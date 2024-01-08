@@ -1,0 +1,30 @@
+classDiagram
+    class GameManager {
+        nextTurn()
+        void init()
+        int roll()
+    }
+    class Board {
+        List~Tile~ getTiles()
+    }
+    class Player {
+        Map~Resource, int~ getResources()
+    }
+    class Resource {
+
+    }
+    class Tile {
+        int getNumber()
+        Resource getResource()
+    }
+    class Property {
+        Player getPlayer()
+        bool isAdjacent(tile: Tile)
+    }
+    GameManager *-- Board
+    GameManager *-- Player
+    Board *-- Tile
+    Board *-- Property
+    Tile *-- Resource
+    Player *-- Resource
+    Property *-- Player
