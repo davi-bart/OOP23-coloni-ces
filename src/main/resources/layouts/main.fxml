@@ -5,11 +5,13 @@
 
 <VBox
     xmlns="http://javafx.com/javafx"
-    xmlns:fx="http://javafx.com/fxml">
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="it.unibo.controller.impl.ControllerImpl">
   <children>
     <Button fx:id="btn"
     	alignment="CENTER"
-    	text="Say Hello!" />
+    	text="Say Hello!"
+      onMouseClicked="#test"/>
 
     <Label fx:id="lbl"
     	alignment="CENTER_LEFT"
