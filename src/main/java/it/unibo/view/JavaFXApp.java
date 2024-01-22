@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 public class JavaFXApp extends Application {
     private static final int WIDTH = 500;
     private static final int HEIGTH = 500;
+    private final BoardView boardView = new BoardView();
 
     /**
      * Start.
@@ -23,6 +24,8 @@ public class JavaFXApp extends Application {
     @Override
     public void start(final Stage stage) throws Exception {
         final VBox root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
+        
+        root.getChildren().add(2, boardView.getBoard());
 
         final Scene scene = new Scene(root, WIDTH, HEIGTH);
 
