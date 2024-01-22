@@ -3,5 +3,5 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane alignment="CENTER">
+<StackPane>
 </StackPane>
