@@ -19,7 +19,7 @@ import javafx.util.Pair;
  * Board view.
  */
 public final class BoardView {
-    static final int EXAGON_RADIUS = 70;
+    static final int HEXAGON_RADIUS = 70;
 
     /**
      * @throws IOException
@@ -32,10 +32,13 @@ public final class BoardView {
         getExagonsCoordinates().forEach(coords -> {
             final int row = coords.getKey();
             final int col = coords.getValue();
-            final Hexagon hexagon = new Hexagon(EXAGON_RADIUS,
-                    col * 2 * EXAGON_RADIUS + (row % 2 != 0 ? EXAGON_RADIUS : 0),
-                    row * EXAGON_RADIUS * Math.sqrt(3));
-            group.getChildren().add(hexagon);
+            final Group tile = new Tile(HEXAGON_RADIUS,
+                    col * 2 * HEXAGON_RADIUS + (row % 2 != 0 ? HEXAGON_RADIUS : 0),
+                    row * HEXAGON_RADIUS * Math.sqrt(3), 0);
+            group.getChildren().add(tile);
+            // group.getChildren().add(tile.getHexagon());
+            // group.getChildren().addAll(tile.getProperties());
+            // group.getChildren().addAll(tile.getRoads());
         });
         pane.getChildren().add(0, group);
         pane.setBorder(new Border(new BorderStroke(Color.BLACK,
