@@ -3,7 +3,10 @@ package it.unibo.view;
 /**
  * Application.
  */
-public class App {
+public final class App {
+    private App() {
+    }
+
     /**
      * Program's entry point.
      * 

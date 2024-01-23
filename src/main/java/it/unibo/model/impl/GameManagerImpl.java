@@ -2,7 +2,10 @@ package it.unibo.model.impl;
 
 import it.unibo.model.api.GameManager;
 
-public class GameManagerImpl implements GameManager {
+/**
+ * Implementation of GameManager.
+ */
+public final class GameManagerImpl implements GameManager {
 
     @Override
     public void start() {

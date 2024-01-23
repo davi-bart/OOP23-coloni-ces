@@ -2,6 +2,9 @@ package it.unibo.model.api;
 
 import java.util.Optional;
 
+/**
+ * Hexagonal tile.
+ */
 public interface Tile {
 
     /**
@@ -10,11 +13,13 @@ public interface Tile {
     int getNumber();
 
     /**
-     * @return the street in the given direction.
+     * @param direction
+     * @return the road in the given direction.
      */
-    Optional<Street> getStreet(StreetDirection direction);
+    Optional<Road> getRoad(RoadDirection direction);
 
     /**
+     * @param direction
      * @return the property in the given direction.
      */
     Optional<Property> getProperty(PropertyDirection direction);

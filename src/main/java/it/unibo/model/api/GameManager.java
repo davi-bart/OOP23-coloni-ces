@@ -1,7 +1,9 @@
 package it.unibo.model.api;
 
+/**
+ * GameManager.
+ */
 public interface GameManager {
-
     /**
      * Starts the game.
      */

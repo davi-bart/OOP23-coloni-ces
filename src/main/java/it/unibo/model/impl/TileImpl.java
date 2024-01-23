@@ -6,13 +6,16 @@ import java.util.Optional;
 
 import it.unibo.model.api.Property;
 import it.unibo.model.api.PropertyDirection;
-import it.unibo.model.api.Street;
+import it.unibo.model.api.Road;
 import it.unibo.model.api.Tile;
-import it.unibo.model.api.StreetDirection;
+import it.unibo.model.api.RoadDirection;
 
-public class TileImpl implements Tile {
+/**
+ * Tile implementation.
+ */
+public final class TileImpl implements Tile {
     private final int number;
-    private final Map<StreetDirection, Street> streets = new HashMap<>();
+    private final Map<RoadDirection, Road> roads = new HashMap<>();
     private final Map<PropertyDirection, Property> properties = new HashMap<>();
 
     TileImpl(final int number) {
@@ -25,12 +28,12 @@ public class TileImpl implements Tile {
     }
 
     @Override
-    public Optional<Street> getStreet(StreetDirection direction) {
-        return Optional.ofNullable(this.streets.get(direction));
+    public Optional<Road> getRoad(final RoadDirection direction) {
+        return Optional.ofNullable(this.roads.get(direction));
     }
 
     @Override
-    public Optional<Property> getProperty(PropertyDirection direction) {
+    public Optional<Property> getProperty(final PropertyDirection direction) {
         return Optional.ofNullable(this.properties.get(direction));
     }
 
