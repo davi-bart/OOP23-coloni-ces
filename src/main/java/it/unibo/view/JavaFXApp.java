@@ -11,6 +11,7 @@ import javafx.stage.Stage;
  */
 public class JavaFXApp extends Application {
     private final BoardView boardView = new BoardView();
+    private final ResourcesView resouceView = new ResourcesView();
 
     /**
      * Start.
@@ -24,7 +25,7 @@ public class JavaFXApp extends Application {
         final VBox root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
 
         root.getChildren().add(2, boardView.getBoard());
-
+        root.getChildren().add(3, resouceView.getResource("wool"));
         final Scene scene = new Scene(root);
 
         stage.setTitle("JavaFX - Complete Example");
