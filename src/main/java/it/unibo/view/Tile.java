@@ -7,7 +7,6 @@ import javafx.scene.Group;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 
 /**
@@ -16,6 +15,7 @@ import javafx.scene.text.Text;
  */
 public class Tile extends Group {
     static final int SIDES = 6;
+
     private final List<Line> roads = new ArrayList<>();
     private final List<Circle> properties = new ArrayList<>();
 
@@ -28,6 +28,7 @@ public class Tile extends Group {
      * @param number number on the tile
      */
     public Tile(final double radius, final double x, final double y, final int number) {
+        final int strokeWidth = 5;
         // TODO: pay attention that roads and properties are in commond with nearby
         // tiles.
         final var points = Utility.getExagonCoordinates(radius * (2 - Math.sqrt(3) / 2), x, y);
@@ -38,8 +39,8 @@ public class Tile extends Group {
         for (int i = 0; i < SIDES; i++) {
             final var point = points.get(i);
             final var nextPoint = points.get((i + 1) % SIDES);
-            Line road = new Line(point.getKey(), point.getValue(), nextPoint.getKey(), nextPoint.getValue());
-            road.setStrokeWidth(5);
+            final Line road = new Line(point.getKey(), point.getValue(), nextPoint.getKey(), nextPoint.getValue());
+            road.setStrokeWidth(strokeWidth);
             roads.add(road);
         }
         super.getChildren().add(new Hexagon(radius, x, y));

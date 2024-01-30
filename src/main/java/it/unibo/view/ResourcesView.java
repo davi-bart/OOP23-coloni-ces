@@ -5,11 +5,20 @@ import java.io.IOException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class ResourcesView {
+/**
+ * ResourceView class.
+ */
+public final class ResourcesView {
 
-    public ImageView getResource(String resource) throws IOException {
-        Image brick = new Image("imgs/resources/resources--" + resource + ".png");
-        ImageView image = new ImageView(brick);
+    /**
+     * 
+     * @param resource
+     * @return the image view of the needed resource
+     * @throws IOException
+     */
+    public ImageView getResource(final String resource) throws IOException {
+        final Image brick = new Image("imgs/resources/" + resource + ".png");
+        final ImageView image = new ImageView(brick);
         image.setFitHeight(100);
         image.setPreserveRatio(true);
         return image;
