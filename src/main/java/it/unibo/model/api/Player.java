@@ -34,12 +34,14 @@ public interface Player {
      * Get the amount of the given resource that the player have.
      * 
      * @param resource
-     * @return
+     * @return the amount of the given resource
      */
     int getResource(ResourceType resource);
+
     /**
      * Get the victory points of the player.
-     * @return
+     * 
+     * @return victory points of the player
      */
     int getVictoryPoints();
 }

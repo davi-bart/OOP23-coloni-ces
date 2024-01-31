@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PlayerTest {
 
-    Player player = new PlayerImpl("lucone");
+    final Player player = new PlayerImpl();
 
     @Test
     public void testInit() {

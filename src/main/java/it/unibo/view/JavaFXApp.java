@@ -3,8 +3,10 @@ package it.unibo.view;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import it.unibo.common.ResourceType;
 
 /**
  * Application.
@@ -23,9 +25,13 @@ public class JavaFXApp extends Application {
     @Override
     public void start(final Stage stage) throws Exception {
         final VBox root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
-
-        root.getChildren().add(2, boardView.getBoard());
-        root.getChildren().add(3, resouceView.getResource("wool"));
+        final HBox playerHand = new HBox();
+        final int amount = 0;
+        for (final ResourceType resource : ResourceType.values()) {
+            playerHand.getChildren().add(resouceView.getResource(resource, amount));
+        }
+        root.getChildren().add(boardView.getBoard());
+        root.getChildren().add(playerHand);
         final Scene scene = new Scene(root);
 
         stage.setTitle("JavaFX - Complete Example");
