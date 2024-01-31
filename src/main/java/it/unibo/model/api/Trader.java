@@ -20,11 +20,11 @@ public interface Trader {
     void acceptTrade(Map<ResourceType, Integer> givenResouces, Map<ResourceType, Integer> recivingResources);
 
     /**
-     * Method for checking if the trader has the resources to actually trade
+     * Method for checking if the trader has the resources to actually trade.
      * 
-     * @param tradeResource are the resources that the caller need to have before
+     * @param tradeResource the resources that the caller need to have before
      *                      accepting the trade.
-     * @return
+     * @return whether the trader has enough resources
      */
     boolean canTrade(Map<ResourceType, Integer> tradeResource);
 }

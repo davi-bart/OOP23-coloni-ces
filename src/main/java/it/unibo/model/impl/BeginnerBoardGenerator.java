@@ -13,7 +13,7 @@ import it.unibo.model.api.Tile;
  * A generator which generates the suggested beginner's map set-up,
  * according to the official Catan's rules.
  */
-public class BeginnerBoardGenerator implements BoardGenerator {
+public final class BeginnerBoardGenerator implements BoardGenerator {
 
     @Override
     public Board generate() {

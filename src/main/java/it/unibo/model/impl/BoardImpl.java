@@ -15,12 +15,12 @@ public final class BoardImpl implements Board {
     private final Map<ImmutablePair<Integer, Integer>, Tile> board;
 
     /**
-     * Constructor of board impl
+     * Constructor of BoardImpl.
      * 
      * @param board the board to start with
      */
-    public BoardImpl(Map<ImmutablePair<Integer, Integer>, Tile> board) {
-        this.board = board;
+    public BoardImpl(final Map<ImmutablePair<Integer, Integer>, Tile> board) {
+        this.board = new HashMap<>(board);
     }
 
     @Override

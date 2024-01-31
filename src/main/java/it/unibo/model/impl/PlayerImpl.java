@@ -17,8 +17,9 @@ public final class PlayerImpl implements Player, Trader {
     private final String name;
 
     /**
-     * Create a Player implementation that has the given name.
+     * Creates a Player.
      * 
+     * @param name the name of the player
      */
     public PlayerImpl(final String name) {
         this.name = name;
@@ -78,7 +79,7 @@ public final class PlayerImpl implements Player, Trader {
     }
 
     @Override
-    public boolean canTrade(Map<ResourceType, Integer> givenResouces) {
+    public boolean canTrade(final Map<ResourceType, Integer> givenResouces) {
         for (Entry<ResourceType, Integer> resource : givenResouces.entrySet()) {
             if (getResource(resource.getKey()) < resource.getValue()) {
                 return false;

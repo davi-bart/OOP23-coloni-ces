@@ -10,13 +10,16 @@ import it.unibo.model.api.Board;
 import it.unibo.model.api.BoardGenerator;
 import it.unibo.model.api.Tile;
 
-public class RandomBoardGenerator implements BoardGenerator {
+/**
+ * A board generator which generates a random board.
+ */
+public final class RandomBoardGenerator implements BoardGenerator {
 
     @Override
     public Board generate() {
         final Map<ImmutablePair<Integer, Integer>, Tile> map = new HashMap<>();
         final int minNumber = 1, maxNumber = 12;
-        Random r = new Random();
+        final Random rng = new Random();
         return new BoardImpl(map);
     }
 

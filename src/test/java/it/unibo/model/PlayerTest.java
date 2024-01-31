@@ -16,10 +16,13 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * Test class for the player.
  */
-public class PlayerTest {
+public final class PlayerTest {
 
     private PlayerImpl player;
 
+    /**
+     * Initialization.
+     */
     @BeforeEach
     public void init() {
         this.player = new PlayerImpl("lucone");
@@ -61,6 +64,9 @@ public class PlayerTest {
         assertEquals(3, player.getVictoryPoints());
     }
 
+    /**
+     * Test acceptTrade.
+     */
     @Test
     public void testAcceptTrade() {
         player.addResources(ResourceType.BRICK, 5);
