@@ -8,17 +8,26 @@ import it.unibo.model.impl.PlayerImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Test class for the player.
+ */
 public class PlayerTest {
 
-    final Player player = new PlayerImpl();
+    private final Player player = new PlayerImpl();
 
+    /**
+     * Test the initialization of the player.
+     */
     @Test
     public void testInit() {
-        for (ResourceType resource : ResourceType.values()) {
+        for (final ResourceType resource : ResourceType.values()) {
             assertEquals(player.getResource(resource), 0);
         }
     }
 
+    /**
+     * Test addResources and removeResources.
+     */
     @Test
     public void testModifyResources() {
         player.addResources(ResourceType.BRICK, 2);
@@ -29,6 +38,9 @@ public class PlayerTest {
         assertEquals(0, player.getResource(ResourceType.BRICK));
     }
 
+    /**
+     * Test addVictoryPoints.
+     */
     @Test
     public void testAddVictoryPoints() {
         assertEquals(player.getVictoryPoints(), 0);

@@ -28,6 +28,8 @@ public final class PlayerImpl implements Player {
     public void incrementVictoryPoints(final int amount) {
         if (amount > 0) {
             victoryPoints += amount;
+        } else {
+            throw new IllegalArgumentException("amount must be positive");
         }
     }
 
@@ -35,6 +37,8 @@ public final class PlayerImpl implements Player {
     public void addResources(final ResourceType resource, final int amount) {
         if (amount > 0) {
             hand.put(resource, hand.get(resource) + amount);
+        }else {
+            throw new IllegalArgumentException("amount must be positive");
         }
     }
 
@@ -42,6 +46,8 @@ public final class PlayerImpl implements Player {
     public void removeResources(final ResourceType resource, final int amount) {
         if (hand.get(resource) >= amount) {
             hand.put(resource, hand.get(resource) - amount);
+        }else {
+            throw new IllegalArgumentException("amount must be minor than the total resource");
         }
     }
 
