@@ -5,17 +5,25 @@ import java.util.Map;
 
 import it.unibo.model.api.Board;
 import it.unibo.model.api.Tile;
-import javafx.util.Pair;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
 
 /**
  * Board implementation.
  */
 public final class BoardImpl implements Board {
-    // TODO: change Pair with proper class
-    private final Map<Pair<Integer, Integer>, Tile> board = new HashMap<>();
+    private final Map<ImmutablePair<Integer, Integer>, Tile> board;
+
+    /**
+     * Constructor of board impl
+     * 
+     * @param board the board to start with
+     */
+    public BoardImpl(Map<ImmutablePair<Integer, Integer>, Tile> board) {
+        this.board = board;
+    }
 
     @Override
     public void generateBoard() {
-        board.put(new Pair<>(0, 0), new TileImpl(0));
     }
 }
