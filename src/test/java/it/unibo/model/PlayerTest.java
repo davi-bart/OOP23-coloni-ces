@@ -3,17 +3,27 @@ package it.unibo.model;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.common.ResourceType;
-import it.unibo.model.api.Player;
 import it.unibo.model.impl.PlayerImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Test class for the player.
  */
 public class PlayerTest {
 
-    private final Player player = new PlayerImpl();
+    private PlayerImpl player;
+
+    @BeforeEach
+    public void init() {
+        this.player = new PlayerImpl("lucone");
+    }
 
     /**
      * Test the initialization of the player.
@@ -32,8 +42,9 @@ public class PlayerTest {
     public void testModifyResources() {
         player.addResources(ResourceType.BRICK, 2);
         assertEquals(2, player.getResource(ResourceType.BRICK));
-        player.removeResources(ResourceType.BRICK, 4);
-        assertEquals(2, player.getResource(ResourceType.BRICK));
+        assertThrows(IllegalArgumentException.class, () -> player.removeResources(ResourceType.BRICK, 4));
+        assertThrows(IllegalArgumentException.class, () -> player.addResources(ResourceType.BRICK, -6));
+
         player.removeResources(ResourceType.BRICK, 2);
         assertEquals(0, player.getResource(ResourceType.BRICK));
     }
@@ -43,10 +54,23 @@ public class PlayerTest {
      */
     @Test
     public void testAddVictoryPoints() {
-        assertEquals(player.getVictoryPoints(), 0);
+        assertEquals(0, player.getVictoryPoints());
         player.incrementVictoryPoints(2);
-        assertEquals(player.getVictoryPoints(), 2);
+        assertEquals(2, player.getVictoryPoints());
         player.incrementVictoryPoints(1);
-        assertEquals(player.getVictoryPoints(), 3);
+        assertEquals(3, player.getVictoryPoints());
+    }
+
+    @Test
+    public void testAcceptTrade() {
+        player.addResources(ResourceType.BRICK, 5);
+        player.addResources(ResourceType.LUMBER, 10);
+        final Map<ResourceType, Integer> givenResouces = new HashMap<>();
+        final Map<ResourceType, Integer> recivingResouces = new HashMap<>();
+        givenResouces.put(ResourceType.BRICK, Integer.valueOf(2));
+        recivingResouces.put(ResourceType.WOOL, Integer.valueOf(2));
+        player.acceptTrade(givenResouces, recivingResouces);
+        assertEquals(3, player.getResource(ResourceType.BRICK));
+        assertEquals(2, player.getResource(ResourceType.WOOL));
     }
 }
