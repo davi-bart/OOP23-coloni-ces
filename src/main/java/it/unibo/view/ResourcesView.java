@@ -3,7 +3,6 @@ package it.unibo.view;
 import java.io.IOException;
 import java.util.Locale;
 
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

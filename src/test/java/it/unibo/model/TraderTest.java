@@ -18,6 +18,8 @@ import it.unibo.model.impl.ResourceManagerImpl;
 /**
  * Test for a trader istance.
  */
+// CHECKSTYLE: MagicNumber OFF
+
 public class TraderTest {
     private Trader player;
     private ResourceManager rm;
@@ -71,3 +73,4 @@ public class TraderTest {
         assertEquals(2, player.getResource(ResourceType.WOOL));
     }
 }
+// CHECKSTYLE: MagicNumber OFF
