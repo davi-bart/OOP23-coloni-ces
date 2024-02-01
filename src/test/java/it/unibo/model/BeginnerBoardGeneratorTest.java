@@ -1,7 +1,6 @@
 package it.unibo.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ import it.unibo.model.impl.BeginnerBoardGenerator;
  * Test for a trader istance.
  */
 // CHECKSTYLE: MagicNumber OFF
-public final class BeginnerBoardGeneratorTest {
+class BeginnerBoardGeneratorTest {
     private BoardGenerator generator;
     private Board board;
 
@@ -22,7 +21,7 @@ public final class BeginnerBoardGeneratorTest {
      * Initialization.
      */
     @BeforeEach
-    public void init() {
+    void init() {
         this.generator = new BeginnerBoardGenerator();
         this.board = generator.generate();
     }
@@ -31,7 +30,9 @@ public final class BeginnerBoardGeneratorTest {
      * Test the beginner board generator.
      */
     @Test
-    public void test() {
+    void test() {
+        assertNotNull(generator);
+        assertNotNull(board);
     }
 }
-// CHECKSTYLE: MagicNumber OFF
+// CHECKSTYLE: MagicNumber ON

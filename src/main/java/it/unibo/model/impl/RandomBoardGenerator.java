@@ -20,10 +20,11 @@ import it.unibo.model.api.Tile;
  */
 public final class RandomBoardGenerator implements BoardGenerator {
 
+    private final Random rng = new Random();
+
     @Override
     public Board generate() {
         final Map<Pair<Integer, Integer>, Tile> map = new HashMap<>();
-        final Random rng = new Random();
         final List<Pair<Integer, Integer>> positions = getPositions();
         final List<TerrainType> terrains = getTerrains();
         final List<Integer> numbers = getNumbers();

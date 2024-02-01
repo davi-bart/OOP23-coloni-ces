@@ -26,11 +26,11 @@ public class Tile extends Group {
     /**
      * Constructor.
      * 
-     * @param radius radius
-     * @param x      x coordinate of the center
-     * @param y      y coordinate of the center
+     * @param radius      radius
+     * @param x           x coordinate of the center
+     * @param y           y coordinate of the center
      * @param terrainType terrain type
-     * @param number number on the tile
+     * @param number      number on the tile
      */
     public Tile(final double radius, final double x, final double y, final TerrainType terrainType, final int number) {
         final int strokeWidth = 5;
@@ -48,7 +48,7 @@ public class Tile extends Group {
             road.setStrokeWidth(strokeWidth);
             roads.add(road);
         }
-        Hexagon hexagon = new Hexagon(radius, x, y);
+        final Hexagon hexagon = new Hexagon(radius, x, y);
         hexagon.setFill(
                 new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
         super.getChildren().add(hexagon);

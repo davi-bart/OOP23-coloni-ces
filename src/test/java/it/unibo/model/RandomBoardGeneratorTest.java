@@ -1,10 +1,6 @@
 package it.unibo.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.util.HashMap;
-import java.util.Map;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +13,7 @@ import it.unibo.model.impl.RandomBoardGenerator;
  * Test for a trader istance.
  */
 // CHECKSTYLE: MagicNumber OFF
-public final class RandomBoardGeneratorTest {
+class RandomBoardGeneratorTest {
     private BoardGenerator generator;
     private Board board;
 
@@ -25,7 +21,7 @@ public final class RandomBoardGeneratorTest {
      * Initialization.
      */
     @BeforeEach
-    public void init() {
+    void init() {
         this.generator = new RandomBoardGenerator();
         this.board = generator.generate();
     }
@@ -34,7 +30,9 @@ public final class RandomBoardGeneratorTest {
      * Test the random board generator.
      */
     @Test
-    public void test() {
+    void test() {
+        assertNotNull(generator);
+        assertNotNull(board);
     }
 }
-// CHECKSTYLE: MagicNumber OFF
+// CHECKSTYLE: MagicNumber ON
