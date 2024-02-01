@@ -27,9 +27,12 @@ public final class RandomBoardGenerator implements BoardGenerator {
         final List<Pair<Integer, Integer>> positions = getPositions();
         final List<TerrainType> terrains = getTerrains();
         final List<Integer> numbers = getNumbers();
-        final int desertIndex = rng.nextInt(positions.size());
-        map.put(positions.get(desertIndex), new TileImpl(TerrainType.DESERT, -1));
-        terrains.remove(desertIndex);
+
+        // imposto come prima cosa la tassella con il deserto
+        final int desertPositionIndex = rng.nextInt(positions.size());
+        map.put(positions.get(desertPositionIndex), new TileImpl(TerrainType.DESERT, -1));
+        positions.remove(desertPositionIndex);
+
         // prendo una terna posizione,terreno,numero da aggiungere alla mappa
         while (!positions.isEmpty()) {
             final int remaining = positions.size();
@@ -51,7 +54,7 @@ public final class RandomBoardGenerator implements BoardGenerator {
         final int minNumber = 2;
         final int maxNumber = 12;
         final List<Integer> unusedNumbers = List.of(7);
-        IntStream.range(minNumber, maxNumber + 1).filter(i -> unusedNumbers.contains(i))
+        IntStream.range(minNumber, maxNumber + 1).filter(i -> !unusedNumbers.contains(i))
                 .forEach(i -> numberOccurrences.put(i, i == minNumber || i == maxNumber ? 1 : 2));
         numberOccurrences.forEach((number, occurrences) -> {
             while (occurrences > 0) {
