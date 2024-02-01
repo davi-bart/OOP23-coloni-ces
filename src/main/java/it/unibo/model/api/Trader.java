@@ -27,4 +27,20 @@ public interface Trader {
      * @return whether the trader has enough resources
      */
     boolean canTrade(Map<ResourceType, Integer> tradeResource);
+
+    /**
+     * Set the new amount of the given resource.
+     * 
+     * @param resource
+     * @param amount
+     */
+    void setResource(ResourceType resource, int amount);
+
+    /**
+     * Get the amount of the given resource that the player have.
+     * 
+     * @param resource
+     * @return the amount of the given resource
+     */
+    int getResource(ResourceType resource);
 }

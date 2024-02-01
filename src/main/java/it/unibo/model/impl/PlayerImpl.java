@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import it.unibo.common.ResourceType;
 import it.unibo.model.api.Player;
+import it.unibo.model.api.ResourceManager;
 import it.unibo.model.api.Trader;
 
 /**
@@ -14,6 +15,7 @@ import it.unibo.model.api.Trader;
 public final class PlayerImpl implements Player, Trader {
     private final Map<ResourceType, Integer> hand = new HashMap<>();
     private int victoryPoints;
+    private final ResourceManager resourceManager = new ResourceManagerImpl(this);
     private final String name;
 
     /**
@@ -39,21 +41,8 @@ public final class PlayerImpl implements Player, Trader {
     }
 
     @Override
-    public void addResources(final ResourceType resource, final int amount) {
-        if (amount > 0) {
-            hand.put(resource, hand.get(resource) + amount);
-        } else {
-            throw new IllegalArgumentException("amount must be positive");
-        }
-    }
-
-    @Override
-    public void removeResources(final ResourceType resource, final int amount) {
-        if (hand.get(resource) >= amount) {
-            hand.put(resource, hand.get(resource) - amount);
-        } else {
-            throw new IllegalArgumentException("amount must be minor than the total resource");
-        }
+    public int getVictoryPoints() {
+        return this.victoryPoints;
     }
 
     @Override
@@ -62,29 +51,30 @@ public final class PlayerImpl implements Player, Trader {
     }
 
     @Override
-    public int getVictoryPoints() {
-        return this.victoryPoints;
+    public void setResource(final ResourceType resource, final int amount) {
+        hand.replace(resource, amount);
     }
 
     @Override
     public void acceptTrade(final Map<ResourceType, Integer> givenResouces,
             final Map<ResourceType, Integer> recivingResources) {
 
-        for (Entry<ResourceType, Integer> resource : givenResouces.entrySet()) {
-            removeResources(resource.getKey(), resource.getValue());
+        for (final Entry<ResourceType, Integer> resource : givenResouces.entrySet()) {
+            resourceManager.removeResources(resource.getKey(), resource.getValue());
         }
-        for (Entry<ResourceType, Integer> resource : recivingResources.entrySet()) {
-            addResources(resource.getKey(), resource.getValue());
+        for (final Entry<ResourceType, Integer> resource : recivingResources.entrySet()) {
+            resourceManager.addResources(resource.getKey(), resource.getValue());
         }
     }
 
     @Override
     public boolean canTrade(final Map<ResourceType, Integer> givenResouces) {
-        for (Entry<ResourceType, Integer> resource : givenResouces.entrySet()) {
+        for (final Entry<ResourceType, Integer> resource : givenResouces.entrySet()) {
             if (getResource(resource.getKey()) < resource.getValue()) {
                 return false;
             }
         }
         return true;
     }
+
 }
