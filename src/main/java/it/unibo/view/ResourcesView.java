@@ -23,6 +23,7 @@ public final class ResourcesView {
      * @throws IOException
      */
     public VBox getResource(final ResourceType resource, final int amount) throws IOException {
+
         final int defaultHeight = 100;
         final VBox resourceAndAmount = new VBox();
         final Label amountLabel = new Label();
@@ -33,13 +34,14 @@ public final class ResourcesView {
         resourceAndAmount.setAlignment(Pos.CENTER);
         image.setFitHeight(defaultHeight);
         image.setPreserveRatio(true);
-        image.hoverProperty().addListener((ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
-            if (newValue) {
-                image.setFitHeight(defaultHeight + 0.5 * defaultHeight);
-            } else {
-                image.setFitHeight(defaultHeight);
-            }
-        });
+        // image.hoverProperty().addListener((ChangeListener<Boolean>) (observable,
+        // oldValue, newValue) -> {
+        // if (newValue) {
+        // image.setFitHeight(defaultHeight + 0.5 * defaultHeight);
+        // } else {
+        // image.setFitHeight(defaultHeight);
+        // }
+        // });
 
         resourceAndAmount.getChildren().add(image);
         resourceAndAmount.getChildren().add(amountLabel);

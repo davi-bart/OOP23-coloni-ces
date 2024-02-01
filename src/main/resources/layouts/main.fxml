@@ -3,8 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox
+<HBox
     xmlns="http://javafx.com/javafx"
     xmlns:fx="http://javafx.com/fxml">
-
-</VBox>
+    <children>
+        <VBox></VBox>
+        <VBox></VBox>
+    </children>
+</HBox>
