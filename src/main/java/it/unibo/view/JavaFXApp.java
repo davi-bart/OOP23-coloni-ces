@@ -56,7 +56,7 @@ public class JavaFXApp extends Application {
             bankVault.getChildren().add(resouceView.getResource(resource, INITIAL_BANK_VALUE));
             playerHand.getChildren().add(resouceView.getResource(resource, amount));
         }
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        final Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 
         costCard.setFitHeight(DEFAULT_HEIGHT);
         costCard.setPreserveRatio(true);

@@ -33,8 +33,9 @@ public interface ResourceManager {
      * 
      * @param name     player name
      * @param resource resource type
+     * @return the resource amount
      **/
-    int getResource(String name, final ResourceType resource);
+    int getResource(String name, ResourceType resource);
 
     /**
      * Modify the resources of the players into the trade.
@@ -46,15 +47,16 @@ public interface ResourceManager {
      * @param recivingResources are the resources that the accepter give to the
      *                          proposer
      */
-    void acceptTrade(String proposer, String accepter, final Map<ResourceType, Integer> givingResouces,
-            final Map<ResourceType, Integer> recivingResources);
+    void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> givingResouces,
+            Map<ResourceType, Integer> recivingResources);
 
     /**
-     * Return if the given player can trade.
+     * * Return if the given player can trade.
+     * The player can trade if it has all the recivingResources.
      * 
-     * @param name          player name
-     * @param tradeResource all the resources involved into the trade
+     * @param name              player name
+     * @param recivingResources
      * @return true if the given player can trade, false otherwise
      */
-    boolean canTrade(String name, final Map<ResourceType, Integer> tradeResource);
+    boolean canTrade(String name, Map<ResourceType, Integer> recivingResources);
 }

@@ -17,14 +17,19 @@ public class ResourceManagerImpl implements ResourceManager {
     private static final int DEFAUL_INIT_VALUE = 0;
     private static final int DEFAUL_BANK_VALUE = 19;
 
-    public final Map<String, Map<ResourceType, Integer>> allEntityResources = new HashMap<>();
+    private final Map<String, Map<ResourceType, Integer>> allEntityResources = new HashMap<>();
 
+    /**
+     * Create the ResourceManager from the list of the players.
+     * 
+     * @param playersName
+     */
     public ResourceManagerImpl(final List<String> playersName) {
         for (final String name : playersName) {
 
             final Map<ResourceType, Integer> currentPlayerResourceAmount = new HashMap<>();
             for (final ResourceType resource : ResourceType.values()) {
-                if (name.toLowerCase(Locale.US).equals("bank")) {
+                if ("bank".equals(name.toLowerCase(Locale.US))) {
                     currentPlayerResourceAmount.put(resource, Integer.valueOf(DEFAUL_BANK_VALUE));
                 } else {
                     currentPlayerResourceAmount.put(resource, Integer.valueOf(DEFAUL_INIT_VALUE));
@@ -61,6 +66,7 @@ public class ResourceManagerImpl implements ResourceManager {
     public final void acceptTrade(final String proposer, final String accepter,
             final Map<ResourceType, Integer> givingResouces,
             final Map<ResourceType, Integer> recivingResources) {
+
         for (final Entry<ResourceType, Integer> resource : givingResouces.entrySet()) {
             removeResources(proposer, resource.getKey(), resource.getValue());
             addResources(accepter, resource.getKey(), resource.getValue());
