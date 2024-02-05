@@ -9,5 +9,7 @@
     <children>
         <VBox></VBox>
         <VBox></VBox>
+        <VBox></VBox>
+        <VBox></VBox>
     </children>
 </HBox>
