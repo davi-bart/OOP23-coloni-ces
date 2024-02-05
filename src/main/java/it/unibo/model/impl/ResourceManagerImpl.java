@@ -29,14 +29,15 @@ public class ResourceManagerImpl implements ResourceManager {
 
             final Map<ResourceType, Integer> currentPlayerResourceAmount = new HashMap<>();
             for (final ResourceType resource : ResourceType.values()) {
-                if ("bank".equals(name.toLowerCase(Locale.US))) {
-                    currentPlayerResourceAmount.put(resource, Integer.valueOf(DEFAUL_BANK_VALUE));
-                } else {
-                    currentPlayerResourceAmount.put(resource, Integer.valueOf(DEFAUL_INIT_VALUE));
-                }
+                currentPlayerResourceAmount.put(resource, Integer.valueOf(DEFAUL_INIT_VALUE));
             }
             allEntityResources.put(name.toLowerCase(Locale.US), currentPlayerResourceAmount);
         }
+        final Map<ResourceType, Integer> bankAmount = new HashMap<>();
+        for (final ResourceType resource : ResourceType.values()) {
+            bankAmount.put(resource, Integer.valueOf(DEFAUL_BANK_VALUE));
+        }
+        allEntityResources.put("bank", bankAmount);
     }
 
     @Override

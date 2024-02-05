@@ -20,21 +20,26 @@ import it.unibo.model.impl.ResourceManagerImpl;
  */
 class ResourceManagerTest {
 
-    private ResourceManager rm;
+    private ResourceManager resourceManager;
+    private static final String PLAYER1 = "luca";
+    private static final String PLAYER2 = "andrea";
+    private static final String PLAYER3 = "alex";
+    private static final String PLAYER4 = "sbara";
 
     @BeforeEach
     void init() {
-        this.rm = new ResourceManagerImpl(List.of("Luca", "Andrea", "Alex", "Sbara", "Bank"));
+
+        this.resourceManager = new ResourceManagerImpl(List.of(PLAYER1, PLAYER2, PLAYER3, PLAYER4));
     }
 
     /**
      * Test addResources.
      */
     @Test
-    public void testAddResources() {
-        assertEquals(0, rm.getResource("luca", ResourceType.BRICK));
-        rm.addResources("luca", ResourceType.BRICK, 3);
-        assertEquals(3, rm.getResource("luca", ResourceType.BRICK));
+    void testAddResources() {
+        assertEquals(0, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
+        resourceManager.addResources(PLAYER1, ResourceType.BRICK, 3);
+        assertEquals(3, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
 
     }
 
@@ -42,11 +47,11 @@ class ResourceManagerTest {
      * Test removeResources.
      */
     @Test
-    public void testRemoveResources() {
-        assertEquals(0, rm.getResource("luca", ResourceType.BRICK));
-        rm.addResources("luca", ResourceType.BRICK, 5);
-        rm.removeResources("luca", ResourceType.BRICK, 3);
-        assertEquals(2, rm.getResource("luca", ResourceType.BRICK));
+    void testRemoveResources() {
+        assertEquals(0, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
+        resourceManager.addResources(PLAYER1, ResourceType.BRICK, 5);
+        resourceManager.removeResources(PLAYER1, ResourceType.BRICK, 3);
+        assertEquals(2, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
 
     }
 
@@ -54,25 +59,25 @@ class ResourceManagerTest {
      * Test trade.
      */
     @Test
-    public void testTrade() {
+    void testTrade() {
         final Map<ResourceType, Integer> givingResource = new HashMap<>();
         final Map<ResourceType, Integer> recivingResource = new HashMap<>();
 
-        rm.addResources("luca", ResourceType.BRICK, 5);
-        rm.addResources("luca", ResourceType.WOOL, 5);
-        rm.addResources("luca", ResourceType.GRAIN, 5);
-        rm.addResources("alex", ResourceType.LUMBER, 5);
-        rm.addResources("alex", ResourceType.ORE, 5);
+        resourceManager.addResources(PLAYER1, ResourceType.BRICK, 5);
+        resourceManager.addResources(PLAYER1, ResourceType.WOOL, 5);
+        resourceManager.addResources(PLAYER1, ResourceType.GRAIN, 5);
+        resourceManager.addResources(PLAYER2, ResourceType.LUMBER, 5);
+        resourceManager.addResources(PLAYER2, ResourceType.ORE, 5);
         recivingResource.put(ResourceType.BRICK, 2);
         recivingResource.put(ResourceType.WOOL, 3);
-        assertTrue(rm.canTrade("luca", recivingResource));
+        assertTrue(resourceManager.canTrade(PLAYER1, recivingResource));
         givingResource.put(ResourceType.LUMBER, 2);
         givingResource.put(ResourceType.ORE, 4);
-        rm.acceptTrade("alex", "luca", givingResource, recivingResource);
-        assertEquals(3, rm.getResource("luca", ResourceType.BRICK));
-        assertEquals(2, rm.getResource("luca", ResourceType.WOOL));
-        assertEquals(3, rm.getResource("alex", ResourceType.LUMBER));
-        assertEquals(1, rm.getResource("alex", ResourceType.ORE));
+        resourceManager.acceptTrade(PLAYER2, PLAYER1, givingResource, recivingResource);
+        assertEquals(3, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
+        assertEquals(2, resourceManager.getResource(PLAYER1, ResourceType.WOOL));
+        assertEquals(3, resourceManager.getResource(PLAYER2, ResourceType.LUMBER));
+        assertEquals(1, resourceManager.getResource(PLAYER2, ResourceType.ORE));
 
     }
     // CHECKSTYLE: MagicNumber ON

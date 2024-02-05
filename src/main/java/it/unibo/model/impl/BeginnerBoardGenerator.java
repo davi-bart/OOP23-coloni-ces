@@ -43,5 +43,4 @@ public final class BeginnerBoardGenerator implements BoardGenerator {
         // CHECKSTYLE: MagicNumber ON
         return new BoardImpl(map);
     }
-
 }

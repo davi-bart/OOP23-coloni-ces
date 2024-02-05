@@ -5,7 +5,7 @@ import java.util.Map;
 import it.unibo.common.ResourceType;
 
 /**
- * A manager that monitor the amount of resources of a player, by adding or
+ * A manager that monitor the amount of resources of all players, by adding or
  * removing them.
  */
 public interface ResourceManager {
