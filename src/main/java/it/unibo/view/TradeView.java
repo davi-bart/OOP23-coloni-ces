@@ -37,19 +37,30 @@ public class TradeView {
     private void showTradeStage() throws IOException {
         Stage newStage = new Stage();
         VBox comp = new VBox();
-
+        HBox bigContainer = new HBox(comp);
+        VBox tradePossibility = new VBox(); 
+        HBox player1Trade = new HBox();
+        Label playerName1 = new Label("PlayerName1");
         Label givinResources = new Label("Seleziona risorse da dare");
         Label recivingResources = new Label("Seleziona risorse da ricevere");
+        Button acceptingTrade = new Button("Accept Trade");
 
+
+        newStage.setTitle("Finestra di scambio");
         comp.getChildren().add(givinResources);
-
         comp.getChildren().add(resourcesView.getAllResources());
         comp.getChildren().add(recivingResources);
         comp.getChildren().add(resourcesView.getAllResources());
 
-        Scene stageScene = new Scene(comp, 500, 300);
+        player1Trade.getChildren().add(playerName1);
+        tradePossibility.getChildren().add(player1Trade);
+        tradePossibility.getChildren().add(acceptingTrade);
+        bigContainer.getChildren().add(tradePossibility);
+
+        Scene stageScene = new Scene(bigContainer, 500, 300);
         newStage.initModality(Modality.APPLICATION_MODAL);
         newStage.setScene(stageScene);
+        newStage.setResizable(false);
         newStage.show();
 
     }

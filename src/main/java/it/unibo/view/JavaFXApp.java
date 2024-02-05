@@ -55,8 +55,8 @@ public class JavaFXApp extends Application {
         final Scene scene = new Scene(root);
 
         for (final ResourceType resource : ResourceType.values()) {
-            bankVault.getChildren().add(resouceView.getResource(resource, INITIAL_BANK_VALUE));
-            playerHand.getChildren().add(resouceView.getResource(resource, amount));
+            bankVault.getChildren().add(resouceView.getResourceLabelAmount(resource, INITIAL_BANK_VALUE));
+            playerHand.getChildren().add(resouceView.getResourceLabelAmount(resource, amount));
         }
 
         costCard.setFitHeight(DEFAULT_HEIGHT);
@@ -93,7 +93,7 @@ public class JavaFXApp extends Application {
         final int amount = 0;
 
         for (final ResourceType resource : ResourceType.values()) {
-            playerHand.getChildren().add(resouceView.getResource(resource, amount));
+            playerHand.getChildren().add(resouceView.getResourceLabelAmount(resource, amount));
         }
         player.getChildren().add(nameLabel);
         player.getChildren().add(playerHand);
