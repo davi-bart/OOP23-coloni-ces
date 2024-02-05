@@ -6,20 +6,20 @@ import java.util.Map;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.Tile;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Board implementation.
  */
 public final class BoardImpl implements Board {
-    private final Map<ImmutablePair<Integer, Integer>, Tile> board;
+    private final Map<Pair<Integer, Integer>, Tile> board;
 
     /**
      * Constructor of BoardImpl.
      * 
      * @param board the board to start with
      */
-    public BoardImpl(final Map<ImmutablePair<Integer, Integer>, Tile> board) {
+    public BoardImpl(final Map<Pair<Integer, Integer>, Tile> board) {
         this.board = new HashMap<>(board);
     }
 

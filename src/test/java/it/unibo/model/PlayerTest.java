@@ -11,15 +11,14 @@ import org.junit.jupiter.api.BeforeEach;
 /**
  * Test class for the player.
  */
-public final class PlayerTest {
-
+class PlayerTest {
     private PlayerImpl player;
 
     /**
      * Initialization.
      */
     @BeforeEach
-    public void init() {
+    void init() {
         this.player = new PlayerImpl("lucone");
     }
 
@@ -27,7 +26,7 @@ public final class PlayerTest {
      * Test addVictoryPoints.
      */
     @Test
-    public void testAddVictoryPoints() {
+    void testAddVictoryPoints() {
         assertEquals(0, player.getVictoryPoints());
         player.incrementVictoryPoints(2);
         assertEquals(2, player.getVictoryPoints());

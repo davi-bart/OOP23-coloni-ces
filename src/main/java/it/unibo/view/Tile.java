@@ -2,8 +2,12 @@ package it.unibo.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import it.unibo.common.TerrainType;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -22,12 +26,13 @@ public class Tile extends Group {
     /**
      * Constructor.
      * 
-     * @param radius radius
-     * @param x      x coordinate of the center
-     * @param y      y coordinate of the center
-     * @param number number on the tile
+     * @param radius      radius
+     * @param x           x coordinate of the center
+     * @param y           y coordinate of the center
+     * @param terrainType terrain type
+     * @param number      number on the tile
      */
-    public Tile(final double radius, final double x, final double y, final int number) {
+    public Tile(final double radius, final double x, final double y, final TerrainType terrainType, final int number) {
         final int strokeWidth = 5;
         // TODO: pay attention that roads and properties are in commond with nearby
         // tiles.
@@ -43,7 +48,10 @@ public class Tile extends Group {
             road.setStrokeWidth(strokeWidth);
             roads.add(road);
         }
-        super.getChildren().add(new Hexagon(radius, x, y));
+        final Hexagon hexagon = new Hexagon(radius, x, y);
+        hexagon.setFill(
+                new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
+        super.getChildren().add(hexagon);
         super.getChildren().addAll(this.roads);
         super.getChildren().addAll(this.properties);
         super.getChildren().add(new Text(x, y, String.valueOf(number)));

@@ -20,7 +20,7 @@ import it.unibo.model.impl.ResourceManagerImpl;
  */
 // CHECKSTYLE: MagicNumber OFF
 
-public class TraderTest {
+class TraderTest {
     private Trader player;
     private ResourceManager rm;
 
@@ -28,7 +28,7 @@ public class TraderTest {
      * Initialization.
      */
     @BeforeEach
-    public void init() {
+    void init() {
         this.player = new PlayerImpl("lucone");
         this.rm = new ResourceManagerImpl(player);
     }
@@ -37,7 +37,7 @@ public class TraderTest {
      * Test the initialization of the player.
      */
     @Test
-    public void testInit() {
+    void testInit() {
         for (final ResourceType resource : ResourceType.values()) {
             assertEquals(0, player.getResource(resource));
         }
@@ -47,7 +47,7 @@ public class TraderTest {
      * Test addResources and removeResources.
      */
     @Test
-    public void testModifyResources() {
+    void testModifyResources() {
         rm.addResources(ResourceType.BRICK, 2);
         assertEquals(2, player.getResource(ResourceType.BRICK));
         assertThrows(IllegalArgumentException.class, () -> rm.removeResources(ResourceType.BRICK, 4));
@@ -61,7 +61,7 @@ public class TraderTest {
      * Test acceptTrade.
      */
     @Test
-    public void testAcceptTrade() {
+    void testAcceptTrade() {
         rm.addResources(ResourceType.BRICK, 5);
         rm.addResources(ResourceType.LUMBER, 10);
         final Map<ResourceType, Integer> givenResouces = new HashMap<>();
@@ -73,4 +73,4 @@ public class TraderTest {
         assertEquals(2, player.getResource(ResourceType.WOOL));
     }
 }
-// CHECKSTYLE: MagicNumber OFF
+// CHECKSTYLE: MagicNumber ON
