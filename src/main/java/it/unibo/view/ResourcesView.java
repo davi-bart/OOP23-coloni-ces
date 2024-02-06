@@ -1,7 +1,6 @@
 package it.unibo.view;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Locale;
 
 import javafx.geometry.Pos;
@@ -13,16 +12,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import it.unibo.common.ResourceType;
 
-/*
- *TODO: factory for Resource card: 
- *one with the label, one with the combobox, one with only the image
- */
+
 /**
  * ResourceView class.
  */
 public final class ResourcesView {
 
-    private VBox generateResource(final ResourceType resource){
+    private VBox generateResource(final ResourceType resource) {
         final int defaultHeight = 100;
         final VBox resourceCard = new VBox();
         final Image resourceImage = new Image("imgs/resources/" + resource.toString().toLowerCase(Locale.US) + ".png");
@@ -36,15 +32,19 @@ public final class ResourcesView {
     }
     /**
      * @param resource
-     * @param amount
-     * @return the image view of the needed resource
+     * @return the image view of the needed resource.
      * @throws IOException
      */
     public VBox getResourceBasic(final ResourceType resource) {
         return generateResource(resource);
     }
-
-    public VBox getResourceLabelAmount(final ResourceType resource, final int amount){
+    /**
+     * @param resource
+     * @param amount
+     * @return the image view of the needed resource with a label representing the amount.
+     * @throws IOException
+     */
+    public VBox getResourceLabelAmount(final ResourceType resource, final int amount) {
         final Label amountLabel = new Label();
         final VBox resourceAndAmount = new VBox(generateResource(resource));
         amountLabel.setText(String.valueOf(amount));
@@ -52,18 +52,25 @@ public final class ResourcesView {
         resourceAndAmount.getChildren().add(amountLabel);
         return resourceAndAmount;
     }
-    
-    public VBox getResourceComboBoxAmount(final ResourceType resource){
+    /**
+     * @param resource
+     * @return the image view of the needed resource with a combobox.
+     * @throws IOException
+     */
+    public VBox getResourceComboBoxAmount(final ResourceType resource) {
         final ComboBox<Integer> amountBox = new ComboBox<>();
         final VBox resourceAndAmount = new VBox(generateResource(resource));
 
-        amountBox.getItems().addAll(List.of(0, 1,2,3));
+        amountBox.getItems().addAll(0, 1, 2, 3);
         amountBox.getSelectionModel().selectFirst();
         resourceAndAmount.getChildren().add(amountBox);
         return resourceAndAmount;
     }
-
-    public HBox getAllResources(){
+    /**
+     * 
+     * @return an HBox representing all the resources (the hand of the player).
+     */
+    public HBox getAllResources() {
         final HBox hand = new HBox();
         for (final ResourceType resource : ResourceType.values()) {
             hand.getChildren().add(new VBox(getResourceComboBoxAmount(resource)));

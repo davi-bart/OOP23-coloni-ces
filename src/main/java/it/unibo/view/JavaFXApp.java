@@ -2,20 +2,12 @@ package it.unibo.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,7 +23,6 @@ public class JavaFXApp extends Application {
     private final ResourcesView resouceView = new ResourcesView();
     private final TradeView tradeView = new TradeView();
     private static final int DEFAULT_HEIGHT = 350;
-    private static final double DEFAULT_RATEO = 0.1;
 
     /**
      * Start.
