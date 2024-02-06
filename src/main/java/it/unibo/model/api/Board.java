@@ -9,14 +9,4 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public interface Board {
 
-    /**
-     * generates the starting board.
-     */
-    void generateBoard();
-
-    /**
-     * get the tile positions.
-     * @return the list of the tile positions
-     */
-    List<Pair<Integer, Integer>> getTilePositions();
 }

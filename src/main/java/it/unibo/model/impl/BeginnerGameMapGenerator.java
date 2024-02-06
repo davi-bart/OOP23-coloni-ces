@@ -8,17 +8,17 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.common.TerrainType;
 import it.unibo.model.api.Board;
-import it.unibo.model.api.BoardGenerator;
+import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;
 
 /**
  * A generator which generates the suggested beginner's map set-up,
  * according to the official Catan's rules.
  */
-public final class BeginnerBoardGenerator implements BoardGenerator {
+public final class BeginnerGameMapGenerator implements GameMapGenerator {
 
     @Override
-    public Board generate() {
+    public Map<Pair<Integer, Integer>, Tile> generate() {
         final Map<Pair<Integer, Integer>, Tile> map = new HashMap<>();
         // CHECKSTYLE: MagicNumber OFF
         map.put(new ImmutablePair<>(0, 2), new TileImpl(TerrainType.MOUNTAIN, 10));
@@ -41,6 +41,6 @@ public final class BeginnerBoardGenerator implements BoardGenerator {
         map.put(new ImmutablePair<>(4, 3), new TileImpl(TerrainType.FIELD, 6));
         map.put(new ImmutablePair<>(4, 4), new TileImpl(TerrainType.PASTURE, 11));
         // CHECKSTYLE: MagicNumber ON
-        return new BoardImpl(map);
+        return map;
     }
 }

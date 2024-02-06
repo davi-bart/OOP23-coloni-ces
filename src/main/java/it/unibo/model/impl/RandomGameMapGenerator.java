@@ -12,29 +12,29 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.common.TerrainType;
 import it.unibo.model.api.Board;
-import it.unibo.model.api.BoardGenerator;
+import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;
 
 /**
- * A board generator which generates a random board.
+ * A generator which generates a random game map.
  */
-public final class RandomBoardGenerator implements BoardGenerator {
+public final class RandomGameMapGenerator implements GameMapGenerator {
 
     private final Random rng = new Random();
 
     @Override
-    public Board generate() {
+    public Map<Pair<Integer, Integer>, Tile> generate() {
         final Map<Pair<Integer, Integer>, Tile> map = new HashMap<>();
         final List<Pair<Integer, Integer>> positions = getPositions();
         final List<TerrainType> terrains = getTerrains();
         final List<Integer> numbers = getNumbers();
 
-        // imposto come prima cosa la tassella con il deserto
+        // set the desert tile before starting in order to avoid taking a number
         final int desertPositionIndex = rng.nextInt(positions.size());
         map.put(positions.get(desertPositionIndex), new TileImpl(TerrainType.DESERT, -1));
         positions.remove(desertPositionIndex);
 
-        // prendo una terna posizione,terreno,numero da aggiungere alla mappa
+        // an entry is generated randomly selecting a triplet of position,terrain,number
         while (!positions.isEmpty()) {
             final int remaining = positions.size();
             final TerrainType terrain = terrains.get(rng.nextInt(remaining));
@@ -45,13 +45,13 @@ public final class RandomBoardGenerator implements BoardGenerator {
             positions.remove(position);
             numbers.remove(number);
         }
-        return new BoardImpl(map);
+        return map;
     }
 
     private List<Integer> getNumbers() {
         final List<Integer> out = new ArrayList<>();
         final Map<Integer, Integer> numberOccurrences = new HashMap<>();
-        // il 7 compare 0 volte, l'1 e il 12 compaiono 1 volta, gli altri 2 volte
+        // 7 occurs 0 times, 1 and 12 occur 1 times, the others 2 times
         final int minNumber = 2;
         final int maxNumber = 12;
         final List<Integer> unusedNumbers = List.of(7);
@@ -70,7 +70,7 @@ public final class RandomBoardGenerator implements BoardGenerator {
         final List<Pair<Integer, Integer>> out = new ArrayList<>();
         final Map<Integer, Integer> indexes = new HashMap<>();
         final int minX = 0, maxX = 4, maxY = 4;
-        // indice y di partenza di ogni riga ((0,2),(1,1),(2,0),(3,1),(4,2))
+        // starting column index for each row
         for (int i = minX; i <= maxX; i++) {
             indexes.put(i, Math.abs(maxY / 2 - i));
         }

@@ -6,15 +6,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.model.api.Board;
-import it.unibo.model.api.BoardGenerator;
-import it.unibo.model.impl.RandomBoardGenerator;
+import it.unibo.model.api.GameMapGenerator;
+import it.unibo.model.impl.BoardImpl;
+import it.unibo.model.impl.RandomGameMapGenerator;
 
 /**
  * Test for a trader istance.
  */
 // CHECKSTYLE: MagicNumber OFF
 class RandomBoardGeneratorTest {
-    private BoardGenerator generator;
+    private GameMapGenerator generator;
     private Board board;
 
     /**
@@ -22,8 +23,8 @@ class RandomBoardGeneratorTest {
      */
     @BeforeEach
     void init() {
-        this.generator = new RandomBoardGenerator();
-        this.board = generator.generate();
+        this.generator = new RandomGameMapGenerator();
+        this.board = new BoardImpl(generator);
     }
 
     /**
