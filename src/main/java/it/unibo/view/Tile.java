@@ -56,7 +56,7 @@ public class Tile extends Group {
         super.getChildren().addAll(this.roads);
         super.getChildren().addAll(this.properties);
         if (terrainType != TerrainType.DESERT) {
-            Text numberText = new Text(x, y, String.valueOf(number));
+            final Text numberText = new Text(x, y, String.valueOf(number));
             numberText.setFont(new Font(25));
             super.getChildren().add(numberText);
         }

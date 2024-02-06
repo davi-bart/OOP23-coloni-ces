@@ -12,7 +12,7 @@ public final class GameManagerImpl implements GameManager {
     /**
      * Constructor of GameManagerImpl.
      */
-    public GameManagerImpl() { 
+    public GameManagerImpl() {
         this.board = new BoardImpl(new BeginnerGameMapGenerator());
     }
 
@@ -32,5 +32,4 @@ public final class GameManagerImpl implements GameManager {
     public Board getBoard() {
         return this.board;
     }
-
 }
