@@ -32,5 +32,4 @@ public final class GameManagerImpl implements GameManager {
     public Board getBoard() {
         return this.board;
     }
-
 }

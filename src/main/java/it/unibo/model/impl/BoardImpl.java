@@ -32,7 +32,7 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public int getTileNumber(Pair<Integer, Integer> pos) {
+    public int getTileNumber(final Pair<Integer, Integer> pos) {
         if (!this.board.containsKey(pos)) {
             throw new IllegalArgumentException("Position not found");
         }
@@ -40,7 +40,7 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public TerrainType getTileTerrainType(Pair<Integer, Integer> pos) {
+    public TerrainType getTileTerrainType(final Pair<Integer, Integer> pos) {
         if (!this.board.containsKey(pos)) {
             throw new IllegalArgumentException("Position not found");
         }

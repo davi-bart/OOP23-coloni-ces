@@ -55,9 +55,11 @@ public class Tile extends Group {
         super.getChildren().add(hexagon);
         super.getChildren().addAll(this.roads);
         super.getChildren().addAll(this.properties);
-        Text numberText = new Text(x, y, String.valueOf(number));
-        numberText.setFont(new Font(25));
-        super.getChildren().add(numberText);
+        if (terrainType != TerrainType.DESERT) {
+            final Text numberText = new Text(x, y, String.valueOf(number));
+            numberText.setFont(new Font(25));
+            super.getChildren().add(numberText);
+        }
     }
 
     /**

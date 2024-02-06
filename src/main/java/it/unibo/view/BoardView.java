@@ -2,7 +2,6 @@ package it.unibo.view;
 
 import java.io.IOException;
 
-import it.unibo.common.TerrainType;
 import it.unibo.controller.api.BoardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;

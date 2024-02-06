@@ -29,12 +29,12 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public int getTileNumber(Pair<Integer, Integer> pos) {
+    public int getTileNumber(final Pair<Integer, Integer> pos) {
         return this.board.getTileNumber(pos);
     }
 
     @Override
-    public TerrainType getTileTerrainType(Pair<Integer, Integer> pos) {
+    public TerrainType getTileTerrainType(final Pair<Integer, Integer> pos) {
         return this.board.getTileTerrainType(pos);
     }
 }
