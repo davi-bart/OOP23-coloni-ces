@@ -2,8 +2,10 @@ package it.unibo.model.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -67,15 +69,23 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
 
     private List<Pair<Integer, Integer>> getPositions() {
         final List<Pair<Integer, Integer>> out = new ArrayList<>();
-        final Map<Integer, Integer> indexes = new HashMap<>();
-        final int minX = 0, maxX = 4, maxY = 4;
-        // starting column index for each row
-        for (int i = minX; i <= maxX; i++) {
-            indexes.put(i, Math.abs(maxY / 2 - i));
+        // each row is mapped to start and end indexes (0,3->(i,0),(i,1),(i,2),(i,3))
+        final Map<Integer, Pair<Integer, Integer>> indexes = new HashMap<>();
+        final int minCols = 3, maxCols = 5, minX = 0, maxX = 4;
+        final Iterator<Integer> it = IntStream.iterate(0, i -> i + 1).limit(2 * (maxCols - minCols) + 1).iterator();
+        while (it.hasNext()) {
+            Integer value = it.next();
+            final int index = value;
+            if (value > maxCols - minCols) {
+                value = 2 * (maxCols - minCols) - value;
+            }
+            value += minCols;
+            indexes.put(index, new ImmutablePair<>(index == minX || index == maxX ? 1 : 0, value));
         }
-        for (int i = minX; i <= maxX; i++) {
-            for (int j = indexes.get(i); j <= maxY; j++) {
-                out.add(new ImmutablePair<>(i, j));
+        for (Entry<Integer, Pair<Integer, Integer>> entry : indexes.entrySet()) {
+            for (int i = entry.getValue().getLeft(); i <= entry.getValue().getRight(); i++) {
+                out.add(new ImmutablePair<>(entry.getKey(), i));
+                System.out.println(new ImmutablePair<>(entry.getKey(), i));
             }
         }
         return out;
