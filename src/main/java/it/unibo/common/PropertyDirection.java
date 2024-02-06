@@ -1,4 +1,4 @@
-package it.unibo.model.api;
+package it.unibo.common;
 
 /**
  * PropertyDirection.

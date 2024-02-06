@@ -15,7 +15,7 @@ public class Hexagon extends Polygon {
      * @param y      y coordinate of the center
      */
     public Hexagon(final double radius, final double x, final double y) {
-        for (final var point : Utility.getExagonCoordinates(radius, x, y)) {
+        for (final var point : Utility.getHexagonCoordinates(radius, x, y)) {
             this.getPoints().addAll(point.getKey(), point.getValue());
         }
         this.setFill(Paint.valueOf("RED"));

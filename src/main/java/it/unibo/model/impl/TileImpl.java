@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import it.unibo.common.PropertyDirection;
+import it.unibo.common.RoadDirection;
 import it.unibo.common.TerrainType;
 import it.unibo.model.api.Property;
-import it.unibo.model.api.PropertyDirection;
 import it.unibo.model.api.Road;
 import it.unibo.model.api.Tile;
-import it.unibo.model.api.RoadDirection;
 
 /**
  * Tile implementation.

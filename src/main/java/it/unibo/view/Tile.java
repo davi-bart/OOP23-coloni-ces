@@ -37,7 +37,7 @@ public class Tile extends Group {
         final int strokeWidth = 5;
         // TODO: pay attention that roads and properties are in commond with nearby
         // tiles.
-        final var points = Utility.getExagonCoordinates(radius * (2 - Math.sqrt(3) / 2), x, y);
+        final var points = Utility.getHexagonCoordinates(radius * (2 - Math.sqrt(3) / 2), x, y);
         for (final var point : points) {
             properties.add(new Circle(point.getKey(), point.getValue(), radius * (1 - Math.sqrt(3) / 2),
                     Paint.valueOf("GREEN")));
