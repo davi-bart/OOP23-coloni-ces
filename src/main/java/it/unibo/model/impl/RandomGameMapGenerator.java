@@ -80,12 +80,12 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
                 value = 2 * (maxCols - minCols) - value;
             }
             value += minCols;
-            indexes.put(index, new ImmutablePair<>(index == minX || index == maxX ? 1 : 0, value));
+            indexes.put(index, new ImmutablePair<>(index == minX || index == maxX ? 1 : 0,
+                    index == minX || index == maxX ? value + 1 : value));
         }
         for (Entry<Integer, Pair<Integer, Integer>> entry : indexes.entrySet()) {
-            for (int i = entry.getValue().getLeft(); i <= entry.getValue().getRight(); i++) {
+            for (int i = entry.getValue().getLeft(); i < entry.getValue().getRight(); i++) {
                 out.add(new ImmutablePair<>(entry.getKey(), i));
-                System.out.println(new ImmutablePair<>(entry.getKey(), i));
             }
         }
         return out;
