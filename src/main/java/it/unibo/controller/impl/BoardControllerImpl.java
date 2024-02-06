@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import it.unibo.common.TerrainType;
 import it.unibo.controller.api.BoardController;
 import it.unibo.model.api.Board;
 
@@ -25,5 +26,15 @@ public final class BoardControllerImpl implements BoardController {
     @Override
     public List<Pair<Integer, Integer>> getTilePositions() {
         return this.board.getTilePositions();
+    }
+
+    @Override
+    public int getTileNumber(Pair<Integer, Integer> pos) {
+        return this.board.getTileNumber(pos);
+    }
+
+    @Override
+    public TerrainType getTileTerrainType(Pair<Integer, Integer> pos) {
+        return this.board.getTileTerrainType(pos);
     }
 }

@@ -11,6 +11,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -54,7 +55,9 @@ public class Tile extends Group {
         super.getChildren().add(hexagon);
         super.getChildren().addAll(this.roads);
         super.getChildren().addAll(this.properties);
-        super.getChildren().add(new Text(x, y, String.valueOf(number)));
+        Text numberText = new Text(x, y, String.valueOf(number));
+        numberText.setFont(new Font(25));
+        super.getChildren().add(numberText);
     }
 
     /**

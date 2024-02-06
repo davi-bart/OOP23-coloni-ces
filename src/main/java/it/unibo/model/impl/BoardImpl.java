@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.unibo.common.TerrainType;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;
@@ -28,5 +29,21 @@ public final class BoardImpl implements Board {
     @Override
     public List<Pair<Integer, Integer>> getTilePositions() {
         return this.board.keySet().stream().toList();
+    }
+
+    @Override
+    public int getTileNumber(Pair<Integer, Integer> pos) {
+        if (!this.board.containsKey(pos)) {
+            throw new IllegalArgumentException("Position not found");
+        }
+        return this.board.get(pos).getNumber();
+    }
+
+    @Override
+    public TerrainType getTileTerrainType(Pair<Integer, Integer> pos) {
+        if (!this.board.containsKey(pos)) {
+            throw new IllegalArgumentException("Position not found");
+        }
+        return this.board.get(pos).getTerrainType();
     }
 }
