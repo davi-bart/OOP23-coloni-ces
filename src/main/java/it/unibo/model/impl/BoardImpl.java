@@ -1,6 +1,7 @@
 package it.unibo.model.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import it.unibo.model.api.Board;
@@ -22,5 +23,10 @@ public final class BoardImpl implements Board {
      */
     public BoardImpl(final GameMapGenerator generator) {
         this.board = new HashMap<>(generator.generate());
+    }
+
+    @Override
+    public List<Pair<Integer, Integer>> getTilePositions() {
+        return this.board.keySet().stream().toList();
     }
 }

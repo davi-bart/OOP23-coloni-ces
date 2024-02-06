@@ -5,6 +5,13 @@ package it.unibo.model.api;
  */
 public interface GameManager {
     /**
+     * Get the board.
+     * 
+     * @return the board
+     */
+    Board getBoard();
+
+    /**
      * Starts the game.
      */
     void start();
