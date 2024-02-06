@@ -23,7 +23,7 @@ public final class BoardImpl implements Board {
      * @param generator the map generator
      */
     public BoardImpl(final GameMapGenerator generator) {
-        this.board = new HashMap<>(generator.generate());
+        this.board = generator.generate();
     }
 
     @Override
