@@ -35,7 +35,10 @@ dependencies {
 
     // Example library: Guava. Add what you need (and remove Guava if you don't use it)
     // implementation("com.google.guava:guava:28.1-jre")
-    implementation("org.apache.commons:commons-lang3:3.0")
+    val apacheCommonsVersion = "3.14.0"
+    implementation("org.apache.commons:commons-lang3:$apacheCommonsVersion")
+    val jsonVersion = "20231013"
+    implementation("org.json:json:$jsonVersion")
 
     // JavaFX: comment out if you do not need them
     val javaFxVersion = 15
