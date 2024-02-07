@@ -1,7 +1,11 @@
 package it.unibo.view;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import it.unibo.common.RoadDirection;
+import it.unibo.common.TileCoordinates;
 import it.unibo.controller.api.BoardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -12,6 +16,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 
 /**
  * Board view.
@@ -37,14 +42,20 @@ public final class BoardView {
         final StackPane pane = FXMLLoader.load(ClassLoader.getSystemResource("layouts/board.fxml"));
         // add the exagons and properties/road to the board
         final Group group = new Group();
+        final List<Pair<TileCoordinates, RoadDirection>> addedRoads = new ArrayList<>();
         this.boardController.getTilePositions().forEach(coords -> {
             final int row = coords.getRow();
             final int col = coords.getCol();
             final double xPos = col * 2 * HEXAGON_RADIUS + (row % 2 != 0 ? HEXAGON_RADIUS : 0);
             final double yPos = row * HEXAGON_RADIUS * Math.sqrt(3);
-            final Group tile = new Tile(HEXAGON_RADIUS,
+            final Tile tile = new Tile(HEXAGON_RADIUS,
                     xPos, yPos, boardController.getTileTerrainType(coords),
-                    boardController.getTileNumber(coords));
+                    boardController.getTileNumber(coords),
+                    (direction) -> {
+                        final Pair<TileCoordinates, RoadDirection> otherTile = Utility.otherRoard(coords, direction);
+                        return !addedRoads.contains(otherTile);
+                    });
+            tile.getAddedRoadDirections().forEach(direction -> addedRoads.add(new Pair<>(coords, direction)));
             group.getChildren().add(tile);
         });
         pane.getChildren().add(0, group);
