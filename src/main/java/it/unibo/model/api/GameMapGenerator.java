@@ -2,7 +2,7 @@ package it.unibo.model.api;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.Pair;
+import it.unibo.common.TileCoordinates;
 
 /**
  * Game map generator.
@@ -14,6 +14,6 @@ public interface GameMapGenerator {
      * 
      * @return the generated map
      */
-    Map<Pair<Integer, Integer>, Tile> generate();
+    Map<TileCoordinates, Tile> generate();
 
 }

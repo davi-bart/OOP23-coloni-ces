@@ -2,9 +2,8 @@ package it.unibo.model.api;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import it.unibo.common.TerrainType;
+import it.unibo.common.TileCoordinates;
 
 /**
  * Game board.
@@ -15,7 +14,7 @@ public interface Board {
      * 
      * @return the list of the tile positions
      */
-    List<Pair<Integer, Integer>> getTilePositions();
+    List<TileCoordinates> getTilePositions();
 
     /**
      * get the tile number.
@@ -23,7 +22,7 @@ public interface Board {
      * @param pos the position of the tile
      * @return the number of the tile
      */
-    int getTileNumber(Pair<Integer, Integer> pos);
+    int getTileNumber(TileCoordinates pos);
 
     /**
      * get the tile terrain type.
@@ -31,5 +30,5 @@ public interface Board {
      * @param pos the position of the tile
      * @return the terrain type of the tile
      */
-    TerrainType getTileTerrainType(Pair<Integer, Integer> pos);
+    TerrainType getTileTerrainType(TileCoordinates pos);
 }

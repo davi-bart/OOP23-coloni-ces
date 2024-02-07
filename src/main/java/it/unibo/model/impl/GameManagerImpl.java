@@ -13,7 +13,7 @@ public final class GameManagerImpl implements GameManager {
      * Constructor of GameManagerImpl.
      */
     public GameManagerImpl() {
-        this.board = new BoardImpl(new RandomGameMapGenerator());
+        this.board = new BoardImpl(new BeginnerGameMapGenerator());
     }
 
     @Override

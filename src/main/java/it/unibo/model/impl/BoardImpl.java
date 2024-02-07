@@ -4,17 +4,16 @@ import java.util.List;
 import java.util.Map;
 
 import it.unibo.common.TerrainType;
+import it.unibo.common.TileCoordinates;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Board implementation.
  */
 public final class BoardImpl implements Board {
-    private final Map<Pair<Integer, Integer>, Tile> board;
+    private final Map<TileCoordinates, Tile> board;
 
     /**
      * Constructor of the board.
@@ -26,12 +25,12 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public List<Pair<Integer, Integer>> getTilePositions() {
+    public List<TileCoordinates> getTilePositions() {
         return this.board.keySet().stream().toList();
     }
 
     @Override
-    public int getTileNumber(final Pair<Integer, Integer> pos) {
+    public int getTileNumber(final TileCoordinates pos) {
         if (!this.board.containsKey(pos)) {
             throw new IllegalArgumentException("Position not found");
         }
@@ -39,7 +38,7 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public TerrainType getTileTerrainType(final Pair<Integer, Integer> pos) {
+    public TerrainType getTileTerrainType(final TileCoordinates pos) {
         if (!this.board.containsKey(pos)) {
             throw new IllegalArgumentException("Position not found");
         }

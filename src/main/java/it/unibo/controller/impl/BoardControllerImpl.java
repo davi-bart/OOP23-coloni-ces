@@ -2,9 +2,8 @@ package it.unibo.controller.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import it.unibo.common.TerrainType;
+import it.unibo.common.TileCoordinates;
 import it.unibo.controller.api.BoardController;
 import it.unibo.model.api.Board;
 
@@ -24,17 +23,17 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public List<Pair<Integer, Integer>> getTilePositions() {
+    public List<TileCoordinates> getTilePositions() {
         return this.board.getTilePositions();
     }
 
     @Override
-    public int getTileNumber(final Pair<Integer, Integer> pos) {
+    public int getTileNumber(final TileCoordinates pos) {
         return this.board.getTileNumber(pos);
     }
 
     @Override
-    public TerrainType getTileTerrainType(final Pair<Integer, Integer> pos) {
+    public TerrainType getTileTerrainType(final TileCoordinates pos) {
         return this.board.getTileTerrainType(pos);
     }
 }

@@ -9,10 +9,9 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import it.unibo.common.TerrainType;
+import it.unibo.common.TileCoordinates;
+import it.unibo.common.TileCoordinatesImpl;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;
 
@@ -24,9 +23,9 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
     private final Random rng = new Random();
 
     @Override
-    public Map<Pair<Integer, Integer>, Tile> generate() {
-        final Map<Pair<Integer, Integer>, Tile> map = new HashMap<>();
-        final List<Pair<Integer, Integer>> positions = getPositions();
+    public Map<TileCoordinates, Tile> generate() {
+        final Map<TileCoordinates, Tile> map = new HashMap<>();
+        final List<TileCoordinates> positions = getPositions();
         final List<TerrainType> terrains = getTerrains();
         final List<Integer> numbers = getNumbers();
 
@@ -39,7 +38,7 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
         while (!positions.isEmpty()) {
             final int remaining = positions.size();
             final TerrainType terrain = terrains.get(rng.nextInt(remaining));
-            final Pair<Integer, Integer> position = positions.get(rng.nextInt(remaining));
+            final TileCoordinates position = positions.get(rng.nextInt(remaining));
             final Integer number = numbers.get(rng.nextInt(remaining));
             map.put(position, new TileImpl(terrain, number));
             terrains.remove(terrain);
@@ -67,10 +66,10 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
         return out;
     }
 
-    private List<Pair<Integer, Integer>> getPositions() {
-        final List<Pair<Integer, Integer>> out = new ArrayList<>();
+    private List<TileCoordinates> getPositions() {
+        final List<TileCoordinates> out = new ArrayList<>();
         // each row is mapped to start and end indexes (0,3->(i,0),(i,1),(i,2),(i,3))
-        final Map<Integer, Pair<Integer, Integer>> indexes = new HashMap<>();
+        final Map<Integer, TileCoordinates> indexes = new HashMap<>();
         final int minCols = 3, maxCols = 5, minX = 0, maxX = 4;
         final Iterator<Integer> it = IntStream.iterate(0, i -> i + 1).limit(2 * (maxCols - minCols) + 1).iterator();
         while (it.hasNext()) {
@@ -80,12 +79,12 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
                 value = 2 * (maxCols - minCols) - value;
             }
             value += minCols;
-            indexes.put(index, new ImmutablePair<>(index == minX || index == maxX ? 1 : 0,
+            indexes.put(index, new TileCoordinatesImpl(index == minX || index == maxX ? 1 : 0,
                     index == minX || index == maxX ? value + 1 : value));
         }
-        for (Entry<Integer, Pair<Integer, Integer>> entry : indexes.entrySet()) {
-            for (int i = entry.getValue().getLeft(); i < entry.getValue().getRight(); i++) {
-                out.add(new ImmutablePair<>(entry.getKey(), i));
+        for (Entry<Integer, TileCoordinates> entry : indexes.entrySet()) {
+            for (int i = entry.getValue().getRow(); i < entry.getValue().getCol(); i++) {
+                out.add(new TileCoordinatesImpl(entry.getKey(), i));
             }
         }
         return out;

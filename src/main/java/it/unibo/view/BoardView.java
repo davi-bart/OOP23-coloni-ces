@@ -38,17 +38,14 @@ public final class BoardView {
         // add the exagons and properties/road to the board
         final Group group = new Group();
         this.boardController.getTilePositions().forEach(coords -> {
-            final int row = coords.getKey();
-            final int col = coords.getValue();
+            final int row = coords.getRow();
+            final int col = coords.getCol();
             final double xPos = col * 2 * HEXAGON_RADIUS + (row % 2 != 0 ? HEXAGON_RADIUS : 0);
             final double yPos = row * HEXAGON_RADIUS * Math.sqrt(3);
             final Group tile = new Tile(HEXAGON_RADIUS,
                     xPos, yPos, boardController.getTileTerrainType(coords),
                     boardController.getTileNumber(coords));
             group.getChildren().add(tile);
-            // group.getChildren().add(tile.getHexagon());
-            // group.getChildren().addAll(tile.getProperties());
-            // group.getChildren().addAll(tile.getRoads());
         });
         pane.getChildren().add(0, group);
         pane.setBorder(new Border(new BorderStroke(Color.BLACK,
