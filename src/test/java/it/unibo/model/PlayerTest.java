@@ -28,9 +28,11 @@ class PlayerTest {
     @Test
     void testAddVictoryPoints() {
         assertEquals(0, player.getVictoryPoints());
-        player.incrementVictoryPoints(2);
-        assertEquals(2, player.getVictoryPoints());
-        player.incrementVictoryPoints(1);
-        assertEquals(3, player.getVictoryPoints());
+        player.incrementVictoryPoints();
+        assertEquals(1, player.getVictoryPoints());
+        player.incrementVictoryPoints();
+        player.incrementVictoryPoints();
+        player.incrementVictoryPoints();
+        assertEquals(4, player.getVictoryPoints());
     }
 }

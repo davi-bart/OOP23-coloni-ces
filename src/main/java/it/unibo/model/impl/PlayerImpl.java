@@ -20,16 +20,13 @@ public final class PlayerImpl implements Player {
     }
 
     @Override
-    public void incrementVictoryPoints(final int amount) {
-        if (amount > 0) {
-            victoryPoints += amount;
-        } else {
-            throw new IllegalArgumentException("amount must be positive");
-        }
+    public void incrementVictoryPoints() {
+        victoryPoints++;
     }
 
     @Override
     public int getVictoryPoints() {
         return this.victoryPoints;
     }
+
 }

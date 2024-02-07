@@ -5,12 +5,9 @@ package it.unibo.model.api;
  */
 public interface Player {
     /**
-     * Increment the victory point of the player by the given amount.
-     * 
-     * @param amount
-     * 
+     * Increment the victory points of the player.
      */
-    void incrementVictoryPoints(int amount);
+    void incrementVictoryPoints();
 
     /**
      * Get the victory points of the player.
