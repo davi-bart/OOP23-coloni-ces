@@ -40,9 +40,10 @@ public final class BoardView {
         this.boardController.getTilePositions().forEach(coords -> {
             final int row = coords.getKey();
             final int col = coords.getValue();
+            final double xPos = col * 2 * HEXAGON_RADIUS + (row % 2 != 0 ? HEXAGON_RADIUS : 0);
+            final double yPos = row * HEXAGON_RADIUS * Math.sqrt(3);
             final Group tile = new Tile(HEXAGON_RADIUS,
-                    col * 2 * HEXAGON_RADIUS + (row % 2 != 0 ? HEXAGON_RADIUS : 0),
-                    row * HEXAGON_RADIUS * Math.sqrt(3), boardController.getTileTerrainType(coords),
+                    xPos, yPos, boardController.getTileTerrainType(coords),
                     boardController.getTileNumber(coords));
             group.getChildren().add(tile);
             // group.getChildren().add(tile.getHexagon());

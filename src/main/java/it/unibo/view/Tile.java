@@ -20,9 +20,11 @@ import javafx.scene.text.Text;
  */
 public class Tile extends Group {
     static final int SIDES = 6;
-
-    private final List<Line> roads = new ArrayList<>();
-    private final List<Circle> properties = new ArrayList<>();
+    private final double radius;
+    private final double x;
+    private final double y;
+    private final TerrainType terrainType;
+    private final int number;
 
     /**
      * Constructor.
@@ -34,40 +36,59 @@ public class Tile extends Group {
      * @param number      number on the tile
      */
     public Tile(final double radius, final double x, final double y, final TerrainType terrainType, final int number) {
-        final int strokeWidth = 5;
+        this.radius = radius;
+        this.x = x;
+        this.y = y;
+        this.terrainType = terrainType;
+        this.number = number;
         // TODO: pay attention that roads and properties are in commond with nearby
         // tiles.
+
+        super.getChildren().add(calcHexagon());
+        super.getChildren().addAll(this.calcProperties());
+        super.getChildren().addAll(this.calcRoads());
+        if (terrainType != TerrainType.DESERT) {
+            super.getChildren().add(this.getNumberText());
+        }
+    }
+
+    private Hexagon calcHexagon() {
+        final Hexagon hexagon = new Hexagon(radius, x, y);
+        hexagon.setFill(
+                new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
+        return hexagon;
+    }
+
+    private List<Circle> calcProperties() {
+        final List<Circle> properties = new ArrayList<>();
         final var points = Utility.getHexagonCoordinates(radius * (2 - Math.sqrt(3) / 2), x, y);
         for (final var point : points) {
             properties.add(new Circle(point.getKey(), point.getValue(), radius * (1 - Math.sqrt(3) / 2),
                     Paint.valueOf("GREEN")));
         }
-        for (int i = 0; i < SIDES; i++) {
-            final var point = points.get(i);
-            final var nextPoint = points.get((i + 1) % SIDES);
-            final Line road = new Line(point.getKey(), point.getValue(), nextPoint.getKey(), nextPoint.getValue());
-            road.setStrokeWidth(strokeWidth);
-            roads.add(road);
-        }
-        final Hexagon hexagon = new Hexagon(radius, x, y);
-        hexagon.setFill(
-                new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
-        super.getChildren().add(hexagon);
-        super.getChildren().addAll(this.roads);
-        super.getChildren().addAll(this.properties);
-        if (terrainType != TerrainType.DESERT) {
-            final Text numberText = new Text(x, y, String.valueOf(number));
-            final int fontSize = 25;
-            numberText.setFont(new Font(fontSize));
-            super.getChildren().add(numberText);
-        }
+        return properties;
     }
 
-    /**
-     * @return the roads
-     */
-    public List<Line> getRoads() {
-        return List.copyOf(this.roads);
+    private List<Line> calcRoads() {
+        final int strokeWidth = 5;
+        final List<Line> roadsList = new ArrayList<>();
+        final var roads = Utility.getRoadCoordinates(radius * (2 - Math.sqrt(3) / 2), x, y);
+
+        roads.entrySet().stream().forEach(entry -> {
+            final var endpoints = entry.getValue();
+            final var start = endpoints.getKey();
+            final var end = endpoints.getValue();
+            final Line line = new Line(start.getKey(), start.getValue(), end.getKey(), end.getValue());
+            line.setStrokeWidth(strokeWidth);
+            roadsList.add(line);
+        });
+        return roadsList;
     }
 
+    private Text getNumberText() {
+        final int fontSize = 25;
+        final Text numberText = new Text(x, y, String.valueOf(number));
+        numberText.setFont(new Font(fontSize));
+        return numberText;
+    }
 }
