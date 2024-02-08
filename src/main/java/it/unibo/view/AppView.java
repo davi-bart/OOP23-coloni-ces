@@ -73,23 +73,4 @@ public class AppView {
 
         return scene;
     }
-
-    /**
-     * Initialize the player hand, showing its resources.
-     * 
-     * @param player
-     * @param name
-     * @throws IOException
-     */
-    public final void initPlayers(final VBox player, final String name) throws IOException {
-        final Label nameLabel = new Label(name);
-        final HBox playerHand = new HBox();
-        final int amount = 0;
-
-        for (final ResourceType resource : ResourceType.values()) {
-            playerHand.getChildren().add(resouceView.getResourceLabelAmount(resource, amount));
-        }
-        player.getChildren().add(nameLabel);
-        player.getChildren().add(playerHand);
-    }
 }

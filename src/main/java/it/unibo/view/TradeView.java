@@ -26,17 +26,11 @@ public final class TradeView {
     public Button getTradeButton() {
 
         final Button tradeButton = new Button("Scambio");
-        tradeButton.setOnMouseClicked(event -> {
-            try {
-                showTradeStage();
-            } catch (final IOException e) {
-                System.err.print(e.getMessage());
-            }
-        });
+        tradeButton.setOnMouseClicked(event -> showTradeStage());
         return tradeButton;
     }
 
-    private void showTradeStage() throws IOException {
+    private void showTradeStage() {
         final Stage newStage = new Stage();
         final VBox comp = new VBox();
         final HBox bigContainer = new HBox(comp);
@@ -46,6 +40,8 @@ public final class TradeView {
         final Label givinResources = new Label("Seleziona risorse da dare");
         final Label recivingResources = new Label("Seleziona risorse da ricevere");
         final Button acceptingTrade = new Button("Accetta scambio");
+
+        acceptingTrade.setOnMouseClicked(event -> newStage.close());
 
         newStage.setTitle("Finestra di scambio");
         comp.getChildren().add(givinResources);

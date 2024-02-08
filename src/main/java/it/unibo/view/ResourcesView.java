@@ -12,7 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-
 /**
  * ResourceView class.
  */
@@ -30,6 +29,7 @@ public final class ResourcesView {
         resourceCard.getChildren().add(image);
         return resourceCard;
     }
+
     /**
      * @param resource
      * @return the image view of the needed resource.
@@ -38,10 +38,12 @@ public final class ResourcesView {
     public VBox getResourceBasic(final ResourceType resource) {
         return generateResource(resource);
     }
+
     /**
      * @param resource
      * @param amount
-     * @return the image view of the needed resource with a label representing the amount.
+     * @return the image view of the needed resource with a label representing the
+     *         amount.
      * @throws IOException
      */
     public VBox getResourceLabelAmount(final ResourceType resource, final int amount) {
@@ -51,6 +53,7 @@ public final class ResourcesView {
         resourceAndAmount.getChildren().add(amountLabel);
         return resourceAndAmount;
     }
+
     /**
      * @param resource
      * @return the image view of the needed resource with a combobox.
@@ -59,12 +62,16 @@ public final class ResourcesView {
     public VBox getResourceComboBoxAmount(final ResourceType resource) {
         final ComboBox<Integer> amountBox = new ComboBox<>();
         final VBox resourceAndAmount = new VBox(generateResource(resource));
-
+        /*
+         * TODO: inserire i volri massimi di ogni risorsa in base a quanti ne ha il
+         * giocatore
+         */
         amountBox.getItems().addAll(0, 1, 2, 3);
         amountBox.getSelectionModel().selectFirst();
         resourceAndAmount.getChildren().add(amountBox);
         return resourceAndAmount;
     }
+
     /**
      * 
      * @return an HBox representing all the resources (the hand of the player).
