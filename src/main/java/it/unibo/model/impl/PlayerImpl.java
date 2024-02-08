@@ -13,11 +13,12 @@ import it.unibo.model.api.ResourceOwner;
 public final class PlayerImpl implements Player, ResourceOwner {
     private int victoryPoints;
     private final String name;
-    private final int defaultValue;  
-/**
- * 
- * @return player's name.
- */
+    private final int defaultValue;
+
+    /**
+     * 
+     * @return player's name.
+     */
     public String getName() {
         return name;
     }
@@ -32,10 +33,11 @@ public final class PlayerImpl implements Player, ResourceOwner {
         this.defaultValue = 0;
         victoryPoints = 0;
     }
+
     /**
      * Creates a Player.
      * 
-     * @param name the name of the player
+     * @param name         the name of the player
      * @param defaultValue the dafault value of the initial resources
      */
     public PlayerImpl(final String name, final int defaultValue) {
