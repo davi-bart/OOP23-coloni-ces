@@ -1,4 +1,8 @@
-package it.unibo.common;
+package it.unibo.common.impl;
+
+import it.unibo.common.api.RoadDirection;
+import it.unibo.common.api.RoadPosition;
+import it.unibo.common.api.TileCoordinates;
 
 /**
  * Implementation of RoadPosition.

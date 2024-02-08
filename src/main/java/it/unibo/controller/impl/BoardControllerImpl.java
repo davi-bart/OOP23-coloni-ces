@@ -2,8 +2,8 @@ package it.unibo.controller.impl;
 
 import java.util.List;
 
-import it.unibo.common.TerrainType;
-import it.unibo.common.TileCoordinates;
+import it.unibo.common.api.TerrainType;
+import it.unibo.common.api.TileCoordinates;
 import it.unibo.controller.api.BoardController;
 import it.unibo.model.api.Board;
 

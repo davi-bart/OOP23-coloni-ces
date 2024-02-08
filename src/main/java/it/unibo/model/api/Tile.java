@@ -2,9 +2,9 @@ package it.unibo.model.api;
 
 import java.util.Optional;
 
-import it.unibo.common.PropertyDirection;
-import it.unibo.common.RoadDirection;
-import it.unibo.common.TerrainType;
+import it.unibo.common.api.PropertyDirection;
+import it.unibo.common.api.RoadDirection;
+import it.unibo.common.api.TerrainType;
 
 /**
  * Hexagonal tile.

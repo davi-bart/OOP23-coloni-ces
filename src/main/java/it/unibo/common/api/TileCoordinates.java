@@ -1,4 +1,4 @@
-package it.unibo.common;
+package it.unibo.common.api;
 
 /**
  * Tile coordinates.

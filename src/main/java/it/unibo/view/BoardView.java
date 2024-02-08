@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.common.RoadPosition;
-import it.unibo.common.RoadPositionImpl;
+import it.unibo.common.api.RoadPosition;
+import it.unibo.common.impl.RoadPositionImpl;
 import it.unibo.controller.api.BoardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;

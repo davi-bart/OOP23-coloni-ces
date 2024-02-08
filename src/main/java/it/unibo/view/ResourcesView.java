@@ -3,6 +3,7 @@ package it.unibo.view;
 import java.io.IOException;
 import java.util.Locale;
 
+import it.unibo.common.api.ResourceType;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -10,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import it.unibo.common.ResourceType;
 
 
 /**

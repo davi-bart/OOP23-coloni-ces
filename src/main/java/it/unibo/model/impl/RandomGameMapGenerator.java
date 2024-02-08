@@ -9,9 +9,9 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import it.unibo.common.TerrainType;
-import it.unibo.common.TileCoordinates;
-import it.unibo.common.TileCoordinatesImpl;
+import it.unibo.common.api.TerrainType;
+import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.impl.TileCoordinatesImpl;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;
 

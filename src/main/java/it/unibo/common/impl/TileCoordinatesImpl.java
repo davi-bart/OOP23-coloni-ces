@@ -1,9 +1,11 @@
-package it.unibo.common;
+package it.unibo.common.impl;
 
 import java.util.Objects;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+
+import it.unibo.common.api.TileCoordinates;
 
 /**
  * Implementation of TileCoordinates.

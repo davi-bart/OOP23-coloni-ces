@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import it.unibo.common.ResourceType;
+import it.unibo.common.api.ResourceType;
 import it.unibo.model.api.ResourceManager;
 
 /**

@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.List;
 
-import it.unibo.common.ResourceType;
+import it.unibo.common.api.ResourceType;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.impl.MainControllerImpl;
 
