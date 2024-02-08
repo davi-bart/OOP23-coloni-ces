@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unibo.common.RoadDirection;
-import it.unibo.common.TileCoordinates;
+import it.unibo.common.api.RoadPosition;
+import it.unibo.common.impl.RoadPositionImpl;
 import it.unibo.controller.api.BoardController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -16,7 +16,6 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.util.Pair;
 
 /**
  * Board view.
@@ -42,7 +41,7 @@ public final class BoardView {
         final StackPane pane = FXMLLoader.load(ClassLoader.getSystemResource("layouts/board.fxml"));
         // add the exagons and properties/road to the board
         final Group group = new Group();
-        final List<Pair<TileCoordinates, RoadDirection>> addedRoads = new ArrayList<>();
+        final List<RoadPosition> addedRoads = new ArrayList<>();
         this.boardController.getTilePositions().forEach(coords -> {
             final int row = coords.getRow();
             final int col = coords.getCol();
@@ -52,10 +51,9 @@ public final class BoardView {
                     xPos, yPos, boardController.getTileTerrainType(coords),
                     boardController.getTileNumber(coords),
                     (direction) -> {
-                        final Pair<TileCoordinates, RoadDirection> otherTile = Utility.otherRoard(coords, direction);
-                        return !addedRoads.contains(otherTile);
+                        return !addedRoads.contains(new RoadPositionImpl(coords, direction));
                     });
-            tile.getAddedRoadDirections().forEach(direction -> addedRoads.add(new Pair<>(coords, direction)));
+            tile.getAddedRoadDirections().forEach(direction -> addedRoads.add(new RoadPositionImpl(coords, direction)));
             group.getChildren().add(tile);
         });
         pane.getChildren().add(0, group);

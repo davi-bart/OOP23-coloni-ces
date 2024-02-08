@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 
-import it.unibo.common.RoadDirection;
-import it.unibo.common.TerrainType;
+import it.unibo.common.api.RoadDirection;
+import it.unibo.common.api.TerrainType;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;

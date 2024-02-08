@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import it.unibo.common.PropertyDirection;
-import it.unibo.common.RoadDirection;
-import it.unibo.common.TerrainType;
+import it.unibo.common.api.PropertyDirection;
+import it.unibo.common.api.RoadDirection;
+import it.unibo.common.api.TerrainType;
 import it.unibo.model.api.Property;
 import it.unibo.model.api.Road;
 import it.unibo.model.api.Tile;
@@ -19,6 +19,7 @@ public final class TileImpl implements Tile {
     private final TerrainType terrainType;
     private final Map<RoadDirection, Road> roads = new HashMap<>();
     private final Map<PropertyDirection, Property> properties = new HashMap<>();
+    private boolean robberIsPresent = false;
 
     TileImpl(final TerrainType terrainType, final int number) {
         this.terrainType = terrainType;
@@ -43,6 +44,21 @@ public final class TileImpl implements Tile {
     @Override
     public TerrainType getTerrainType() {
         return this.terrainType;
+    }
+
+    @Override
+    public void addRobber() {
+        robberIsPresent = true;
+    }
+
+    @Override
+    public void removeRobber() {
+        robberIsPresent = false;
+    }
+
+    @Override
+    public boolean isRobberPresent() {
+        return robberIsPresent;
     }
 
 }

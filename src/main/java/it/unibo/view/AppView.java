@@ -9,8 +9,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.List;
 
-import it.unibo.common.ResourceType;
+import it.unibo.common.api.ResourceType;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.impl.MainControllerImpl;
 
@@ -25,12 +26,13 @@ public class AppView {
     private final ResourcesView resouceView = new ResourcesView();
     private final TradeView tradeView = new TradeView();
     private static final int DEFAULT_HEIGHT = 350;
+    private final List<String> players = List.of("Alex", "Lucone", "Monaco", "Dave");
 
     /**
      * Constructor of AppView.
      */
     public AppView() {
-        mainController = new MainControllerImpl();
+        mainController = new MainControllerImpl(players);
         boardView = new BoardView(mainController.getBoardController());
     }
 
@@ -67,10 +69,7 @@ public class AppView {
         leftSide.getChildren().add(playerHandAndTrade);
         rightSide.getChildren().add(costCard);
         rightSide.getChildren().add(bankVault);
-        rightSide.getChildren().add(new Label("Alex"));
-        rightSide.getChildren().add(new Label("Lucone"));
-        rightSide.getChildren().add(new Label("Monaco"));
-        rightSide.getChildren().add(new Label("Dave"));
+        players.forEach(name -> rightSide.getChildren().add(new Label(name)));
 
         return scene;
     }

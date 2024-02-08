@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import it.unibo.common.RoadDirection;
-import it.unibo.common.TileCoordinates;
-import it.unibo.common.TileCoordinatesImpl;
+import it.unibo.common.api.RoadDirection;
 import javafx.util.Pair;
 
 /**
@@ -19,7 +17,6 @@ public final class Utility {
     private Utility() {
     }
 
-    // TODO: check if we want to use javafx pairs.
     /**
      * returns the coordinates of a hexagon's vertices in clockwise order,
      * starting from the bottom one.
@@ -62,30 +59,4 @@ public final class Utility {
         return roads;
     }
 
-    /**
-     * returns the coordinates of the equivalent road of a given road.
-     * 
-     * @param tile
-     * @param road
-     * @return the equivalent road
-     */
-    static Pair<TileCoordinates, RoadDirection> otherRoard(final TileCoordinates tile, final RoadDirection road) {
-        final int colShift = tile.getRow() % 2;
-        return switch (road) {
-            case UPLEFT ->
-                new Pair<>(new TileCoordinatesImpl(tile.getRow() - 1, tile.getCol() - 1 + colShift),
-                        RoadDirection.DOWNRIGHT);
-            case LEFT -> new Pair<>(new TileCoordinatesImpl(tile.getRow(), tile.getCol() - 1), RoadDirection.RIGHT);
-            case DOWNLEFT ->
-                new Pair<>(new TileCoordinatesImpl(tile.getRow() + 1, tile.getCol() - 1 + colShift),
-                        RoadDirection.UPRIGHT);
-            case DOWNRIGHT ->
-                new Pair<>(new TileCoordinatesImpl(tile.getRow() + 1, tile.getCol() + colShift), RoadDirection.UPLEFT);
-            case RIGHT -> new Pair<>(new TileCoordinatesImpl(tile.getRow(), tile.getCol() + 1), RoadDirection.LEFT);
-            case UPRIGHT ->
-                new Pair<>(new TileCoordinatesImpl(tile.getRow() - 1, tile.getCol() + colShift),
-                        RoadDirection.DOWNLEFT);
-            default -> throw new IllegalArgumentException("Invalid road direction");
-        };
-    }
 }
