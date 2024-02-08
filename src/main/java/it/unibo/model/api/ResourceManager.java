@@ -11,52 +11,52 @@ import it.unibo.common.ResourceType;
 public interface ResourceManager {
 
     /**
-     * Add the given amount of the given resource to the given player.
+     * Add the given amount of the given resource to the given owner.
      * 
-     * @param name     player name
+     * @param owner    owner of the resources
      * @param resource resource type
      * @param amount   amount of resource
      */
-    void addResources(String name, ResourceType resource, int amount);
+    void addResources(ResourceOwner owner, ResourceType resource, int amount);
 
     /**
-     * Remove the given amount of the given resource to the given player.
+     * Remove the given amount of the given resource to the given owner.
      * 
-     * @param name     player name
+     * @param owner    owner of the resources
      * @param resource resource type
      * @param amount   amount of resource
      */
-    void removeResources(String name, ResourceType resource, int amount);
+    void removeResources(ResourceOwner owner, ResourceType resource, int amount);
 
     /**
-     * Get the amount of the given resource of the given player.
+     * Get the amount of the given resource of the given owner.
      * 
-     * @param name     player name
+     * @param owner    owner of the resources
      * @param resource resource type
      * @return the resource amount
      **/
-    int getResource(String name, ResourceType resource);
+    int getResource(ResourceOwner owner, ResourceType resource);
 
     /**
-     * Modify the resources of the players into the trade.
+     * Modify the resources of the owners into the trade.
      * 
-     * @param proposer          is the player that propose the trade
-     * @param accepter          is the player that accept the trade
+     * @param proposer          is the owner that propose the trade
+     * @param accepter          is the owner that accept the trade
      * @param givingResouces    are the resources that the proposer give to the
      *                          accepter
      * @param recivingResources are the resources that the accepter give to the
      *                          proposer
      */
-    void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> givingResouces,
+    void acceptTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> givingResouces,
             Map<ResourceType, Integer> recivingResources);
 
     /**
      * * Return if the given player can trade.
      * The player can trade if it has all the recivingResources.
      * 
-     * @param name              player name
+     * @param owner              owner 
      * @param recivingResources
      * @return true if the given player can trade, false otherwise
      */
-    boolean canTrade(String name, Map<ResourceType, Integer> recivingResources);
+    boolean canTrade(ResourceOwner owner, Map<ResourceType, Integer> recivingResources);
 }

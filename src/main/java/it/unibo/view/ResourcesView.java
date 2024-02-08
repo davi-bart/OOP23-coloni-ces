@@ -48,7 +48,6 @@ public final class ResourcesView {
         final Label amountLabel = new Label();
         final VBox resourceAndAmount = new VBox(generateResource(resource));
         amountLabel.setText(String.valueOf(amount));
-
         resourceAndAmount.getChildren().add(amountLabel);
         return resourceAndAmount;
     }

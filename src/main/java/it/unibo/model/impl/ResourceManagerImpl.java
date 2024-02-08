@@ -2,69 +2,56 @@ package it.unibo.model.impl;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import it.unibo.common.ResourceType;
 import it.unibo.model.api.ResourceManager;
+import it.unibo.model.api.ResourceOwner;
 
 /**
  * An implementation of ResourceManager.
  */
 public class ResourceManagerImpl implements ResourceManager {
 
-    private static final int DEFAUL_INIT_VALUE = 0;
-    private static final int DEFAUL_BANK_VALUE = 19;
-
-    private final Map<String, Map<ResourceType, Integer>> allEntityResources = new HashMap<>();
+    private final Map<ResourceOwner, Map<ResourceType, Integer>> allEntityResources = new HashMap<>();
 
     /**
-     * Create the ResourceManager from the list of the players.
+     * Create the ResourceManager from the list of the resource owner(such as players and bank).
      * 
-     * @param playersName
+     * @param resourceOwners 
      */
-    public ResourceManagerImpl(final List<String> playersName) {
-        for (final String name : playersName) {
-
-            final Map<ResourceType, Integer> currentPlayerResourceAmount = new HashMap<>();
-            for (final ResourceType resource : ResourceType.values()) {
-                currentPlayerResourceAmount.put(resource, Integer.valueOf(DEFAUL_INIT_VALUE));
-            }
-            allEntityResources.put(name.toLowerCase(Locale.US), currentPlayerResourceAmount);
-        }
-        final Map<ResourceType, Integer> bankAmount = new HashMap<>();
-        for (final ResourceType resource : ResourceType.values()) {
-            bankAmount.put(resource, Integer.valueOf(DEFAUL_BANK_VALUE));
-        }
-        allEntityResources.put("bank", bankAmount);
+    public ResourceManagerImpl(final List<ResourceOwner> resourceOwners) {
+        resourceOwners.forEach(ro -> allEntityResources.put(ro, ro.getDefaultResources()));
     }
 
     @Override
-    public final void addResources(final String name, final ResourceType resource, final int amount) {
+    public final void addResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
         if (amount > 0) {
-            allEntityResources.get(name).replace(resource, amount + allEntityResources.get(name).get(resource));
+            // allEntityResources.get(owner).replace(resource, amount + allEntityResources.get(owner).get(resource));
+            allEntityResources.get(owner).compute(resource, (k, v) -> v + amount);
         } else {
             throw new IllegalArgumentException("amount must be positive");
         }
     }
 
     @Override
-    public final void removeResources(final String name, final ResourceType resource, final int amount) {
-        if (allEntityResources.get(name).get(resource) >= amount) {
-            allEntityResources.get(name).replace(resource, allEntityResources.get(name).get(resource) - amount);
+    public final void removeResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
+        if (allEntityResources.get(owner).get(resource) >= amount) {
+            // allEntityResources.get(owner).replace(resource, allEntityResources.get(owner).get(resource) - amount);
+            allEntityResources.get(owner).compute(resource, (k, v) -> v - amount);
         } else {
             throw new IllegalArgumentException("amount must be minor than the total resource");
         }
     }
 
     @Override
-    public final int getResource(final String name, final ResourceType resource) {
-        return allEntityResources.get(name).get(resource);
+    public final int getResource(final ResourceOwner owner, final ResourceType resource) {
+        return allEntityResources.get(owner).get(resource);
     }
 
     @Override
-    public final void acceptTrade(final String proposer, final String accepter,
+    public final void acceptTrade(final ResourceOwner proposer, final ResourceOwner accepter,
             final Map<ResourceType, Integer> givingResouces,
             final Map<ResourceType, Integer> recivingResources) {
 
@@ -80,9 +67,9 @@ public class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public final boolean canTrade(final String name, final Map<ResourceType, Integer> tradeResource) {
+    public final boolean canTrade(final ResourceOwner owner, final Map<ResourceType, Integer> tradeResource) {
         for (final Entry<ResourceType, Integer> resource : tradeResource.entrySet()) {
-            if (resource.getValue() > getResource(name, resource.getKey())) {
+            if (resource.getValue() > getResource(owner, resource.getKey())) {
                 return false;
             }
         }
