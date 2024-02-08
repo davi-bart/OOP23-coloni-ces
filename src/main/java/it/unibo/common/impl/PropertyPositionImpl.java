@@ -7,10 +7,19 @@ import it.unibo.common.api.TileCoordinates;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PropertyPositionImpl implements PropertyPosition {
+/**
+ * Implementation of PropertyPosition.
+ */
+public final class PropertyPositionImpl implements PropertyPosition {
     private final TileCoordinates coordinates;
     private final PropertyDirection direction;
 
+    /**
+     * Constructor.
+     * 
+     * @param coordinates of the tile
+     * @param direction   of the property
+     */
     public PropertyPositionImpl(final TileCoordinates coordinates, final PropertyDirection direction) {
         this.coordinates = coordinates;
         this.direction = direction;
@@ -27,6 +36,11 @@ public class PropertyPositionImpl implements PropertyPosition {
     }
 
     @Override
+    public int hashCode() {
+        return this.coordinates.hashCode() ^ this.direction.hashCode();
+    }
+
+    @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
@@ -38,7 +52,7 @@ public class PropertyPositionImpl implements PropertyPosition {
             return false;
         }
 
-        List<PropertyPositionImpl> equalPositions = this.otherProperties();
+        final List<PropertyPositionImpl> equalPositions = this.otherProperties();
         equalPositions.add(this);
         final PropertyPositionImpl other = (PropertyPositionImpl) obj;
         return equalPositions.stream().anyMatch(
@@ -52,7 +66,7 @@ public class PropertyPositionImpl implements PropertyPosition {
      */
     private List<PropertyPositionImpl> otherProperties() {
         final List<PropertyPositionImpl> positions = new ArrayList<>();
-        PropertyPositionImpl nextPos = otherProperty();
+        final PropertyPositionImpl nextPos = otherProperty();
         positions.add(nextPos);
         positions.add(nextPos.otherProperty());
         return positions;

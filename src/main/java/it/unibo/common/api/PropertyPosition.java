@@ -1,5 +1,8 @@
 package it.unibo.common.api;
 
+/**
+ * Interface for the position of a property.
+ */
 public interface PropertyPosition {
     /**
      * @return the coordinates of the tile
@@ -10,5 +13,4 @@ public interface PropertyPosition {
      * @return the direction of the property
      */
     PropertyDirection getDirection();
-    
 }

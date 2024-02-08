@@ -60,7 +60,8 @@ public final class Utility {
         return roads;
     }
 
-    static Map<PropertyDirection, Pair<Double, Double> > getPropertyCoordinates(final double radius, final double x, final double y) {
+    static Map<PropertyDirection, Pair<Double, Double>> getPropertyCoordinates(final double radius, final double x,
+            final double y) {
         final Map<PropertyDirection, Pair<Double, Double>> properties = new HashMap<>();
         final List<Pair<Double, Double>> hexagonCoordinates = getHexagonCoordinates(radius, x, y);
 

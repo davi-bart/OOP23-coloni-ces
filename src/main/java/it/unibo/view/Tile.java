@@ -34,12 +34,13 @@ public class Tile extends Group {
     /**
      * Constructor.
      * 
-     * @param radius        radius
-     * @param x             x coordinate of the center
-     * @param y             y coordinate of the center
-     * @param terrainType   terrain type
-     * @param number        number on the tile
-     * @param shouldAddRoad predicate to check if a road should be added
+     * @param radius            radius
+     * @param x                 x coordinate of the center
+     * @param y                 y coordinate of the center
+     * @param terrainType       terrain type
+     * @param number            number on the tile
+     * @param shouldAddRoad     predicate to check if a road should be added
+     * @param shouldAddProperty predicate to check if a property should be added
      */
     public Tile(final double radius, final double x, final double y, final TerrainType terrainType, final int number,
             final Predicate<RoadDirection> shouldAddRoad, final Predicate<PropertyDirection> shouldAddProperty) {
