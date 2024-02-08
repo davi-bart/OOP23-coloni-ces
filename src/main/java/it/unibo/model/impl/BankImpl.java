@@ -3,7 +3,7 @@ package it.unibo.model.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.unibo.common.ResourceType;
+import it.unibo.common.api.ResourceType;
 import it.unibo.model.api.ResourceOwner;
 /**
  * Implementation of the bank.

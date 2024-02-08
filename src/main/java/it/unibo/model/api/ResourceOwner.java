@@ -3,7 +3,7 @@ package it.unibo.model.api;
 
 import java.util.Map;
 
-import it.unibo.common.ResourceType;
+import it.unibo.common.api.ResourceType;
 /**
  * Resource owner.
  */
