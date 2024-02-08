@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.common.api.ResourceType;
 import it.unibo.model.api.ResourceManager;
+import it.unibo.model.api.ResourceOwner;
+import it.unibo.model.impl.PlayerImpl;
 import it.unibo.model.impl.ResourceManagerImpl;
 
 // CHECKSTYLE: MagicNumber OFF
@@ -21,10 +23,10 @@ import it.unibo.model.impl.ResourceManagerImpl;
 class ResourceManagerTest {
 
     private ResourceManager resourceManager;
-    private static final String PLAYER1 = "luca";
-    private static final String PLAYER2 = "andrea";
-    private static final String PLAYER3 = "alex";
-    private static final String PLAYER4 = "sbara";
+    private static final ResourceOwner PLAYER1 = new PlayerImpl("luca");
+    private static final ResourceOwner PLAYER2 = new PlayerImpl("andrea");
+    private static final ResourceOwner PLAYER3 = new PlayerImpl("alex");
+    private static final ResourceOwner PLAYER4 = new PlayerImpl("sbara");
 
     @BeforeEach
     void init() {
