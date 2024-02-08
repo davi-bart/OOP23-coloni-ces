@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.unibo.common.api.PropertyDirection;
 import it.unibo.common.api.RoadDirection;
 import javafx.util.Pair;
 
@@ -57,6 +58,22 @@ public final class Utility {
         roads.put(RoadDirection.DOWNRIGHT, new Pair<>(hexagonCoordinates.get(5), hexagonCoordinates.get(0)));
         // CHECKSTYLE: MagicNumber ON
         return roads;
+    }
+
+    static Map<PropertyDirection, Pair<Double, Double>> getPropertyCoordinates(final double radius, final double x,
+            final double y) {
+        final Map<PropertyDirection, Pair<Double, Double>> properties = new HashMap<>();
+        final List<Pair<Double, Double>> hexagonCoordinates = getHexagonCoordinates(radius, x, y);
+
+        // CHECKSTYLE: MagicNumber OFF
+        properties.put(PropertyDirection.DOWN, hexagonCoordinates.get(0));
+        properties.put(PropertyDirection.DOWNLEFT, hexagonCoordinates.get(1));
+        properties.put(PropertyDirection.UPLEFT, hexagonCoordinates.get(2));
+        properties.put(PropertyDirection.UP, hexagonCoordinates.get(3));
+        properties.put(PropertyDirection.UPRIGHT, hexagonCoordinates.get(4));
+        properties.put(PropertyDirection.DOWNRIGHT, hexagonCoordinates.get(5));
+        // CHECKSTYLE: MagicNumber ON
+        return properties;
     }
 
 }

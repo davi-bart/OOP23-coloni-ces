@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Implementation of RoadPosition.
  */
-public class RoadPositionImpl implements RoadPosition {
+public final class RoadPositionImpl implements RoadPosition {
     private final TileCoordinates coordinates;
     private final RoadDirection direction;
 
@@ -36,6 +36,11 @@ public class RoadPositionImpl implements RoadPosition {
     }
 
     @Override
+    public int hashCode() {
+        return this.coordinates.hashCode() ^ this.direction.hashCode();
+    }
+
+    @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
@@ -47,7 +52,7 @@ public class RoadPositionImpl implements RoadPosition {
             return false;
         }
 
-        List<RoadPositionImpl> equalPositions = new ArrayList<>();
+        final List<RoadPositionImpl> equalPositions = new ArrayList<>();
         equalPositions.add(this);
         equalPositions.add(this.otherRoad());
         final RoadPositionImpl other = (RoadPositionImpl) obj;

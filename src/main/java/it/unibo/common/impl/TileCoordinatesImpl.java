@@ -51,9 +51,4 @@ public final class TileCoordinatesImpl implements TileCoordinates {
         final TileCoordinatesImpl other = (TileCoordinatesImpl) obj;
         return this.coordinates.equals(other.coordinates);
     }
-
-    @Override
-    public String toString() {
-        return "TileCoordinatesImpl [coordinates=" + coordinates + "]";
-    }
 }

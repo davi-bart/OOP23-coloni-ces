@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Predicate;
 
+import it.unibo.common.api.PropertyDirection;
 import it.unibo.common.api.RoadDirection;
 import it.unibo.common.api.TerrainType;
 import javafx.scene.Group;
@@ -28,19 +29,21 @@ public class Tile extends Group {
     private final TerrainType terrainType;
     private final int number;
     private final List<RoadDirection> addedRoadDirections = new ArrayList<>();
+    private final List<PropertyDirection> addedPropertyDirections = new ArrayList<>();
 
     /**
      * Constructor.
      * 
-     * @param radius      radius
-     * @param x           x coordinate of the center
-     * @param y           y coordinate of the center
-     * @param terrainType terrain type
-     * @param number      number on the tile
-     * @param shouldAddRoad predicate to check if a road should be added
+     * @param radius            radius
+     * @param x                 x coordinate of the center
+     * @param y                 y coordinate of the center
+     * @param terrainType       terrain type
+     * @param number            number on the tile
+     * @param shouldAddRoad     predicate to check if a road should be added
+     * @param shouldAddProperty predicate to check if a property should be added
      */
     public Tile(final double radius, final double x, final double y, final TerrainType terrainType, final int number,
-            final Predicate<RoadDirection> shouldAddRoad) {
+            final Predicate<RoadDirection> shouldAddRoad, final Predicate<PropertyDirection> shouldAddProperty) {
         this.radius = radius;
         this.x = x;
         this.y = y;
@@ -51,7 +54,7 @@ public class Tile extends Group {
 
         super.getChildren().add(calcHexagon());
         super.getChildren().addAll(this.calcRoads(shouldAddRoad));
-        super.getChildren().addAll(this.calcProperties());
+        super.getChildren().addAll(this.calcProperties(shouldAddProperty));
         if (terrainType != TerrainType.DESERT) {
             super.getChildren().add(this.getNumberText());
         }
@@ -64,22 +67,26 @@ public class Tile extends Group {
         return hexagon;
     }
 
-    private List<Circle> calcProperties() {
+    private List<Circle> calcProperties(final Predicate<PropertyDirection> shouldAddProperty) {
         final List<Circle> properties = new ArrayList<>();
-        final var points = Utility.getHexagonCoordinates(radius * (2 - Math.sqrt(3) / 2), x, y);
-        for (final var point : points) {
+        Utility.getPropertyCoordinates(radius * (2 - Math.sqrt(3) / 2), x, y).entrySet().stream().forEach(entry -> {
+            final var direction = entry.getKey();
+            if (!shouldAddProperty.test(direction)) {
+                return;
+            }
+            final var point = entry.getValue();
             properties.add(new Circle(point.getKey(), point.getValue(), radius * (1 - Math.sqrt(3) / 2),
                     Paint.valueOf("GREEN")));
-        }
+            this.addedPropertyDirections.add(direction);
+        });
         return properties;
     }
 
     private List<Line> calcRoads(final Predicate<RoadDirection> shouldAddRoad) {
         final int strokeWidth = 5;
         final List<Line> roadsList = new ArrayList<>();
-        final var roads = Utility.getRoadCoordinates(radius * (2 - Math.sqrt(3) / 2), x, y);
 
-        roads.entrySet().stream().forEach(entry -> {
+        Utility.getRoadCoordinates(radius * (2 - Math.sqrt(3) / 2), x, y).entrySet().stream().forEach(entry -> {
             final var direction = entry.getKey();
             if (!shouldAddRoad.test(direction)) {
                 return;
@@ -104,9 +111,19 @@ public class Tile extends Group {
 
     /**
      * get list of added road directions.
+     * 
      * @return list of added road directions
      */
     public List<RoadDirection> getAddedRoadDirections() {
         return List.copyOf(this.addedRoadDirections);
+    }
+
+    /**
+     * get list of added property directions.
+     * 
+     * @return list of added property directions
+     */
+    public List<PropertyDirection> getAddedPropertyDirections() {
+        return List.copyOf(this.addedPropertyDirections);
     }
 }
