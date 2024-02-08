@@ -4,6 +4,9 @@ import it.unibo.common.api.RoadDirection;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TileCoordinates;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Implementation of RoadPosition.
  */
@@ -43,12 +46,13 @@ public class RoadPositionImpl implements RoadPosition {
         if (getClass() != obj.getClass()) {
             return false;
         }
+
+        List<RoadPositionImpl> equalPositions = new ArrayList<>();
+        equalPositions.add(this);
+        equalPositions.add(this.otherRoad());
         final RoadPositionImpl other = (RoadPositionImpl) obj;
-        if (this.coordinates.equals(other.coordinates) && this.direction.equals(other.direction)) {
-            return true;
-        }
-        final RoadPositionImpl otherRoad = this.otherRoad();
-        return other.coordinates.equals(otherRoad.getCoordinates()) && other.direction.equals(otherRoad.getDirection());
+        return equalPositions.stream().anyMatch(
+                position -> position.direction == other.direction && position.coordinates.equals(other.coordinates));
     }
 
     /**
