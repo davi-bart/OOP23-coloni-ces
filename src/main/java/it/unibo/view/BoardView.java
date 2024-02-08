@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.RoadPosition;
+import it.unibo.common.impl.PropertyPositionImpl;
 import it.unibo.common.impl.RoadPositionImpl;
 import it.unibo.controller.api.BoardController;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +44,7 @@ public final class BoardView {
         // add the exagons and properties/road to the board
         final Group group = new Group();
         final List<RoadPosition> addedRoads = new ArrayList<>();
+        final List<PropertyPosition> addedProperties = new ArrayList<>();
         this.boardController.getTilePositions().forEach(coords -> {
             final int row = coords.getRow();
             final int col = coords.getCol();
@@ -52,8 +55,12 @@ public final class BoardView {
                     boardController.getTileNumber(coords),
                     (direction) -> {
                         return !addedRoads.contains(new RoadPositionImpl(coords, direction));
+                    }, (direction) -> {
+                        return !addedProperties.contains(new PropertyPositionImpl(coords, direction));
                     });
             tile.getAddedRoadDirections().forEach(direction -> addedRoads.add(new RoadPositionImpl(coords, direction)));
+            tile.getAddedPropertyDirections()
+                    .forEach(direction -> addedProperties.add(new PropertyPositionImpl(coords, direction)));
             group.getChildren().add(tile);
         });
         pane.getChildren().add(0, group);
