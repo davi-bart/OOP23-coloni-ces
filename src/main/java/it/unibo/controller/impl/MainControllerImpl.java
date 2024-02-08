@@ -15,7 +15,9 @@ public final class MainControllerImpl implements MainController {
     private final BoardController boardController;
 
     /**
-     * Constructor of MainControllerImpl.
+     * Constructor of the controller.
+     * 
+     * @param players list of players' names
      */
     public MainControllerImpl(final List<String> players) {
         this.gameManager = new GameManagerImpl(players);

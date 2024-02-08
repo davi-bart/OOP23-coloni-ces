@@ -82,7 +82,7 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
             indexes.put(index, new TileCoordinatesImpl(index == minX || index == maxX ? 1 : 0,
                     index == minX || index == maxX ? value + 1 : value));
         }
-        for (Entry<Integer, TileCoordinates> entry : indexes.entrySet()) {
+        for (final Entry<Integer, TileCoordinates> entry : indexes.entrySet()) {
             for (int i = entry.getValue().getRow(); i < entry.getValue().getCol(); i++) {
                 out.add(new TileCoordinatesImpl(entry.getKey(), i));
             }
