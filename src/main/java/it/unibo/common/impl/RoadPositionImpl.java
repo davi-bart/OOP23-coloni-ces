@@ -47,7 +47,7 @@ public class RoadPositionImpl implements RoadPosition {
         if (this.coordinates.equals(other.coordinates) && this.direction.equals(other.direction)) {
             return true;
         }
-        final RoadPositionImpl otherRoad = otherRoard();
+        final RoadPositionImpl otherRoad = this.otherRoad();
         return other.coordinates.equals(otherRoad.getCoordinates()) && other.direction.equals(otherRoad.getDirection());
     }
 
@@ -56,7 +56,7 @@ public class RoadPositionImpl implements RoadPosition {
      * 
      * @return the equivalent RoadPosition
      */
-    private RoadPositionImpl otherRoard() {
+    private RoadPositionImpl otherRoad() {
         final int colShift = coordinates.getRow() % 2;
         return switch (this.direction) {
             case UPLEFT ->
