@@ -16,7 +16,13 @@ public final class ResourceControllerImpl implements ResourceController {
     private final ResourceManager resourceManager;
     private final ResourceOwner bank;
 
-    public ResourceControllerImpl(ResourceManager resourceManager, ResourceOwner bank) {
+    /**
+     * Constructor of resource controller.
+     * 
+     * @param resourceManager
+     * @param bank
+     */
+    public ResourceControllerImpl(final ResourceManager resourceManager, final ResourceOwner bank) {
         this.resourceManager = resourceManager;
         this.bank = bank;
     }

@@ -11,8 +11,8 @@ import it.unibo.model.api.TurnManager;
  */
 public final class TurnManagerImpl implements TurnManager {
 
-    private int currentTurn = 0;
-    private List<Player> playerList = new ArrayList<>();
+    private int currentTurn;
+    private final List<Player> playerList;
 
     /**
      * constructor of TurnManager.
@@ -20,7 +20,8 @@ public final class TurnManagerImpl implements TurnManager {
      * @param players list of players
      */
     public TurnManagerImpl(final List<Player> players) {
-        this.playerList = players;
+        this.playerList = new ArrayList<>(players);
+        currentTurn = 0;
         setRandomOrder();
     }
 

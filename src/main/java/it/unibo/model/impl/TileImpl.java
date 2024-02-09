@@ -19,11 +19,12 @@ public final class TileImpl implements Tile {
     private final TerrainType terrainType;
     private final Map<RoadDirection, Road> roads = new HashMap<>();
     private final Map<PropertyDirection, Property> properties = new HashMap<>();
-    private boolean robberIsPresent = false;
+    private boolean robberIsPresent;
 
     TileImpl(final TerrainType terrainType, final int number) {
         this.terrainType = terrainType;
         this.number = number;
+        this.removeRobber();
     }
 
     @Override

@@ -34,9 +34,7 @@ public interface ResourceController {
     boolean canTrade(ResourceOwner owner, Map<ResourceType, Integer> recivingResources);
 
     /**
-     * Get the bank.
-     * 
-     * @return
+     * @return the bank
      */
     ResourceOwner getBank();
 }
