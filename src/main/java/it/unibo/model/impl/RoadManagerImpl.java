@@ -10,7 +10,10 @@ import it.unibo.model.api.Player;
 import it.unibo.model.api.Road;
 import it.unibo.model.api.RoadManager;
 
-public class RoadManagerImpl implements RoadManager {
+/**
+ * Road manager implementation.
+ */
+public final class RoadManagerImpl implements RoadManager {
 
     private final List<Road> roads = new ArrayList<>();
 

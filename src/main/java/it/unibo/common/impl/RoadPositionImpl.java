@@ -66,6 +66,7 @@ public final class RoadPositionImpl implements RoadPosition {
         return equalPositions;
     }
 
+    @Override
     public RoadPositionImpl equivalent() {
         final int colShift = coordinates.getRow() % 2;
         return switch (this.direction) {
@@ -98,12 +99,12 @@ public final class RoadPositionImpl implements RoadPosition {
     }
 
     @Override
-    public boolean isNearby(RoadPosition other) {
+    public boolean isNearby(final RoadPosition other) {
         final List<RoadPosition> positions = new ArrayList<>();
         final List<RoadDirection> directions = List.of(RoadDirection.values());
         final RoadDirection otherDirection = equivalent().getDirection();
-        int currentDirectionIndex = directions.indexOf(this.direction);
-        int otherDirectionIndex = directions.indexOf(otherDirection);
+        final int currentDirectionIndex = directions.indexOf(this.direction);
+        final int otherDirectionIndex = directions.indexOf(otherDirection);
         positions.add(new RoadPositionImpl(this.coordinates,
                 directions.get((currentDirectionIndex - 1 + directions.size()) % directions.size())));
         positions.add(new RoadPositionImpl(this.coordinates,

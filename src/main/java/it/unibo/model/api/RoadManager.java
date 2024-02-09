@@ -4,6 +4,9 @@ import java.util.Set;
 
 import it.unibo.common.api.RoadPosition;
 
+/**
+ * Road manager.
+ */
 public interface RoadManager {
 
     /**

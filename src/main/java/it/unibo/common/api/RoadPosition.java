@@ -20,7 +20,8 @@ public interface RoadPosition {
     RoadPosition equivalent();
 
     /**
-     * @return whether the road at the current position is nearby a road at position
+     * @param other
+     * @return whether the road at the current position is nearby a road at
      *         {@code position}
      */
     boolean isNearby(RoadPosition other);

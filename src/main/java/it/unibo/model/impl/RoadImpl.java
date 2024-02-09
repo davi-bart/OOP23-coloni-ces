@@ -7,7 +7,7 @@ import it.unibo.model.api.Road;
 /**
  * Road implementation.
  */
-public class RoadImpl implements Road {
+public final class RoadImpl implements Road {
 
     private final RoadPosition position;
     private final Player owner;
@@ -16,6 +16,7 @@ public class RoadImpl implements Road {
      * Constructor of road implementation.
      * 
      * @param position the position of the road
+     * @param owner    the owner of the road
      */
     public RoadImpl(final RoadPosition position, final Player owner) {
         this.position = position;
