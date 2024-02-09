@@ -5,23 +5,14 @@ import java.util.Map;
 
 import it.unibo.common.api.ResourceType;
 import it.unibo.model.api.Player;
-import it.unibo.model.api.ResourceOwner;
 
 /**
  * Implementation of Player.
  */
-public final class PlayerImpl implements Player, ResourceOwner {
+public final class PlayerImpl implements Player {
     private int victoryPoints;
     private final String name;
     private final int defaultValue;
-
-    /**
-     * 
-     * @return player's name.
-     */
-    public String getName() {
-        return name;
-    }
 
     /**
      * Creates a Player.
@@ -63,5 +54,13 @@ public final class PlayerImpl implements Player, ResourceOwner {
             resources.put(resource, defaultValue);
         }
         return resources;
+    }
+
+    /**
+     * 
+     * @return player's name.
+     */
+    public String getName() {
+        return name;
     }
 }
