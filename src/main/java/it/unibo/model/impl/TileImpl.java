@@ -24,7 +24,7 @@ public final class TileImpl implements Tile {
     TileImpl(final TerrainType terrainType, final int number) {
         this.terrainType = terrainType;
         this.number = number;
-        this.removeRobber();
+        this.robberIsPresent = false;
     }
 
     @Override
@@ -49,11 +49,17 @@ public final class TileImpl implements Tile {
 
     @Override
     public void addRobber() {
+        if (isRobberPresent()) {
+            throw new IllegalStateException("Robber was already present on the tile.");
+        }
         robberIsPresent = true;
     }
 
     @Override
     public void removeRobber() {
+        if (!isRobberPresent()) {
+            throw new IllegalStateException("Robber was not present on the tile.");
+        }
         robberIsPresent = false;
     }
 
