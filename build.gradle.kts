@@ -41,7 +41,7 @@ dependencies {
     implementation("org.json:json:$jsonVersion")
     // JGraphT (graph data structures and algorithms)
     val jGraphTVersion = "1.5.2"
-    implementation("org.jgrapht:jgrapht:$jGraphVersion")
+    implementation("org.jgrapht:jgrapht-core:$jGraphTVersion")
 
     // JavaFX: comment out if you do not need them
     val javaFxVersion = 15
