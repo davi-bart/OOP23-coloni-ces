@@ -33,12 +33,15 @@ dependencies {
     // Suppressions for SpotBugs
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.8.3")
 
-    // Example library: Guava. Add what you need (and remove Guava if you don't use it)
-    // implementation("com.google.guava:guava:28.1-jre")
+    // Apache Commons (common data structures (such as Pair))
     val apacheCommonsVersion = "3.14.0"
     implementation("org.apache.commons:commons-lang3:$apacheCommonsVersion")
+    // JSON
     val jsonVersion = "20231013"
     implementation("org.json:json:$jsonVersion")
+    // JGraphT (graph data structures and algorithms)
+    val jGraphTVersion = "1.5.2"
+    implementation("org.jgrapht:jgrapht:$jGraphVersion")
 
     // JavaFX: comment out if you do not need them
     val javaFxVersion = 15
