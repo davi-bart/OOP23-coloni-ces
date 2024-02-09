@@ -12,4 +12,9 @@ public interface Road {
      */
     RoadPosition getPosition();
 
+    /**
+     * @return the owner of the road
+     */
+    Player getOwner();
+
 }
