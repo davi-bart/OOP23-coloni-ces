@@ -1,5 +1,7 @@
 package it.unibo.model.api;
 
+import java.util.List;
+
 /**
  * GameManager.
  */
@@ -22,5 +24,10 @@ public interface GameManager {
      * @return true if the game is over, false otherwise.
      */
     boolean isOver();
+
+    /**
+     * @return the list of the players
+     */
+    List<Player> getPlayers();
 
 }

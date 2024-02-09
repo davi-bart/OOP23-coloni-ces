@@ -32,17 +32,13 @@ public final class GameManagerImpl implements GameManager {
     }
 
     /**
+     * Game manager constructor.
+     * 
+     * @param playersNames list of players' names
      * @see GameManagerImpl#GameManagerImpl(GameMapGenerator, List, int)
      */
     public GameManagerImpl(final List<String> playersNames) {
         this(new BeginnerGameMapGenerator(), playersNames, DEFAULT_POINTS_TO_WIN);
-    }
-
-    /**
-     * @see GameManagerImpl#GameManagerImpl(GameMapGenerator, List, int)
-     */
-    public GameManagerImpl(final List<String> playersNames, final int pointsToWin) {
-        this(new BeginnerGameMapGenerator(), playersNames, pointsToWin);
     }
 
     @Override
@@ -59,5 +55,10 @@ public final class GameManagerImpl implements GameManager {
     @Override
     public Board getBoard() {
         return this.board;
+    }
+
+    @Override
+    public List<Player> getPlayers() {
+        return new ArrayList<>(this.players);
     }
 }
