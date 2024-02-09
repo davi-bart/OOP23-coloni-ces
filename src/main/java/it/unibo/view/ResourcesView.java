@@ -1,6 +1,5 @@
 package it.unibo.view;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import it.unibo.common.api.ResourceType;
@@ -33,7 +32,6 @@ public final class ResourcesView {
     /**
      * @param resource
      * @return the image view of the needed resource.
-     * @throws IOException
      */
     public VBox getResourceBasic(final ResourceType resource) {
         return generateResource(resource);
@@ -44,7 +42,6 @@ public final class ResourcesView {
      * @param amount
      * @return the image view of the needed resource with a label representing the
      *         amount.
-     * @throws IOException
      */
     public VBox getResourceLabelAmount(final ResourceType resource, final int amount) {
         final Label amountLabel = new Label();
@@ -57,7 +54,6 @@ public final class ResourcesView {
     /**
      * @param resource
      * @return the image view of the needed resource with a combobox.
-     * @throws IOException
      */
     public VBox getResourceComboBoxAmount(final ResourceType resource) {
         final ComboBox<Integer> amountBox = new ComboBox<>();
