@@ -37,7 +37,8 @@ public final class PropertyPositionImpl implements PropertyPosition {
 
     @Override
     public int hashCode() {
-        return this.coordinates.hashCode() ^ this.direction.hashCode();
+        return this.equalPositions().stream()
+                .mapToInt(position -> position.coordinates.hashCode() ^ position.direction.hashCode()).sum();
     }
 
     @Override
@@ -52,8 +53,7 @@ public final class PropertyPositionImpl implements PropertyPosition {
             return false;
         }
 
-        final List<PropertyPositionImpl> equalPositions = this.otherProperties();
-        equalPositions.add(this);
+        final List<PropertyPositionImpl> equalPositions = this.equalPositions();
         final PropertyPositionImpl other = (PropertyPositionImpl) obj;
         return equalPositions.stream().anyMatch(
                 position -> position.direction == other.direction && position.coordinates.equals(other.coordinates));
@@ -64,9 +64,10 @@ public final class PropertyPositionImpl implements PropertyPosition {
      * 
      * @return the equivalent positions
      */
-    private List<PropertyPositionImpl> otherProperties() {
+    private List<PropertyPositionImpl> equalPositions() {
         final List<PropertyPositionImpl> positions = new ArrayList<>();
         final PropertyPositionImpl nextPos = otherProperty();
+        positions.add(this);
         positions.add(nextPos);
         positions.add(nextPos.otherProperty());
         return positions;

@@ -37,7 +37,8 @@ public final class RoadPositionImpl implements RoadPosition {
 
     @Override
     public int hashCode() {
-        return this.coordinates.hashCode() ^ this.direction.hashCode();
+        return this.equalPositions().stream()
+                .mapToInt(position -> position.coordinates.hashCode() ^ position.direction.hashCode()).sum();
     }
 
     @Override
@@ -52,12 +53,17 @@ public final class RoadPositionImpl implements RoadPosition {
             return false;
         }
 
-        final List<RoadPositionImpl> equalPositions = new ArrayList<>();
-        equalPositions.add(this);
-        equalPositions.add(this.otherRoad());
+        final List<RoadPositionImpl> equalPositions = this.equalPositions();
         final RoadPositionImpl other = (RoadPositionImpl) obj;
         return equalPositions.stream().anyMatch(
                 position -> position.direction == other.direction && position.coordinates.equals(other.coordinates));
+    }
+
+    private List<RoadPositionImpl> equalPositions() {
+        final List<RoadPositionImpl> equalPositions = new ArrayList<>();
+        equalPositions.add(this);
+        equalPositions.add(this.otherRoad());
+        return equalPositions;
     }
 
     /**
