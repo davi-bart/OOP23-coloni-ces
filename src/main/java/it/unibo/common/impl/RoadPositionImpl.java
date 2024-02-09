@@ -62,16 +62,11 @@ public final class RoadPositionImpl implements RoadPosition {
     private List<RoadPositionImpl> equalPositions() {
         final List<RoadPositionImpl> equalPositions = new ArrayList<>();
         equalPositions.add(this);
-        equalPositions.add(this.otherRoad());
+        equalPositions.add(this.equivalent());
         return equalPositions;
     }
 
-    /**
-     * returns the RoadPosition equivalent to the current one.
-     * 
-     * @return the equivalent RoadPosition
-     */
-    private RoadPositionImpl otherRoad() {
+    public RoadPositionImpl equivalent() {
         final int colShift = coordinates.getRow() % 2;
         return switch (this.direction) {
             case UPLEFT ->
@@ -100,5 +95,25 @@ public final class RoadPositionImpl implements RoadPosition {
                         RoadDirection.DOWNLEFT);
             default -> throw new IllegalArgumentException("Invalid road direction");
         };
+    }
+
+    @Override
+    public boolean isNearby(RoadPosition other) {
+        final List<RoadPosition> positions = new ArrayList<>();
+        final List<RoadDirection> directions = List.of(RoadDirection.values());
+        final RoadDirection otherDirection = equivalent().getDirection();
+        int currentDirectionIndex = directions.indexOf(this.direction);
+        int otherDirectionIndex = directions.indexOf(otherDirection);
+        positions.add(new RoadPositionImpl(this.coordinates,
+                directions.get((currentDirectionIndex - 1 + directions.size()) % directions.size())));
+        positions.add(new RoadPositionImpl(this.coordinates,
+                directions.get((currentDirectionIndex + 1) % directions.size())));
+        positions.add(
+                new RoadPositionImpl(equivalent().coordinates,
+                        directions.get((otherDirectionIndex - 1 + directions.size()) % directions.size())));
+        positions.add(
+                new RoadPositionImpl(equivalent().coordinates,
+                        directions.get((otherDirectionIndex + 1) % directions.size())));
+        return positions.contains(other);
     }
 }

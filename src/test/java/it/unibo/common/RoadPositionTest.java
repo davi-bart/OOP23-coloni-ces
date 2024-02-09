@@ -1,5 +1,8 @@
 package it.unibo.common;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 
 import it.unibo.common.api.RoadDirection;
@@ -16,14 +19,25 @@ class RoadPositionTest {
     void testEquals() {
         final RoadPosition road1 = new RoadPositionImpl(new TileCoordinatesImpl(1, 1), RoadDirection.DOWNLEFT);
         final RoadPosition road2 = new RoadPositionImpl(new TileCoordinatesImpl(1, 1), RoadDirection.DOWNLEFT);
-        assert road1.equals(road2);
+        assertTrue(road1.equals(road2));
         final RoadPosition road3 = new RoadPositionImpl(new TileCoordinatesImpl(1, 2), RoadDirection.UPLEFT);
-        assert !road1.equals(road3);
+        assertFalse(road1.equals(road3));
         final RoadPosition road4 = new RoadPositionImpl(new TileCoordinatesImpl(0, 2), RoadDirection.DOWNRIGHT);
-        assert road3.equals(road4);
+        assertTrue(road3.equals(road4));
         final RoadPosition road5 = new RoadPositionImpl(new TileCoordinatesImpl(2, 1), RoadDirection.UPRIGHT);
-        assert road1.equals(road5);
-        assert !road3.equals(road5);
+        assertTrue(road1.equals(road5));
+        assertFalse(road3.equals(road5));
+    }
+
+    @Test
+    void testEquivalent() {
+        final RoadPosition road1 = new RoadPositionImpl(new TileCoordinatesImpl(0, 1), RoadDirection.DOWNLEFT);
+        final RoadPosition near1 = new RoadPositionImpl(new TileCoordinatesImpl(1, 1), RoadDirection.UPLEFT);
+        final RoadPosition near2 = new RoadPositionImpl(new TileCoordinatesImpl(1, 0), RoadDirection.RIGHT);
+        final RoadPosition notNear1 = new RoadPositionImpl(new TileCoordinatesImpl(0, 0), RoadDirection.LEFT);
+        assertTrue(road1.isNearby(near1));
+        assertTrue(road1.isNearby(near2));
+        assertFalse(road1.isNearby(notNear1));
     }
 }
 
