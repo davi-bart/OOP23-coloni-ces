@@ -32,4 +32,11 @@ public interface ResourceController {
      * @return true if the given player can trade, false otherwise.
      */
     boolean canTrade(ResourceOwner owner, Map<ResourceType, Integer> recivingResources);
+
+    /**
+     * Get the bank.
+     * 
+     * @return
+     */
+    ResourceOwner getBank();
 }

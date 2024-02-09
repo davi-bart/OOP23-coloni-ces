@@ -10,4 +10,11 @@ public interface MainController {
      * @return the board controller
      */
     BoardController getBoardController();
+
+    /**
+     * Get the resource controller.
+     * 
+     * @return the resource controller
+     */
+    ResourceController getResourceController();
 }

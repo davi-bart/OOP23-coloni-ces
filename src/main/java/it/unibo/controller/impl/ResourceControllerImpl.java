@@ -3,22 +3,23 @@ package it.unibo.controller.impl;
 import java.util.Map;
 import java.util.HashMap;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import it.unibo.common.api.ResourceType;
 import it.unibo.controller.api.ResourceController;
 import it.unibo.model.api.ResourceManager;
 import it.unibo.model.api.ResourceOwner;
-import it.unibo.model.impl.ResourceManagerImpl;
 
 /**
  * Resource controller implementation.
  */
 public final class ResourceControllerImpl implements ResourceController {
 
-    private final List<ResourceOwner> owners = new ArrayList<>();
-    private final ResourceManager resourceManager = new ResourceManagerImpl(owners);
+    private final ResourceManager resourceManager;
+    private final ResourceOwner bank;
+
+    public ResourceControllerImpl(ResourceManager resourceManager, ResourceOwner bank) {
+        this.resourceManager = resourceManager;
+        this.bank = bank;
+    }
 
     @Override
     public Map<ResourceType, Integer> getOwnerResources(final ResourceOwner owner) {
@@ -37,5 +38,10 @@ public final class ResourceControllerImpl implements ResourceController {
     @Override
     public boolean canTrade(final ResourceOwner owner, final Map<ResourceType, Integer> recivingResources) {
         return resourceManager.canTrade(owner, recivingResources);
+    }
+
+    @Override
+    public ResourceOwner getBank() {
+        return this.bank;
     }
 }
