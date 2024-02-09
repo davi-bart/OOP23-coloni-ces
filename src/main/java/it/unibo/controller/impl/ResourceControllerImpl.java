@@ -17,25 +17,25 @@ import it.unibo.model.impl.ResourceManagerImpl;
  */
 public final class ResourceControllerImpl implements ResourceController {
 
-	final List<ResourceOwner> owners = new ArrayList<>();
-	final ResourceManager resourceManager = new ResourceManagerImpl(owners);
+    private final List<ResourceOwner> owners = new ArrayList<>();
+    private final ResourceManager resourceManager = new ResourceManagerImpl(owners);
 
-	@Override
-	public Map<ResourceType, Integer> getOwnerResources(final ResourceOwner owner) {
-		final Map<ResourceType, Integer> out = new HashMap<>();
-		for (final ResourceType resource : ResourceType.values()) {
-			out.put(resource, resourceManager.getResource(owner, resource));
-		}
-		return out;
-	}
+    @Override
+    public Map<ResourceType, Integer> getOwnerResources(final ResourceOwner owner) {
+        final Map<ResourceType, Integer> out = new HashMap<>();
+        for (final ResourceType resource : ResourceType.values()) {
+            out.put(resource, resourceManager.getResource(owner, resource));
+        }
+        return out;
+    }
 
-	@Override
-	public int getOwnerResourceAmount(final ResourceOwner owner, final ResourceType resource) {
-		return resourceManager.getResource(owner, resource);
-	}
+    @Override
+    public int getOwnerResourceAmount(final ResourceOwner owner, final ResourceType resource) {
+        return resourceManager.getResource(owner, resource);
+    }
 
-	@Override
-	public boolean canTrade(final ResourceOwner owner, final Map<ResourceType, Integer> recivingResources) {
-		return resourceManager.canTrade(owner, recivingResources);
-	}
+    @Override
+    public boolean canTrade(final ResourceOwner owner, final Map<ResourceType, Integer> recivingResources) {
+        return resourceManager.canTrade(owner, recivingResources);
+    }
 }
