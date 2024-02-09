@@ -54,9 +54,9 @@ public interface ResourceManager {
      * * Return if the given player can trade.
      * The player can trade if it has all the recivingResources.
      * 
-     * @param owner              owner 
+     * @param reciver           reciver
      * @param recivingResources
      * @return true if the given player can trade, false otherwise
      */
-    boolean canTrade(ResourceOwner owner, Map<ResourceType, Integer> recivingResources);
+    boolean canTrade(ResourceOwner reciver, Map<ResourceType, Integer> recivingResources);
 }

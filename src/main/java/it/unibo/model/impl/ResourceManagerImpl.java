@@ -17,9 +17,10 @@ public class ResourceManagerImpl implements ResourceManager {
     private final Map<ResourceOwner, Map<ResourceType, Integer>> allEntityResources = new HashMap<>();
 
     /**
-     * Create the ResourceManager from the list of the resource owner(such as players and bank).
+     * Create the ResourceManager from the list of the resource owner(such as
+     * players and bank).
      * 
-     * @param resourceOwners 
+     * @param resourceOwners
      */
     public ResourceManagerImpl(final List<ResourceOwner> resourceOwners) {
         resourceOwners.forEach(ro -> allEntityResources.put(ro, ro.getDefaultResources()));
@@ -28,7 +29,8 @@ public class ResourceManagerImpl implements ResourceManager {
     @Override
     public final void addResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
         if (amount > 0) {
-            // allEntityResources.get(owner).replace(resource, amount + allEntityResources.get(owner).get(resource));
+            // allEntityResources.get(owner).replace(resource, amount +
+            // allEntityResources.get(owner).get(resource));
             allEntityResources.get(owner).compute(resource, (k, v) -> v + amount);
         } else {
             throw new IllegalArgumentException("amount must be positive");
@@ -38,7 +40,8 @@ public class ResourceManagerImpl implements ResourceManager {
     @Override
     public final void removeResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
         if (allEntityResources.get(owner).get(resource) >= amount) {
-            // allEntityResources.get(owner).replace(resource, allEntityResources.get(owner).get(resource) - amount);
+            // allEntityResources.get(owner).replace(resource,
+            // allEntityResources.get(owner).get(resource) - amount);
             allEntityResources.get(owner).compute(resource, (k, v) -> v - amount);
         } else {
             throw new IllegalArgumentException("amount must be minor than the total resource");
@@ -67,9 +70,9 @@ public class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public final boolean canTrade(final ResourceOwner owner, final Map<ResourceType, Integer> tradeResource) {
+    public final boolean canTrade(final ResourceOwner reciver, final Map<ResourceType, Integer> tradeResource) {
         for (final Entry<ResourceType, Integer> resource : tradeResource.entrySet()) {
-            if (resource.getValue() > getResource(owner, resource.getKey())) {
+            if (resource.getValue() > getResource(reciver, resource.getKey())) {
                 return false;
             }
         }
