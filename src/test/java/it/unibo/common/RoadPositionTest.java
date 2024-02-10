@@ -1,6 +1,8 @@
 package it.unibo.common;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -19,14 +21,14 @@ class RoadPositionTest {
     void testEquals() {
         final RoadPosition road1 = new RoadPositionImpl(new TileCoordinatesImpl(1, 1), RoadDirection.DOWNLEFT);
         final RoadPosition road2 = new RoadPositionImpl(new TileCoordinatesImpl(1, 1), RoadDirection.DOWNLEFT);
-        assertTrue(road1.equals(road2));
+        assertEquals(road1, road2);
         final RoadPosition road3 = new RoadPositionImpl(new TileCoordinatesImpl(1, 2), RoadDirection.UPLEFT);
-        assertFalse(road1.equals(road3));
+        assertNotEquals(road1, road3);
         final RoadPosition road4 = new RoadPositionImpl(new TileCoordinatesImpl(0, 2), RoadDirection.DOWNRIGHT);
-        assertTrue(road3.equals(road4));
+        assertEquals(road3, road4);
         final RoadPosition road5 = new RoadPositionImpl(new TileCoordinatesImpl(2, 1), RoadDirection.UPRIGHT);
-        assertTrue(road1.equals(road5));
-        assertFalse(road3.equals(road5));
+        assertEquals(road1, road5);
+        assertNotEquals(road3, road5);
     }
 
     @Test

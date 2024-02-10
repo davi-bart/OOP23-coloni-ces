@@ -1,7 +1,7 @@
 package it.unibo.common;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,18 +21,17 @@ class PropertyPositionTest {
                 PropertyDirection.UPLEFT);
         final PropertyPosition position2 = new PropertyPositionImpl(new TileCoordinatesImpl(1, 1),
                 PropertyDirection.UPLEFT);
-        assertTrue(position1.equals(position2));
+        assertEquals(position1, position2);
         final PropertyPosition position3 = new PropertyPositionImpl(new TileCoordinatesImpl(1, 0),
                 PropertyDirection.UPRIGHT);
-        assertTrue(position1.equals(position3));
+        assertEquals(position1, position3);
         final PropertyPosition position4 = new PropertyPositionImpl(new TileCoordinatesImpl(0, 1),
                 PropertyDirection.DOWN);
-        assertTrue(position1.equals(position4));
-        assertTrue(position4.equals(position3));
-
+        assertEquals(position1, position4);
+        assertEquals(position4, position3);
         final PropertyPosition position5 = new PropertyPositionImpl(new TileCoordinatesImpl(2, 1),
                 PropertyDirection.UPLEFT);
-        assertFalse(position1.equals(position5));
+        assertNotEquals(position1, position5);
     }
 }
 
