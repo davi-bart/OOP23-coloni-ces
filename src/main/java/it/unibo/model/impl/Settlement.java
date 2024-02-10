@@ -1,5 +1,6 @@
 package it.unibo.model.impl;
 
+import it.unibo.common.api.PropertyPosition;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.Property;
 
@@ -7,9 +8,10 @@ import it.unibo.model.api.Property;
  * Settlement implementation.
  */
 public final class Settlement implements Property {
-    private final Player owner;
     static final int POINTS = 1;
     static final int RESOURCE_GENERATOR_MULTIPLIER = 1;
+    private final Player owner;
+    private final PropertyPosition position;
 
     /**
      * Get the point that the city values.
@@ -34,13 +36,19 @@ public final class Settlement implements Property {
      * 
      * @param owner is the owner of the settlement.
      */
-    public Settlement(final Player owner) {
+    public Settlement(final PropertyPosition position, final Player owner) {
+        this.position = position;
         this.owner = owner;
     }
 
     @Override
     public Player getOwner() {
         return this.owner;
+    }
+
+    @Override
+    public PropertyPosition getPosition() {
+        return this.position;
     }
 
 }
