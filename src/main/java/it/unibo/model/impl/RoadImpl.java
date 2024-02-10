@@ -25,7 +25,7 @@ public final class RoadImpl implements Road {
 
     @Override
     public RoadPosition getPosition() {
-        return position;
+        return this.position;
     }
 
     @Override
