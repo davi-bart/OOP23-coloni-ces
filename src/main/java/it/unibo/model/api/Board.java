@@ -1,6 +1,7 @@
 package it.unibo.model.api;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.common.api.PropertyPosition;
@@ -54,4 +55,17 @@ public interface Board {
      * @return the list of roads
      */
     Set<Road> getPlayerRoads(Player player);
+
+    /**
+     * @return the position of the robber
+     */
+    Optional<TileCoordinates> getRobberPosition();
+
+    /**
+     * Set the robber in the specified position, removing it from the previous
+     * location.
+     * 
+     * @param coordinates coordinates of the new robber's position
+     */
+    void setRobberPosition(TileCoordinates coordinates);
 }

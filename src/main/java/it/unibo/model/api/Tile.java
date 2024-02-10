@@ -16,19 +16,4 @@ public interface Tile {
      * @return the terrain type of the tile.
      */
     TerrainType getTerrainType();
-
-    /**
-     * Adds the robber to the tile.
-     */
-    void addRobber();
-
-    /**
-     * Removes the robber (if present) from the tile.
-     */
-    void removeRobber();
-
-    /**
-     * @return whether the robber is on the tile.
-     */
-    boolean isRobberPresent();
 }

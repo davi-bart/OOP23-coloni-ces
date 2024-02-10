@@ -3,6 +3,7 @@ package it.unibo.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.common.api.PropertyPosition;
@@ -23,6 +24,7 @@ public final class BoardImpl implements Board {
     private final Map<TileCoordinates, Tile> board;
     private final List<Property> properties = new ArrayList<>();
     private final RoadManager roadManager = new RoadManagerImpl();
+    private TileCoordinates robberPosition = null;
 
     /**
      * Constructor of the board.
@@ -71,5 +73,18 @@ public final class BoardImpl implements Board {
     @Override
     public Set<Road> getPlayerRoads(final Player player) {
         return roadManager.getPlayerRoads(player);
+    }
+
+    @Override
+    public Optional<TileCoordinates> getRobberPosition() {
+        return Optional.ofNullable(robberPosition);
+    }
+
+    @Override
+    public void setRobberPosition(TileCoordinates coordinates) {
+        if (robberPosition != null && robberPosition.equals(coordinates)) {
+            throw new IllegalArgumentException("Robber is already present in that coordinate.");
+        }
+        robberPosition = coordinates;
     }
 }
