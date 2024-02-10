@@ -78,7 +78,7 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public Set<RoadPosition> getPlayerRoadPositions(String playerName) {
+    public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
         return boardController.getPlayerRoadPositions(getPlayerByName(playerName));
     }
 

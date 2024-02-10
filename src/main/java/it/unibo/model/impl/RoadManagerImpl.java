@@ -8,7 +8,6 @@ import org.jgrapht.Graph;
 import org.jgrapht.alg.shortestpath.BFSShortestPath;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
-import org.jgrapht.traverse.BreadthFirstIterator;
 
 import it.unibo.common.api.RoadPosition;
 import it.unibo.model.api.Player;

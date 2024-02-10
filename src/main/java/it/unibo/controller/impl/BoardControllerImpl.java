@@ -42,7 +42,7 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public Set<RoadPosition> getPlayerRoadPositions(Player player) {
+    public Set<RoadPosition> getPlayerRoadPositions(final Player player) {
         return this.board.getPlayerRoads(player).stream().map(r -> r.getPosition()).collect(Collectors.toSet());
     }
 
