@@ -1,6 +1,7 @@
 package it.unibo.model.api;
 
 import java.util.List;
+import java.util.Set;
 
 import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.TerrainType;
@@ -45,4 +46,12 @@ public interface Board {
      * @param owner    the owner of the property
      */
     void addProperty(PropertyPosition position, Player owner);
+
+    /**
+     * get the roads of a player.
+     * 
+     * @param player the player
+     * @return the list of roads
+     */
+    Set<Road> getPlayerRoads(Player player);
 }

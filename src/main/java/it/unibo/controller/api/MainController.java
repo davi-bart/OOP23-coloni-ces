@@ -2,8 +2,10 @@ package it.unibo.controller.api;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import it.unibo.common.api.ResourceType;
+import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 
@@ -11,6 +13,10 @@ import it.unibo.common.api.TileCoordinates;
  * Main controller.
  */
 public interface MainController {
+    /**
+     * @return the list of the players' names
+     */
+    List<String> getPlayerNames();
 
     /**
      * @param playerName
@@ -51,4 +57,12 @@ public interface MainController {
      * @return the terrain type of the tile
      */
     TerrainType getTileTerrainType(TileCoordinates pos);
+
+    /**
+     * get the player's road positions.
+     * 
+     * @param playerName the player's name
+     * @return the set of the road positions
+     */
+    Set<RoadPosition> getPlayerRoadPositions(String playerName);
 }

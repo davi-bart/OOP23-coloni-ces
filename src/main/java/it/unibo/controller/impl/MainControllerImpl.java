@@ -3,8 +3,10 @@ package it.unibo.controller.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import it.unibo.common.api.ResourceType;
+import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 import it.unibo.controller.api.BoardController;
@@ -41,6 +43,11 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
+    public List<String> getPlayerNames() {
+        return gameManager.getPlayers().stream().map(p -> p.getName()).toList();
+    }
+
+    @Override
     public Map<ResourceType, Integer> getPlayerResources(final String playerName) {
         return resourceController.getOwnerResources(getPlayerByName(playerName));
     }
@@ -68,6 +75,11 @@ public final class MainControllerImpl implements MainController {
     @Override
     public TerrainType getTileTerrainType(final TileCoordinates pos) {
         return boardController.getTileTerrainType(pos);
+    }
+
+    @Override
+    public Set<RoadPosition> getPlayerRoadPositions(String playerName) {
+        return boardController.getPlayerRoadPositions(getPlayerByName(playerName));
     }
 
     private Player getPlayerByName(final String name) {

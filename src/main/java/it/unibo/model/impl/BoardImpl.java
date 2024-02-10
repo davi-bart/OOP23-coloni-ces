@@ -3,6 +3,7 @@ package it.unibo.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.TerrainType;
@@ -11,6 +12,7 @@ import it.unibo.model.api.Board;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.Property;
+import it.unibo.model.api.Road;
 import it.unibo.model.api.RoadManager;
 import it.unibo.model.api.Tile;
 
@@ -64,5 +66,10 @@ public final class BoardImpl implements Board {
     @Override
     public RoadManager getRoadManager() {
         return roadManager;
+    }
+
+    @Override
+    public Set<Road> getPlayerRoads(final Player player) {
+        return roadManager.getPlayerRoads(player);
     }
 }
