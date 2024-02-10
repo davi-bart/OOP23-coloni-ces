@@ -54,7 +54,7 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public void addRoad(RoadPosition position, Player owner) {
+    public void addRoad(final RoadPosition position, final Player owner) {
         if (this.roads.stream().anyMatch(r -> r.getPosition().equals(position))) {
             throw new IllegalArgumentException("Road already present");
         }
@@ -62,7 +62,7 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public void addProperty(PropertyPosition position, Player owner) {
+    public void addProperty(final PropertyPosition position, final Player owner) {
         if (this.properties.stream().anyMatch(p -> p.getPosition().equals(position))) {
             throw new IllegalArgumentException("Property already present");
         }

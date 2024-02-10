@@ -34,7 +34,8 @@ public final class Settlement implements Property {
     /**
      * Create a settlement.
      * 
-     * @param owner is the owner of the settlement.
+     * @param position position of the settlement.
+     * @param owner    owner of the settlement.
      */
     public Settlement(final PropertyPosition position, final Player owner) {
         this.position = position;

@@ -34,7 +34,8 @@ public final class City implements Property {
     /**
      * Create a city.
      * 
-     * @param owner is the owner of the city.
+     * @param position position of the city.
+     * @param owner    owner of the city.
      */
     public City(final PropertyPosition position, final Player owner) {
         this.position = position;
