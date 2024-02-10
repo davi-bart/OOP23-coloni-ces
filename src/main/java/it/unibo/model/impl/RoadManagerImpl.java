@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.DefaultUndirectedGraph;
+import org.jgrapht.traverse.BreadthFirstIterator;
+
 import it.unibo.common.api.RoadPosition;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.Road;
@@ -29,6 +34,26 @@ public final class RoadManagerImpl implements RoadManager {
     @Override
     public Set<Road> getPlayerRoads(final Player player) {
         return roads.stream().filter(r -> r.getOwner().equals(player)).collect(Collectors.toSet());
+    }
+
+    @Override
+    public int getLongestRoadLength(final Player player) {
+        final Graph<Road, DefaultEdge> graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
+        final Set<Road> playerRoads = roads.stream().filter(road -> road.getOwner().equals(player))
+                .collect(Collectors.toSet());
+        playerRoads.forEach(road -> graph.addVertex(road));
+        playerRoads.forEach(
+                road -> getNearbyRoads(road).forEach(road2 -> graph.addEdge(road, road2)));
+        final BreadthFirstIterator<Road, DefaultEdge> bfsIterator = new BreadthFirstIterator<>(graph);
+        return graph.vertexSet().stream().mapToInt(road -> bfsIterator.getDepth(road)).max().orElse(0);
+    }
+
+    /**
+     * @param road
+     * @return a set of roads nearby {@code road}
+     */
+    private Set<Road> getNearbyRoads(final Road road) {
+        return roads.stream().filter(r -> road.getPosition().isNearby(r.getPosition())).collect(Collectors.toSet());
     }
 
 }

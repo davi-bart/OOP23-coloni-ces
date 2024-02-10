@@ -1,5 +1,6 @@
 package it.unibo.model.api;
 
+import java.util.Map;
 import java.util.Set;
 
 import it.unibo.common.api.RoadPosition;
@@ -22,5 +23,11 @@ public interface RoadManager {
      * @return a set of the roads built by {@code player}
      */
     Set<Road> getPlayerRoads(Player player);
+
+    /**
+     * @param player
+     * @return the length of the longest road owned by {@code player}
+     */
+    int getLongestRoadLength(Player player);
 
 }
