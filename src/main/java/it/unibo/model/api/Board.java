@@ -3,7 +3,6 @@ package it.unibo.model.api;
 import java.util.List;
 
 import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 
@@ -35,12 +34,9 @@ public interface Board {
     TerrainType getTileTerrainType(TileCoordinates pos);
 
     /**
-     * add a road to the board.
-     * 
-     * @param position the position of the road
-     * @param owner    the owner of the road
+     * @return the road manager
      */
-    void addRoad(RoadPosition position, Player owner);
+    RoadManager getRoadManager();
 
     /**
      * add a property to the board.

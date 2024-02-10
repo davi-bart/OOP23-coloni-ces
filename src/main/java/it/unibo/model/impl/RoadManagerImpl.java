@@ -1,7 +1,6 @@
 package it.unibo.model.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,12 +19,12 @@ import it.unibo.model.api.RoadManager;
  */
 public final class RoadManagerImpl implements RoadManager {
 
-    private final List<Road> roads = new ArrayList<>();
+    private final Set<Road> roads = new LinkedHashSet<>();
 
     @Override
     public void addRoad(final Player player, final RoadPosition position) {
         final Road newRoad = new RoadImpl(position, player);
-        if (roads.contains(newRoad)) {
+        if (roads.stream().anyMatch(r -> r.getPosition().equals(position))) {
             throw new IllegalArgumentException("Road was already present");
         }
         roads.add(newRoad);
@@ -43,7 +42,7 @@ public final class RoadManagerImpl implements RoadManager {
                 .collect(Collectors.toSet());
         playerRoads.forEach(road -> graph.addVertex(road));
         playerRoads.forEach(
-                road -> getNearbyRoads(road).forEach(road2 -> graph.addEdge(road, road2)));
+                road -> getNearbyRoads(road).forEach(r -> graph.addEdge(road, r)));
         final BreadthFirstIterator<Road, DefaultEdge> bfsIterator = new BreadthFirstIterator<>(graph);
         return graph.vertexSet().stream().mapToInt(road -> bfsIterator.getDepth(road)).max().orElse(0);
     }
