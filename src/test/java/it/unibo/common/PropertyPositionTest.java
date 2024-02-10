@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.common.api.PropertyDirection;
 import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.RoadDirection;
-import it.unibo.common.api.RoadPosition;
 import it.unibo.common.impl.PropertyPositionImpl;
-import it.unibo.common.impl.RoadPositionImpl;
 import it.unibo.common.impl.TileCoordinatesImpl;
 
 /**

@@ -23,11 +23,10 @@ public final class RoadManagerImpl implements RoadManager {
 
     @Override
     public void addRoad(final Player player, final RoadPosition position) {
-        final Road newRoad = new RoadImpl(position, player);
         if (roads.stream().anyMatch(r -> r.getPosition().equals(position))) {
             throw new IllegalArgumentException("Road was already present");
         }
-        roads.add(newRoad);
+        roads.add(new RoadImpl(position, player));
     }
 
     @Override

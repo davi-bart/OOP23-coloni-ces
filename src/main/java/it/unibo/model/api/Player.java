@@ -15,4 +15,9 @@ public interface Player extends ResourceOwner {
      * @return victory points of the player
      */
     int getVictoryPoints();
+
+    /**
+     * @return the player's name
+     */
+    String getName();
 }

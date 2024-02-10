@@ -16,6 +16,11 @@ public interface ResourceController {
     Map<ResourceType, Integer> getOwnerResources(ResourceOwner owner);
 
     /**
+     * @return the bank resources
+     */
+    Map<ResourceType, Integer> getBankResources();
+
+    /**
      * @param owner    is the owner.
      * @param resource is the resource type.
      * @return the amount of the given resource of the given owner.
@@ -33,8 +38,4 @@ public interface ResourceController {
      */
     boolean canTrade(ResourceOwner owner, Map<ResourceType, Integer> recivingResources);
 
-    /**
-     * @return the bank
-     */
-    ResourceOwner getBank();
 }

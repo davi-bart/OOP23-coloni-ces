@@ -1,6 +1,5 @@
 package it.unibo.model.api;
 
-import java.util.Map;
 import java.util.Set;
 
 import it.unibo.common.api.RoadPosition;

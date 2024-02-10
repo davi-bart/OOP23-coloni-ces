@@ -8,7 +8,7 @@ import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.common.impl.PropertyPositionImpl;
 import it.unibo.common.impl.RoadPositionImpl;
-import it.unibo.controller.api.BoardController;
+import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -23,14 +23,14 @@ import javafx.scene.paint.Color;
  */
 public final class BoardView {
     static final int HEXAGON_RADIUS = 70;
-    private final BoardController boardController;
+    private final MainController boardController;
 
     /**
      * Constructor of BoardView.
      * 
      * @param boardController the board controller
      */
-    public BoardView(final BoardController boardController) {
+    public BoardView(final MainController boardController) {
         this.boardController = boardController;
     }
 

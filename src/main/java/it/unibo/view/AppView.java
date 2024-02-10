@@ -14,7 +14,6 @@ import java.util.List;
 
 import it.unibo.common.api.ResourceType;
 import it.unibo.controller.api.MainController;
-import it.unibo.controller.api.ResourceController;
 import it.unibo.controller.impl.MainControllerImpl;
 
 /**
@@ -22,7 +21,6 @@ import it.unibo.controller.impl.MainControllerImpl;
  */
 public class AppView {
     private final MainController mainController;
-    private final ResourceController resourceController;
 
     private final BoardView boardView;
     private final ResourcesView resouceView = new ResourcesView();
@@ -35,9 +33,7 @@ public class AppView {
      */
     public AppView() {
         mainController = new MainControllerImpl(players);
-        resourceController = mainController.getResourceController();
-        boardView = new BoardView(mainController.getBoardController());
-
+        boardView = new BoardView(mainController);
     }
 
     /**
@@ -60,7 +56,7 @@ public class AppView {
 
         for (final ResourceType resource : ResourceType.values()) {
             bankVault.getChildren().add(resouceView.getResourceLabelAmount(resource,
-                    resourceController.getOwnerResourceAmount(resourceController.getBank(), resource)));
+                    mainController.getBankResources().get(resource)));
             playerHand.getChildren().add(resouceView.getResourceLabelAmount(resource, amount));
         }
 

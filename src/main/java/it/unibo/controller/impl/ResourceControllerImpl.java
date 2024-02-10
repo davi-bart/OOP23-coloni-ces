@@ -47,7 +47,7 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public ResourceOwner getBank() {
-        return this.bank;
+    public Map<ResourceType, Integer> getBankResources() {
+        return getOwnerResources(bank);
     }
 }

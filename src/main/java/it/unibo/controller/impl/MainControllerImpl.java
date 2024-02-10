@@ -2,11 +2,16 @@ package it.unibo.controller.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import it.unibo.common.api.ResourceType;
+import it.unibo.common.api.TerrainType;
+import it.unibo.common.api.TileCoordinates;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;
 import it.unibo.model.api.GameManager;
+import it.unibo.model.api.Player;
 import it.unibo.model.api.ResourceOwner;
 import it.unibo.model.impl.BankImpl;
 import it.unibo.model.impl.GameManagerImpl;
@@ -36,12 +41,37 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public BoardController getBoardController() {
-        return this.boardController;
+    public Map<ResourceType, Integer> getPlayerResources(final String playerName) {
+        return resourceController.getOwnerResources(getPlayerByName(playerName));
     }
 
     @Override
-    public ResourceController getResourceController() {
-        return this.resourceController;
+    public Map<ResourceType, Integer> getBankResources() {
+        return resourceController.getBankResources();
+    }
+
+    @Override
+    public int getVictoryPoints(final String playerName) {
+        return getPlayerByName(playerName).getVictoryPoints();
+    }
+
+    @Override
+    public List<TileCoordinates> getTilePositions() {
+        return boardController.getTilePositions();
+    }
+
+    @Override
+    public int getTileNumber(final TileCoordinates pos) {
+        return boardController.getTileNumber(pos);
+    }
+
+    @Override
+    public TerrainType getTileTerrainType(final TileCoordinates pos) {
+        return boardController.getTileTerrainType(pos);
+    }
+
+    private Player getPlayerByName(final String name) {
+        return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
     }
 }

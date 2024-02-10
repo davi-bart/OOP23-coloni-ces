@@ -56,10 +56,7 @@ public final class PlayerImpl implements Player {
         return resources;
     }
 
-    /**
-     * 
-     * @return player's name.
-     */
+    @Override
     public String getName() {
         return name;
     }
