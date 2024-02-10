@@ -30,7 +30,7 @@ class RoadPositionTest {
     }
 
     @Test
-    void testEquivalent() {
+    void testNearby() {
         final RoadPosition road1 = new RoadPositionImpl(new TileCoordinatesImpl(0, 1), RoadDirection.DOWNLEFT);
         final RoadPosition near1 = new RoadPositionImpl(new TileCoordinatesImpl(1, 1), RoadDirection.UPLEFT);
         final RoadPosition near2 = new RoadPositionImpl(new TileCoordinatesImpl(1, 0), RoadDirection.RIGHT);
