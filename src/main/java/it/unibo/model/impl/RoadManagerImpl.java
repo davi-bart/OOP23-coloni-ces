@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jgrapht.Graph;
+import org.jgrapht.alg.shortestpath.BFSShortestPath;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
@@ -36,14 +37,20 @@ public final class RoadManagerImpl implements RoadManager {
 
     @Override
     public int getLongestRoadLength(final Player player) {
+        if (getPlayerRoads(player).isEmpty()) {
+            return 0;
+        }
         final Graph<Road, DefaultEdge> graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
         final Set<Road> playerRoads = roads.stream().filter(road -> road.getOwner().equals(player))
                 .collect(Collectors.toSet());
         playerRoads.forEach(road -> graph.addVertex(road));
         playerRoads.forEach(
                 road -> getNearbyRoads(road).forEach(r -> graph.addEdge(road, r)));
-        final BreadthFirstIterator<Road, DefaultEdge> bfsIterator = new BreadthFirstIterator<>(graph);
-        return graph.vertexSet().stream().mapToInt(road -> bfsIterator.getDepth(road)).max().orElse(0);
+        final BFSShortestPath<Road, DefaultEdge> bfs = new BFSShortestPath<>(graph);
+        return graph.vertexSet().stream()
+                .mapToInt(road -> getNearbyRoads(road).stream().mapToInt(r -> bfs.getPath(road, r).getLength())
+                        .reduce(0, Integer::max))
+                .reduce(0, Integer::max) + 1;
     }
 
     /**
