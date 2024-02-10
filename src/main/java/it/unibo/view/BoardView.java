@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import it.unibo.common.api.RoadPosition;
 import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
 import javafx.scene.layout.Border;
@@ -69,31 +71,34 @@ public final class BoardView {
 
     private List<Line> drawRoads() {
         final List<Line> roads = new ArrayList<>();
+        final Set<RoadPosition> allRoads = this.controller.getAllRoadPositions();
         this.playerColors.entrySet().stream().forEach(entry -> {
             final String playerName = entry.getKey();
             final Color color = entry.getValue();
-            roads.addAll(drawPlayerRoads(playerName, color));
+            this.controller.getPlayerRoadPositions(playerName).forEach(pos -> {
+                roads.add(drawRoad(pos, color));
+                if (allRoads.contains(pos)) {
+                    allRoads.remove(pos);
+                }
+            });
         });
+        allRoads.forEach(pos -> roads.add(drawRoad(pos, Color.LIGHTGRAY)));
         return roads;
     }
 
-    private List<Line> drawPlayerRoads(String playerName, Color color) {
-        final List<Line> roads = new ArrayList<>();
-        this.controller.getPlayerRoadPositions(playerName).forEach(position -> {
-            final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
-                    position.getCoordinates().getCol());
-            final var endpoints = Utility
-                    .getRoadCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight())
-                    .get(position.getDirection());
-            final var start = endpoints.getKey();
-            final var end = endpoints.getValue();
-            final Line line = new Line(start.getKey(), start.getValue(), end.getKey(),
-                    end.getValue());
-            line.setStrokeWidth(5);
-            line.setFill(color);
-            roads.add(line);
-        });
-        return roads;
+    private Line drawRoad(final RoadPosition position, final Color color) {
+        final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
+                position.getCoordinates().getCol());
+        final var endpoints = Utility
+                .getRoadCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight())
+                .get(position.getDirection());
+        final var start = endpoints.getKey();
+        final var end = endpoints.getValue();
+        final Line line = new Line(start.getKey(), start.getValue(), end.getKey(),
+                end.getValue());
+        line.setStrokeWidth(12);
+        line.setStroke(color);
+        return line;
     }
 
     private Pair<Double, Double> getPositionFromTile(final int row, final int col) {

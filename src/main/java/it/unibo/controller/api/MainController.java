@@ -65,4 +65,11 @@ public interface MainController {
      * @return the set of the road positions
      */
     Set<RoadPosition> getPlayerRoadPositions(String playerName);
+
+    /**
+     * get all the road positions, including empty ones.
+     * 
+     * @return the set of the road positions
+     */
+    Set<RoadPosition> getAllRoadPositions();
 }

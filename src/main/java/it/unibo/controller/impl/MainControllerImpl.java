@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.unibo.common.api.ResourceType;
+import it.unibo.common.api.RoadDirection;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.impl.RoadPositionImpl;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;
@@ -80,6 +84,13 @@ public final class MainControllerImpl implements MainController {
     @Override
     public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
         return boardController.getPlayerRoadPositions(getPlayerByName(playerName));
+    }
+
+    @Override
+    public Set<RoadPosition> getAllRoadPositions() {
+        return this.getTilePositions().stream()
+                .flatMap(tilePos -> Stream.of(RoadDirection.values()).map(dir -> new RoadPositionImpl(tilePos, dir)))
+                .collect(Collectors.toSet());
     }
 
     private Player getPlayerByName(final String name) {
