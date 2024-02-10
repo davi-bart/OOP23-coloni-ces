@@ -7,11 +7,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import it.unibo.common.api.PropertyDirection;
+import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.ResourceType;
 import it.unibo.common.api.RoadDirection;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.impl.PropertyPositionImpl;
 import it.unibo.common.impl.RoadPositionImpl;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
@@ -96,5 +99,19 @@ public final class MainControllerImpl implements MainController {
     private Player getPlayerByName(final String name) {
         return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
+    }
+
+    @Override
+    public Set<PropertyPosition> getPlayerPropertyPositions(String playerName) {
+        // TODO: implement
+        return Set.of();
+    }
+
+    @Override
+    public Set<PropertyPosition> getAllPropertyPositions() {
+        return this.getTilePositions().stream()
+                .flatMap(tilePos -> Stream.of(PropertyDirection.values())
+                        .map(dir -> new PropertyPositionImpl(tilePos, dir)))
+                .collect(Collectors.toSet());
     }
 }

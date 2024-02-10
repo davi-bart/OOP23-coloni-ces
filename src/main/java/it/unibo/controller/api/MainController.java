@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.ResourceType;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TerrainType;
@@ -72,4 +73,19 @@ public interface MainController {
      * @return the set of the road positions
      */
     Set<RoadPosition> getAllRoadPositions();
+
+    /**
+     * get the player's property positions.
+     * 
+     * @param playerName the player's name
+     * @return the set of the property positions
+     */
+    Set<PropertyPosition> getPlayerPropertyPositions(String playerName);
+
+    /**
+     * get all the property positions, including empty ones.
+     * 
+     * @return the set of the property positions
+     */
+    Set<PropertyPosition> getAllPropertyPositions();
 }

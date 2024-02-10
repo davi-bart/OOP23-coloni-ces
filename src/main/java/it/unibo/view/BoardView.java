@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
+import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
@@ -20,6 +21,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 /**
@@ -51,6 +53,7 @@ public final class BoardView {
         final Group group = new Group();
         group.getChildren().addAll(drawTiles());
         group.getChildren().addAll(drawRoads());
+        group.getChildren().addAll(drawProperties());
         pane.getChildren().add(0, group);
         pane.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -99,6 +102,34 @@ public final class BoardView {
         line.setStrokeWidth(12);
         line.setStroke(color);
         return line;
+    }
+
+    private List<Circle> drawProperties() {
+        final List<Circle> properties = new ArrayList<>();
+        final Set<PropertyPosition> allProperties = this.controller.getAllPropertyPositions();
+        this.playerColors.entrySet().stream().forEach(entry -> {
+            final String playerName = entry.getKey();
+            final Color color = entry.getValue();
+            this.controller.getPlayerPropertyPositions(playerName).forEach(pos -> {
+                properties.add(drawProperty(pos, color));
+                if (allProperties.contains(pos)) {
+                    allProperties.remove(pos);
+                }
+            });
+        });
+        allProperties.forEach(pos -> properties.add(drawProperty(pos, Color.GRAY)));
+        return properties;
+    }
+
+    private Circle drawProperty(final PropertyPosition position, final Color color) {
+        final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
+                position.getCoordinates().getCol());
+        final var center = Utility
+                .getPropertyCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight())
+                .get(position.getDirection());
+        final Circle circle = new Circle(center.getKey(), center.getValue(), 12);
+        circle.setFill(color);
+        return circle;
     }
 
     private Pair<Double, Double> getPositionFromTile(final int row, final int col) {
