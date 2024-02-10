@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -46,9 +47,8 @@ public class AppView {
      * @return the scene
      */
     public Scene getScene() throws IOException {
-        final HBox root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
-        final VBox leftSide = (VBox) root.getChildren().get(0);
-        final VBox rightSide = (VBox) root.getChildren().get(1);
+        final BorderPane root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
+        final VBox rightSide = new VBox();
         final HBox playerHandAndTrade = new HBox();
         final HBox playerHand = new HBox();
         final HBox bankVault = new HBox();
@@ -69,10 +69,11 @@ public class AppView {
         playerHandAndTrade.getChildren().add(playerHand);
         playerHandAndTrade.getChildren().add(tradeButton);
 
-        leftSide.getChildren().add(boardView.getBoard());
-        leftSide.getChildren().add(playerHandAndTrade);
         rightSide.getChildren().add(costCard);
         rightSide.getChildren().add(bankVault);
+        root.setBottom(playerHandAndTrade);
+        root.setRight(rightSide);
+        root.setCenter(boardView.getBoard());
         players.forEach(name -> rightSide.getChildren().add(new Label(name)));
 
         return scene;

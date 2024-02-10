@@ -3,11 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox
+<BorderPane
     xmlns="http://javafx.com/javafx"
     xmlns:fx="http://javafx.com/fxml">
-    <children>
-        <VBox></VBox>
-        <VBox></VBox>
-    </children>
-</HBox>
+</BorderPane>

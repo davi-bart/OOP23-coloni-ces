@@ -9,7 +9,6 @@ import it.unibo.common.api.RoadPosition;
 import it.unibo.common.impl.PropertyPositionImpl;
 import it.unibo.common.impl.RoadPositionImpl;
 import it.unibo.controller.api.BoardController;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -40,7 +39,7 @@ public final class BoardView {
      * @return a stackpane representing the board
      */
     public StackPane getBoard() throws IOException {
-        final StackPane pane = FXMLLoader.load(ClassLoader.getSystemResource("layouts/board.fxml"));
+        final StackPane pane = new StackPane();
         // add the exagons and properties/road to the board
         final Group group = new Group();
         final List<RoadPosition> addedRoads = new ArrayList<>();
