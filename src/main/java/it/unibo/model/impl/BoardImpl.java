@@ -24,7 +24,7 @@ public final class BoardImpl implements Board {
     private final Map<TileCoordinates, Tile> board;
     private final List<Property> properties = new ArrayList<>();
     private final RoadManager roadManager = new RoadManagerImpl();
-    private TileCoordinates robberPosition = null;
+    private TileCoordinates robberPosition;
 
     /**
      * Constructor of the board.
@@ -33,7 +33,6 @@ public final class BoardImpl implements Board {
      */
     public BoardImpl(final GameMapGenerator generator) {
         this.board = generator.generate();
-
     }
 
     @Override
@@ -81,7 +80,7 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public void setRobberPosition(TileCoordinates coordinates) {
+    public void setRobberPosition(final TileCoordinates coordinates) {
         if (robberPosition != null && robberPosition.equals(coordinates)) {
             throw new IllegalArgumentException("Robber is already present in that coordinate.");
         }

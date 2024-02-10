@@ -102,7 +102,7 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public Set<PropertyPosition> getPlayerPropertyPositions(String playerName) {
+    public Set<PropertyPosition> getPlayerPropertyPositions(final String playerName) {
         // TODO: implement
         return Set.of();
     }
