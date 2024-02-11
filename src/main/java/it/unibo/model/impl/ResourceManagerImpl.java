@@ -29,8 +29,6 @@ public class ResourceManagerImpl implements ResourceManager {
     @Override
     public final void addResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
         if (amount > 0) {
-            // allEntityResources.get(owner).replace(resource, amount +
-            // allEntityResources.get(owner).get(resource));
             allEntityResources.get(owner).compute(resource, (k, v) -> v + amount);
         } else {
             throw new IllegalArgumentException("amount must be positive");
@@ -40,11 +38,9 @@ public class ResourceManagerImpl implements ResourceManager {
     @Override
     public final void removeResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
         if (allEntityResources.get(owner).get(resource) >= amount) {
-            // allEntityResources.get(owner).replace(resource,
-            // allEntityResources.get(owner).get(resource) - amount);
             allEntityResources.get(owner).compute(resource, (k, v) -> v - amount);
         } else {
-            throw new IllegalArgumentException("amount must be minor than the total resource");
+            throw new IllegalArgumentException("amount must be lower than the total resource");
         }
     }
 
@@ -61,8 +57,8 @@ public class ResourceManagerImpl implements ResourceManager {
         for (final Entry<ResourceType, Integer> resource : givingResouces.entrySet()) {
             removeResources(proposer, resource.getKey(), resource.getValue());
             addResources(accepter, resource.getKey(), resource.getValue());
-
         }
+
         for (final Entry<ResourceType, Integer> resource : recivingResources.entrySet()) {
             addResources(proposer, resource.getKey(), resource.getValue());
             removeResources(accepter, resource.getKey(), resource.getValue());
