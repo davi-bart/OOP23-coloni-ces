@@ -25,7 +25,8 @@ public final class Utility {
      * @param y      y coordinate of the center
      * @return the list of coordinates
      */
-    static List<Pair<Double, Double>> getHexagonCoordinates(final double radius, final double x, final double y) {
+    public static List<Pair<Double, Double>> getHexagonCoordinates(final double radius, final double x,
+            final double y) {
         final List<Pair<Double, Double>> coordinates = new ArrayList<>();
         for (int i = 0; i < SIDES; i++) {
             final double angle = (2 * Math.PI) / SIDES * i + Math.PI / 2;
@@ -44,7 +45,7 @@ public final class Utility {
      * @param direction direction of the road
      * @return a map of roads, by their direction
      */
-    static public Pair<Pair<Double, Double>, Pair<Double, Double>> getRoadCoordinates(final double radius,
+    public static Pair<Pair<Double, Double>, Pair<Double, Double>> getRoadCoordinates(final double radius,
             final double x, final double y, final RoadDirection direction) {
         final List<Pair<Double, Double>> hexagonCoordinates = getHexagonCoordinates(radius, x, y);
         final List<RoadDirection> directions = List.of(RoadDirection.DOWNLEFT, RoadDirection.LEFT, RoadDirection.UPLEFT,
@@ -63,7 +64,7 @@ public final class Utility {
      * @param direction direction of the property
      * @return a map of properties, by their direction
      */
-    static public Pair<Double, Double> getPropertyCoordinates(final double radius, final double x,
+    public static Pair<Double, Double> getPropertyCoordinates(final double radius, final double x,
             final double y, final PropertyDirection direction) {
         final List<PropertyDirection> directions = List.of(PropertyDirection.DOWN, PropertyDirection.DOWNLEFT,
                 PropertyDirection.UPLEFT, PropertyDirection.UP, PropertyDirection.UPRIGHT, PropertyDirection.DOWNRIGHT);
