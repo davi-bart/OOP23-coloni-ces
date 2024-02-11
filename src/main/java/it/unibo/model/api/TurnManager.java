@@ -1,5 +1,7 @@
 package it.unibo.model.api;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 /**
  * interface of TurnManager.
  */
@@ -15,4 +17,11 @@ public interface TurnManager {
      * updates the current player.
      */
     void endTurn();
+
+    /**
+     * 
+     * @return the dice roll.
+     */
+    Pair<Integer, Integer> diceRoller();
+
 }

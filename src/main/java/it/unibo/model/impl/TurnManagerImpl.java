@@ -5,14 +5,20 @@ import java.util.Collections;
 import java.util.List;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.TurnManager;
+import java.util.Random;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * implementation of TurnManager.
  */
 public final class TurnManagerImpl implements TurnManager {
 
-    private int currentTurn;
-    private final List<Player> playerList;
+    private int currentTurn = 0;
+    private final List<Player> playerList = new ArrayList<>();
+    private final Random random = new Random();
+    private static final int MAX_ROLL = 6;
+    private static final int MIN_ROLL = 1;
 
     /**
      * constructor of TurnManager.
@@ -20,8 +26,7 @@ public final class TurnManagerImpl implements TurnManager {
      * @param players list of players
      */
     public TurnManagerImpl(final List<Player> players) {
-        this.playerList = new ArrayList<>(players);
-        currentTurn = 0;
+        players.forEach(playerList::add);
         setRandomOrder();
     }
 
@@ -37,6 +42,12 @@ public final class TurnManagerImpl implements TurnManager {
     @Override
     public void endTurn() {
         currentTurn = (currentTurn + 1) % playerList.size();
+    }
+
+    @Override
+    public Pair<Integer, Integer> diceRoller() {
+        return new ImmutablePair<Integer, Integer>(random.nextInt(MIN_ROLL, MAX_ROLL + 1),
+                random.nextInt(MIN_ROLL, MAX_ROLL + 1));
     }
 
 }
