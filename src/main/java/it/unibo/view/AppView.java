@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +22,7 @@ import it.unibo.controller.impl.MainControllerImpl;
  */
 public class AppView {
     private final MainController mainController;
-
+    private final Stage stage;
     private final BoardView boardView;
     private final ResourcesView resouceView = new ResourcesView();
     private final TradeView tradeView = new TradeView();
@@ -31,9 +32,28 @@ public class AppView {
     /**
      * Constructor of AppView.
      */
-    public AppView() {
+    public AppView(final Stage stage) {
         mainController = new MainControllerImpl(players);
-        boardView = new BoardView(mainController);
+        boardView = new BoardView(mainController, () -> {
+            try {
+                draw();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        this.stage = stage;
+    }
+
+    /**
+     * draw the full application.
+     * 
+     * @throws IOException exception
+     */
+    public void draw() throws IOException {
+        stage.setTitle("I Coloni di Cesena");
+        stage.setScene(getScene());
+        stage.setMaximized(true);
+        stage.show();
     }
 
     /**
