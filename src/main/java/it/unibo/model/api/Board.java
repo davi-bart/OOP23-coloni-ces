@@ -35,17 +35,18 @@ public interface Board {
     TerrainType getTileTerrainType(TileCoordinates pos);
 
     /**
-     * @return the road manager
-     */
-    RoadManager getRoadManager();
-
-    /**
      * get the roads of a player.
      * 
      * @param player the player
      * @return the list of roads
      */
     Set<Road> getPlayerRoads(Player player);
+
+    /**
+     * @param player
+     * @return a set of the roads built by {@code player}
+     */
+    Set<Property> getPlayerProperties(Player player);
 
     /**
      * @return the position of the robber

@@ -10,6 +10,8 @@ import it.unibo.common.api.TileCoordinates;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Player;
+import it.unibo.model.api.Property;
+import it.unibo.model.api.PropertyManager;
 import it.unibo.model.api.Road;
 import it.unibo.model.api.RoadManager;
 import it.unibo.model.api.Tile;
@@ -20,6 +22,7 @@ import it.unibo.model.api.Tile;
 public final class BoardImpl implements Board {
     private final Map<TileCoordinates, Tile> board;
     private final RoadManager roadManager = new RoadManagerImpl();
+    private final PropertyManager propertyManager = new PropertyManagerImpl();
     private TileCoordinates robberPosition;
 
     /**
@@ -53,13 +56,13 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public RoadManager getRoadManager() {
-        return roadManager;
+    public Set<Road> getPlayerRoads(final Player player) {
+        return roadManager.getPlayerRoads(player);
     }
 
     @Override
-    public Set<Road> getPlayerRoads(final Player player) {
-        return roadManager.getPlayerRoads(player);
+    public Set<Property> getPlayerProperties(final Player player) {
+        return propertyManager.getPlayerProperties(player);
     }
 
     @Override

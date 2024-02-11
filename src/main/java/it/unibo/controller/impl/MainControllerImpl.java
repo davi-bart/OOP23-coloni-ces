@@ -7,8 +7,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import it.unibo.common.api.PropertyDirection;
 import it.unibo.common.api.PropertyPosition;
+import it.unibo.common.api.PropertyType;
 import it.unibo.common.api.ResourceType;
 import it.unibo.common.api.RoadDirection;
 import it.unibo.common.api.RoadPosition;
@@ -16,7 +19,6 @@ import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 import it.unibo.common.impl.PropertyPositionImpl;
 import it.unibo.common.impl.RoadPositionImpl;
-import it.unibo.common.impl.TileCoordinatesImpl;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;
@@ -87,9 +89,6 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
-        if (playerName == "Lucone") {
-            return Set.of(new RoadPositionImpl(new TileCoordinatesImpl(3, 2), RoadDirection.UPLEFT));
-        }
         return boardController.getPlayerRoadPositions(getPlayerByName(playerName));
     }
 
@@ -100,18 +99,9 @@ public final class MainControllerImpl implements MainController {
                 .collect(Collectors.toSet());
     }
 
-    private Player getPlayerByName(final String name) {
-        return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
-    }
-
     @Override
-    public Set<PropertyPosition> getPlayerPropertyPositions(final String playerName) {
-        if(playerName == "Lucone") {
-            return Set.of(new PropertyPositionImpl(new TileCoordinatesImpl(3, 2), PropertyDirection.UPLEFT));
-        }
-        // TODO: implement
-        return Set.of();
+    public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final String playerName) {
+        return boardController.getPlayerPropertyPositions(getPlayerByName(playerName));
     }
 
     @Override
@@ -120,5 +110,10 @@ public final class MainControllerImpl implements MainController {
                 .flatMap(tilePos -> Stream.of(PropertyDirection.values())
                         .map(dir -> new PropertyPositionImpl(tilePos, dir)))
                 .collect(Collectors.toSet());
+    }
+
+    private Player getPlayerByName(final String name) {
+        return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
     }
 }
