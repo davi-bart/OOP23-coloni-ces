@@ -31,14 +31,16 @@ public final class BoardView {
     static final int HEXAGON_RADIUS = 70;
     private final MainController controller;
     private final Map<String, Color> playerColors = new HashMap<>();
+    private final Runnable redraw;
 
     /**
      * Constructor of BoardView.
      * 
      * @param controller the board controller
      */
-    public BoardView(final MainController controller) {
+    public BoardView(final MainController controller, final Runnable redraw) {
         this.controller = controller;
+        this.redraw = redraw;
         final var colors = List.of(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
         this.controller.getPlayerNames().stream().forEach(p -> playerColors.put(p, colors.get(playerColors.size())));
     }

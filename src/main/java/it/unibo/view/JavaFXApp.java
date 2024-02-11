@@ -1,7 +1,6 @@
 package it.unibo.view;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -17,15 +16,8 @@ public class JavaFXApp extends Application {
      */
     @Override
     public void start(final Stage stage) throws Exception {
-        final AppView appView = new AppView();
-
-        final Scene scene = appView.getScene();
-
-        stage.setTitle("I Coloni di Cesena");
-        stage.setScene(scene);
-        stage.setMaximized(true);
-
-        stage.show();
+        final AppView appView = new AppView(stage);
+        appView.draw();
     }
 
     /**

@@ -16,6 +16,7 @@ import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 import it.unibo.common.impl.PropertyPositionImpl;
 import it.unibo.common.impl.RoadPositionImpl;
+import it.unibo.common.impl.TileCoordinatesImpl;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;
@@ -86,6 +87,9 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
+        if (playerName == "Lucone") {
+            return Set.of(new RoadPositionImpl(new TileCoordinatesImpl(3, 2), RoadDirection.UPLEFT));
+        }
         return boardController.getPlayerRoadPositions(getPlayerByName(playerName));
     }
 
@@ -103,6 +107,9 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public Set<PropertyPosition> getPlayerPropertyPositions(final String playerName) {
+        if(playerName == "Lucone") {
+            return Set.of(new PropertyPositionImpl(new TileCoordinatesImpl(3, 2), PropertyDirection.UPLEFT));
+        }
         // TODO: implement
         return Set.of();
     }
