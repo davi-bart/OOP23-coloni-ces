@@ -1,9 +1,7 @@
 package it.unibo.view;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import it.unibo.common.api.PropertyDirection;
 import it.unibo.common.api.RoadDirection;
@@ -37,43 +35,39 @@ public final class Utility {
     }
 
     /**
-     * returns the coordinates of the roads of an hexagon.
+     * returns the coordinates of the roads of an hexagon in the specified
+     * direction.
      * 
-     * @param radius radius
-     * @param x      x coordinate of the center
-     * @param y      y coordinate of the center
+     * @param radius    radius
+     * @param x         x coordinate of the center
+     * @param y         y coordinate of the center
+     * @param direction direction of the road
      * @return a map of roads, by their direction
      */
-    static Map<RoadDirection, Pair<Pair<Double, Double>, Pair<Double, Double>>> getRoadCoordinates(final double radius,
-            final double x, final double y) {
-        final Map<RoadDirection, Pair<Pair<Double, Double>, Pair<Double, Double>>> roads = new HashMap<>();
+    static public Pair<Pair<Double, Double>, Pair<Double, Double>> getRoadCoordinates(final double radius,
+            final double x, final double y, final RoadDirection direction) {
         final List<Pair<Double, Double>> hexagonCoordinates = getHexagonCoordinates(radius, x, y);
-
-        // CHECKSTYLE: MagicNumber OFF
-        roads.put(RoadDirection.DOWNLEFT, new Pair<>(hexagonCoordinates.get(0), hexagonCoordinates.get(1)));
-        roads.put(RoadDirection.LEFT, new Pair<>(hexagonCoordinates.get(1), hexagonCoordinates.get(2)));
-        roads.put(RoadDirection.UPLEFT, new Pair<>(hexagonCoordinates.get(2), hexagonCoordinates.get(3)));
-        roads.put(RoadDirection.UPRIGHT, new Pair<>(hexagonCoordinates.get(3), hexagonCoordinates.get(4)));
-        roads.put(RoadDirection.RIGHT, new Pair<>(hexagonCoordinates.get(4), hexagonCoordinates.get(5)));
-        roads.put(RoadDirection.DOWNRIGHT, new Pair<>(hexagonCoordinates.get(5), hexagonCoordinates.get(0)));
-        // CHECKSTYLE: MagicNumber ON
-        return roads;
+        final List<RoadDirection> directions = List.of(RoadDirection.DOWNLEFT, RoadDirection.LEFT, RoadDirection.UPLEFT,
+                RoadDirection.UPRIGHT, RoadDirection.RIGHT, RoadDirection.DOWNRIGHT);
+        final int index = directions.indexOf(direction);
+        return new Pair<>(hexagonCoordinates.get(index), hexagonCoordinates.get((index + 1) % SIDES));
     }
 
-    static Map<PropertyDirection, Pair<Double, Double>> getPropertyCoordinates(final double radius, final double x,
-            final double y) {
-        final Map<PropertyDirection, Pair<Double, Double>> properties = new HashMap<>();
-        final List<Pair<Double, Double>> hexagonCoordinates = getHexagonCoordinates(radius, x, y);
-
-        // CHECKSTYLE: MagicNumber OFF
-        properties.put(PropertyDirection.DOWN, hexagonCoordinates.get(0));
-        properties.put(PropertyDirection.DOWNLEFT, hexagonCoordinates.get(1));
-        properties.put(PropertyDirection.UPLEFT, hexagonCoordinates.get(2));
-        properties.put(PropertyDirection.UP, hexagonCoordinates.get(3));
-        properties.put(PropertyDirection.UPRIGHT, hexagonCoordinates.get(4));
-        properties.put(PropertyDirection.DOWNRIGHT, hexagonCoordinates.get(5));
-        // CHECKSTYLE: MagicNumber ON
-        return properties;
+    /**
+     * returns the coordinates of the propertiy of an hexagon in the specified
+     * direction.
+     * 
+     * @param radius    radius
+     * @param x         x coordinate of the center
+     * @param y         y coordinate of the center
+     * @param direction direction of the property
+     * @return a map of properties, by their direction
+     */
+    static public Pair<Double, Double> getPropertyCoordinates(final double radius, final double x,
+            final double y, final PropertyDirection direction) {
+        final List<PropertyDirection> directions = List.of(PropertyDirection.DOWN, PropertyDirection.DOWNLEFT,
+                PropertyDirection.UPLEFT, PropertyDirection.UP, PropertyDirection.UPRIGHT, PropertyDirection.DOWNRIGHT);
+        return getHexagonCoordinates(radius, x, y).get(directions.indexOf(direction));
     }
 
 }

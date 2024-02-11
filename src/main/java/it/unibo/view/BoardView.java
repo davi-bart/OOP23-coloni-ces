@@ -102,12 +102,10 @@ public final class BoardView {
         final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
                 position.getCoordinates().getCol());
         final var endpoints = Utility
-                .getRoadCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight())
-                .get(position.getDirection());
-        final var start = endpoints.getKey();
-        final var end = endpoints.getValue();
-        final Line line = new Line(start.getKey(), start.getValue(), end.getKey(),
-                end.getValue());
+                .getRoadCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
+                        position.getDirection());
+        final Line line = new Line(endpoints.getKey().getKey(), endpoints.getKey().getValue(),
+                endpoints.getValue().getKey(), endpoints.getValue().getValue());
         line.setStrokeWidth(12);
         line.setStroke(color);
         return line;
@@ -131,13 +129,7 @@ public final class BoardView {
     }
 
     private Circle drawProperty(final PropertyPosition position, final PropertyType propertyType, final Color color) {
-        final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
-                position.getCoordinates().getCol());
-        final var center = Utility
-                .getPropertyCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight())
-                .get(position.getDirection());
-        final Circle circle = new Circle(center.getKey(), center.getValue(), 24);
-
+        final Circle circle = getPropertyCircle(position, 26);
         final Image img = new Image("imgs/property/" + propertyType.toString().toLowerCase(Locale.US) + ".png");
         circle.setFill(new ImagePattern(img));
         circle.setEffect(new Lighting(new Light.Distant(45, 45, color)));
@@ -145,13 +137,18 @@ public final class BoardView {
     }
 
     private Circle drawEmptyProperty(final PropertyPosition position, final Color color) {
+        final Circle circle = getPropertyCircle(position, 12);
+        circle.setFill(color);
+        return circle;
+    }
+
+    private Circle getPropertyCircle(final PropertyPosition position, final int radius) {
         final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
                 position.getCoordinates().getCol());
         final var center = Utility
-                .getPropertyCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight())
-                .get(position.getDirection());
-        final Circle circle = new Circle(center.getKey(), center.getValue(), 12);
-        circle.setFill(color);
+                .getPropertyCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
+                        position.getDirection());
+        final Circle circle = new Circle(center.getKey(), center.getValue(), radius);
         return circle;
     }
 
