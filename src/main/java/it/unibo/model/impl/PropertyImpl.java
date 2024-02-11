@@ -5,7 +5,10 @@ import it.unibo.common.api.PropertyType;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.Property;
 
-public class PropertyImpl implements Property {
+/**
+ * Property implementation.
+ */
+public final class PropertyImpl implements Property {
     private final PropertyPosition position;
     private final Player owner;
     private PropertyType type = PropertyType.SETTLEMENT;

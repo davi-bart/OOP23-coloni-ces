@@ -10,12 +10,14 @@ import it.unibo.model.api.Player;
 import it.unibo.model.api.Property;
 import it.unibo.model.api.PropertyManager;
 
-public class PropertyManagerImpl implements PropertyManager {
-
+/**
+ * Property manager implementation.
+ */
+public final class PropertyManagerImpl implements PropertyManager {
     private final Set<Property> properies = new LinkedHashSet<>();
 
     @Override
-    public void addSettlement(Player player, PropertyPosition position) {
+    public void addSettlement(final Player player, final PropertyPosition position) {
         if (properies.stream().anyMatch(r -> r.getPosition().equals(position))) {
             throw new IllegalArgumentException("Settlement was already present");
         }
@@ -23,13 +25,12 @@ public class PropertyManagerImpl implements PropertyManager {
     }
 
     @Override
-    public Set<Property> getPlayerProperties(Player player) {
+    public Set<Property> getPlayerProperties(final Player player) {
         return properies.stream().filter(r -> r.getOwner().equals(player)).collect(Collectors.toSet());
     }
 
     @Override
-    public void upgradeToCity(PropertyPosition position) {
-
+    public void upgradeToCity(final PropertyPosition position) {
         final Optional<Property> property = properies.stream().filter(p -> p.getPosition().equals(position))
                 .findFirst();
         if (property.isPresent()) {

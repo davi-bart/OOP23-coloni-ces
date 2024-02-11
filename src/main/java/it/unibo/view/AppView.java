@@ -31,14 +31,16 @@ public class AppView {
 
     /**
      * Constructor of AppView.
+     * 
+     * @param stage the stage
      */
     public AppView(final Stage stage) {
         mainController = new MainControllerImpl(players);
         boardView = new BoardView(mainController, () -> {
             try {
                 draw();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                System.exit(0);
             }
         });
         this.stage = stage;

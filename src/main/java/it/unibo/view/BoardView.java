@@ -11,9 +11,13 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.common.api.PropertyPosition;
+import it.unibo.common.api.PropertyType;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -21,8 +25,10 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import java.util.Locale;
 
 /**
  * Board view.
@@ -37,11 +43,12 @@ public final class BoardView {
      * Constructor of BoardView.
      * 
      * @param controller the board controller
+     * @param redraw     the function to redraw the view
      */
     public BoardView(final MainController controller, final Runnable redraw) {
         this.controller = controller;
         this.redraw = redraw;
-        final var colors = List.of(Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW);
+        final var colors = List.of(Color.RED, Color.BLUE, Color.LIMEGREEN, Color.MAGENTA);
         this.controller.getPlayerNames().stream().forEach(p -> playerColors.put(p, colors.get(playerColors.size())));
     }
 
@@ -113,17 +120,31 @@ public final class BoardView {
             final String playerName = entry.getKey();
             final Color color = entry.getValue();
             this.controller.getPlayerPropertyPositions(playerName).forEach(pos -> {
-                properties.add(drawProperty(pos, color));
-                if (allProperties.contains(pos)) {
-                    allProperties.remove(pos);
+                properties.add(drawProperty(pos.getLeft(), pos.getRight(), color));
+                if (allProperties.contains(pos.getLeft())) {
+                    allProperties.remove(pos.getLeft());
                 }
             });
         });
-        allProperties.forEach(pos -> properties.add(drawProperty(pos, Color.GRAY)));
+        allProperties.forEach(pos -> properties.add(drawEmptyProperty(pos, Color.GRAY)));
         return properties;
     }
 
-    private Circle drawProperty(final PropertyPosition position, final Color color) {
+    private Circle drawProperty(final PropertyPosition position, final PropertyType propertyType, final Color color) {
+        final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
+                position.getCoordinates().getCol());
+        final var center = Utility
+                .getPropertyCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight())
+                .get(position.getDirection());
+        final Circle circle = new Circle(center.getKey(), center.getValue(), 24);
+
+        final Image img = new Image("imgs/property/" + propertyType.toString().toLowerCase(Locale.US) + ".png");
+        circle.setFill(new ImagePattern(img));
+        circle.setEffect(new Lighting(new Light.Distant(45, 45, color)));
+        return circle;
+    }
+
+    private Circle drawEmptyProperty(final PropertyPosition position, final Color color) {
         final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
                 position.getCoordinates().getCol());
         final var center = Utility

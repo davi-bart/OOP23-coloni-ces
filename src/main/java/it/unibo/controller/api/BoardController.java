@@ -50,7 +50,7 @@ public interface BoardController {
     /**
      * get the player's property positions.
      * 
-     * @param playerName the player
+     * @param player the player
      * @return the set of the property positions and their types
      */
     Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(Player player);
