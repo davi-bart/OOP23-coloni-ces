@@ -22,12 +22,14 @@ import it.unibo.common.impl.RoadPositionImpl;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;
+import it.unibo.controller.api.TurnController;
 import it.unibo.model.api.GameManager;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.ResourceOwner;
 import it.unibo.model.impl.BankImpl;
 import it.unibo.model.impl.GameManagerImpl;
 import it.unibo.model.impl.ResourceManagerImpl;
+import it.unibo.model.impl.TurnManagerImpl;
 
 /**
  * Main controller implementation.
@@ -36,6 +38,7 @@ public final class MainControllerImpl implements MainController {
     private final GameManager gameManager;
     private final BoardController boardController;
     private final ResourceController resourceController;
+    private final TurnController turnController;
 
     /**
      * Constructor of the controller.
@@ -50,6 +53,7 @@ public final class MainControllerImpl implements MainController {
         final BankImpl bank = new BankImpl(19);
         owners.add(bank);
         this.resourceController = new ResourceControllerImpl(new ResourceManagerImpl(owners), bank);
+        this.turnController = new TurnControllerImpl(new TurnManagerImpl(this.gameManager.getPlayers()));
     }
 
     @Override
@@ -116,6 +120,21 @@ public final class MainControllerImpl implements MainController {
         return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
     }
+
+	@Override
+	public String getCurrentPlayer() {
+		return this.turnController.getCurrentPlayerTurn().getName();
+	}
+
+	@Override
+	public void endTurn() {
+		this.turnController.endTurn();
+	}
+
+	@Override
+	public Pair<Integer, Integer> rollDie() {
+		return this.turnController.rollDie();
+	}
 
     @Override
     public void buildSettlement(PropertyPosition position) {

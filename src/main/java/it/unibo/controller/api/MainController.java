@@ -105,4 +105,20 @@ public interface MainController {
      * @param position where to build the city.
      */
     void buildCity(PropertyPosition position);
+
+    /**
+     * @return get the name of the player whose turn it currently is.
+     */
+    String getCurrentPlayer();
+
+    /**
+     * end the current turn and updates the current player.
+     */
+    void endTurn();
+
+    /**
+     * 
+     * @return the dice roll.
+     */
+    Pair<Integer, Integer> rollDie();
 }

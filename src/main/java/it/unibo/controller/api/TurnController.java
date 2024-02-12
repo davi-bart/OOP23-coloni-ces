@@ -1,11 +1,13 @@
-package it.unibo.model.api;
+package it.unibo.controller.api;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import it.unibo.model.api.Player;
+
 /**
- * interface of TurnManager.
+ * interface of TurnController.
  */
-public interface TurnManager {
+public interface TurnController {
 
     /**
      * 

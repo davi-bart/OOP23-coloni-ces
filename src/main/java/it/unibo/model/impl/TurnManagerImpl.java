@@ -45,7 +45,7 @@ public final class TurnManagerImpl implements TurnManager {
     }
 
     @Override
-    public Pair<Integer, Integer> diceRoller() {
+    public Pair<Integer, Integer> rollDie() {
         return new ImmutablePair<Integer, Integer>(random.nextInt(MIN_ROLL, MAX_ROLL + 1),
                 random.nextInt(MIN_ROLL, MAX_ROLL + 1));
     }
