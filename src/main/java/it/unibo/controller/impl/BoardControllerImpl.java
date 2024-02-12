@@ -59,17 +59,17 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public void buildSettlement(PropertyPosition position, Player player) {
+    public void buildSettlement(final PropertyPosition position, final Player player) {
         this.board.buildSettlement(position, player);
     }
 
     @Override
-    public void buildCity(PropertyPosition position, Player player) {
+    public void buildCity(final PropertyPosition position, final Player player) {
         this.board.buildCity(position, player);
     }
 
     @Override
-    public PropertyType getPropertyType(PropertyPosition position) {
+    public PropertyType getPropertyType(final PropertyPosition position) {
         return this.board.getPropertyType(position);
     }
 }

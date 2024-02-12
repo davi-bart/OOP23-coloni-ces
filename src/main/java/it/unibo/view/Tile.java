@@ -1,7 +1,11 @@
 package it.unibo.view;
 
 import java.util.Locale;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import it.unibo.common.api.TerrainType;
+import it.unibo.common.api.TileCoordinates;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -18,14 +22,15 @@ public class Tile extends Group {
     /**
      * Constructor.
      * 
-     * @param radius      radius
-     * @param x           x coordinate of the center
-     * @param y           y coordinate of the center
+     * @param coordinates coordinates of the tile
      * @param terrainType terrain type
      * @param number      number on the tile
      */
-    public Tile(final double radius, final double x, final double y, final TerrainType terrainType, final int number) {
-        final Hexagon hexagon = new Hexagon(radius, x, y);
+    public Tile(final TileCoordinates coordinates, final TerrainType terrainType, final int number) {
+        final Pair<Double, Double> pos = Utility.getPositionFromTile(coordinates.getRow(), coordinates.getCol());
+        final double x = pos.getLeft();
+        final double y = pos.getRight();
+        final Hexagon hexagon = new Hexagon(Utility.HEXAGON_RADIUS, x, y);
         hexagon.setFill(
                 new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
         super.getChildren().add(hexagon);

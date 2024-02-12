@@ -11,7 +11,7 @@ import it.unibo.model.api.TurnManager;
  */
 public final class TurnControllerImpl implements TurnController {
 
-    private TurnManager turnManager;
+    private final TurnManager turnManager;
 
     /**
      * Constructori of TurnControllerImpl.

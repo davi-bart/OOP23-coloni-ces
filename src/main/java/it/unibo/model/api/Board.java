@@ -72,7 +72,7 @@ public interface Board {
     void setRobberPosition(TileCoordinates coordinates);
 
     /**
-     * Build a settlement in the specified position
+     * Build a settlement in the specified position.
      * 
      * @param position position
      * @param player   owner of the settlement
@@ -80,7 +80,7 @@ public interface Board {
     void buildSettlement(PropertyPosition position, Player player);
 
     /**
-     * Build a city in the specified position
+     * Build a city in the specified position.
      * 
      * @param position position
      * @param player   owner of the settlement

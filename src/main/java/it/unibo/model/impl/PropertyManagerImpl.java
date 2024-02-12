@@ -40,7 +40,7 @@ public final class PropertyManagerImpl implements PropertyManager {
     }
 
     @Override
-    public PropertyType getPropertyType(PropertyPosition position) {
+    public PropertyType getPropertyType(final PropertyPosition position) {
         return properies.stream().filter(p -> p.getPosition().equals(position))
                 .findFirst().map(p -> p.getPropertyType()).orElse(PropertyType.EMPTY);
     }

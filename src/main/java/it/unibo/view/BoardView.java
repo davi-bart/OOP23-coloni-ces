@@ -5,13 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.PropertyType;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
@@ -30,17 +27,14 @@ import javafx.scene.shape.Line;
 public final class BoardView {
     private final MainController controller;
     private final Map<String, Color> playerColors = new HashMap<>();
-    private final Runnable redraw;
 
     /**
      * Constructor of BoardView.
      * 
      * @param controller the board controller
-     * @param redraw     the function to redraw the view
      */
-    public BoardView(final MainController controller, final Runnable redraw) {
+    public BoardView(final MainController controller) {
         this.controller = controller;
-        this.redraw = redraw;
         final var colors = List.of(Color.RED, Color.BLUE, Color.LIMEGREEN, Color.MAGENTA);
         this.controller.getPlayerNames().stream().forEach(p -> playerColors.put(p, colors.get(playerColors.size())));
     }
@@ -65,11 +59,7 @@ public final class BoardView {
     private List<Group> drawTiles() {
         final List<Group> tiles = new ArrayList<>();
         this.controller.getTilePositions().forEach(coords -> {
-            final Pair<Double, Double> pos = Utility.getPositionFromTile(coords.getRow(), coords.getCol());
-            final Tile tile = new Tile(Utility.HEXAGON_RADIUS,
-                    pos.getLeft(), pos.getRight(), controller.getTileTerrainType(coords),
-                    controller.getTileNumber(coords));
-            tiles.add(tile);
+            tiles.add(new Tile(coords, controller.getTileTerrainType(coords), controller.getTileNumber(coords)));
         });
         return tiles;
     }
@@ -106,23 +96,8 @@ public final class BoardView {
 
     private List<PropertyView> drawProperties() {
         final List<PropertyView> properties = new ArrayList<>();
-        final Set<PropertyPosition> allProperties = this.controller.getAllPropertyPositions();
-        this.playerColors.entrySet().stream().forEach(entry -> {
-            final String playerName = entry.getKey();
-            final Color color = entry.getValue();
-            this.controller.getPlayerPropertyPositions(playerName).forEach(pos -> {
-                final PropertyPosition propertyPosition = pos.getLeft();
-                final PropertyType propertyType = pos.getRight();
-                properties
-                        .add(new PropertyView(controller, propertyPosition, propertyType, color, () -> color));
-                if (allProperties.contains(pos.getLeft())) {
-                    allProperties.remove(pos.getLeft());
-                }
-            });
-        });
-        allProperties.forEach(pos -> properties.add(
-                new PropertyView(controller, pos, PropertyType.EMPTY, Color.LIGHTGRAY,
-                        () -> this.playerColors.get(controller.getCurrentPlayer()))));
+        this.controller.getAllPropertyPositions().forEach(pos -> properties.add(
+                new PropertyView(controller, pos, () -> this.playerColors.get(controller.getCurrentPlayer()))));
         return properties;
     }
 }

@@ -81,17 +81,17 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public void buildSettlement(PropertyPosition position, Player player) {
+    public void buildSettlement(final PropertyPosition position, final Player player) {
         this.propertyManager.addSettlement(position, player);
     }
 
     @Override
-    public void buildCity(PropertyPosition position, Player player) {
+    public void buildCity(final PropertyPosition position, final Player player) {
         this.propertyManager.upgradeToCity(position);
     }
 
     @Override
-    public PropertyType getPropertyType(PropertyPosition position) {
+    public PropertyType getPropertyType(final PropertyPosition position) {
         return propertyManager.getPropertyType(position);
     }
 }

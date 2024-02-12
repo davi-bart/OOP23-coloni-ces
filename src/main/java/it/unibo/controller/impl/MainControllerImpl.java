@@ -137,17 +137,17 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public void buildSettlement(PropertyPosition position) {
+    public void buildSettlement(final PropertyPosition position) {
         this.boardController.buildSettlement(position, getPlayerByName("Lucone"));
     }
 
     @Override
-    public void buildCity(PropertyPosition position) {
+    public void buildCity(final PropertyPosition position) {
         this.boardController.buildCity(position, getPlayerByName("Lucone"));
     }
 
     @Override
-    public PropertyType getPropertyType(PropertyPosition position) {
+    public PropertyType getPropertyType(final PropertyPosition position) {
         return this.boardController.getPropertyType(position);
     }
 }

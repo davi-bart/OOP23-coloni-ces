@@ -78,6 +78,8 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
      * index and its length.
      * The odd rows are inteded to be shifted of half a column, in order to fit
      * between the hexagons on top and on.
+     * 
+     * @return the list of the tile coordinates
      */
     private List<TileCoordinates> getCoordinates() {
         final List<TileCoordinates> out = new ArrayList<>();

@@ -14,6 +14,9 @@ import it.unibo.common.api.RoadDirection;
  */
 public final class Utility {
     private static final int SIDES = 6;
+    /**
+     * The radius of the hexagon in pixels.
+     */
     public static final int HEXAGON_RADIUS = 70;
 
     private Utility() {
