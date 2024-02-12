@@ -91,4 +91,18 @@ public interface MainController {
      * @return the set of the property positions
      */
     Set<PropertyPosition> getAllPropertyPositions();
+
+    /**
+     * Build a settlement in the given position.
+     * 
+     * @param position where to build the settlement.
+     */
+    void buildSettlement(PropertyPosition position);
+
+    /**
+     * Build a city in the given position.
+     * 
+     * @param position where to build the city.
+     */
+    void buildCity(PropertyPosition position);
 }

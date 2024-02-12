@@ -116,4 +116,14 @@ public final class MainControllerImpl implements MainController {
         return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
     }
+
+    @Override
+    public void buildSettlement(PropertyPosition position) {
+        this.boardController.buildSettlement(position, getPlayerByName("Lucone"));
+    }
+
+    @Override
+    public void buildCity(PropertyPosition position) {
+        this.boardController.buildCity(position, getPlayerByName("Lucone"));
+    }
 }

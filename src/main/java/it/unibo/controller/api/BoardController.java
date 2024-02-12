@@ -54,4 +54,21 @@ public interface BoardController {
      * @return the set of the property positions and their types
      */
     Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(Player player);
+
+    /**
+     * Build a settlement in the given position.
+     * 
+     * @param position where to build the settlement.
+     * @param player   who own the settlement.
+     */
+    void buildSettlement(PropertyPosition position, Player player);
+
+    /**
+     * Build a city in the given position.
+     * 
+     * @param position where to build the city.
+     * @param player   who own the city.
+     */
+    void buildCity(PropertyPosition position, Player player);
+
 }

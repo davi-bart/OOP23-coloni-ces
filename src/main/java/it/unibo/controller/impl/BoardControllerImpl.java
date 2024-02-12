@@ -57,4 +57,14 @@ public final class BoardControllerImpl implements BoardController {
                 .map(p -> new ImmutablePair<PropertyPosition, PropertyType>(p.getPosition(), p.getPropertyType()))
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public void buildSettlement(PropertyPosition position, Player player) {
+        this.board.buildSettlement(position, player);
+    }
+
+    @Override
+    public void buildCity(PropertyPosition position, Player player) {
+        this.board.buildCity(position, player);
+    }
 }
