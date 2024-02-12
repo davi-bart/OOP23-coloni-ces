@@ -9,6 +9,9 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.stream.IntStream;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 import it.unibo.common.impl.TileCoordinatesImpl;
@@ -25,16 +28,20 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
     @Override
     public Map<TileCoordinates, Tile> generate() {
         final Map<TileCoordinates, Tile> map = new HashMap<>();
-        final List<TileCoordinates> positions = getPositions();
+        final List<TileCoordinates> positions = getCoordinates();
         final List<TerrainType> terrains = getTerrains();
         final List<Integer> numbers = getNumbers();
 
-        // set the desert tile before starting in order to avoid taking a number
+        /**
+         * A map consists of tiles, each of which has a number and a terrain.
+         * The map is generated taking each time a random triplet of position, terrain
+         * and number.
+         * The desert tile is added separately because it doesn't contain any number.
+         */
         final int desertPositionIndex = rng.nextInt(positions.size());
         map.put(positions.get(desertPositionIndex), new TileImpl(TerrainType.DESERT, -1));
         positions.remove(desertPositionIndex);
 
-        // an entry is generated randomly selecting a triplet of position,terrain,number
         while (!positions.isEmpty()) {
             final int remaining = positions.size();
             final TerrainType terrain = terrains.get(rng.nextInt(remaining));
@@ -66,27 +73,30 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
         return out;
     }
 
-    private List<TileCoordinates> getPositions() {
+    /**
+     * Returns the tile coordinates of a classic Catan map.
+     * 
+     * {@code shape} is a list containing, for the i-th row, its starting column
+     * index and its length.
+     * The odd rows are inteded to be shifted of half a column, in order to fit
+     * between the hexagons on top and on.
+     */
+    private List<TileCoordinates> getCoordinates() {
         final List<TileCoordinates> out = new ArrayList<>();
-        // each row is mapped to start and end indexes (0,3->(i,0),(i,1),(i,2),(i,3))
-        final Map<Integer, TileCoordinates> indexes = new HashMap<>();
-        final int minCols = 3, maxCols = 5, minX = 0, maxX = 4;
-        final Iterator<Integer> it = IntStream.iterate(0, i -> i + 1).limit(2 * (maxCols - minCols) + 1).iterator();
-        while (it.hasNext()) {
-            Integer value = it.next();
-            final int index = value;
-            if (value > maxCols - minCols) {
-                value = 2 * (maxCols - minCols) - value;
-            }
-            value += minCols;
-            indexes.put(index, new TileCoordinatesImpl(index == minX || index == maxX ? 1 : 0,
-                    index == minX || index == maxX ? value + 1 : value));
-        }
-        for (final Entry<Integer, TileCoordinates> entry : indexes.entrySet()) {
-            for (int i = entry.getValue().getRow(); i < entry.getValue().getCol(); i++) {
-                out.add(new TileCoordinatesImpl(entry.getKey(), i));
-            }
-        }
+        final List<Pair<Integer, Integer>> shape = new ArrayList<>();
+        // CHECKSTYLE: MagicNumber OFF
+        shape.add(new ImmutablePair<>(1, 3));
+        shape.add(new ImmutablePair<>(0, 4));
+        shape.add(new ImmutablePair<>(0, 5));
+        shape.add(new ImmutablePair<>(0, 4));
+        shape.add(new ImmutablePair<>(1, 3));
+        // CHECKSTYLE: MagicNumber ON
+        IntStream.range(0, shape.size()).forEach(row -> {
+            final Pair<Integer, Integer> pair = shape.get(row);
+            final int index = pair.getLeft();
+            final int length = pair.getRight();
+            IntStream.range(index, index + length).forEach(col -> out.add(new TileCoordinatesImpl(row, col)));
+        });
         return out;
     }
 

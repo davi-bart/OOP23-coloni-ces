@@ -39,6 +39,13 @@ public final class RoadManagerImpl implements RoadManager {
         if (getPlayerRoads(player).isEmpty()) {
             return 0;
         }
+        /**
+         * In order to find the longest road, a graph is created with player roads as
+         * vertexes. Each pair of nearby roads is connected with an edge. Then a BFS is
+         * performed for each vertex, in order to find the furthest road from the given
+         * one. Finally, the maximum value is taken and the value is incremented because
+         * we count the vertexes instead of the edges.
+         */
         final Graph<Road, DefaultEdge> graph = new DefaultUndirectedGraph<>(DefaultEdge.class);
         final Set<Road> playerRoads = roads.stream().filter(road -> road.getOwner().equals(player))
                 .collect(Collectors.toSet());
