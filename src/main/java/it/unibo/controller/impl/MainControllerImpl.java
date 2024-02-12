@@ -140,19 +140,20 @@ public final class MainControllerImpl implements MainController {
 	@Override
 	public void buildSettlement(final PropertyPosition position) {
 		this.boardController.buildSettlement(position, turnController.getCurrentPlayerTurn());
-		this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getSettlementRecipes());
+		this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
+				Recipes.getSettlementResources());
 	}
 
 	@Override
 	public void buildCity(final PropertyPosition position) {
 		this.boardController.buildCity(position, turnController.getCurrentPlayerTurn());
-		this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getCityRecipes());
+		this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getCityResources());
 	}
 
 	@Override
-	public void buildRoad(RoadPosition position) {
+	public void buildRoad(final RoadPosition position) {
 		this.boardController.buildRoad(position, turnController.getCurrentPlayerTurn());
-		this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getRoadRecipes());
+		this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getRoadResources());
 	}
 
 	@Override

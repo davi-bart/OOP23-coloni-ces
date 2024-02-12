@@ -54,24 +54,24 @@ public final class ResourceControllerImpl implements ResourceController {
 	}
 
 	@Override
-	public boolean canBuildSettlemet(ResourceOwner player) {
-		return resourceManager.hasResources(player, Recipes.getSettlementRecipes());
+	public boolean canBuildSettlemet(final ResourceOwner player) {
+		return resourceManager.hasResources(player, Recipes.getSettlementResources());
 	}
 
 	@Override
-	public boolean canBuildCity(ResourceOwner player) {
-		return resourceManager.hasResources(player, Recipes.getCityRecipes());
+	public boolean canBuildCity(final ResourceOwner player) {
+		return resourceManager.hasResources(player, Recipes.getCityResources());
 	}
 
 	@Override
-	public void removeResources(ResourceOwner owner, Map<ResourceType, Integer> resources) {
-		for (Entry<ResourceType, Integer> resource : resources.entrySet()) {
+	public void removeResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
+		for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
 			resourceManager.removeResources(owner, resource.getKey(), resource.getValue());
 		}
 	}
 
 	@Override
-	public boolean canBuildRoad(ResourceOwner player) {
-		return resourceManager.hasResources(player, Recipes.getRoadRecipes());
+	public boolean canBuildRoad(final ResourceOwner player) {
+		return resourceManager.hasResources(player, Recipes.getRoadResources());
 	}
 }

@@ -8,15 +8,11 @@ import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextBoundsType;
 
 /**
  * View of a tile.

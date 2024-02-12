@@ -12,9 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map.Entry;
 
-import it.unibo.common.api.ResourceType;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.impl.MainControllerImpl;
 
@@ -87,10 +85,8 @@ public class AppView {
 	 */
 	private HBox bankResources() {
 		final HBox bankVault = new HBox();
-		for (final Entry<ResourceType, Integer> resource : mainController
-				.getBankResources().entrySet()) {
-			bankVault.getChildren().add(resouceView.getResourceLabelAmount(resource.getKey(), (resource.getValue())));
-		}
+		mainController.getBankResources().entrySet().forEach(entry -> bankVault.getChildren()
+				.add(resouceView.getResourceLabelAmount(entry.getKey(), entry.getValue())));
 		return bankVault;
 	}
 
@@ -101,10 +97,10 @@ public class AppView {
 	 */
 	private HBox playerHand() {
 		final HBox playerHand = new HBox();
-		for (final Entry<ResourceType, Integer> resource : mainController
-				.getPlayerResources(mainController.getCurrentPlayer()).entrySet()) {
-			playerHand.getChildren().add(resouceView.getResourceLabelAmount(resource.getKey(), (resource.getValue())));
-		}
+		mainController
+				.getPlayerResources(mainController.getCurrentPlayer()).entrySet()
+				.forEach(entry -> playerHand.getChildren()
+						.add(resouceView.getResourceLabelAmount(entry.getKey(), entry.getValue())));
 		return playerHand;
 	}
 

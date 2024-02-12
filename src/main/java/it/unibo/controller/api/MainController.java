@@ -121,10 +121,19 @@ public interface MainController {
 	 */
 	void buildRoad(RoadPosition position);
 
+	/**
+	 * @return whether the current player can build a settlement
+	 */
 	boolean canBuildSettlemet();
 
+	/**
+	 * @return whether the current player can build a city
+	 */
 	boolean canBuildCity();
 
+	/**
+	 * @return whether the current player can build a road
+	 */
 	boolean canBuildRoad();
 
 	/**

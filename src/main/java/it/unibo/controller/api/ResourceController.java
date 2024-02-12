@@ -36,12 +36,30 @@ public interface ResourceController {
 	 */
 	boolean hasResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
 
+	/**
+	 * @param player
+	 * @return whether {@code player} can build a settlement
+	 */
 	boolean canBuildSettlemet(ResourceOwner player);
 
+	/**
+	 * @param player
+	 * @return whether {@code player} can build a city
+	 */
 	boolean canBuildCity(ResourceOwner player);
-	
+
+	/**
+	 * @param player
+	 * @return whether {@code player} can build a road
+	 */
 	boolean canBuildRoad(ResourceOwner player);
 
-	void removeResources(final ResourceOwner owner, Map<ResourceType, Integer> resources);
+	/**
+	 * Removes resources {@code resources} from player {@code owner}.
+	 * 
+	 * @param owner     owner of the resources
+	 * @param resources map from resource type to amount
+	 */
+	void removeResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
 
 }
