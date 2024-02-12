@@ -23,76 +23,79 @@ import javafx.scene.shape.Circle;
  * View of a property.
  */
 public final class PropertyView extends Circle {
-    private final MainController controller;
-    private final PropertyPosition propertyPosition;
-    private PropertyType propertyType;
-    private Color currentColor;
-    private final Supplier<Color> getCurrentColor;
+	private final MainController controller;
+	private final PropertyPosition propertyPosition;
+	private PropertyType propertyType;
+	private Color currentColor;
+	private final Supplier<Color> getCurrentColor;
 
-    /**
-     * Constructor.
-     * 
-     * @param controller       the main controller
-     * @param propertyPosition the position of the property
-     * @param getCurrentColor  the supplier of the current color
-     */
-    public PropertyView(final MainController controller, final PropertyPosition propertyPosition,
-            final Supplier<Color> getCurrentColor) {
-        this.controller = controller;
-        this.propertyPosition = propertyPosition;
-        this.propertyType = PropertyType.EMPTY;
-        this.currentColor = Color.GRAY;
-        this.getCurrentColor = getCurrentColor;
-        draw();
-    }
+	/**
+	 * Constructor.
+	 * 
+	 * @param controller       the main controller
+	 * @param propertyPosition the position of the property
+	 * @param getCurrentColor  the supplier of the current color
+	 */
+	public PropertyView(final MainController controller, final PropertyPosition propertyPosition,
+			final Supplier<Color> getCurrentColor) {
+		this.controller = controller;
+		this.propertyPosition = propertyPosition;
+		this.propertyType = PropertyType.EMPTY;
+		this.currentColor = Color.GRAY;
+		this.getCurrentColor = getCurrentColor;
+		draw();
+	}
 
-    private void draw() {
-        setCircle(propertyPosition);
-        if (propertyType == PropertyType.EMPTY) {
-            super.setRadius(12);
-            super.setFill(currentColor);
-            super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                if (warningPropertyStage()) {
-                    this.currentColor = getCurrentColor.get();
-                    controller.buildSettlement(propertyPosition);
-                    this.propertyType = controller.getPropertyType(propertyPosition);
-                    draw();
-                }
-            });
-        } else if (propertyType == PropertyType.SETTLEMENT) {
-            super.setRadius(26);
-            final Image img = new Image("imgs/property/settlement.png");
-            super.setFill(new ImagePattern(img));
-            super.setEffect(new Lighting(new Light.Distant(45, 45, currentColor)));
-            super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                if (warningPropertyStage()) {
-                    controller.buildCity(propertyPosition);
-                    this.propertyType = controller.getPropertyType(propertyPosition);
-                    draw();
-                }
-            });
-        } else if (propertyType == PropertyType.CITY) {
-            super.setRadius(26);
-            final Image img = new Image("imgs/property/city.png");
-            super.setFill(new ImagePattern(img));
-            super.setEffect(new Lighting(new Light.Distant(45, 45, currentColor)));
-        }
-    }
+	private void draw() {
+		setCircle(propertyPosition);
+		if (propertyType == PropertyType.EMPTY) {
+			super.setRadius(12);
+			super.setFill(currentColor);
+			super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+				if (warningPropertyAlert()) {
+					this.currentColor = getCurrentColor.get();
+					controller.buildSettlement(propertyPosition);
+					this.propertyType = controller.getPropertyType(propertyPosition);
+					draw();
+				}
+			});
+		} else if (propertyType == PropertyType.SETTLEMENT) {
+			super.setRadius(26);
+			final Image img = new Image("imgs/property/settlement.png");
+			super.setFill(new ImagePattern(img));
+			super.setEffect(new Lighting(new Light.Distant(45, 45, currentColor)));
+			super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+				if (warningPropertyAlert()) {
+					controller.buildCity(propertyPosition);
+					this.propertyType = controller.getPropertyType(propertyPosition);
+					draw();
+				}
+			});
 
-    private void setCircle(final PropertyPosition position) {
-        final Pair<Double, Double> pos = Utility.getPositionFromTile(position.getCoordinates().getRow(),
-                position.getCoordinates().getCol());
-        final var center = Utility
-                .getPropertyCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
-                        position.getDirection());
-        super.setCenterX(center.getLeft());
-        super.setCenterY(center.getRight());
-    }
+		} else if (propertyType == PropertyType.CITY) {
+			super.setRadius(26);
+			final Image img = new Image("imgs/property/city.png");
+			super.setFill(new ImagePattern(img));
+			super.setEffect(new Lighting(new Light.Distant(45, 45, currentColor)));
+			super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+			});
+		}
+	}
 
-    private boolean warningPropertyStage() {
-        final Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText("Are you sure to build here?");
-        final Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get().equals(ButtonType.OK);
-    }
+	private void setCircle(final PropertyPosition position) {
+		final Pair<Double, Double> pos = Utility.getPositionFromTile(position.getCoordinates().getRow(),
+				position.getCoordinates().getCol());
+		final var center = Utility
+				.getPropertyCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
+						position.getDirection());
+		super.setCenterX(center.getLeft());
+		super.setCenterY(center.getRight());
+	}
+
+	private boolean warningPropertyAlert() {
+		final Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setHeaderText("Are you sure to build here?");
+		final Optional<ButtonType> result = alert.showAndWait();
+		return result.isPresent() && result.get().equals(ButtonType.OK);
+	}
 }

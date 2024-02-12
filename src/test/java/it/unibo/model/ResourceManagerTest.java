@@ -71,7 +71,7 @@ class ResourceManagerTest {
         resourceManager.addResources(PLAYER2, ResourceType.ORE, 5);
         recivingResource.put(ResourceType.BRICK, 2);
         recivingResource.put(ResourceType.WOOL, 3);
-        assertTrue(resourceManager.canTrade(PLAYER1, recivingResource));
+        assertTrue(resourceManager.hasResources(PLAYER1, recivingResource));
         givingResource.put(ResourceType.LUMBER, 2);
         givingResource.put(ResourceType.ORE, 4);
         resourceManager.acceptTrade(PLAYER2, PLAYER1, givingResource, recivingResource);

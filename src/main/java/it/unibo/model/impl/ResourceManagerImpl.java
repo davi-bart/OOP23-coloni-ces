@@ -66,9 +66,9 @@ public class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public final boolean canTrade(final ResourceOwner reciver, final Map<ResourceType, Integer> tradeResource) {
-        for (final Entry<ResourceType, Integer> resource : tradeResource.entrySet()) {
-            if (resource.getValue() > getResource(reciver, resource.getKey())) {
+    public final boolean hasResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
+        for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
+            if (resource.getValue() > getResource(owner, resource.getKey())) {
                 return false;
             }
         }
