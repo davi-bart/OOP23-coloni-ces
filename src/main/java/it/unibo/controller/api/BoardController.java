@@ -79,4 +79,12 @@ public interface BoardController {
      */
     void buildCity(PropertyPosition position, Player player);
 
+    /**
+     * Builds the road at position {@code position}.
+     * 
+     * @param position position of the road
+     * @param player   owner of the road
+     */
+    void buildRoad(RoadPosition position, Player player);
+
 }

@@ -21,13 +21,13 @@ class RoadManagerTest {
 
         final RoadManager roadManager = new RoadManagerImpl();
         assertEquals(0, roadManager.getLongestRoadLength(player1));
-        roadManager.addRoad(player1, new RoadPositionImpl(new TileCoordinatesImpl(0, 1), RoadDirection.DOWNLEFT));
+        roadManager.addRoad(new RoadPositionImpl(new TileCoordinatesImpl(0, 1), RoadDirection.DOWNLEFT), player1);
         assertEquals(1, roadManager.getLongestRoadLength(player1));
-        assertThrows(IllegalArgumentException.class, () -> roadManager.addRoad(player1,
-                new RoadPositionImpl(new TileCoordinatesImpl(1, 0), RoadDirection.UPRIGHT)));
-        roadManager.addRoad(player1, new RoadPositionImpl(new TileCoordinatesImpl(1, 0), RoadDirection.RIGHT));
+        assertThrows(IllegalArgumentException.class, () -> roadManager.addRoad(
+                new RoadPositionImpl(new TileCoordinatesImpl(1, 0), RoadDirection.UPRIGHT), player1));
+        roadManager.addRoad(new RoadPositionImpl(new TileCoordinatesImpl(1, 0), RoadDirection.RIGHT), player1);
         assertEquals(2, roadManager.getLongestRoadLength(player1));
-        roadManager.addRoad(player1, new RoadPositionImpl(new TileCoordinatesImpl(0, 0), RoadDirection.UPLEFT));
+        roadManager.addRoad(new RoadPositionImpl(new TileCoordinatesImpl(0, 0), RoadDirection.UPLEFT), player1);
         assertEquals(2, roadManager.getLongestRoadLength(player1));
     }
 

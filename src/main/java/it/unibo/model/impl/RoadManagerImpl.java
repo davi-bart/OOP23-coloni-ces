@@ -22,7 +22,7 @@ public final class RoadManagerImpl implements RoadManager {
     private final Set<Road> roads = new LinkedHashSet<>();
 
     @Override
-    public void addRoad(final Player player, final RoadPosition position) {
+    public void addRoad(final RoadPosition position, final Player player) {
         if (roads.stream().anyMatch(r -> r.getPosition().equals(position))) {
             throw new IllegalArgumentException("Road was already present");
         }

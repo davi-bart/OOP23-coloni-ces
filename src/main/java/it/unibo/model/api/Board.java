@@ -6,6 +6,7 @@ import java.util.Set;
 
 import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.PropertyType;
+import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 
@@ -86,4 +87,12 @@ public interface Board {
      * @param player   owner of the settlement
      */
     void buildCity(PropertyPosition position, Player player);
+
+    /**
+     * Builds the road at position {@code position}.
+     * 
+     * @param position position of the road
+     * @param player   owner of the road
+     */
+    void buildRoad(RoadPosition position, Player player);
 }

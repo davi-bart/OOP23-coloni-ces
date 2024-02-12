@@ -7,6 +7,7 @@ import java.util.Set;
 
 import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.PropertyType;
+import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 import it.unibo.model.api.Board;
@@ -93,5 +94,10 @@ public final class BoardImpl implements Board {
     @Override
     public PropertyType getPropertyType(final PropertyPosition position) {
         return propertyManager.getPropertyType(position);
+    }
+
+    @Override
+    public void buildRoad(final RoadPosition position, final Player player) {
+        roadManager.addRoad(position, player);
     }
 }

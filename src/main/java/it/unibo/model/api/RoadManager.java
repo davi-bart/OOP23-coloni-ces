@@ -12,10 +12,10 @@ public interface RoadManager {
     /**
      * Adds a road.
      * 
-     * @param player   the player who owns the road
      * @param position the position of the road
+     * @param player   the player who owns the road
      */
-    void addRoad(Player player, RoadPosition position);
+    void addRoad(RoadPosition position, Player player);
 
     /**
      * @param player

@@ -5,11 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import it.unibo.common.api.RoadPosition;
 import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
 import javafx.scene.layout.Border;
@@ -66,32 +62,9 @@ public final class BoardView {
 
     private List<Line> drawRoads() {
         final List<Line> roads = new ArrayList<>();
-        final Set<RoadPosition> allRoads = this.controller.getAllRoadPositions();
-        this.playerColors.entrySet().stream().forEach(entry -> {
-            final String playerName = entry.getKey();
-            final Color color = entry.getValue();
-            this.controller.getPlayerRoadPositions(playerName).forEach(pos -> {
-                roads.add(drawRoad(pos, color));
-                if (allRoads.contains(pos)) {
-                    allRoads.remove(pos);
-                }
-            });
-        });
-        allRoads.forEach(pos -> roads.add(drawRoad(pos, Color.LIGHTGRAY)));
+        this.controller.getAllRoadPositions().forEach(pos -> roads
+                .add(new RoadView(controller, pos, () -> this.playerColors.get(controller.getCurrentPlayer()))));
         return roads;
-    }
-
-    private Line drawRoad(final RoadPosition position, final Color color) {
-        final Pair<Double, Double> pos = Utility.getPositionFromTile(position.getCoordinates().getRow(),
-                position.getCoordinates().getCol());
-        final var endpoints = Utility
-                .getRoadCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
-                        position.getDirection());
-        final Line line = new Line(endpoints.getKey().getKey(), endpoints.getKey().getValue(),
-                endpoints.getValue().getKey(), endpoints.getValue().getValue());
-        line.setStrokeWidth(12);
-        line.setStroke(color);
-        return line;
     }
 
     private List<PropertyView> drawProperties() {
