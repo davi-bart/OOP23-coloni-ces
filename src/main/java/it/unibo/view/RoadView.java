@@ -46,7 +46,7 @@ public final class RoadView extends Line {
         if (!built) {
             super.setStroke(currentColor);
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                if (warningPropertyStage()) {
+                if (controller.canBuildRoad() && warningPropertyStage()) {
                     this.currentColor = getCurrentColor.get();
                     controller.buildRoad(roadPosition);
                     built = true;

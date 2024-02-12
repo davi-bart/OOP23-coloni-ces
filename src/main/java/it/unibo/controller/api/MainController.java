@@ -121,6 +121,12 @@ public interface MainController {
 	 */
 	void buildRoad(RoadPosition position);
 
+	boolean canBuildSettlemet();
+
+	boolean canBuildCity();
+
+	boolean canBuildRoad();
+
 	/**
 	 * @return get the name of the player whose turn it currently is.
 	 */
