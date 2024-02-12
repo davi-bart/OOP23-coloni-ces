@@ -69,17 +69,11 @@ public class AppView {
 		final VBox rightSide = new VBox();
 		final HBox playerHandAndButtons = new HBox();
 		final Button tradeButton = tradeView.getTradeButton();
-		final Button buyRoad = new Button("Strada");
-		final Button buySettlement = new Button("Accampamento");
-		final Button buyCity = new Button("Città");
 
 		final Scene scene = new Scene(root);
 
 		playerHandAndButtons.getChildren().add(setPlayerHand());
 		playerHandAndButtons.getChildren().add(tradeButton);
-		playerHandAndButtons.getChildren().add(buyRoad);
-		playerHandAndButtons.getChildren().add(buySettlement);
-		playerHandAndButtons.getChildren().add(buyCity);
 
 		rightSide.getChildren().add(costCard());
 		rightSide.getChildren().add(setBankResources());
@@ -120,6 +114,11 @@ public class AppView {
 		return playerHand;
 	}
 
+	/**
+	 * Create the cost card legend.
+	 * 
+	 * @return an ImageView representing the cost card.
+	 */
 	private ImageView costCard() {
 		final ImageView costCard = new ImageView("imgs/building-costs/building_cost_no_develop_cards.png");
 		costCard.setFitHeight(DEFAULT_HEIGHT);

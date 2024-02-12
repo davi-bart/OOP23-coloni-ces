@@ -23,7 +23,7 @@ public final class TradeView {
      */
     public Button getTradeButton() {
 
-        final Button tradeButton = new Button("Scambio");
+        final Button tradeButton = new Button("Trade");
         tradeButton.setOnMouseClicked(event -> showTradeStage());
         return tradeButton;
     }
@@ -35,13 +35,13 @@ public final class TradeView {
         final VBox tradePossibility = new VBox();
         final HBox player1Trade = new HBox();
         final Label playerName1 = new Label("PlayerName1");
-        final Label givinResources = new Label("Seleziona risorse da dare");
-        final Label recivingResources = new Label("Seleziona risorse da ricevere");
-        final Button acceptingTrade = new Button("Accetta scambio");
+        final Label givinResources = new Label("Select resource to give");
+        final Label recivingResources = new Label("Select resource to recive");
+        final Button acceptingTrade = new Button("Accept trade");
 
         acceptingTrade.setOnMouseClicked(event -> newStage.close());
 
-        newStage.setTitle("Finestra di scambio");
+        newStage.setTitle("Trade window");
         comp.getChildren().add(givinResources);
         comp.getChildren().add(resourcesView.getAllResources());
         comp.getChildren().add(recivingResources);
