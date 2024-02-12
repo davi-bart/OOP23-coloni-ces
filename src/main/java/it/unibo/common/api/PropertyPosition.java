@@ -13,4 +13,7 @@ public interface PropertyPosition {
      * @return the direction of the property
      */
     PropertyDirection getDirection();
+
+    boolean isNear(PropertyPosition position);
+
 }

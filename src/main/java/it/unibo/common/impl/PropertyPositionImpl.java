@@ -104,6 +104,27 @@ public final class PropertyPositionImpl implements PropertyPosition {
         };
     }
 
+    /**
+     * Return if the property in given position is
+     * near to the current property.
+     * 
+     * @param position given position
+     * @return true if the property in given position is
+     *         near to the current property, false otherwise.
+     */
+    public boolean isNear(final PropertyPosition position) {
+        final List<PropertyPosition> relativePositions = new ArrayList<>();
+        relativePositions.add(position);
+        relativePositions.add(otherProperty());
+        relativePositions.add(otherProperty().otherProperty());
+        final List<PropertyPosition> near = new ArrayList<>();
+        final List<PropertyDirection> directions = List.of(PropertyDirection.values());
+        relativePositions.forEach(pos -> near
+                .add(new PropertyPositionImpl(pos.getCoordinates(),
+                        directions.get((directions.indexOf(pos.getDirection()) + 1) % directions.size()))));
+        return near.contains(position);
+    }
+
     @Override
     public String toString() {
         return "Pos [" + coordinates + "," + direction + "]";
