@@ -1,5 +1,6 @@
 package it.unibo.view;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -7,19 +8,16 @@ import org.apache.commons.lang3.tuple.Pair;
 import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.PropertyType;
 import it.unibo.controller.api.MainController;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class PropertyView extends Circle {
     private final MainController controller;
@@ -83,33 +81,14 @@ public class PropertyView extends Circle {
     }
 
     private boolean warningPropertyStage() {
-        final Label playerChoice = new Label();
-        final Stage warning = new Stage();
-        final VBox components = new VBox();
-        final Label label = new Label();
-        final Button yes = new Button("yes");
-        final Button no = new Button("no");
-
-        label.setText("Are you sure to build here?");
-        components.getChildren().add(label);
-        components.getChildren().add(yes);
-        components.getChildren().add(no);
-
-        yes.setOnMouseClicked(event -> {
-            playerChoice.setText("yes");
-            warning.close();
-        });
-        no.setOnMouseClicked(event -> {
-            playerChoice.setText("no");
-            warning.close();
-        });
-
-        final Scene stageScene = new Scene(components, 500, 300);
-        warning.initModality(Modality.APPLICATION_MODAL);
-        warning.setScene(stageScene);
-        warning.setResizable(false);
-        warning.showAndWait();
-        return playerChoice.getText().equals("yes");
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setHeaderText("Are you sure to build here?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
