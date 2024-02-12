@@ -18,6 +18,7 @@ import javafx.scene.Group;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -133,12 +134,24 @@ public final class BoardView {
         final Image img = new Image("imgs/property/" + propertyType.toString().toLowerCase(Locale.US) + ".png");
         circle.setFill(new ImagePattern(img));
         circle.setEffect(new Lighting(new Light.Distant(45, 45, color)));
+        if (propertyType == PropertyType.SETTLEMENT) {
+            circle.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                System.out.print("CITY");
+                controller.buildCity(position);
+                redraw.run();
+            });
+        }
         return circle;
     }
 
     private Circle drawEmptyProperty(final PropertyPosition position, final Color color) {
         final Circle circle = getPropertyCircle(position, 12);
         circle.setFill(color);
+        circle.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            System.out.print("SETTLEMENT");
+            controller.buildSettlement(position);
+            redraw.run();
+        });
         return circle;
     }
 
