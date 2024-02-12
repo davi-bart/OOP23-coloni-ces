@@ -15,6 +15,9 @@ import it.unibo.common.api.PropertyType;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -25,10 +28,14 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.util.Locale;
 
 /**
@@ -136,9 +143,11 @@ public final class BoardView {
         circle.setEffect(new Lighting(new Light.Distant(45, 45, color)));
         if (propertyType == PropertyType.SETTLEMENT) {
             circle.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                System.out.print("CITY");
-                controller.buildCity(position);
-                redraw.run();
+
+                if (warningPropertyStage()) {
+                    controller.buildCity(position);
+                    redraw.run();
+                }
             });
         }
         return circle;
@@ -148,9 +157,10 @@ public final class BoardView {
         final Circle circle = getPropertyCircle(position, 12);
         circle.setFill(color);
         circle.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-            System.out.print("SETTLEMENT");
-            controller.buildSettlement(position);
-            redraw.run();
+            if (warningPropertyStage()) {
+                controller.buildSettlement(position);
+                redraw.run();
+            }
         });
         return circle;
     }
@@ -169,5 +179,35 @@ public final class BoardView {
         final double xPos = col * 2 * HEXAGON_RADIUS + (row % 2 != 0 ? HEXAGON_RADIUS : 0);
         final double yPos = row * HEXAGON_RADIUS * Math.sqrt(3);
         return new ImmutablePair<>(xPos, yPos);
+    }
+
+    private boolean warningPropertyStage() {
+        final Label playerChoice = new Label();
+        final Stage warning = new Stage();
+        final VBox components = new VBox();
+        final Label label = new Label();
+        final Button yes = new Button("yes");
+        final Button no = new Button("no");
+
+        label.setText("Are you sure to build here?");
+        components.getChildren().add(label);
+        components.getChildren().add(yes);
+        components.getChildren().add(no);
+
+        yes.setOnMouseClicked(event -> {
+            playerChoice.setText("yes");
+            warning.close();
+        });
+        no.setOnMouseClicked(event -> {
+            playerChoice.setText("no");
+            warning.close();
+        });
+
+        final Scene stageScene = new Scene(components, 500, 300);
+        warning.initModality(Modality.APPLICATION_MODAL);
+        warning.setScene(stageScene);
+        warning.setResizable(false);
+        warning.showAndWait();
+        return playerChoice.getText().equals("yes");
     }
 }
