@@ -15,6 +15,7 @@ public final class TileCoordinatesImpl implements TileCoordinates {
 
     /**
      * Constructor.
+     * 
      * @param row
      * @param col
      */

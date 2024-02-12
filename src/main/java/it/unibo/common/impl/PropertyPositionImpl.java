@@ -74,12 +74,13 @@ public final class PropertyPositionImpl implements PropertyPosition {
     }
 
     /**
-     * returns the next position equivalent to the current one, in clockwise order.
+     * returns the next position equivalent to the current one, in counterclockwise
+     * order.
      * 
      * @return the equivalent PropertyPosition
      */
     private PropertyPositionImpl otherProperty() {
-        final int colShift = coordinates.getRow() % 2;
+        final int colShift = (coordinates.getRow() % 2 + 2) % 2;
         return switch (this.direction) {
             case UP -> new PropertyPositionImpl(
                     new TileCoordinatesImpl(coordinates.getRow() - 1, coordinates.getCol() + colShift),
@@ -103,4 +104,8 @@ public final class PropertyPositionImpl implements PropertyPosition {
         };
     }
 
+    @Override
+    public String toString() {
+        return "Pos [" + coordinates + "," + direction + "]";
+    }
 }
