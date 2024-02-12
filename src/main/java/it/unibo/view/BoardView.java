@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.common.api.PropertyPosition;
@@ -15,34 +14,19 @@ import it.unibo.common.api.PropertyType;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-
-import java.util.Locale;
 
 /**
  * Board view.
  */
 public final class BoardView {
-    static final int HEXAGON_RADIUS = 70;
     private final MainController controller;
     private final Map<String, Color> playerColors = new HashMap<>();
     private final Runnable redraw;
@@ -80,8 +64,8 @@ public final class BoardView {
     private List<Group> drawTiles() {
         final List<Group> tiles = new ArrayList<>();
         this.controller.getTilePositions().forEach(coords -> {
-            final Pair<Double, Double> pos = getPositionFromTile(coords.getRow(), coords.getCol());
-            final Tile tile = new Tile(HEXAGON_RADIUS,
+            final Pair<Double, Double> pos = Utility.getPositionFromTile(coords.getRow(), coords.getCol());
+            final Tile tile = new Tile(Utility.HEXAGON_RADIUS,
                     pos.getLeft(), pos.getRight(), controller.getTileTerrainType(coords),
                     controller.getTileNumber(coords));
             tiles.add(tile);
@@ -107,10 +91,10 @@ public final class BoardView {
     }
 
     private Line drawRoad(final RoadPosition position, final Color color) {
-        final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
+        final Pair<Double, Double> pos = Utility.getPositionFromTile(position.getCoordinates().getRow(),
                 position.getCoordinates().getCol());
         final var endpoints = Utility
-                .getRoadCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
+                .getRoadCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
                         position.getDirection());
         final Line line = new Line(endpoints.getKey().getKey(), endpoints.getKey().getValue(),
                 endpoints.getValue().getKey(), endpoints.getValue().getValue());
@@ -119,95 +103,25 @@ public final class BoardView {
         return line;
     }
 
-    private List<Circle> drawProperties() {
-        final List<Circle> properties = new ArrayList<>();
+    private List<PropertyView> drawProperties() {
+        final List<PropertyView> properties = new ArrayList<>();
         final Set<PropertyPosition> allProperties = this.controller.getAllPropertyPositions();
         this.playerColors.entrySet().stream().forEach(entry -> {
             final String playerName = entry.getKey();
             final Color color = entry.getValue();
             this.controller.getPlayerPropertyPositions(playerName).forEach(pos -> {
-                properties.add(drawProperty(pos.getLeft(), pos.getRight(), color));
+                final PropertyPosition propertyPosition = pos.getLeft();
+                final PropertyType propertyType = pos.getRight();
+                properties
+                        .add(new PropertyView(controller, propertyPosition, propertyType, color, () -> color));
                 if (allProperties.contains(pos.getLeft())) {
                     allProperties.remove(pos.getLeft());
                 }
             });
         });
-        allProperties.forEach(pos -> properties.add(drawEmptyProperty(pos, Color.GRAY)));
+        allProperties.forEach(pos -> properties.add(
+                new PropertyView(controller, pos, PropertyType.EMPTY, Color.LIGHTGRAY,
+                        () -> this.playerColors.get(controller.getCurrentPlayer()))));
         return properties;
-    }
-
-    private Circle drawProperty(final PropertyPosition position, final PropertyType propertyType, final Color color) {
-        final Circle circle = getPropertyCircle(position, 26);
-        final Image img = new Image("imgs/property/" + propertyType.toString().toLowerCase(Locale.US) + ".png");
-        circle.setFill(new ImagePattern(img));
-        circle.setEffect(new Lighting(new Light.Distant(45, 45, color)));
-        if (propertyType == PropertyType.SETTLEMENT) {
-            circle.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-
-                if (warningPropertyStage()) {
-                    controller.buildCity(position);
-                    redraw.run();
-                }
-            });
-        }
-        return circle;
-    }
-
-    private Circle drawEmptyProperty(final PropertyPosition position, final Color color) {
-        final Circle circle = getPropertyCircle(position, 12);
-        circle.setFill(color);
-        circle.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-            if (warningPropertyStage()) {
-                controller.buildSettlement(position);
-                redraw.run();
-            }
-        });
-        return circle;
-    }
-
-    private Circle getPropertyCircle(final PropertyPosition position, final int radius) {
-        final Pair<Double, Double> pos = getPositionFromTile(position.getCoordinates().getRow(),
-                position.getCoordinates().getCol());
-        final var center = Utility
-                .getPropertyCoordinates(HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
-                        position.getDirection());
-        final Circle circle = new Circle(center.getKey(), center.getValue(), radius);
-        return circle;
-    }
-
-    private Pair<Double, Double> getPositionFromTile(final int row, final int col) {
-        final double xPos = col * 2 * HEXAGON_RADIUS + (row % 2 != 0 ? HEXAGON_RADIUS : 0);
-        final double yPos = row * HEXAGON_RADIUS * Math.sqrt(3);
-        return new ImmutablePair<>(xPos, yPos);
-    }
-
-    private boolean warningPropertyStage() {
-        final Label playerChoice = new Label();
-        final Stage warning = new Stage();
-        final VBox components = new VBox();
-        final Label label = new Label();
-        final Button yes = new Button("yes");
-        final Button no = new Button("no");
-
-        label.setText("Are you sure to build here?");
-        components.getChildren().add(label);
-        components.getChildren().add(yes);
-        components.getChildren().add(no);
-
-        yes.setOnMouseClicked(event -> {
-            playerChoice.setText("yes");
-            warning.close();
-        });
-        no.setOnMouseClicked(event -> {
-            playerChoice.setText("no");
-            warning.close();
-        });
-
-        final Scene stageScene = new Scene(components, 500, 300);
-        warning.initModality(Modality.APPLICATION_MODAL);
-        warning.setScene(stageScene);
-        warning.setResizable(false);
-        warning.showAndWait();
-        return playerChoice.getText().equals("yes");
     }
 }

@@ -5,5 +5,5 @@ package it.unibo.common.api;
  */
 // CHECKSTYLE: JavadocVariable OFF
 public enum PropertyType {
-    SETTLEMENT, CITY;
+    EMPTY, SETTLEMENT, CITY;
 }

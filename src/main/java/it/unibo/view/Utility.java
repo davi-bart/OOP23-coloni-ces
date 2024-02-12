@@ -3,15 +3,18 @@ package it.unibo.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
 import it.unibo.common.api.PropertyDirection;
 import it.unibo.common.api.RoadDirection;
-import javafx.util.Pair;
 
 /**
  * Utility class.
  */
 public final class Utility {
     private static final int SIDES = 6;
+    public static final int HEXAGON_RADIUS = 70;
 
     private Utility() {
     }
@@ -30,7 +33,7 @@ public final class Utility {
         final List<Pair<Double, Double>> coordinates = new ArrayList<>();
         for (int i = 0; i < SIDES; i++) {
             final double angle = (2 * Math.PI) / SIDES * i + Math.PI / 2;
-            coordinates.add(new Pair<>(Math.cos(angle) * radius + x, Math.sin(angle) * radius + y));
+            coordinates.add(new ImmutablePair<>(Math.cos(angle) * radius + x, Math.sin(angle) * radius + y));
         }
         return coordinates;
     }
@@ -51,7 +54,7 @@ public final class Utility {
         final List<RoadDirection> directions = List.of(RoadDirection.DOWNLEFT, RoadDirection.LEFT, RoadDirection.UPLEFT,
                 RoadDirection.UPRIGHT, RoadDirection.RIGHT, RoadDirection.DOWNRIGHT);
         final int index = directions.indexOf(direction);
-        return new Pair<>(hexagonCoordinates.get(index), hexagonCoordinates.get((index + 1) % SIDES));
+        return new ImmutablePair<>(hexagonCoordinates.get(index), hexagonCoordinates.get((index + 1) % SIDES));
     }
 
     /**
@@ -69,6 +72,19 @@ public final class Utility {
         final List<PropertyDirection> directions = List.of(PropertyDirection.DOWN, PropertyDirection.DOWNLEFT,
                 PropertyDirection.UPLEFT, PropertyDirection.UP, PropertyDirection.UPRIGHT, PropertyDirection.DOWNRIGHT);
         return getHexagonCoordinates(radius, x, y).get(directions.indexOf(direction));
+    }
+
+    /**
+     * returns the position of a tile in the board.
+     * 
+     * @param row row
+     * @param col column
+     * @return the center position of the tile in pixels
+     */
+    public static Pair<Double, Double> getPositionFromTile(final int row, final int col) {
+        final double xPos = col * 2 * HEXAGON_RADIUS + (row % 2 != 0 ? HEXAGON_RADIUS : 0);
+        final double yPos = row * HEXAGON_RADIUS * Math.sqrt(3);
+        return new ImmutablePair<>(xPos, yPos);
     }
 
 }
