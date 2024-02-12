@@ -44,7 +44,7 @@ public final class RoadView extends Line {
     private void draw() {
         setLine(roadPosition);
         if (!built) {
-            super.setFill(currentColor);
+            super.setStroke(currentColor);
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (warningPropertyStage()) {
                     this.currentColor = getCurrentColor.get();
@@ -54,7 +54,7 @@ public final class RoadView extends Line {
                 }
             });
         } else {
-            super.setFill(currentColor);
+            super.setStroke(currentColor);
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
             });
         }
