@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 
@@ -60,4 +61,20 @@ public interface Board {
      * @param coordinates coordinates of the new robber's position
      */
     void setRobberPosition(TileCoordinates coordinates);
+
+    /**
+     * Build a settlement in the specified position
+     * 
+     * @param position position
+     * @param player   owner of the settlement
+     */
+    void buildSettlement(PropertyPosition position, Player player);
+
+    /**
+     * Build a city in the specified position
+     * 
+     * @param position position
+     * @param player   owner of the settlement
+     */
+    void buildCity(PropertyPosition position, Player player);
 }

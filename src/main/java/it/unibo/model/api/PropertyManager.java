@@ -12,10 +12,10 @@ public interface PropertyManager {
     /**
      * Adds a settlement.
      * 
-     * @param player   the player who owns the settlement
      * @param position the position of the settlement
+     * @param player   the player who owns the settlement
      */
-    void addSettlement(Player player, PropertyPosition position);
+    void addSettlement(PropertyPosition position, Player player);
 
     /**
      * @param player

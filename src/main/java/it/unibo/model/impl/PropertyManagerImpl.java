@@ -17,7 +17,7 @@ public final class PropertyManagerImpl implements PropertyManager {
     private final Set<Property> properies = new LinkedHashSet<>();
 
     @Override
-    public void addSettlement(final Player player, final PropertyPosition position) {
+    public void addSettlement(final PropertyPosition position, final Player player) {
         if (properies.stream().anyMatch(r -> r.getPosition().equals(position))) {
             throw new IllegalArgumentException("Settlement was already present");
         }

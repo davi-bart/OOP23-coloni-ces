@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 import it.unibo.model.api.Board;
@@ -76,5 +77,15 @@ public final class BoardImpl implements Board {
             throw new IllegalArgumentException("Robber is already present in that coordinate.");
         }
         robberPosition = coordinates;
+    }
+
+    @Override
+    public void buildSettlement(PropertyPosition position, Player player) {
+        this.propertyManager.addSettlement(position, player);
+    }
+
+    @Override
+    public void buildCity(PropertyPosition position, Player player) {
+        this.propertyManager.upgradeToCity(position);
     }
 }
