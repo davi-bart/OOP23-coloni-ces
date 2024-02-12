@@ -38,7 +38,7 @@ public final class GameManagerImpl implements GameManager {
      * @see GameManagerImpl#GameManagerImpl(GameMapGenerator, List, int)
      */
     public GameManagerImpl(final List<String> playersNames) {
-        this(new BeginnerGameMapGenerator(), playersNames, DEFAULT_POINTS_TO_WIN);
+        this(new RandomGameMapGenerator(), playersNames, DEFAULT_POINTS_TO_WIN);
     }
 
     @Override

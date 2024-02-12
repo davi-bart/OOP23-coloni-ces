@@ -35,7 +35,7 @@ public final class RoadView extends Line {
             final Supplier<Color> getCurrentColor) {
         this.controller = controller;
         this.roadPosition = roadPosition;
-        this.currentColor = Color.GRAY;
+        this.currentColor = Color.LIGHTGRAY;
         this.getCurrentColor = getCurrentColor;
         built = false;
         draw();
