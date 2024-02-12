@@ -121,20 +121,20 @@ public final class MainControllerImpl implements MainController {
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
     }
 
-	@Override
-	public String getCurrentPlayer() {
-		return this.turnController.getCurrentPlayerTurn().getName();
-	}
+    @Override
+    public String getCurrentPlayer() {
+        return this.turnController.getCurrentPlayerTurn().getName();
+    }
 
-	@Override
-	public void endTurn() {
-		this.turnController.endTurn();
-	}
+    @Override
+    public void endTurn() {
+        this.turnController.endTurn();
+    }
 
-	@Override
-	public Pair<Integer, Integer> rollDie() {
-		return this.turnController.rollDie();
-	}
+    @Override
+    public Pair<Integer, Integer> rollDie() {
+        return this.turnController.rollDie();
+    }
 
     @Override
     public void buildSettlement(PropertyPosition position) {

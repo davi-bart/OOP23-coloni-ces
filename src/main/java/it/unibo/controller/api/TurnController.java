@@ -26,4 +26,9 @@ public interface TurnController {
      */
     Pair<Integer, Integer> rollDie();
 
+    /**
+     * 
+     * @return the number of the current turn
+     */
+    int getTurn();
 }

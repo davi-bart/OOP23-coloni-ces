@@ -6,10 +6,18 @@ import it.unibo.controller.api.TurnController;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.TurnManager;
 
-public class TurnControllerImpl implements TurnController {
+/**
+ * Turn controller implementation.
+ */
+public final class TurnControllerImpl implements TurnController {
 
     private TurnManager turnManager;
 
+    /**
+     * Constructori of TurnControllerImpl.
+     * 
+     * @param turnManager
+     */
     public TurnControllerImpl(final TurnManager turnManager) {
         this.turnManager = turnManager;
     }
@@ -27,6 +35,11 @@ public class TurnControllerImpl implements TurnController {
     @Override
     public Pair<Integer, Integer> rollDie() {
         return this.turnManager.rollDie();
+    }
+
+    @Override
+    public int getTurn() {
+        return this.turnManager.getTurn();
     }
 
 }
