@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.common.api.PropertyPosition;
+import it.unibo.common.api.PropertyType;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 
@@ -48,6 +49,14 @@ public interface Board {
      * @return a set of the roads built by {@code player}
      */
     Set<Property> getPlayerProperties(Player player);
+
+    /**
+     * get the property type of the property at the given position.
+     * 
+     * @param position the position of the property
+     * @return the type of the property
+     */
+    PropertyType getPropertyType(PropertyPosition position);
 
     /**
      * @return the position of the robber

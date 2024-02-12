@@ -67,4 +67,9 @@ public final class BoardControllerImpl implements BoardController {
     public void buildCity(PropertyPosition position, Player player) {
         this.board.buildCity(position, player);
     }
+
+    @Override
+    public PropertyType getPropertyType(PropertyPosition position) {
+        return this.board.getPropertyType(position);
+    }
 }

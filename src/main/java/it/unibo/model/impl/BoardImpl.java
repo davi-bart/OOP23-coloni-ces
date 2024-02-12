@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.common.api.PropertyPosition;
+import it.unibo.common.api.PropertyType;
 import it.unibo.common.api.TerrainType;
 import it.unibo.common.api.TileCoordinates;
 import it.unibo.model.api.Board;
@@ -87,5 +88,10 @@ public final class BoardImpl implements Board {
     @Override
     public void buildCity(PropertyPosition position, Player player) {
         this.propertyManager.upgradeToCity(position);
+    }
+
+    @Override
+    public PropertyType getPropertyType(PropertyPosition position) {
+        return propertyManager.getPropertyType(position);
     }
 }

@@ -78,6 +78,14 @@ public interface MainController {
     Set<RoadPosition> getAllRoadPositions();
 
     /**
+     * get the property type of the property at the given position.
+     * 
+     * @param position the position of the property
+     * @return the type of the property
+     */
+    PropertyType getPropertyType(PropertyPosition position);
+
+    /**
      * get the player's property positions.
      * 
      * @param playerName the player's name

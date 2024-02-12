@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import it.unibo.common.api.PropertyPosition;
+import it.unibo.common.api.PropertyType;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.Property;
 import it.unibo.model.api.PropertyManager;
@@ -36,6 +37,12 @@ public final class PropertyManagerImpl implements PropertyManager {
         if (property.isPresent()) {
             property.get().upgrade();
         }
+    }
+
+    @Override
+    public PropertyType getPropertyType(PropertyPosition position) {
+        return properies.stream().filter(p -> p.getPosition().equals(position))
+                .findFirst().map(p -> p.getPropertyType()).orElse(PropertyType.EMPTY);
     }
 
 }

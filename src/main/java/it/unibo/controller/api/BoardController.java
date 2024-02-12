@@ -56,6 +56,14 @@ public interface BoardController {
     Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(Player player);
 
     /**
+     * get the property type of the property at the given position.
+     * 
+     * @param position the position of the property
+     * @return the type of the property
+     */
+    PropertyType getPropertyType(PropertyPosition position);
+
+    /**
      * Build a settlement in the given position.
      * 
      * @param position where to build the settlement.

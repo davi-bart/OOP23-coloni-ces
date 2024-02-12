@@ -3,6 +3,7 @@ package it.unibo.model.api;
 import java.util.Set;
 
 import it.unibo.common.api.PropertyPosition;
+import it.unibo.common.api.PropertyType;
 
 /**
  * Property manager.
@@ -22,6 +23,14 @@ public interface PropertyManager {
      * @return a set of the roads built by {@code player}
      */
     Set<Property> getPlayerProperties(Player player);
+
+    /**
+     * get the property type of the property at the given position.
+     * 
+     * @param position the position of the property
+     * @return the type of the property
+     */
+    PropertyType getPropertyType(PropertyPosition position);
 
     /**
      * Upgrade the settlement to a city in the given position.
