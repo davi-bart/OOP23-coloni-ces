@@ -26,7 +26,20 @@ public interface TurnManager {
 
     /**
      * 
-     * @return the number of the current turn
+     * @return the number of the current turn.
      */
     int getTurnNumber();
+
+    /**
+     * 
+     * @return true if it's the first cycle of turns.
+     */
+    boolean isFirstCycle();
+
+    /**
+     * 
+     * @return true if it's the second cycle of turns.
+     */
+    boolean isSecondCycle();
+
 }

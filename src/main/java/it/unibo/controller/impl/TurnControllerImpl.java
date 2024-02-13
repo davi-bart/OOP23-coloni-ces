@@ -42,4 +42,14 @@ public final class TurnControllerImpl implements TurnController {
         return this.turnManager.getTurnNumber();
     }
 
+    @Override
+    public boolean isFirstCycle() {
+        return this.turnManager.isFirstCycle();
+    }
+
+    @Override
+    public boolean isSecondCycle() {
+        return this.turnManager.isSecondCycle();
+    }
+
 }

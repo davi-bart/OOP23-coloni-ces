@@ -71,4 +71,14 @@ public final class TurnManagerImpl implements TurnManager {
         return turnNumber;
     }
 
+    @Override
+    public boolean isFirstCycle() {
+        return turnNumber <= playerList.size();
+    }
+
+    @Override
+    public boolean isSecondCycle() {
+        return turnNumber > playerList.size() && turnNumber <= (playerList.size() * 2);
+    }
+
 }
