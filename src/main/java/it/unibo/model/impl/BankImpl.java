@@ -5,16 +5,19 @@ import java.util.Map;
 
 import it.unibo.common.api.ResourceType;
 import it.unibo.model.api.ResourceOwner;
+
 /**
  * Implementation of the bank.
  */
 public final class BankImpl implements ResourceOwner {
 
-    private final  int defaultResourceAmount;
+    private final int defaultResourceAmount;
+
     /**
-    * Create the bank.
-    * @param defaultResourceAmount is the default amount of resources of the bank.
-    */
+     * Create the bank.
+     * 
+     * @param defaultResourceAmount is the default amount of resources of the bank.
+     */
     public BankImpl(final int defaultResourceAmount) {
         this.defaultResourceAmount = defaultResourceAmount;
     }

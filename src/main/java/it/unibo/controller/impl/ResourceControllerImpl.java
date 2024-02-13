@@ -15,63 +15,63 @@ import it.unibo.model.api.ResourceOwner;
  */
 public final class ResourceControllerImpl implements ResourceController {
 
-	private final ResourceManager resourceManager;
-	private final ResourceOwner bank;
+    private final ResourceManager resourceManager;
+    private final ResourceOwner bank;
 
-	/**
-	 * Constructor of resource controller.
-	 * 
-	 * @param resourceManager
-	 * @param bank
-	 */
-	public ResourceControllerImpl(final ResourceManager resourceManager, final ResourceOwner bank) {
-		this.resourceManager = resourceManager;
-		this.bank = bank;
-	}
+    /**
+     * Constructor of resource controller.
+     * 
+     * @param resourceManager
+     * @param bank
+     */
+    public ResourceControllerImpl(final ResourceManager resourceManager, final ResourceOwner bank) {
+        this.resourceManager = resourceManager;
+        this.bank = bank;
+    }
 
-	@Override
-	public Map<ResourceType, Integer> getOwnerResources(final ResourceOwner owner) {
-		final Map<ResourceType, Integer> out = new HashMap<>();
-		for (final ResourceType resource : ResourceType.values()) {
-			out.put(resource, resourceManager.getResource(owner, resource));
-		}
-		return out;
-	}
+    @Override
+    public Map<ResourceType, Integer> getOwnerResources(final ResourceOwner owner) {
+        final Map<ResourceType, Integer> out = new HashMap<>();
+        for (final ResourceType resource : ResourceType.values()) {
+            out.put(resource, resourceManager.getResource(owner, resource));
+        }
+        return out;
+    }
 
-	@Override
-	public int getOwnerResourceAmount(final ResourceOwner owner, final ResourceType resource) {
-		return resourceManager.getResource(owner, resource);
-	}
+    @Override
+    public int getOwnerResourceAmount(final ResourceOwner owner, final ResourceType resource) {
+        return resourceManager.getResource(owner, resource);
+    }
 
-	@Override
-	public boolean hasResources(final ResourceOwner owner, final Map<ResourceType, Integer> resource) {
-		return resourceManager.hasResources(owner, resource);
-	}
+    @Override
+    public boolean hasResources(final ResourceOwner owner, final Map<ResourceType, Integer> resource) {
+        return resourceManager.hasResources(owner, resource);
+    }
 
-	@Override
-	public Map<ResourceType, Integer> getBankResources() {
-		return getOwnerResources(bank);
-	}
+    @Override
+    public Map<ResourceType, Integer> getBankResources() {
+        return getOwnerResources(bank);
+    }
 
-	@Override
-	public boolean canBuildSettlemet(final ResourceOwner player) {
-		return resourceManager.hasResources(player, Recipes.getSettlementResources());
-	}
+    @Override
+    public boolean canBuildSettlemet(final ResourceOwner player) {
+        return resourceManager.hasResources(player, Recipes.getSettlementResources());
+    }
 
-	@Override
-	public boolean canBuildCity(final ResourceOwner player) {
-		return resourceManager.hasResources(player, Recipes.getCityResources());
-	}
+    @Override
+    public boolean canBuildCity(final ResourceOwner player) {
+        return resourceManager.hasResources(player, Recipes.getCityResources());
+    }
 
-	@Override
-	public void removeResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
-		for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
-			resourceManager.removeResources(owner, resource.getKey(), resource.getValue());
-		}
-	}
+    @Override
+    public void removeResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
+        for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
+            resourceManager.removeResources(owner, resource.getKey(), resource.getValue());
+        }
+    }
 
-	@Override
-	public boolean canBuildRoad(final ResourceOwner player) {
-		return resourceManager.hasResources(player, Recipes.getRoadResources());
-	}
+    @Override
+    public boolean canBuildRoad(final ResourceOwner player) {
+        return resourceManager.hasResources(player, Recipes.getRoadResources());
+    }
 }
