@@ -2,6 +2,7 @@ package it.unibo.view;
 
 import it.unibo.controller.api.MainController;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 /**
@@ -32,6 +33,7 @@ public final class CurrentPlayerView extends HBox {
         super.getChildren().add(tradeView.getTradeButton());
         super.getChildren().add(getEndTurnButton());
         super.getChildren().add(getRollButton());
+        super.getChildren().add(new Label(controller.getCurrentPlayer()));
 
     }
 

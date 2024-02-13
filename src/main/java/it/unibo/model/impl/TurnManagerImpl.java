@@ -41,7 +41,7 @@ public final class TurnManagerImpl implements TurnManager {
          * and a stream that goes from 1 to 4 infinite times.
          */
         this.iterator = Stream.concat(
-                Stream.concat(Stream.iterate(0, i -> i + 1).limit(playerList.size()),
+                Stream.concat(Stream.iterate(1, i -> i + 1).limit(playerList.size() - 1),
                         Stream.iterate(playerList.size() - 1, i -> i - 1).limit(playerList.size())),
                 Stream.iterate(0, i -> (i + 1) % playerList.size())).iterator();
     }
