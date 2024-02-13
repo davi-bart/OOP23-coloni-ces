@@ -264,6 +264,6 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canRollDie() {
-        return !turnController.hasRolled();
+        return !turnController.hasRolled() && turnController.getCycle()>2;
     }
 }
