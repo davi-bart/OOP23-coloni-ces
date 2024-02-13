@@ -76,7 +76,7 @@ public final class TurnManagerImpl implements TurnManager {
 
     @Override
     public int getCycle() {
-        return turnNumber / playerList.size();
+        return (turnNumber / playerList.size()) + 1;
     }
 
     @Override
