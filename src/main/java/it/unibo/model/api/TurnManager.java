@@ -36,4 +36,10 @@ public interface TurnManager {
      */
     int getCycle();
 
+    /**
+     * 
+     * @return if the player has rolled.
+     */
+    boolean hasRolled();
+
 }
