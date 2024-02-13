@@ -112,6 +112,7 @@ public final class PropertyPositionImpl implements PropertyPosition {
      * @return true if the property in given position is
      *         near to the current property, false otherwise.
      */
+    @Override
     public boolean isNear(final PropertyPosition position) {
         final List<PropertyPosition> relativePositions = new ArrayList<>();
         relativePositions.add(this);

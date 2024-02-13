@@ -8,15 +8,16 @@ import javafx.scene.layout.HBox;
  */
 public final class CurrentPlayerView extends HBox {
     private final MainController controller;
-    private final TradeView tradeView = new TradeView();
+    private final TradeView tradeView;
 
     /**
      * Constructor of CurrentPlayerView.
      * 
      * @param controller the main controller
      */
-    public CurrentPlayerView(MainController controller) {
+    public CurrentPlayerView(final MainController controller) {
         this.controller = controller;
+        tradeView = new TradeView(this.controller);
         draw();
     }
 

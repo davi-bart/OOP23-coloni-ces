@@ -1,5 +1,6 @@
 package it.unibo.view;
 
+import it.unibo.controller.api.MainController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +15,13 @@ import javafx.stage.Stage;
  */
 
 public final class TradeView {
+
+    final MainController controller;
+
+    public TradeView(final MainController controller) {
+        this.controller = controller;
+    }
+
     /**
      * Get the trade button.
      * 
@@ -30,23 +38,24 @@ public final class TradeView {
         final VBox comp = new VBox();
         final HBox bigContainer = new HBox(comp);
         final VBox tradePossibility = new VBox();
-        final HBox player1Trade = new HBox();
-        final Label playerName1 = new Label("PlayerName1");
-        final Label givinResources = new Label("Select resource to give");
-        final Label recivingResources = new Label("Select resource to recive");
-        final Button acceptingTrade = new Button("Accept trade");
+        final HBox playerTrade = new HBox();
+        final String currentPlayerName = controller.getCurrentPlayer();
+        final Label playerNameLabel = new Label(currentPlayerName);
+        final Label givingResourcesLabel = new Label("Select resources to give");
+        final Label receivingResourcesLabel = new Label("Select resources to receive");
+        final Button acceptingTradeButton = new Button("Accept trade");
 
-        acceptingTrade.setOnMouseClicked(event -> newStage.close());
+        acceptingTradeButton.setOnMouseClicked(event -> newStage.close());
 
         newStage.setTitle("Trade window");
-        comp.getChildren().add(givinResources);
-        comp.getChildren().add(ResourcesViewFactory.getAllResources());
-        comp.getChildren().add(recivingResources);
-        comp.getChildren().add(ResourcesViewFactory.getAllResources());
+        comp.getChildren().add(givingResourcesLabel);
+        comp.getChildren()
+                .add(ResourcesViewFactory.getResourceComboBoxAmount(controller.getPlayerResources(currentPlayerName)));
+        comp.getChildren().add(receivingResourcesLabel);
 
-        player1Trade.getChildren().add(playerName1);
-        tradePossibility.getChildren().add(player1Trade);
-        tradePossibility.getChildren().add(acceptingTrade);
+        playerTrade.getChildren().add(playerNameLabel);
+        tradePossibility.getChildren().add(playerTrade);
+        tradePossibility.getChildren().add(acceptingTradeButton);
         bigContainer.getChildren().add(tradePossibility);
 
         final Scene stageScene = new Scene(bigContainer, 500, 300);
