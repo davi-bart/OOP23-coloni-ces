@@ -15,11 +15,6 @@ public interface RoadPosition {
     RoadDirection getDirection();
 
     /**
-     * @return the equivalent version (different tilecoordinates) of a road position
-     */
-    RoadPosition equivalent();
-
-    /**
      * @param other
      * @return whether the road at the current position is nearby a road at
      *         {@code position}
