@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 /**
  * View class for the players. It shows their current points.
  */
-public class PlayersView extends VBox {
+public final class PlayersView extends VBox {
     private final MainController controller;
 
     /**
@@ -15,7 +15,7 @@ public class PlayersView extends VBox {
      * 
      * @param controller the main controller
      */
-    public PlayersView(MainController controller) {
+    public PlayersView(final MainController controller) {
         this.controller = controller;
         draw();
     }

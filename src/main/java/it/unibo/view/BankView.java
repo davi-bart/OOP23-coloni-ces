@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 /**
  * View class for the bank. It shows the resources of the bank.
  */
-public class BankView extends HBox {
+public final class BankView extends HBox {
     private final MainController controller;
 
     /**
@@ -14,7 +14,7 @@ public class BankView extends HBox {
      * 
      * @param controller the main controller
      */
-    public BankView(MainController controller) {
+    public BankView(final MainController controller) {
         this.controller = controller;
         draw();
     }

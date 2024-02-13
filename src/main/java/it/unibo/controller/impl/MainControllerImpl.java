@@ -191,20 +191,14 @@ public final class MainControllerImpl implements MainController {
     private boolean isRoadNearToAnyOwnedProperty(final RoadPosition position) {
         return this.getPlayerPropertyPositions(getCurrentPlayer()).stream()
                 .anyMatch(propertyPosition -> {
-                    if (position.isNearToProperty(propertyPosition.getKey())) {
-                        return true;
-                    }
-                    return false;
+                    return position.isNearToProperty(propertyPosition.getKey());
                 });
     }
 
     private boolean isPropertyNearToAnyOwnerRoad(final PropertyPosition position) {
         return this.getPlayerRoadPositions(getCurrentPlayer()).stream()
                 .anyMatch(roadPosition -> {
-                    if (roadPosition.isNearToProperty(position)) {
-                        return true;
-                    }
-                    return false;
+                    return roadPosition.isNearToProperty(position);
                 });
     }
 
@@ -215,10 +209,7 @@ public final class MainControllerImpl implements MainController {
      */
     private boolean isRoadNearToAnyOwnedRoad(final RoadPosition position) {
         return this.getPlayerRoadPositions(getCurrentPlayer()).stream().anyMatch(roadPosition -> {
-            if (position.isNearby(roadPosition)) {
-                return true;
-            }
-            return false;
+            return position.isNearby(roadPosition);
         });
     }
 

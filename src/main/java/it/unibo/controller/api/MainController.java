@@ -123,18 +123,21 @@ public interface MainController {
 
     /**
      * @return whether the current player can build a settlement
+     * @param position where to build the settlemet
      */
-    boolean canBuildSettlemet(final PropertyPosition position);
+    boolean canBuildSettlemet(PropertyPosition position);
 
     /**
      * @return whether the current player can build a city
+     * @param position where to build the city
      */
-    boolean canBuildCity(final PropertyPosition position);
+    boolean canBuildCity(PropertyPosition position);
 
     /**
      * @return whether the current player can build a road
+     * @param position where to build the rode
      */
-    boolean canBuildRoad(final RoadPosition position);
+    boolean canBuildRoad(RoadPosition position);
 
     /**
      * @return get the name of the player whose turn it currently is.
@@ -163,8 +166,8 @@ public interface MainController {
     /**
      * * Return if the given owner has the given resources.
      * 
-     * @param owner     owner
-     * @param resources
+     * @param playerName player's name
+     * @param resources  map with the resources
      * @return true if the given owner has the given resources, false otherwise
      */
     boolean hasResources(String playerName, Map<ResourceType, Integer> resources);

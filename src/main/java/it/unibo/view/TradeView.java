@@ -16,8 +16,13 @@ import javafx.stage.Stage;
 
 public final class TradeView {
 
-    final MainController controller;
+    private final MainController controller;
 
+    /**
+     * TradeView.
+     * 
+     * @param controller
+     */
     public TradeView(final MainController controller) {
         this.controller = controller;
     }

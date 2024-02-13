@@ -15,7 +15,7 @@ import org.apache.commons.lang3.tuple.Pair;
 public final class TurnManagerImpl implements TurnManager {
 
     private int turnNumber = 1;
-    private int currentTurn = 0;
+    private int currentTurn;
     private final List<Player> playerList = new ArrayList<>();
     private final Random random = new Random();
     private static final int MAX_ROLL = 6;

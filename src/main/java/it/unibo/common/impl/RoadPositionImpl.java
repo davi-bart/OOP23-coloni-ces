@@ -120,8 +120,8 @@ public final class RoadPositionImpl implements RoadPosition {
     }
 
     @Override
-    public boolean isNearToProperty(PropertyPosition position) {
-        List<PropertyPosition> nearRoadProperty = new ArrayList<>();
+    public boolean isNearToProperty(final PropertyPosition position) {
+        final List<PropertyPosition> nearRoadProperty = new ArrayList<>();
         switch (getDirection()) {
             case UPLEFT:
                 nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.UPLEFT));
@@ -146,6 +146,8 @@ public final class RoadPositionImpl implements RoadPosition {
             case LEFT:
                 nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.DOWNLEFT));
                 nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.UPLEFT));
+                break;
+            default:
                 break;
         }
         return nearRoadProperty.contains(position);

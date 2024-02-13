@@ -52,6 +52,7 @@ public class Tile extends Group {
      * @param radius radius
      * @param x      x coordinate of the center
      * @param y      y coordinate of the center
+     * @return an hexagon
      */
     private Polygon getHexagon(final double radius, final double x, final double y) {
         final Polygon hex = new Polygon();

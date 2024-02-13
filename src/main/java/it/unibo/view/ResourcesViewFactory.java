@@ -56,7 +56,7 @@ public final class ResourcesViewFactory {
     }
 
     /**
-     * @param resource
+     * @param resources the map with all the resources.
      * @return the image view of the needed resource with a combobox.
      */
     public static HBox getResourceComboBoxAmount(final Map<ResourceType, Integer> resources) {
