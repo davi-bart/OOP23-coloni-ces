@@ -168,6 +168,12 @@ public final class MainControllerImpl implements MainController {
 
     }
 
+    /**
+     * @param position
+     * 
+     * @return true if the property in the given position is near to an other
+     *         property, false otherwise.
+     */
     private boolean isNearToAnyProperty(final PropertyPosition position) {
         return this.getAllPropertyPositions().stream().anyMatch(propertyPosition -> {
             if (!this.getPropertyType(propertyPosition).equals(PropertyType.EMPTY)) {
@@ -177,6 +183,34 @@ public final class MainControllerImpl implements MainController {
         });
     }
 
+    /**
+     * @param position
+     * @return true if the road in the given position is near to an other
+     *         property in current player, false otherwise.
+     */
+    private boolean isRoadNearToAnyOwnedProperty(final RoadPosition position) {
+        return this.getPlayerPropertyPositions(getCurrentPlayer()).stream()
+                .anyMatch(propertyPosition -> {
+                    if (position.isNearToProperty(propertyPosition.getKey())) {
+                        return true;
+                    }
+                    return false;
+                });
+    }
+
+    /**
+     * @param position
+     * @return true if the road in the given position is near to an other
+     *         road in current player, false otherwise.
+     */
+    private boolean isRoadNearToAnyOwnedRoad(final RoadPosition position) {
+        return this.getPlayerRoadPositions(getCurrentPlayer()).stream().anyMatch(roadPosition -> {
+            if (position.isNearby(roadPosition)) {
+                return true;
+            }
+            return false;
+        });
+    }
 
     @Override
     public boolean canBuildCity(final PropertyPosition position) {
@@ -186,17 +220,18 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canBuildRoad(final RoadPosition position) {
-        return this.resourceController.canBuildRoad(turnController.getCurrentPlayerTurn());
+        return (isRoadNearToAnyOwnedRoad(position) || isRoadNearToAnyOwnedProperty(position))
+                && this.resourceController.canBuildRoad(turnController.getCurrentPlayerTurn());
     }
 
     @Override
-    public int getPlayerPoints(String player) {
+    public int getPlayerPoints(final String player) {
         return getPlayerByName(player).getVictoryPoints();
     }
 
-	@Override
-	public boolean hasResources(final String playerName, final Map<ResourceType, Integer> resources) {
-		return resourceController.hasResources(getPlayerByName(playerName), resources);
-	}
+    @Override
+    public boolean hasResources(final String playerName, final Map<ResourceType, Integer> resources) {
+        return resourceController.hasResources(getPlayerByName(playerName), resources);
+    }
 
 }

@@ -25,4 +25,11 @@ public interface RoadPosition {
      *         {@code position}
      */
     boolean isNearby(RoadPosition other);
+
+    /**
+     * 
+     * @param position
+     * @return true if this road is near the property in the given position.
+     */
+    boolean isNearToProperty(PropertyPosition position);
 }

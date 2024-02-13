@@ -1,5 +1,7 @@
 package it.unibo.common.impl;
 
+import it.unibo.common.api.PropertyDirection;
+import it.unibo.common.api.PropertyPosition;
 import it.unibo.common.api.RoadDirection;
 import it.unibo.common.api.RoadPosition;
 import it.unibo.common.api.TileCoordinates;
@@ -117,4 +119,37 @@ public final class RoadPositionImpl implements RoadPosition {
                         directions.get((otherDirectionIndex + 1) % directions.size())));
         return positions.contains(other);
     }
+
+    @Override
+    public boolean isNearToProperty(PropertyPosition position) {
+        List<PropertyPosition> nearRoadProperty = new ArrayList<>();
+        switch (getDirection()) {
+            case UPLEFT:
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.UPLEFT));
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.UP));
+                break;
+            case UPRIGHT:
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.UP));
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.UPRIGHT));
+                break;
+            case RIGHT:
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.UPRIGHT));
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.DOWNRIGHT));
+                break;
+            case DOWNRIGHT:
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.DOWNRIGHT));
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.DOWN));
+                break;
+            case DOWNLEFT:
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.DOWN));
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.DOWNLEFT));
+                break;
+            case LEFT:
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.DOWNLEFT));
+                nearRoadProperty.add(new PropertyPositionImpl(coordinates, PropertyDirection.UPLEFT));
+                break;
+        }
+        return nearRoadProperty.contains(position);
+    }
+
 }
