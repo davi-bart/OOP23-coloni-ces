@@ -205,7 +205,8 @@ public final class MainControllerImpl implements MainController {
     public boolean canBuildSettlement(final PropertyPosition position) {
         final int cycle = turnController.getCycle();
         if (cycle <= 2) {
-            return !isNearToAnyProperty(position) && getAllPropertyPositions().size() < cycle;
+            return !isNearToAnyProperty(position)
+                    && getPlayerPropertyPositions(getCurrentPlayer()).size() < cycle;
         }
         return !isNearToAnyProperty(position) && isPropertyNearToAnyOwnerRoad(position)
                 && this.resourceController.hasResourcesForSettlement(turnController.getCurrentPlayerTurn());
@@ -213,6 +214,9 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canBuildCity(final PropertyPosition position) {
+        if (turnController.getCycle() <= 2) {
+            return false;
+        }
         return !isNearToAnyProperty(position)
                 && this.resourceController.hasResourcesForCity(turnController.getCurrentPlayerTurn());
     }
@@ -222,7 +226,7 @@ public final class MainControllerImpl implements MainController {
         final int cycle = turnController.getCycle();
         if (cycle <= 2) {
             return isRoadNearToAnyOwnedProperty(position)
-                    && getAllRoadPositions().size() < cycle;
+                    && getPlayerRoadPositions(getCurrentPlayer()).size() < cycle;
         }
         return (isRoadNearToAnyOwnedRoad(position) || isRoadNearToAnyOwnedProperty(position))
                 && this.resourceController.hasResourcesForRoad(turnController.getCurrentPlayerTurn());
