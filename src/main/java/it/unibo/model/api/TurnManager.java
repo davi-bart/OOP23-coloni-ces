@@ -28,5 +28,5 @@ public interface TurnManager {
      * 
      * @return the number of the current turn
      */
-    int getTurn();
+    int getTurnNumber();
 }
