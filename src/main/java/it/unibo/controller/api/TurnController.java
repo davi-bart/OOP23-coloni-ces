@@ -34,13 +34,8 @@ public interface TurnController {
 
     /**
      * 
-     * @return true if it's the first cycle of turns.
+     * @return the number of cycles.
      */
-    boolean isFirstCycle();
+    int getCycle();
 
-    /**
-     * 
-     * @return true if it's the second cycle of turns.
-     */
-    boolean isSecondCycle();
 }

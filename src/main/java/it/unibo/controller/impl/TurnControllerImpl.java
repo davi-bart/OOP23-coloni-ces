@@ -43,13 +43,8 @@ public final class TurnControllerImpl implements TurnController {
     }
 
     @Override
-    public boolean isFirstCycle() {
-        return this.turnManager.isFirstCycle();
-    }
-
-    @Override
-    public boolean isSecondCycle() {
-        return this.turnManager.isSecondCycle();
+    public int getCycle() {
+        return this.turnManager.getCycle();
     }
 
 }

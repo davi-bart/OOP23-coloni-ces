@@ -17,7 +17,7 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public final class TurnManagerImpl implements TurnManager {
 
-    private int turnNumber = 1;
+    private int turnNumber = 0;
     private int currentTurn;
     private final Iterator<Integer> iterator;
     private final List<Player> playerList = new ArrayList<>();
@@ -72,13 +72,8 @@ public final class TurnManagerImpl implements TurnManager {
     }
 
     @Override
-    public boolean isFirstCycle() {
-        return turnNumber <= playerList.size();
-    }
-
-    @Override
-    public boolean isSecondCycle() {
-        return turnNumber > playerList.size() && turnNumber <= (playerList.size() * 2);
+    public int getCycle() {
+        return turnNumber / playerList.size();
     }
 
 }
