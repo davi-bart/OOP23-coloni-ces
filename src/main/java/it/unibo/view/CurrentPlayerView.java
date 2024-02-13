@@ -20,6 +20,9 @@ public final class CurrentPlayerView extends HBox {
         draw();
     }
 
+    /**
+     * Draw the current player view.
+     */
     public void draw() {
         super.getChildren().clear();
         controller.getPlayerResources(controller.getCurrentPlayer()).entrySet().forEach(entry -> super.getChildren()

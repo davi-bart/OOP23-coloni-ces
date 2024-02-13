@@ -2,7 +2,6 @@ package it.unibo.view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -61,11 +60,10 @@ public class AppView {
 
         rightSide.getChildren().add(costCard());
         rightSide.getChildren().add(new BankView(controller));
+        rightSide.getChildren().add(new PlayersView(controller));
         root.setBottom(new CurrentPlayerView(controller));
         root.setRight(rightSide);
         root.setCenter(boardView.getBoard());
-        players.forEach(name -> rightSide.getChildren().add(new Label(name)));
-
         return scene;
     }
 

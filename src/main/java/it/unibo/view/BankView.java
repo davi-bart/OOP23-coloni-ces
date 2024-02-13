@@ -19,6 +19,9 @@ public class BankView extends HBox {
         draw();
     }
 
+    /**
+     * Draw the bank view.
+     */
     public void draw() {
         super.getChildren().clear();
         controller.getBankResources().entrySet().forEach(entry -> super.getChildren()
