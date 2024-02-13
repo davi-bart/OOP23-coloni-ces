@@ -36,144 +36,149 @@ import it.unibo.model.impl.TurnManagerImpl;
  * Main controller implementation.
  */
 public final class MainControllerImpl implements MainController {
-	private final GameManager gameManager;
-	private final BoardController boardController;
-	private final ResourceController resourceController;
-	private final TurnController turnController;
+    private final GameManager gameManager;
+    private final BoardController boardController;
+    private final ResourceController resourceController;
+    private final TurnController turnController;
 
-	/**
-	 * Constructor of the controller.
-	 * 
-	 * @param players list of players' names
-	 */
-	public MainControllerImpl(final List<String> players) {
-		this.gameManager = new GameManagerImpl(players);
-		this.boardController = new BoardControllerImpl(this.gameManager.getBoard());
-		final List<ResourceOwner> owners = new ArrayList<>();
-		gameManager.getPlayers().forEach(owners::add);
-		final BankImpl bank = new BankImpl(19);
-		owners.add(bank);
-		this.resourceController = new ResourceControllerImpl(new ResourceManagerImpl(owners), bank);
-		this.turnController = new TurnControllerImpl(new TurnManagerImpl(this.gameManager.getPlayers()));
-	}
+    /**
+     * Constructor of the controller.
+     * 
+     * @param players list of players' names
+     */
+    public MainControllerImpl(final List<String> players) {
+        this.gameManager = new GameManagerImpl(players);
+        this.boardController = new BoardControllerImpl(this.gameManager.getBoard());
+        final List<ResourceOwner> owners = new ArrayList<>();
+        gameManager.getPlayers().forEach(owners::add);
+        final BankImpl bank = new BankImpl(19);
+        owners.add(bank);
+        this.resourceController = new ResourceControllerImpl(new ResourceManagerImpl(owners), bank);
+        this.turnController = new TurnControllerImpl(new TurnManagerImpl(this.gameManager.getPlayers()));
+    }
 
-	@Override
-	public List<String> getPlayerNames() {
-		return gameManager.getPlayers().stream().map(p -> p.getName()).toList();
-	}
+    @Override
+    public List<String> getPlayerNames() {
+        return gameManager.getPlayers().stream().map(p -> p.getName()).toList();
+    }
 
-	@Override
-	public Map<ResourceType, Integer> getPlayerResources(final String playerName) {
-		return resourceController.getOwnerResources(getPlayerByName(playerName));
-	}
+    @Override
+    public Map<ResourceType, Integer> getPlayerResources(final String playerName) {
+        return resourceController.getOwnerResources(getPlayerByName(playerName));
+    }
 
-	@Override
-	public Map<ResourceType, Integer> getBankResources() {
-		return resourceController.getBankResources();
-	}
+    @Override
+    public Map<ResourceType, Integer> getBankResources() {
+        return resourceController.getBankResources();
+    }
 
-	@Override
-	public int getVictoryPoints(final String playerName) {
-		return getPlayerByName(playerName).getVictoryPoints();
-	}
+    @Override
+    public int getVictoryPoints(final String playerName) {
+        return getPlayerByName(playerName).getVictoryPoints();
+    }
 
-	@Override
-	public List<TileCoordinates> getTilePositions() {
-		return boardController.getTilePositions();
-	}
+    @Override
+    public List<TileCoordinates> getTilePositions() {
+        return boardController.getTilePositions();
+    }
 
-	@Override
-	public int getTileNumber(final TileCoordinates pos) {
-		return boardController.getTileNumber(pos);
-	}
+    @Override
+    public int getTileNumber(final TileCoordinates pos) {
+        return boardController.getTileNumber(pos);
+    }
 
-	@Override
-	public TerrainType getTileTerrainType(final TileCoordinates pos) {
-		return boardController.getTileTerrainType(pos);
-	}
+    @Override
+    public TerrainType getTileTerrainType(final TileCoordinates pos) {
+        return boardController.getTileTerrainType(pos);
+    }
 
-	@Override
-	public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
-		return boardController.getPlayerRoadPositions(getPlayerByName(playerName));
-	}
+    @Override
+    public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
+        return boardController.getPlayerRoadPositions(getPlayerByName(playerName));
+    }
 
-	@Override
-	public Set<RoadPosition> getAllRoadPositions() {
-		return this.getTilePositions().stream()
-				.flatMap(tilePos -> Stream.of(RoadDirection.values()).map(dir -> new RoadPositionImpl(tilePos, dir)))
-				.collect(Collectors.toSet());
-	}
+    @Override
+    public Set<RoadPosition> getAllRoadPositions() {
+        return this.getTilePositions().stream()
+                .flatMap(tilePos -> Stream.of(RoadDirection.values()).map(dir -> new RoadPositionImpl(tilePos, dir)))
+                .collect(Collectors.toSet());
+    }
 
-	@Override
-	public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final String playerName) {
-		return boardController.getPlayerPropertyPositions(getPlayerByName(playerName));
-	}
+    @Override
+    public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final String playerName) {
+        return boardController.getPlayerPropertyPositions(getPlayerByName(playerName));
+    }
 
-	@Override
-	public Set<PropertyPosition> getAllPropertyPositions() {
-		return this.getTilePositions().stream()
-				.flatMap(tilePos -> Stream.of(PropertyDirection.values())
-						.map(dir -> new PropertyPositionImpl(tilePos, dir)))
-				.collect(Collectors.toSet());
-	}
+    @Override
+    public Set<PropertyPosition> getAllPropertyPositions() {
+        return this.getTilePositions().stream()
+                .flatMap(tilePos -> Stream.of(PropertyDirection.values())
+                        .map(dir -> new PropertyPositionImpl(tilePos, dir)))
+                .collect(Collectors.toSet());
+    }
 
-	private Player getPlayerByName(final String name) {
-		return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
-				.orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
-	}
+    private Player getPlayerByName(final String name) {
+        return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
+    }
 
-	@Override
-	public String getCurrentPlayer() {
-		return this.turnController.getCurrentPlayerTurn().getName();
-	}
+    @Override
+    public String getCurrentPlayer() {
+        return this.turnController.getCurrentPlayerTurn().getName();
+    }
 
-	@Override
-	public void endTurn() {
-		this.turnController.endTurn();
-	}
+    @Override
+    public void endTurn() {
+        this.turnController.endTurn();
+    }
 
-	@Override
-	public Pair<Integer, Integer> rollDie() {
-		return this.turnController.rollDie();
-	}
+    @Override
+    public Pair<Integer, Integer> rollDie() {
+        return this.turnController.rollDie();
+    }
 
-	@Override
-	public void buildSettlement(final PropertyPosition position) {
-		this.boardController.buildSettlement(position, turnController.getCurrentPlayerTurn());
-		this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
-				Recipes.getSettlementResources());
-	}
+    @Override
+    public void buildSettlement(final PropertyPosition position) {
+        this.boardController.buildSettlement(position, turnController.getCurrentPlayerTurn());
+        this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
+                Recipes.getSettlementResources());
+    }
 
-	@Override
-	public void buildCity(final PropertyPosition position) {
-		this.boardController.buildCity(position, turnController.getCurrentPlayerTurn());
-		this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getCityResources());
-	}
+    @Override
+    public void buildCity(final PropertyPosition position) {
+        this.boardController.buildCity(position, turnController.getCurrentPlayerTurn());
+        this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getCityResources());
+    }
 
-	@Override
-	public void buildRoad(final RoadPosition position) {
-		this.boardController.buildRoad(position, turnController.getCurrentPlayerTurn());
-		this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getRoadResources());
-	}
+    @Override
+    public void buildRoad(final RoadPosition position) {
+        this.boardController.buildRoad(position, turnController.getCurrentPlayerTurn());
+        this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getRoadResources());
+    }
 
-	@Override
-	public PropertyType getPropertyType(final PropertyPosition position) {
-		return this.boardController.getPropertyType(position);
-	}
+    @Override
+    public PropertyType getPropertyType(final PropertyPosition position) {
+        return this.boardController.getPropertyType(position);
+    }
 
-	@Override
-	public boolean canBuildSettlemet() {
-		return this.resourceController.canBuildSettlemet(turnController.getCurrentPlayerTurn());
-	}
+    @Override
+    public boolean canBuildSettlemet() {
+        return this.resourceController.canBuildSettlemet(turnController.getCurrentPlayerTurn());
+    }
 
-	@Override
-	public boolean canBuildCity() {
-		return this.resourceController.canBuildCity(turnController.getCurrentPlayerTurn());
-	}
+    @Override
+    public boolean canBuildCity() {
+        return this.resourceController.canBuildCity(turnController.getCurrentPlayerTurn());
+    }
 
-	@Override
-	public boolean canBuildRoad() {
-		return this.resourceController.canBuildRoad(turnController.getCurrentPlayerTurn());
-	}
+    @Override
+    public boolean canBuildRoad() {
+        return this.resourceController.canBuildRoad(turnController.getCurrentPlayerTurn());
+    }
+
+    @Override
+    public int getPlayerPoints(String player) {
+        return getPlayerByName(player).getVictoryPoints();
+    }
 
 }
