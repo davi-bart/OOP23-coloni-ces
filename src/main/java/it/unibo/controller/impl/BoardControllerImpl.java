@@ -77,4 +77,9 @@ public final class BoardControllerImpl implements BoardController {
     public void buildRoad(final RoadPosition position, final Player player) {
         this.board.buildRoad(position, player);
     }
+
+    @Override
+    public int getLongestRoadLength(Player player) {
+        return this.board.getLongestRoadLength(player);
+    }
 }

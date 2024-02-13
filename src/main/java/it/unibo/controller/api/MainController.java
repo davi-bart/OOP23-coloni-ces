@@ -177,4 +177,10 @@ public interface MainController {
      * @return true if the given owner has the given resources, false otherwise
      */
     boolean hasResources(String playerName, Map<ResourceType, Integer> resources);
+
+    /**
+     * @param playerName
+     * @return the longest road length of the player with name {@code playerName}
+     */
+    int getLongestRoadLength(String playerName);
 }
