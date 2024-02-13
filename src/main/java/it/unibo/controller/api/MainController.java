@@ -124,17 +124,17 @@ public interface MainController {
     /**
      * @return whether the current player can build a settlement
      */
-    boolean canBuildSettlemet();
+    boolean canBuildSettlemet(final PropertyPosition position);
 
     /**
      * @return whether the current player can build a city
      */
-    boolean canBuildCity();
+    boolean canBuildCity(final PropertyPosition position);
 
     /**
      * @return whether the current player can build a road
      */
-    boolean canBuildRoad();
+    boolean canBuildRoad(final RoadPosition position);
 
     /**
      * @return get the name of the player whose turn it currently is.

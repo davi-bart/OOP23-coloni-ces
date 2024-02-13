@@ -162,17 +162,30 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public boolean canBuildSettlemet() {
-        return this.resourceController.canBuildSettlemet(turnController.getCurrentPlayerTurn());
+    public boolean canBuildSettlemet(final PropertyPosition position) {
+        return !isNearToAnyProperty(position)
+                && this.resourceController.canBuildSettlemet(turnController.getCurrentPlayerTurn());
+
+    }
+
+    private boolean isNearToAnyProperty(final PropertyPosition position) {
+        return this.getAllPropertyPositions().stream().anyMatch(propertyPosition -> {
+            if (!this.getPropertyType(propertyPosition).equals(PropertyType.EMPTY)) {
+                return propertyPosition.isNear(position);
+            }
+            return false;
+        });
+    }
+
+
+    @Override
+    public boolean canBuildCity(final PropertyPosition position) {
+        return !isNearToAnyProperty(position)
+                && this.resourceController.canBuildCity(turnController.getCurrentPlayerTurn());
     }
 
     @Override
-    public boolean canBuildCity() {
-        return this.resourceController.canBuildCity(turnController.getCurrentPlayerTurn());
-    }
-
-    @Override
-    public boolean canBuildRoad() {
+    public boolean canBuildRoad(final RoadPosition position) {
         return this.resourceController.canBuildRoad(turnController.getCurrentPlayerTurn());
     }
 

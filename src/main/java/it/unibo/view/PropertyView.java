@@ -52,12 +52,7 @@ public final class PropertyView extends Circle {
             super.setRadius(12);
             super.setFill(currentColor);
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                controller.getAllPropertyPositions().forEach(property -> {
-                    if (property.isNear(propertyPosition)) {
-
-                    }
-                });
-                if (controller.canBuildSettlemet() && warningPropertyAlert()) {
+                if (controller.canBuildSettlemet(propertyPosition) && warningPropertyAlert()) {
                     this.currentColor = getCurrentColor.get();
                     controller.buildSettlement(propertyPosition);
                     this.propertyType = controller.getPropertyType(propertyPosition);
@@ -70,7 +65,7 @@ public final class PropertyView extends Circle {
             super.setFill(new ImagePattern(img));
             super.setEffect(new Lighting(new Light.Distant(45, 45, currentColor)));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-                if (controller.canBuildCity() && warningPropertyAlert()) {
+                if (controller.canBuildCity(propertyPosition) && warningPropertyAlert()) {
                     controller.buildCity(propertyPosition);
                     this.propertyType = controller.getPropertyType(propertyPosition);
                     draw();
