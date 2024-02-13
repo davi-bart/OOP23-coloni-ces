@@ -68,8 +68,7 @@ public final class RoadPositionImpl implements RoadPosition {
         return equalPositions;
     }
 
-    @Override
-    public RoadPositionImpl equivalent() {
+    private RoadPositionImpl equivalent() {
         final int colShift = (coordinates.getRow() % 2 + 2) % 2;
         return switch (this.direction) {
             case UPLEFT ->
