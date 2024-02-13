@@ -48,6 +48,9 @@ class PropertyPositionTest {
                                 PropertyDirection.UPRIGHT);
                 assertTrue(property1.isNear(near1));
                 assertFalse(property1.isNear(notNear1));
+                assertFalse(notNear1.isNear(property1));
+                assertTrue(near1.isNear(property1));
+                assertTrue(near2.isNear(property1));
                 assertTrue(property1.isNear(near2));
         }
 }

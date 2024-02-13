@@ -114,7 +114,7 @@ public final class PropertyPositionImpl implements PropertyPosition {
      */
     public boolean isNear(final PropertyPosition position) {
         final List<PropertyPosition> relativePositions = new ArrayList<>();
-        relativePositions.add(position);
+        relativePositions.add(this);
         relativePositions.add(otherProperty());
         relativePositions.add(otherProperty().otherProperty());
         final List<PropertyPosition> near = new ArrayList<>();

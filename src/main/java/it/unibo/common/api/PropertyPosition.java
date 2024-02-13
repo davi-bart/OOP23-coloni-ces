@@ -14,6 +14,12 @@ public interface PropertyPosition {
      */
     PropertyDirection getDirection();
 
+    /**
+     * 
+     * @param position given position
+     * @return true if the given position is near an existing property, false
+     *         otherwise.
+     */
     boolean isNear(PropertyPosition position);
 
 }
