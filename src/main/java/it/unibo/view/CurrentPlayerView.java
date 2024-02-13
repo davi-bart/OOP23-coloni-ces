@@ -1,6 +1,7 @@
 package it.unibo.view;
 
 import it.unibo.controller.api.MainController;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 /**
@@ -29,5 +30,15 @@ public final class CurrentPlayerView extends HBox {
         controller.getPlayerResources(controller.getCurrentPlayer()).entrySet().forEach(entry -> super.getChildren()
                 .add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue())));
         super.getChildren().add(tradeView.getTradeButton());
+        super.getChildren().add(getEndTurnButton());
+    }
+
+    private Button getEndTurnButton() {
+        final Button endTurnButton = new Button("End turn");
+        endTurnButton.setOnAction(e -> {
+            controller.endTurn();
+            draw();
+        });
+        return endTurnButton;
     }
 }
