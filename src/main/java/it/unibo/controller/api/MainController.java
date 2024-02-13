@@ -159,4 +159,13 @@ public interface MainController {
      * @return the dice roll.
      */
     Pair<Integer, Integer> rollDie();
+
+    /**
+     * * Return if the given owner has the given resources.
+     * 
+     * @param owner     owner
+     * @param resources
+     * @return true if the given owner has the given resources, false otherwise
+     */
+    boolean hasResources(String playerName, Map<ResourceType, Integer> resources);
 }

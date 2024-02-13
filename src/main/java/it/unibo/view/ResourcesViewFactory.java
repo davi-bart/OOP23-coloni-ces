@@ -1,6 +1,9 @@
 package it.unibo.view;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import it.unibo.common.api.ResourceType;
 import javafx.geometry.Pos;
@@ -12,9 +15,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- * ResourceView class.
+ * Utility class used for generating view objects of resources.
  */
 public final class ResourcesViewFactory {
+
+    private ResourcesViewFactory() {
+    }
+
     /**
      * @param resource
      * @return the image view of the needed resource.
@@ -52,28 +59,17 @@ public final class ResourcesViewFactory {
      * @param resource
      * @return the image view of the needed resource with a combobox.
      */
-    public static VBox getResourceComboBoxAmount(final ResourceType resource) {
-        final ComboBox<Integer> amountBox = new ComboBox<>();
-        final VBox resourceAndAmount = new VBox(generateResource(resource));
-        /*
-         * TODO: inserire i volri massimi di ogni risorsa in base a quanti ne ha il
-         * giocatore
-         */
-        amountBox.getItems().addAll(0, 1, 2, 3);
-        amountBox.getSelectionModel().selectFirst();
-        resourceAndAmount.getChildren().add(amountBox);
-        return resourceAndAmount;
-    }
-
-    /**
-     * 
-     * @return an HBox representing all the resources (the hand of the player).
-     */
-    public static HBox getAllResources() {
-        final HBox hand = new HBox();
-        for (final ResourceType resource : ResourceType.values()) {
-            hand.getChildren().add(new VBox(getResourceComboBoxAmount(resource)));
-        }
-        return hand;
+    public static HBox getResourceComboBoxAmount(final Map<ResourceType, Integer> resources) {
+        final HBox horizontalBox = new HBox();
+        resources.forEach((resource, amount) -> {
+            final VBox resourceAndAmount = new VBox();
+            resourceAndAmount.getChildren().add(generateResource(resource));
+            final ComboBox<Integer> amountComboBox = new ComboBox<>();
+            amountComboBox.getItems().addAll(IntStream.range(0, amount + 1).boxed().collect(Collectors.toList()));
+            amountComboBox.getSelectionModel().selectFirst();
+            resourceAndAmount.getChildren().add(amountComboBox);
+            horizontalBox.getChildren().add(resourceAndAmount);
+        });
+        return horizontalBox;
     }
 }

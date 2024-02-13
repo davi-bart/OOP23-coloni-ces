@@ -181,4 +181,9 @@ public final class MainControllerImpl implements MainController {
         return getPlayerByName(player).getVictoryPoints();
     }
 
+	@Override
+	public boolean hasResources(final String playerName, final Map<ResourceType, Integer> resources) {
+		return resourceController.hasResources(getPlayerByName(playerName), resources);
+	}
+
 }
