@@ -150,6 +150,12 @@ public interface MainController {
     void endTurn();
 
     /**
+     * 
+     * @return the number of the current turn
+     */
+    int getTurnNumber();
+
+    /**
      * get the points of the specified player.
      * 
      * @param player the player

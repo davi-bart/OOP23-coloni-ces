@@ -161,13 +161,6 @@ public final class MainControllerImpl implements MainController {
         return this.boardController.getPropertyType(position);
     }
 
-    @Override
-    public boolean canBuildSettlemet(final PropertyPosition position) {
-        return !isNearToAnyProperty(position) && isPropertyNearToAnyOwnerRoad(position)
-                && this.resourceController.canBuildSettlemet(turnController.getCurrentPlayerTurn());
-
-    }
-
     /**
      * @param position
      * 
@@ -214,6 +207,20 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
+    public boolean canBuildSettlemet(final PropertyPosition position) {
+        if (turnController.getTurnNumber() == 1) {
+            if (sonoNelPrimoTurno()) {
+                return !isNearToAnyProperty(position) && (getAllPropertyPositions().size() == 0);
+            } else if (sonoNelSecondoTurno()) {
+                return !isNearToAnyProperty(position) && (getAllPropertyPositions().size() == 1);
+            }
+        }
+        return !isNearToAnyProperty(position) && isPropertyNearToAnyOwnerRoad(position)
+                && this.resourceController.canBuildSettlemet(turnController.getCurrentPlayerTurn());
+
+    }
+
+    @Override
     public boolean canBuildCity(final PropertyPosition position) {
         return !isNearToAnyProperty(position)
                 && this.resourceController.canBuildCity(turnController.getCurrentPlayerTurn());
@@ -221,6 +228,11 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canBuildRoad(final RoadPosition position) {
+        if (sonoNelPrimoTurno()) {
+            return isRoadNearToAnyOwnedProperty(position) && (getAllRoadPositions().size() == 0);
+        } else if (sonoNelSecondoTurno()) {
+            return isRoadNearToAnyOwnedProperty(position) && (getAllRoadPositions().size() == 1);
+        }
         return (isRoadNearToAnyOwnedRoad(position) || isRoadNearToAnyOwnedProperty(position))
                 && this.resourceController.canBuildRoad(turnController.getCurrentPlayerTurn());
     }
@@ -233,6 +245,11 @@ public final class MainControllerImpl implements MainController {
     @Override
     public boolean hasResources(final String playerName, final Map<ResourceType, Integer> resources) {
         return resourceController.hasResources(getPlayerByName(playerName), resources);
+    }
+
+    @Override
+    public int getTurnNumber() {
+        return turnController.getTurnNumber();
     }
 
 }
