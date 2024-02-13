@@ -87,4 +87,10 @@ public interface BoardController {
      */
     void buildRoad(RoadPosition position, Player player);
 
+    /**
+     * @param player
+     * @return the longest road length of {@code player}
+     */
+    int getLongestRoadLength(Player player);
+
 }

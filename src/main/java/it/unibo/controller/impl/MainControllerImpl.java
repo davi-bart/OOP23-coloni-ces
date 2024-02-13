@@ -117,11 +117,6 @@ public final class MainControllerImpl implements MainController {
                 .collect(Collectors.toSet());
     }
 
-    private Player getPlayerByName(final String name) {
-        return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
-    }
-
     @Override
     public String getCurrentPlayer() {
         return this.turnController.getCurrentPlayerTurn().getName();
@@ -233,6 +228,16 @@ public final class MainControllerImpl implements MainController {
     @Override
     public boolean hasResources(final String playerName, final Map<ResourceType, Integer> resources) {
         return resourceController.hasResources(getPlayerByName(playerName), resources);
+    }
+
+    @Override
+    public int getLongestRoadLength(String playerName) {
+        return boardController.getLongestRoadLength(getPlayerByName(playerName));
+    }
+
+    private Player getPlayerByName(final String name) {
+        return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
     }
 
 }

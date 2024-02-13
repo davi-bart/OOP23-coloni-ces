@@ -100,4 +100,9 @@ public final class BoardImpl implements Board {
     public void buildRoad(final RoadPosition position, final Player player) {
         roadManager.addRoad(position, player);
     }
+
+    @Override
+    public int getLongestRoadLength(final Player player) {
+        return roadManager.getLongestRoadLength(player);
+    }
 }
