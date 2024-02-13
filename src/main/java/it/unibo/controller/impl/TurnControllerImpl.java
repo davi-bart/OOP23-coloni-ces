@@ -47,4 +47,9 @@ public final class TurnControllerImpl implements TurnController {
         return this.turnManager.getCycle();
     }
 
+    @Override
+    public boolean hasRolled() {
+        return this.turnManager.hasRolled();
+    }
+
 }

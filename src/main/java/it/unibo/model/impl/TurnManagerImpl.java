@@ -17,6 +17,7 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public final class TurnManagerImpl implements TurnManager {
 
+    private boolean hasRolled = false;
     private int turnNumber = 0;
     private int currentTurn;
     private final Iterator<Integer> iterator;
@@ -58,10 +59,12 @@ public final class TurnManagerImpl implements TurnManager {
     public void endTurn() {
         turnNumber++;
         currentTurn = this.iterator.next();
+        hasRolled = false;
     }
 
     @Override
     public Pair<Integer, Integer> rollDie() {
+        hasRolled = true;
         return new ImmutablePair<Integer, Integer>(random.nextInt(MIN_ROLL, MAX_ROLL + 1),
                 random.nextInt(MIN_ROLL, MAX_ROLL + 1));
     }
@@ -74,6 +77,11 @@ public final class TurnManagerImpl implements TurnManager {
     @Override
     public int getCycle() {
         return turnNumber / playerList.size();
+    }
+
+    @Override
+    public boolean hasRolled() {
+        return hasRolled;
     }
 
 }
