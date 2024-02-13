@@ -125,7 +125,7 @@ public interface MainController {
      * @return whether the current player can build a settlement
      * @param position where to build the settlemet
      */
-    boolean canBuildSettlemet(PropertyPosition position);
+    boolean canBuildSettlement(PropertyPosition position);
 
     /**
      * @return whether the current player can build a city
@@ -148,12 +148,6 @@ public interface MainController {
      * end the current turn and updates the current player.
      */
     void endTurn();
-
-    /**
-     * 
-     * @return the number of the current turn
-     */
-    int getTurnNumber();
 
     /**
      * get the points of the specified player.
@@ -183,4 +177,9 @@ public interface MainController {
      * @return the longest road length of the player with name {@code playerName}
      */
     int getLongestRoadLength(String playerName);
+
+    /**
+     * @return whether the current player can end the turn
+     */
+    boolean canEndTurn();
 }

@@ -40,19 +40,19 @@ public interface ResourceController {
      * @param player
      * @return whether {@code player} can build a settlement
      */
-    boolean canBuildSettlemet(ResourceOwner player);
+    boolean hasResourcesForSettlement(ResourceOwner player);
 
     /**
      * @param player
      * @return whether {@code player} can build a city
      */
-    boolean canBuildCity(ResourceOwner player);
+    boolean hasResourcesForCity(ResourceOwner player);
 
     /**
      * @param player
      * @return whether {@code player} can build a road
      */
-    boolean canBuildRoad(ResourceOwner player);
+    boolean hasResourcesForRoad(ResourceOwner player);
 
     /**
      * Removes resources {@code resources} from player {@code owner}.

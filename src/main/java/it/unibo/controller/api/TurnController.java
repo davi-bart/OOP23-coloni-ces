@@ -28,12 +28,6 @@ public interface TurnController {
 
     /**
      * 
-     * @return the number of the current turn.
-     */
-    int getTurnNumber();
-
-    /**
-     * 
      * @return the number of cycles.
      */
     int getCycle();

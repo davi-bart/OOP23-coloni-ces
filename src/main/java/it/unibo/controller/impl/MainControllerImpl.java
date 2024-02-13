@@ -202,34 +202,30 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public boolean canBuildSettlemet(final PropertyPosition position) {
-        if (turnController.getTurnNumber() == 1) {
-            if (sonoNelPrimoTurno()) {
-                return !isNearToAnyProperty(position) && (getAllPropertyPositions().size() == 0);
-            } else if (sonoNelSecondoTurno()) {
-                return !isNearToAnyProperty(position) && (getAllPropertyPositions().size() == 1);
-            }
+    public boolean canBuildSettlement(final PropertyPosition position) {
+        final int cycle = turnController.getCycle();
+        if (cycle <= 2) {
+            return !isNearToAnyProperty(position) && getAllPropertyPositions().size() < cycle;
         }
         return !isNearToAnyProperty(position) && isPropertyNearToAnyOwnerRoad(position)
-                && this.resourceController.canBuildSettlemet(turnController.getCurrentPlayerTurn());
-
+                && this.resourceController.hasResourcesForSettlement(turnController.getCurrentPlayerTurn());
     }
 
     @Override
     public boolean canBuildCity(final PropertyPosition position) {
         return !isNearToAnyProperty(position)
-                && this.resourceController.canBuildCity(turnController.getCurrentPlayerTurn());
+                && this.resourceController.hasResourcesForCity(turnController.getCurrentPlayerTurn());
     }
 
     @Override
     public boolean canBuildRoad(final RoadPosition position) {
-        if (sonoNelPrimoTurno()) {
-            return isRoadNearToAnyOwnedProperty(position) && (getAllRoadPositions().size() == 0);
-        } else if (sonoNelSecondoTurno()) {
-            return isRoadNearToAnyOwnedProperty(position) && (getAllRoadPositions().size() == 1);
+        final int cycle = turnController.getCycle();
+        if (cycle <= 2) {
+            return isRoadNearToAnyOwnedProperty(position)
+                    && getAllRoadPositions().size() < cycle;
         }
         return (isRoadNearToAnyOwnedRoad(position) || isRoadNearToAnyOwnedProperty(position))
-                && this.resourceController.canBuildRoad(turnController.getCurrentPlayerTurn());
+                && this.resourceController.hasResourcesForRoad(turnController.getCurrentPlayerTurn());
     }
 
     @Override
@@ -247,9 +243,18 @@ public final class MainControllerImpl implements MainController {
         return boardController.getLongestRoadLength(getPlayerByName(playerName));
     }
 
+    @Override
+    public boolean canEndTurn() {
+        final int cycle = turnController.getCycle();
+        if (cycle <= 2) {
+            return getPlayerPropertyPositions(getCurrentPlayer()).size() == cycle
+                    && getPlayerRoadPositions(getCurrentPlayer()).size() == cycle;
+        }
+        return true;
+    }
+
     private Player getPlayerByName(final String name) {
         return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
     }
-
 }

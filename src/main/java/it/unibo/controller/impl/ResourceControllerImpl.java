@@ -54,12 +54,12 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public boolean canBuildSettlemet(final ResourceOwner player) {
+    public boolean hasResourcesForSettlement(final ResourceOwner player) {
         return resourceManager.hasResources(player, Recipes.getSettlementResources());
     }
 
     @Override
-    public boolean canBuildCity(final ResourceOwner player) {
+    public boolean hasResourcesForCity(final ResourceOwner player) {
         return resourceManager.hasResources(player, Recipes.getCityResources());
     }
 
@@ -71,7 +71,7 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public boolean canBuildRoad(final ResourceOwner player) {
+    public boolean hasResourcesForRoad(final ResourceOwner player) {
         return resourceManager.hasResources(player, Recipes.getRoadResources());
     }
 }

@@ -36,12 +36,11 @@ public final class CurrentPlayerView extends HBox {
     private Button getEndTurnButton() {
         final Button endTurnButton = new Button("End turn");
         endTurnButton.setOnAction(e -> {
-            if ((controller.getPlayerPropertyPositions(controller.getCurrentPlayer()).size() == 0
-                    || controller.getPlayerRoadPositions(controller.getCurrentPlayer()).size() == 0)
-                    && controller.sonoNelPrimoTurno()) {
+            if (controller.canEndTurn()) {
+                controller.endTurn();
+            } else {
                 endTurnButton.setText("puppa");
             }
-            controller.endTurn();
             draw();
         });
         return endTurnButton;
