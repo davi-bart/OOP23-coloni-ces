@@ -1,6 +1,5 @@
 package it.unibo.view;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,11 +7,6 @@ import java.util.Map;
 
 import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -20,7 +14,7 @@ import javafx.scene.shape.Line;
 /**
  * Board view.
  */
-public final class BoardView {
+public final class BoardView extends StackPane {
     private final MainController controller;
     private final Map<String, Color> playerColors = new HashMap<>();
 
@@ -33,23 +27,20 @@ public final class BoardView {
         this.controller = controller;
         final var colors = List.of(Color.RED, Color.BLUE, Color.LIMEGREEN, Color.MAGENTA);
         this.controller.getPlayerNames().stream().forEach(p -> playerColors.put(p, colors.get(playerColors.size())));
+        draw();
     }
 
     /**
-     * @throws IOException
-     * @return a stackpane representing the board
+     * Draw the board.
      */
-    public StackPane getBoard() throws IOException {
-        final StackPane pane = new StackPane();
+    public void draw() {
+        super.getChildren().clear();
         // add the exagons and properties/road to the board
         final Group group = new Group();
         group.getChildren().addAll(drawTiles());
         group.getChildren().addAll(drawRoads());
         group.getChildren().addAll(drawProperties());
-        pane.getChildren().add(0, group);
-        pane.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        return pane;
+        super.getChildren().add(0, group);
     }
 
     private List<Group> drawTiles() {

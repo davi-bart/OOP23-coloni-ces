@@ -19,7 +19,6 @@ import it.unibo.controller.impl.MainControllerImpl;
 public class AppView {
     private final MainController controller;
     private final Stage stage;
-    private final BoardView boardView;
     private static final int DEFAULT_HEIGHT = 350;
     private final List<String> players = List.of("Alex", "Lucone", "Monaco", "Dave");
 
@@ -30,7 +29,6 @@ public class AppView {
      */
     public AppView(final Stage stage) {
         controller = new MainControllerImpl(players);
-        boardView = new BoardView(controller);
         this.stage = stage;
     }
 
@@ -63,7 +61,7 @@ public class AppView {
         rightSide.getChildren().add(new PlayersView(controller));
         root.setBottom(new CurrentPlayerView(controller));
         root.setRight(rightSide);
-        root.setCenter(boardView.getBoard());
+        root.setCenter(new BoardView(controller));
         return scene;
     }
 
