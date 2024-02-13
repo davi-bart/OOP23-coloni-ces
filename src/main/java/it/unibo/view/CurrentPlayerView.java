@@ -31,6 +31,8 @@ public final class CurrentPlayerView extends HBox {
                 .add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue())));
         super.getChildren().add(tradeView.getTradeButton());
         super.getChildren().add(getEndTurnButton());
+        super.getChildren().add(getRollButton());
+
     }
 
     private Button getEndTurnButton() {
@@ -44,5 +46,18 @@ public final class CurrentPlayerView extends HBox {
             draw();
         });
         return endTurnButton;
+    }
+
+    private Button getRollButton() {
+        final Button rollButton = new Button("Roll die");
+        if (controller.canRollDie()) {
+            rollButton.setOnAction(e -> {
+                var roll = controller.rollDie();
+                var rollSum = roll.getLeft() + roll.getRight();
+                rollButton.setText(String.valueOf(rollSum) + roll);
+                rollButton.setDisable(true);
+            });
+        }
+        return rollButton;
     }
 }

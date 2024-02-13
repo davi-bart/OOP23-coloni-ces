@@ -257,4 +257,9 @@ public final class MainControllerImpl implements MainController {
         return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
     }
+
+    @Override
+    public boolean canRollDie() {
+        return !turnController.hasRolled();
+    }
 }

@@ -182,4 +182,10 @@ public interface MainController {
      * @return whether the current player can end the turn
      */
     boolean canEndTurn();
+
+    /**
+     * 
+     * @return if the player can roll.
+     */
+    boolean canRollDie();
 }
