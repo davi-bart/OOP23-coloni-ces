@@ -14,15 +14,12 @@ import javafx.stage.Stage;
  */
 
 public final class TradeView {
-    private final ResourcesView resourcesView = new ResourcesView();
-
     /**
      * Get the trade button.
      * 
      * @return the trade button
      */
     public Button getTradeButton() {
-
         final Button tradeButton = new Button("Trade");
         tradeButton.setOnMouseClicked(event -> showTradeStage());
         return tradeButton;
@@ -43,9 +40,9 @@ public final class TradeView {
 
         newStage.setTitle("Trade window");
         comp.getChildren().add(givinResources);
-        comp.getChildren().add(resourcesView.getAllResources());
+        comp.getChildren().add(ResourcesViewFactory.getAllResources());
         comp.getChildren().add(recivingResources);
-        comp.getChildren().add(resourcesView.getAllResources());
+        comp.getChildren().add(ResourcesViewFactory.getAllResources());
 
         player1Trade.getChildren().add(playerName1);
         tradePossibility.getChildren().add(player1Trade);
@@ -57,6 +54,5 @@ public final class TradeView {
         newStage.setScene(stageScene);
         newStage.setResizable(false);
         newStage.show();
-
     }
 }

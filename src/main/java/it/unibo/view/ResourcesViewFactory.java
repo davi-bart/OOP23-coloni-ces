@@ -14,12 +14,12 @@ import javafx.scene.layout.VBox;
 /**
  * ResourceView class.
  */
-public final class ResourcesView {
+public final class ResourcesViewFactory {
     /**
      * @param resource
      * @return the image view of the needed resource.
      */
-    private VBox generateResource(final ResourceType resource) {
+    private static VBox generateResource(final ResourceType resource) {
         final int defaultHeight = 100;
         final VBox resourceCard = new VBox();
         final Image resourceImage = new Image("imgs/resources/" + resource.toString().toLowerCase(Locale.US) + ".png");
@@ -38,7 +38,7 @@ public final class ResourcesView {
      * @return the image view of the needed resource with a label representing the
      *         amount.
      */
-    public VBox getResourceLabelAmount(final ResourceType resource, final int amount) {
+    public static VBox getResourceLabelAmount(final ResourceType resource, final int amount) {
         final Label amountLabel = new Label();
         final VBox resourceAndAmount = new VBox(generateResource(resource));
         amountLabel.setText(String.valueOf(amount));
@@ -52,7 +52,7 @@ public final class ResourcesView {
      * @param resource
      * @return the image view of the needed resource with a combobox.
      */
-    public VBox getResourceComboBoxAmount(final ResourceType resource) {
+    public static VBox getResourceComboBoxAmount(final ResourceType resource) {
         final ComboBox<Integer> amountBox = new ComboBox<>();
         final VBox resourceAndAmount = new VBox(generateResource(resource));
         /*
@@ -69,7 +69,7 @@ public final class ResourcesView {
      * 
      * @return an HBox representing all the resources (the hand of the player).
      */
-    public HBox getAllResources() {
+    public static HBox getAllResources() {
         final HBox hand = new HBox();
         for (final ResourceType resource : ResourceType.values()) {
             hand.getChildren().add(new VBox(getResourceComboBoxAmount(resource)));
