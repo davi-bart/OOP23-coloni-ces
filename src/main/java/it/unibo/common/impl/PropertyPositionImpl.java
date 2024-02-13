@@ -126,8 +126,10 @@ public final class PropertyPositionImpl implements PropertyPosition {
         return near.contains(position);
     }
 
+
     @Override
     public String toString() {
         return "Pos [" + coordinates + "," + direction + "]";
     }
+
 }

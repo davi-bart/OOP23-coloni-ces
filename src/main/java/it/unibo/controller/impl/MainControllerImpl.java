@@ -163,7 +163,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canBuildSettlemet(final PropertyPosition position) {
-        return !isNearToAnyProperty(position)
+        return !isNearToAnyProperty(position) && isPropertyNearToAnyOwnerRoad(position)
                 && this.resourceController.canBuildSettlemet(turnController.getCurrentPlayerTurn());
 
     }
@@ -192,6 +192,16 @@ public final class MainControllerImpl implements MainController {
         return this.getPlayerPropertyPositions(getCurrentPlayer()).stream()
                 .anyMatch(propertyPosition -> {
                     if (position.isNearToProperty(propertyPosition.getKey())) {
+                        return true;
+                    }
+                    return false;
+                });
+    }
+
+    private boolean isPropertyNearToAnyOwnerRoad(final PropertyPosition position) {
+        return this.getPlayerRoadPositions(getCurrentPlayer()).stream()
+                .anyMatch(roadPosition -> {
+                    if (roadPosition.isNearToProperty(position)) {
                         return true;
                     }
                     return false;
