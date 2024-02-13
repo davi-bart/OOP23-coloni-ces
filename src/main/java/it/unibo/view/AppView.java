@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -19,7 +18,7 @@ import it.unibo.controller.impl.MainControllerImpl;
  * Application.
  */
 public class AppView {
-    private final MainController mainController;
+    private final MainController controller;
     private final Stage stage;
     private final BoardView boardView;
     private static final int DEFAULT_HEIGHT = 350;
@@ -31,8 +30,8 @@ public class AppView {
      * @param stage the stage
      */
     public AppView(final Stage stage) {
-        mainController = new MainControllerImpl(players);
-        boardView = new BoardView(mainController);
+        controller = new MainControllerImpl(players);
+        boardView = new BoardView(controller);
         this.stage = stage;
     }
 
@@ -57,32 +56,17 @@ public class AppView {
     public Scene getScene() throws IOException {
         final BorderPane root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
         final VBox rightSide = new VBox();
-        final HBox playerHandAndButtons = new HBox();
 
         final Scene scene = new Scene(root);
 
-        playerHandAndButtons.getChildren().add(new CurrentPlayerView(mainController));
-
         rightSide.getChildren().add(costCard());
-        rightSide.getChildren().add(bankResources());
-        root.setBottom(playerHandAndButtons);
+        rightSide.getChildren().add(new BankView(controller));
+        root.setBottom(new CurrentPlayerView(controller));
         root.setRight(rightSide);
         root.setCenter(boardView.getBoard());
         players.forEach(name -> rightSide.getChildren().add(new Label(name)));
 
         return scene;
-    }
-
-    /**
-     * Create the bank resources.
-     * 
-     * @return the box containing the bank resources.
-     */
-    private HBox bankResources() {
-        final HBox bankVault = new HBox();
-        mainController.getBankResources().entrySet().forEach(entry -> bankVault.getChildren()
-                .add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue())));
-        return bankVault;
     }
 
     /**

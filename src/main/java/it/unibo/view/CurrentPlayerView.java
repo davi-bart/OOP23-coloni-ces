@@ -4,7 +4,7 @@ import it.unibo.controller.api.MainController;
 import javafx.scene.layout.HBox;
 
 /**
- * View class the current player. It shows his resources and some buttons.
+ * View class for the current player. It shows his resources and some buttons.
  */
 public final class CurrentPlayerView extends HBox {
     private final MainController controller;
