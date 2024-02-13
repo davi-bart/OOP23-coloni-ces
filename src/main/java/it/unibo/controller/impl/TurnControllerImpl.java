@@ -38,8 +38,8 @@ public final class TurnControllerImpl implements TurnController {
     }
 
     @Override
-    public int getTurn() {
-        return this.turnManager.getTurn();
+    public int getTurnNumber() {
+        return this.turnManager.getTurnNumber();
     }
 
 }
