@@ -16,8 +16,8 @@ public class JavaFXApp extends Application {
      */
     @Override
     public void start(final Stage stage) throws Exception {
-        final AppView appView = new AppView(stage);
-        appView.draw();
+        final Menu menu = new Menu(stage);
+        menu.draw();
     }
 
     /**
