@@ -1,6 +1,7 @@
 package it.unibo.controller.api;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -93,4 +94,8 @@ public interface BoardController {
      */
     int getLongestRoadLength(Player player);
 
+    /**
+     * @return the position of the robber
+     */
+    Optional<TilePosition> getRobberPosition();
 }

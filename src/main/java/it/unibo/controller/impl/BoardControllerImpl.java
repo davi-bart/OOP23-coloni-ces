@@ -1,6 +1,7 @@
 package it.unibo.controller.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -87,5 +88,10 @@ public final class BoardControllerImpl implements BoardController {
     @Override
     public int getLongestRoadLength(final Player player) {
         return this.roadManager.getLongestRoadLength(player);
+    }
+
+    @Override
+    public Optional<TilePosition> getRobberPosition() {
+        return this.board.getRobberPosition();
     }
 }
