@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -53,6 +54,26 @@ public class Menu {
         stage.show();
     }
 
+    private void addPlayer(int size, ObservableList<String> list, TextField textfield, Alert alert) {
+        if (size < 4) {
+            if (list.contains(textfield.getText())) {
+                alert.setHeaderText("The chosen name is already taken");
+                alert.showAndWait();
+            } else {
+                if (textfield.getText().equals("")) {
+                    alert.setHeaderText("An empty text field is not a valid name");
+                    alert.showAndWait();
+                } else {
+                    players.add(textfield.getText());
+                    textfield.clear();
+                }
+            }
+        } else {
+            alert.setHeaderText("The player limit has been reached");
+            alert.showAndWait();
+        }
+    }
+
     /**
      * getScene.
      * 
@@ -60,6 +81,7 @@ public class Menu {
      * @return the scene
      */
     public Scene getScene() throws IOException {
+
         final BorderPane root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
         final VBox playBox = new VBox();
         final Button playButton = new Button("PLAY");
@@ -77,11 +99,11 @@ public class Menu {
         final int maxTextAreaHeight = 200;
         final int maxTextAreaWidth = 200;
 
-
         playerName.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue()));
         tableView.getColumns().add(playerName);
         tableView.setMaxSize(maxTableWidth, maxTableHeight);
-        tableView.setMinSize(minTableWidth, minTableHeight );
+        tableView.setMinSize(minTableWidth, minTableHeight);
+
         playButton.setOnMouseClicked(e -> {
             if (players.size() >= 1) {
                 stage.close();
@@ -94,19 +116,13 @@ public class Menu {
         });
 
         addButton.setOnMouseClicked(e -> {
-            if (players.size() < 4) {
-                if (players.contains(textField.getText())) {
-                    popUp.setHeaderText("The chosen name is already taken");
-                    popUp.showAndWait();
-                } else {
-                    players.add(textField.getText());
-                    textField.clear();
-                }
-            } else {
-                popUp.setHeaderText("The player limit has been reached");
-                popUp.showAndWait();
-            }
+            addPlayer(players.size(), players, textField, popUp);
+        });
 
+        textField.setOnKeyPressed(e -> {
+            if (e.getCode() == (KeyCode.ENTER)) {
+                addPlayer(players.size(), players, textField, popUp);
+            }
         });
 
         Image image = new Image("imgs/menu/SettlersOfCesena.png");
@@ -117,7 +133,7 @@ public class Menu {
 
         tableView.setItems(players);
         playerName.prefWidthProperty().bind(tableView.widthProperty());
-        textField.setPromptText("Insert player names");
+        textField.setPromptText("Insert player name");
         textField.setMaxSize(maxTextAreaWidth, maxTextAreaHeight);
         playBox.getChildren().addAll(textField, addButton, tableView, playButton);
         playBox.setSpacing(childrenSpacing);
