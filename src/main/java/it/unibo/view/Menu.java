@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -41,7 +42,7 @@ public class Menu {
     }
 
     /**
-     * draw the menu
+     * draw the menu.
      * 
      * @throws IOException exception
      */
@@ -68,11 +69,19 @@ public class Menu {
         final TableView<String> tableView = new TableView<String>();
         final Alert popUp = new Alert(AlertType.ERROR);
         final TableColumn<String, String> playerName = new TableColumn<String, String>("Player Name");
+        final int maxTableHeight = 140;
+        final int maxTableWidth = 300;
+        final int minTableHeight = 0;
+        final int minTableWidth = 300;
+        final int childrenSpacing = 5;
+        final int maxTextAreaHeight = 200;
+        final int maxTextAreaWidth = 200;
+
 
         playerName.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue()));
         tableView.getColumns().add(playerName);
-        tableView.setMaxSize(300, 200);
-        tableView.setMinSize(300, 0);
+        tableView.setMaxSize(maxTableWidth, maxTableHeight);
+        tableView.setMinSize(minTableWidth, minTableHeight );
         playButton.setOnMouseClicked(e -> {
             if (players.size() >= 1) {
                 stage.close();
@@ -109,9 +118,10 @@ public class Menu {
         tableView.setItems(players);
         playerName.prefWidthProperty().bind(tableView.widthProperty());
         textField.setPromptText("Insert player names");
-        textField.setMaxSize(200, 200);
+        textField.setMaxSize(maxTextAreaWidth, maxTextAreaHeight);
         playBox.getChildren().addAll(textField, addButton, tableView, playButton);
-        playBox.setSpacing(5);
+        playBox.setSpacing(childrenSpacing);
+        tableView.setPlaceholder(new Label(""));
 
         playBox.setAlignment(Pos.CENTER);
         root.setBackground(background);

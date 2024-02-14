@@ -1,5 +1,7 @@
 package it.unibo.view;
-
+/**
+ * interface of AppView.
+ */
 public interface AppView {
     /**
      * draw the full application.
