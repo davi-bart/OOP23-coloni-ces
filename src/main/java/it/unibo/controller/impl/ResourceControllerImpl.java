@@ -89,4 +89,10 @@ public final class ResourceControllerImpl implements ResourceController {
             resourceManager.removeResources(bank, resource.getKey(), resource.getValue());
         }
     }
+
+    @Override
+    public void acceptTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> givingResouces,
+            Map<ResourceType, Integer> recivingResources) {
+        resourceManager.acceptTrade(proposer, accepter, givingResouces, recivingResources);
+    }
 }

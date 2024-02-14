@@ -334,4 +334,11 @@ public final class MainControllerImpl implements MainController {
     public int getCycle() {
         return turnController.getCycle();
     }
+
+    @Override
+    public void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> proposedResources,
+            Map<ResourceType, Integer> wantedResources) {
+        resourceController.acceptTrade(getPlayerByName(proposer), getPlayerByName(accepter), proposedResources,
+                wantedResources);
+    }
 }

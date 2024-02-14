@@ -71,4 +71,17 @@ public interface ResourceController {
     void addResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
 
     void removeBankResources(Map<ResourceType, Integer> resources);
+
+    /**
+     * Modify the resources of the owners into the trade.
+     * 
+     * @param proposer          is the owner that propose the trade
+     * @param accepter          is the owner that accept the trade
+     * @param givingResouces    are the resources that the proposer give to the
+     *                          accepter
+     * @param recivingResources are the resources that the accepter give to the
+     *                          proposer
+     */
+    void acceptTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> givingResouces,
+            Map<ResourceType, Integer> recivingResources);
 }

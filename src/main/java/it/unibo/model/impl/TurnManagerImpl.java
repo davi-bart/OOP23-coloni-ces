@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import it.unibo.model.api.Player;
-import it.unibo.model.api.TurnManager;
 import java.util.Random;
 import java.util.stream.Stream;
+
+import it.unibo.model.api.Player;
+import it.unibo.model.api.TurnManager;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;

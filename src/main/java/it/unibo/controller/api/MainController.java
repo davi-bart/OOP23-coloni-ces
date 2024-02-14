@@ -157,7 +157,6 @@ public interface MainController {
      */
     int getPlayerPoints(String player);
 
-
     /**
      * 
      * @return the dice roll.
@@ -202,4 +201,17 @@ public interface MainController {
      * @return the number of cycles.
      */
     int getCycle();
+
+    /**
+     * Modify the resources of the owners into the trade.
+     * 
+     * @param proposer          is the owner that propose the trade
+     * @param accepter          is the owner that accept the trade
+     * @param proposedResources are the resources that the proposer give to the
+     *                          accepter
+     * @param wantedResources   are the resources that the accepter give to the
+     *                          proposer
+     */
+    void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> proposedResources,
+            Map<ResourceType, Integer> wantedResources);
 }

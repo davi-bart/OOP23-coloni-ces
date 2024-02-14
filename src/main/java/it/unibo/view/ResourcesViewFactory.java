@@ -26,7 +26,7 @@ public final class ResourcesViewFactory {
      * @param resource
      * @return the image view of the needed resource.
      */
-    private static VBox generateResource(final ResourceType resource) {
+    public static VBox generateResource(final ResourceType resource) {
         final int defaultHeight = 100;
         final VBox resourceCard = new VBox();
         final Image resourceImage = new Image("imgs/resources/" + resource.toString().toLowerCase(Locale.US) + ".png");
@@ -72,6 +72,7 @@ public final class ResourcesViewFactory {
         });
         return horizontalBox;
     }
+
     /**
      * @param resources the map with all the resources.
      * @return the image view of the needed resource with a combobox.
