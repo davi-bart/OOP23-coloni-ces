@@ -21,7 +21,7 @@ public final class PlayerImpl implements Player {
      */
     public PlayerImpl(final String name) {
         this.name = name;
-        this.defaultValue = 10;
+        this.defaultValue = 0;
         victoryPoints = 0;
     }
 

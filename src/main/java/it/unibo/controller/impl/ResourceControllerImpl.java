@@ -74,4 +74,19 @@ public final class ResourceControllerImpl implements ResourceController {
     public boolean hasResourcesForRoad(final ResourceOwner player) {
         return resourceManager.hasResources(player, Recipes.getRoadResources());
     }
+
+    @Override
+
+    public void addResources(ResourceOwner owner, Map<ResourceType, Integer> resources) {
+        for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
+            resourceManager.addResources(owner, resource.getKey(), resources.get(resource.getKey()));
+        }
+    }
+
+    @Override
+    public void removeBankResources(Map<ResourceType, Integer> resources) {
+        for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
+            resourceManager.removeResources(bank, resource.getKey(), resource.getValue());
+        }
+    }
 }

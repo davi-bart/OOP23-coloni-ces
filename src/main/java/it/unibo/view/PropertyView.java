@@ -55,6 +55,10 @@ public final class PropertyView extends Circle {
                 if (controller.canBuildSettlement(propertyPosition) && warningPropertyAlert()) {
                     this.currentColor = getCurrentColor.get();
                     controller.buildSettlement(propertyPosition);
+                    controller.incrementVictoryPoints(controller.getCurrentPlayer());
+                    // System.out.println(
+                    // controller.getCurrentPlayer() +
+                    // controller.getVictoryPoints(controller.getCurrentPlayer()));
                     this.propertyType = controller.getPropertyType(propertyPosition);
                     draw();
                 }
@@ -67,6 +71,11 @@ public final class PropertyView extends Circle {
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (controller.canBuildCity(propertyPosition) && warningPropertyAlert()) {
                     controller.buildCity(propertyPosition);
+                    controller.incrementVictoryPoints(controller.getCurrentPlayer());
+                    controller.incrementVictoryPoints(controller.getCurrentPlayer());
+                    // System.out.println(
+                    // controller.getCurrentPlayer() +
+                    // controller.getVictoryPoints(controller.getCurrentPlayer()));
                     this.propertyType = controller.getPropertyType(propertyPosition);
                     draw();
                 }

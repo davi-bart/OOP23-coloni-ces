@@ -28,7 +28,7 @@ public class ResourceManagerImpl implements ResourceManager {
 
     @Override
     public final void addResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
-        if (amount > 0) {
+        if (amount >= 0) {
             allEntityResources.get(owner).compute(resource, (k, v) -> v + amount);
         } else {
             throw new IllegalArgumentException("amount must be positive");

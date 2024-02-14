@@ -158,6 +158,13 @@ public interface MainController {
     int getPlayerPoints(String player);
 
     /**
+     * increment the victory points of the given player.
+     * 
+     * @param player
+     */
+    void incrementVictoryPoints(String player);
+
+    /**
      * 
      * @return the dice roll.
      */
@@ -188,4 +195,12 @@ public interface MainController {
      * @return if the player can roll.
      */
     boolean canRollDie();
+
+    /**
+     * give the resources produced by the tile with the given number.
+     * 
+     * @param rollSum sum of the 2 dices.
+     */
+    void giveResources(int rollSum);
+    
 }

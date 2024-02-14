@@ -1,6 +1,7 @@
 package it.unibo.controller.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -135,8 +136,11 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buildSettlement(final PropertyPosition position) {
         this.boardController.buildSettlement(position, turnController.getCurrentPlayerTurn());
-        this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
-                Recipes.getSettlementResources());
+        final int cycle = turnController.getCycle();
+        if (cycle > 2) {
+            this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
+                    Recipes.getSettlementResources());
+        }
     }
 
     @Override
@@ -148,7 +152,10 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buildRoad(final RoadPosition position) {
         this.boardController.buildRoad(position, turnController.getCurrentPlayerTurn());
-        this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getRoadResources());
+        final int cycle = turnController.getCycle();
+        if (cycle > 2) {
+            this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getRoadResources());
+        }
     }
 
     @Override
@@ -265,5 +272,61 @@ public final class MainControllerImpl implements MainController {
     @Override
     public boolean canRollDie() {
         return !turnController.hasRolled() && turnController.getCycle() > 2;
+    }
+
+    @Override
+    public void incrementVictoryPoints(String player) {
+        this.getPlayerByName(player).incrementVictoryPoints();
+    }
+
+    @Override
+    public void giveResources(int rollSum) {
+        for (String player : this.getPlayerNames()) {
+            final Map<ResourceType, Integer> givenResource = new HashMap<>();
+            List.of(ResourceType.values()).forEach(resource -> givenResource.put(resource, 0));
+            for (Pair<PropertyPosition, PropertyType> property : boardController
+                    .getPlayerPropertyPositions(getPlayerByName(player))) {
+                for (PropertyPositionImpl propertyPositions : property.getLeft().getAllPropertyPositions()) {
+                    try {
+                        if (getTileNumber(propertyPositions.getCoordinates()) == rollSum) {
+
+                            // resourceController.addResources(getPlayerByName(player),
+                            // property.getValue() == PropertyType.CITY ? 2 : 1);
+                            final int amount = property.getValue() == PropertyType.CITY ? 2 : 1;
+                            switch (getTileTerrainType(propertyPositions.getCoordinates())) {
+                                case DESERT:
+                                    break;
+                                case FIELD:
+                                    givenResource.compute(ResourceType.GRAIN, (k, v) -> v + amount);
+                                    break;
+                                case FOREST:
+                                    givenResource.compute(ResourceType.LUMBER, (k, v) -> v + amount);
+                                    break;
+                                case HILL:
+                                    givenResource.compute(ResourceType.BRICK, (k, v) -> v + amount);
+                                    break;
+                                case MOUNTAIN:
+                                    givenResource.compute(ResourceType.ORE, (k, v) -> v + amount);
+                                    break;
+                                case PASTURE:
+                                    givenResource.compute(ResourceType.WOOL, (k, v) -> v + amount);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                    } catch (Exception e) {
+                        // non esiste la tile (bordo)
+                    }
+                }
+            }
+            resourceController.addResources(getPlayerByName(player), givenResource);
+            resourceController.removeBankResources(givenResource);
+            System.out.println(
+                    getPlayerByName(player).getName() + resourceController.getOwnerResources(getPlayerByName(player)));
+        }
+        System.out.println(
+                "bank " + resourceController.getBankResources());
     }
 }

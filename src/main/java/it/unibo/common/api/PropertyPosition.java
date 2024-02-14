@@ -1,5 +1,9 @@
 package it.unibo.common.api;
 
+import java.util.List;
+
+import it.unibo.common.impl.PropertyPositionImpl;
+
 /**
  * Interface for the position of a property.
  */
@@ -13,6 +17,8 @@ public interface PropertyPosition {
      * @return the direction of the property
      */
     PropertyDirection getDirection();
+
+    List<PropertyPositionImpl> getAllPropertyPositions();
 
     /**
      * 

@@ -79,6 +79,7 @@ public final class PropertyPositionImpl implements PropertyPosition {
      * 
      * @return the equivalent PropertyPosition
      */
+
     private PropertyPositionImpl otherProperty() {
         final int colShift = (coordinates.getRow() % 2 + 2) % 2;
         return switch (this.direction) {
@@ -104,6 +105,10 @@ public final class PropertyPositionImpl implements PropertyPosition {
         };
     }
 
+    public List<PropertyPositionImpl> getAllPropertyPositions() {
+        return List.of(this, this.otherProperty(), this.otherProperty().otherProperty());
+    }
+
     /**
      * Return if the property in given position is
      * near to the current property.
@@ -125,7 +130,6 @@ public final class PropertyPositionImpl implements PropertyPosition {
                         directions.get((directions.indexOf(pos.getDirection()) + 1) % directions.size()))));
         return near.contains(position);
     }
-
 
     @Override
     public String toString() {

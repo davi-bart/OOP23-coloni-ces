@@ -62,4 +62,13 @@ public interface ResourceController {
      */
     void removeResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
 
+    /**
+     * Add resources {@code resources} to player {@code owner}.
+     * 
+     * @param owner     owner of the resources
+     * @param resources map from resource type to amount
+     */
+    void addResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
+
+    void removeBankResources(Map<ResourceType, Integer> resources);
 }
