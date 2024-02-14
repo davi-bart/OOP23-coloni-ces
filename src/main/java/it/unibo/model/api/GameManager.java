@@ -7,6 +7,18 @@ import java.util.List;
  */
 public interface GameManager {
     /**
+     * Check whether the game is over.
+     * 
+     * @return true if the game is over, false otherwise.
+     */
+    boolean isGameOver();
+
+    /**
+     * @return the list of the players
+     */
+    List<Player> getPlayers();
+
+    /**
      * Get the board.
      * 
      * @return the board
@@ -14,20 +26,18 @@ public interface GameManager {
     Board getBoard();
 
     /**
-     * Starts the game.
+     * @return the property manager
      */
-    void start();
+    PropertyManager getPropertyManager();
 
     /**
-     * Check whether the game is over.
-     * 
-     * @return true if the game is over, false otherwise.
+     * @return the road manager
      */
-    boolean isOver();
+    RoadManager getRoadManager();
 
     /**
-     * @return the list of the players
+     * @return the turn manager
      */
-    List<Player> getPlayers();
+    TurnManager getTurnManager();
 
 }
