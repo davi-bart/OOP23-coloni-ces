@@ -93,4 +93,8 @@ public interface BoardController {
      */
     int getLongestRoadLength(Player player);
 
+    /**
+     * @return the position of the robber
+     */
+    TilePosition getRobberPosition();
 }

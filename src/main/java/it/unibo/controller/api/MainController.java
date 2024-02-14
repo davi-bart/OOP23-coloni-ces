@@ -214,4 +214,9 @@ public interface MainController {
      */
     void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
+
+    /**
+     * @return the position of the robber
+     */
+    TilePosition getRobberPosition();
 }

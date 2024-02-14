@@ -88,4 +88,9 @@ public final class BoardControllerImpl implements BoardController {
     public int getLongestRoadLength(final Player player) {
         return this.roadManager.getLongestRoadLength(player);
     }
+
+    @Override
+    public TilePosition getRobberPosition() {
+        return this.board.getRobberPosition();
+    }
 }

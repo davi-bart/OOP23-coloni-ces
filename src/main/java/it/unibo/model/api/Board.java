@@ -1,7 +1,6 @@
 package it.unibo.model.api;
 
 import java.util.List;
-import java.util.Optional;
 
 import it.unibo.common.api.tile.TerrainType;
 import it.unibo.common.api.tile.TilePosition;
@@ -36,7 +35,7 @@ public interface Board {
     /**
      * @return the position of the robber
      */
-    Optional<TilePosition> getRobberPosition();
+    TilePosition getRobberPosition();
 
     /**
      * Set the robber in the specified position, removing it from the previous
