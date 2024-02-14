@@ -32,6 +32,7 @@ import it.unibo.model.impl.BankImpl;
 import it.unibo.model.impl.GameManagerImpl;
 import it.unibo.model.impl.ResourceManagerImpl;
 import it.unibo.model.impl.TurnManagerImpl;
+import it.unibo.view.AppView;
 
 /**
  * Main controller implementation.
@@ -41,13 +42,15 @@ public final class MainControllerImpl implements MainController {
     private final BoardController boardController;
     private final ResourceController resourceController;
     private final TurnController turnController;
+    private final AppView appView;
 
     /**
      * Constructor of the controller.
      * 
      * @param players list of players' names
      */
-    public MainControllerImpl(final List<String> players) {
+    public MainControllerImpl(final AppView appView, final List<String> players) {
+        this.appView = appView;
         this.gameManager = new GameManagerImpl(players);
         this.boardController = new BoardControllerImpl(this.gameManager.getBoard());
         final List<ResourceOwner> owners = new ArrayList<>();

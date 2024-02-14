@@ -58,11 +58,7 @@ public class Menu {
         final Scene scene = new Scene(root);
         playButton.setOnMouseClicked(e -> {
             stage.close();
-            try {
-                new AppView(stage).draw();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            new AppViewImpl(stage).draw();
         });
 
         Image image = new Image("imgs/menu/SettlersOfCesena.png");
