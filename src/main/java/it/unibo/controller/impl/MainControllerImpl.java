@@ -146,7 +146,8 @@ public final class MainControllerImpl implements MainController {
             this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
                     Recipes.getSettlementResources());
         }
-
+        this.appView.redrawCurrentPlayer();
+        this.appView.redrawPlayers();
     }
 
     @Override
@@ -155,6 +156,8 @@ public final class MainControllerImpl implements MainController {
         this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
         this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
         this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getCityResources());
+        this.appView.redrawCurrentPlayer();
+        this.appView.redrawPlayers();
     }
 
     @Override
@@ -164,6 +167,8 @@ public final class MainControllerImpl implements MainController {
         if (cycle > 2) {
             this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getRoadResources());
         }
+        this.appView.redrawCurrentPlayer();
+        this.appView.redrawPlayers();
     }
 
     @Override
