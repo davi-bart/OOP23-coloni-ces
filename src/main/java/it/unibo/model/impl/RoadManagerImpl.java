@@ -9,7 +9,7 @@ import org.jgrapht.alg.shortestpath.BFSShortestPath;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultUndirectedGraph;
 
-import it.unibo.common.api.RoadPosition;
+import it.unibo.common.api.road.RoadPosition;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.Road;
 import it.unibo.model.api.RoadManager;

@@ -1,6 +1,6 @@
 package it.unibo.model.api;
 
-import it.unibo.common.api.RoadPosition;
+import it.unibo.common.api.road.RoadPosition;
 
 /**
  * Road.

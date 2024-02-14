@@ -10,9 +10,9 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.TerrainType;
-import it.unibo.common.api.TileCoordinates;
-import it.unibo.common.impl.TileCoordinatesImpl;
+import it.unibo.common.api.tile.TerrainType;
+import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.impl.tile.TilePositionImpl;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;
 
@@ -24,9 +24,9 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
     private final Random rng = new Random();
 
     @Override
-    public Map<TileCoordinates, Tile> generate() {
-        final Map<TileCoordinates, Tile> map = new HashMap<>();
-        final List<TileCoordinates> positions = getCoordinates();
+    public Map<TilePosition, Tile> generate() {
+        final Map<TilePosition, Tile> map = new HashMap<>();
+        final List<TilePosition> positions = getCoordinates();
         final List<TerrainType> terrains = getTerrains();
         final List<Integer> numbers = getNumbers();
 
@@ -43,7 +43,7 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
         while (!positions.isEmpty()) {
             final int remaining = positions.size();
             final TerrainType terrain = terrains.get(rng.nextInt(remaining));
-            final TileCoordinates position = positions.get(rng.nextInt(remaining));
+            final TilePosition position = positions.get(rng.nextInt(remaining));
             final Integer number = numbers.get(rng.nextInt(remaining));
             map.put(position, new TileImpl(terrain, number));
             terrains.remove(terrain);
@@ -81,8 +81,8 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
      * 
      * @return the list of the tile coordinates
      */
-    private List<TileCoordinates> getCoordinates() {
-        final List<TileCoordinates> out = new ArrayList<>();
+    private List<TilePosition> getCoordinates() {
+        final List<TilePosition> out = new ArrayList<>();
         final List<Pair<Integer, Integer>> shape = new ArrayList<>();
         // CHECKSTYLE: MagicNumber OFF
         shape.add(new ImmutablePair<>(1, 3));
@@ -95,7 +95,7 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
             final Pair<Integer, Integer> pair = shape.get(row);
             final int index = pair.getLeft();
             final int length = pair.getRight();
-            IntStream.range(index, index + length).forEach(col -> out.add(new TileCoordinatesImpl(row, col)));
+            IntStream.range(index, index + length).forEach(col -> out.add(new TilePositionImpl(row, col)));
         });
         return out;
     }

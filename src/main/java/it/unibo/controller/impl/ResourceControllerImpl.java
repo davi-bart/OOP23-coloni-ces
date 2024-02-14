@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
 
-import it.unibo.common.api.ResourceType;
+import it.unibo.common.api.tile.ResourceType;
 import it.unibo.common.impl.Recipes;
 import it.unibo.controller.api.ResourceController;
 import it.unibo.model.api.ResourceManager;

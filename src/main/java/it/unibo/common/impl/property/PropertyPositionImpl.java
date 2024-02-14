@@ -1,8 +1,9 @@
-package it.unibo.common.impl;
+package it.unibo.common.impl.property;
 
-import it.unibo.common.api.PropertyDirection;
-import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.api.property.PropertyDirection;
+import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.impl.tile.TilePositionImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * Implementation of PropertyPosition.
  */
 public final class PropertyPositionImpl implements PropertyPosition {
-    private final TileCoordinates coordinates;
+    private final TilePosition coordinates;
     private final PropertyDirection direction;
 
     /**
@@ -20,14 +21,14 @@ public final class PropertyPositionImpl implements PropertyPosition {
      * @param coordinates of the tile
      * @param direction   of the property
      */
-    public PropertyPositionImpl(final TileCoordinates coordinates, final PropertyDirection direction) {
+    public PropertyPositionImpl(final TilePosition coordinates, final PropertyDirection direction) {
         this.coordinates = coordinates;
         this.direction = direction;
     }
 
     @Override
-    public TileCoordinates getCoordinates() {
-        return new TileCoordinatesImpl(this.coordinates.getRow(), this.coordinates.getCol());
+    public TilePosition getCoordinates() {
+        return new TilePositionImpl(this.coordinates.getRow(), this.coordinates.getCol());
     }
 
     @Override
@@ -84,22 +85,22 @@ public final class PropertyPositionImpl implements PropertyPosition {
         final int colShift = (coordinates.getRow() % 2 + 2) % 2;
         return switch (this.direction) {
             case UP -> new PropertyPositionImpl(
-                    new TileCoordinatesImpl(coordinates.getRow() - 1, coordinates.getCol() + colShift),
+                    new TilePositionImpl(coordinates.getRow() - 1, coordinates.getCol() + colShift),
                     PropertyDirection.DOWNLEFT);
             case UPLEFT -> new PropertyPositionImpl(
-                    new TileCoordinatesImpl(coordinates.getRow() - 1, coordinates.getCol() - 1 + colShift),
+                    new TilePositionImpl(coordinates.getRow() - 1, coordinates.getCol() - 1 + colShift),
                     PropertyDirection.DOWN);
             case DOWNLEFT -> new PropertyPositionImpl(
-                    new TileCoordinatesImpl(coordinates.getRow(), coordinates.getCol() - 1),
+                    new TilePositionImpl(coordinates.getRow(), coordinates.getCol() - 1),
                     PropertyDirection.DOWNRIGHT);
             case DOWN -> new PropertyPositionImpl(
-                    new TileCoordinatesImpl(coordinates.getRow() + 1, coordinates.getCol() - 1 + colShift),
+                    new TilePositionImpl(coordinates.getRow() + 1, coordinates.getCol() - 1 + colShift),
                     PropertyDirection.UPRIGHT);
             case DOWNRIGHT -> new PropertyPositionImpl(
-                    new TileCoordinatesImpl(coordinates.getRow() + 1, coordinates.getCol() + colShift),
+                    new TilePositionImpl(coordinates.getRow() + 1, coordinates.getCol() + colShift),
                     PropertyDirection.UP);
             case UPRIGHT -> new PropertyPositionImpl(
-                    new TileCoordinatesImpl(coordinates.getRow(), coordinates.getCol() + 1),
+                    new TilePositionImpl(coordinates.getRow(), coordinates.getCol() + 1),
                     PropertyDirection.UPLEFT);
             default -> throw new IllegalArgumentException("Invalid road direction");
         };

@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.common.api.RoadDirection;
-import it.unibo.common.impl.RoadPositionImpl;
-import it.unibo.common.impl.TileCoordinatesImpl;
+import it.unibo.common.api.road.RoadDirection;
+import it.unibo.common.impl.road.RoadPositionImpl;
+import it.unibo.common.impl.tile.TilePositionImpl;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.RoadManager;
 import it.unibo.model.impl.PlayerImpl;
@@ -21,13 +21,13 @@ class RoadManagerTest {
 
         final RoadManager roadManager = new RoadManagerImpl();
         assertEquals(0, roadManager.getLongestRoadLength(player1));
-        roadManager.addRoad(new RoadPositionImpl(new TileCoordinatesImpl(0, 1), RoadDirection.DOWNLEFT), player1);
+        roadManager.addRoad(new RoadPositionImpl(new TilePositionImpl(0, 1), RoadDirection.DOWNLEFT), player1);
         assertEquals(1, roadManager.getLongestRoadLength(player1));
         assertThrows(IllegalArgumentException.class, () -> roadManager.addRoad(
-                new RoadPositionImpl(new TileCoordinatesImpl(1, 0), RoadDirection.UPRIGHT), player1));
-        roadManager.addRoad(new RoadPositionImpl(new TileCoordinatesImpl(1, 0), RoadDirection.RIGHT), player1);
+                new RoadPositionImpl(new TilePositionImpl(1, 0), RoadDirection.UPRIGHT), player1));
+        roadManager.addRoad(new RoadPositionImpl(new TilePositionImpl(1, 0), RoadDirection.RIGHT), player1);
         assertEquals(2, roadManager.getLongestRoadLength(player1));
-        roadManager.addRoad(new RoadPositionImpl(new TileCoordinatesImpl(0, 0), RoadDirection.UPLEFT), player1);
+        roadManager.addRoad(new RoadPositionImpl(new TilePositionImpl(0, 0), RoadDirection.UPLEFT), player1);
         assertEquals(2, roadManager.getLongestRoadLength(player1));
     }
 

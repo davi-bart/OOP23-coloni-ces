@@ -1,10 +1,12 @@
-package it.unibo.common.impl;
+package it.unibo.common.impl.road;
 
-import it.unibo.common.api.PropertyDirection;
-import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.RoadDirection;
-import it.unibo.common.api.RoadPosition;
-import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.api.property.PropertyDirection;
+import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.road.RoadDirection;
+import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.impl.property.PropertyPositionImpl;
+import it.unibo.common.impl.tile.TilePositionImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  * Implementation of RoadPosition.
  */
 public final class RoadPositionImpl implements RoadPosition {
-    private final TileCoordinates coordinates;
+    private final TilePosition coordinates;
     private final RoadDirection direction;
 
     /**
@@ -22,14 +24,14 @@ public final class RoadPositionImpl implements RoadPosition {
      * @param coordinates
      * @param direction
      */
-    public RoadPositionImpl(final TileCoordinates coordinates, final RoadDirection direction) {
+    public RoadPositionImpl(final TilePosition coordinates, final RoadDirection direction) {
         this.coordinates = coordinates;
         this.direction = direction;
     }
 
     @Override
-    public TileCoordinates getCoordinates() {
-        return new TileCoordinatesImpl(this.coordinates.getRow(), this.coordinates.getCol());
+    public TilePosition getCoordinates() {
+        return new TilePositionImpl(this.coordinates.getRow(), this.coordinates.getCol());
     }
 
     @Override
@@ -73,27 +75,27 @@ public final class RoadPositionImpl implements RoadPosition {
         return switch (this.direction) {
             case UPLEFT ->
                 new RoadPositionImpl(
-                        new TileCoordinatesImpl(coordinates.getRow() - 1,
+                        new TilePositionImpl(coordinates.getRow() - 1,
                                 coordinates.getCol() - 1 + colShift),
                         RoadDirection.DOWNRIGHT);
             case LEFT ->
-                new RoadPositionImpl(new TileCoordinatesImpl(coordinates.getRow(), coordinates.getCol() - 1),
+                new RoadPositionImpl(new TilePositionImpl(coordinates.getRow(), coordinates.getCol() - 1),
                         RoadDirection.RIGHT);
             case DOWNLEFT ->
                 new RoadPositionImpl(
-                        new TileCoordinatesImpl(coordinates.getRow() + 1,
+                        new TilePositionImpl(coordinates.getRow() + 1,
                                 coordinates.getCol() - 1 + colShift),
                         RoadDirection.UPRIGHT);
             case DOWNRIGHT ->
                 new RoadPositionImpl(
-                        new TileCoordinatesImpl(coordinates.getRow() + 1, coordinates.getCol() + colShift),
+                        new TilePositionImpl(coordinates.getRow() + 1, coordinates.getCol() + colShift),
                         RoadDirection.UPLEFT);
             case RIGHT ->
-                new RoadPositionImpl(new TileCoordinatesImpl(coordinates.getRow(), coordinates.getCol() + 1),
+                new RoadPositionImpl(new TilePositionImpl(coordinates.getRow(), coordinates.getCol() + 1),
                         RoadDirection.LEFT);
             case UPRIGHT ->
                 new RoadPositionImpl(
-                        new TileCoordinatesImpl(coordinates.getRow() - 1, coordinates.getCol() + colShift),
+                        new TilePositionImpl(coordinates.getRow() - 1, coordinates.getCol() + colShift),
                         RoadDirection.DOWNLEFT);
             default -> throw new IllegalArgumentException("Invalid road direction");
         };

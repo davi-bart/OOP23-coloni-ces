@@ -1,7 +1,7 @@
 package it.unibo.model.api;
 
-import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.PropertyType;
+import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.property.PropertyType;
 
 /**
  * Property.

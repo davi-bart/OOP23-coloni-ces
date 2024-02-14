@@ -1,16 +1,16 @@
-package it.unibo.common.impl;
+package it.unibo.common.impl.tile;
 
 import java.util.Objects;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.api.tile.TilePosition;
 
 /**
- * Implementation of TileCoordinates.
+ * Implementation of a tile position.
  */
-public final class TileCoordinatesImpl implements TileCoordinates {
+public final class TilePositionImpl implements TilePosition {
     private final Pair<Integer, Integer> coordinates;
 
     /**
@@ -19,7 +19,7 @@ public final class TileCoordinatesImpl implements TileCoordinates {
      * @param row
      * @param col
      */
-    public TileCoordinatesImpl(final int row, final int col) {
+    public TilePositionImpl(final int row, final int col) {
         this.coordinates = new ImmutablePair<>(row, col);
     }
 
@@ -49,7 +49,7 @@ public final class TileCoordinatesImpl implements TileCoordinates {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TileCoordinatesImpl other = (TileCoordinatesImpl) obj;
+        final TilePositionImpl other = (TilePositionImpl) obj;
         return this.coordinates.equals(other.coordinates);
     }
 

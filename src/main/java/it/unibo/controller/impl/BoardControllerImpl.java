@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.PropertyType;
-import it.unibo.common.api.RoadPosition;
-import it.unibo.common.api.TerrainType;
-import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.property.PropertyType;
+import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.api.tile.TerrainType;
+import it.unibo.common.api.tile.TilePosition;
 import it.unibo.controller.api.BoardController;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.Player;
@@ -32,17 +32,17 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public List<TileCoordinates> getTilePositions() {
+    public List<TilePosition> getTilePositions() {
         return this.board.getTilePositions();
     }
 
     @Override
-    public int getTileNumber(final TileCoordinates pos) {
+    public int getTileNumber(final TilePosition pos) {
         return this.board.getTileNumber(pos);
     }
 
     @Override
-    public TerrainType getTileTerrainType(final TileCoordinates pos) {
+    public TerrainType getTileTerrainType(final TilePosition pos) {
         return this.board.getTileTerrainType(pos);
     }
 

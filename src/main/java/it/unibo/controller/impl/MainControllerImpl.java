@@ -10,17 +10,17 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.PropertyDirection;
-import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.PropertyType;
-import it.unibo.common.api.ResourceType;
-import it.unibo.common.api.RoadDirection;
-import it.unibo.common.api.RoadPosition;
-import it.unibo.common.api.TerrainType;
-import it.unibo.common.api.TileCoordinates;
-import it.unibo.common.impl.PropertyPositionImpl;
+import it.unibo.common.api.property.PropertyDirection;
+import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.property.PropertyType;
+import it.unibo.common.api.road.RoadDirection;
+import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.api.tile.TerrainType;
+import it.unibo.common.api.tile.TilePosition;
 import it.unibo.common.impl.Recipes;
-import it.unibo.common.impl.RoadPositionImpl;
+import it.unibo.common.impl.property.PropertyPositionImpl;
+import it.unibo.common.impl.road.RoadPositionImpl;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;
@@ -79,17 +79,17 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public List<TileCoordinates> getTilePositions() {
+    public List<TilePosition> getTilePositions() {
         return boardController.getTilePositions();
     }
 
     @Override
-    public int getTileNumber(final TileCoordinates pos) {
+    public int getTileNumber(final TilePosition pos) {
         return boardController.getTileNumber(pos);
     }
 
     @Override
-    public TerrainType getTileTerrainType(final TileCoordinates pos) {
+    public TerrainType getTileTerrainType(final TilePosition pos) {
         return boardController.getTileTerrainType(pos);
     }
 

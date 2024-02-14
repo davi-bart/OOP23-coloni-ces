@@ -1,9 +1,9 @@
-package it.unibo.common.api;
+package it.unibo.common.api.tile;
 
 /**
  * Tile coordinates.
  */
-public interface TileCoordinates {
+public interface TilePosition {
     /**
      * @return the row of the tile
      */

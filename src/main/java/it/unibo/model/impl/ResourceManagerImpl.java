@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import it.unibo.common.api.ResourceType;
+import it.unibo.common.api.tile.ResourceType;
 import it.unibo.model.api.ResourceManager;
 import it.unibo.model.api.ResourceOwner;
 

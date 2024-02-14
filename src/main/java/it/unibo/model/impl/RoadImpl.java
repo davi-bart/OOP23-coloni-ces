@@ -1,6 +1,6 @@
 package it.unibo.model.impl;
 
-import it.unibo.common.api.RoadPosition;
+import it.unibo.common.api.road.RoadPosition;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.Road;
 

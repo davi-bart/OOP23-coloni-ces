@@ -4,8 +4,8 @@ import java.util.Locale;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.TerrainType;
-import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.api.tile.TerrainType;
+import it.unibo.common.api.tile.TilePosition;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -28,7 +28,7 @@ public class Tile extends Group {
      * @param terrainType terrain type
      * @param number      number on the tile
      */
-    public Tile(final TileCoordinates coordinates, final TerrainType terrainType, final int number) {
+    public Tile(final TilePosition coordinates, final TerrainType terrainType, final int number) {
         final Pair<Double, Double> pos = Utility.getPositionFromTile(coordinates.getRow(), coordinates.getCol());
         final double x = pos.getLeft();
         final double y = pos.getRight();

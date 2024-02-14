@@ -6,12 +6,12 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.PropertyType;
-import it.unibo.common.api.ResourceType;
-import it.unibo.common.api.RoadPosition;
-import it.unibo.common.api.TerrainType;
-import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.property.PropertyType;
+import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.api.tile.TerrainType;
+import it.unibo.common.api.tile.TilePosition;
 
 /**
  * Main controller.
@@ -44,7 +44,7 @@ public interface MainController {
      * 
      * @return the list of the tile positions
      */
-    List<TileCoordinates> getTilePositions();
+    List<TilePosition> getTilePositions();
 
     /**
      * get the tile number.
@@ -52,7 +52,7 @@ public interface MainController {
      * @param pos the position of the tile
      * @return the number of the tile
      */
-    int getTileNumber(TileCoordinates pos);
+    int getTileNumber(TilePosition pos);
 
     /**
      * get the tile terrain type.
@@ -60,7 +60,7 @@ public interface MainController {
      * @param pos the position of the tile
      * @return the terrain type of the tile
      */
-    TerrainType getTileTerrainType(TileCoordinates pos);
+    TerrainType getTileTerrainType(TilePosition pos);
 
     /**
      * get the player's road positions.

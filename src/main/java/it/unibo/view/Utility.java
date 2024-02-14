@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.PropertyDirection;
-import it.unibo.common.api.RoadDirection;
+import it.unibo.common.api.property.PropertyDirection;
+import it.unibo.common.api.road.RoadDirection;
 
 /**
  * Utility class.

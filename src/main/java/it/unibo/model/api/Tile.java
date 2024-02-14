@@ -1,6 +1,6 @@
 package it.unibo.model.api;
 
-import it.unibo.common.api.TerrainType;
+import it.unibo.common.api.tile.TerrainType;
 
 /**
  * Hexagonal tile.

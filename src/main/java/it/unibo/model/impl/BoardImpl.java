@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.PropertyType;
-import it.unibo.common.api.RoadPosition;
-import it.unibo.common.api.TerrainType;
-import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.property.PropertyType;
+import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.api.tile.TerrainType;
+import it.unibo.common.api.tile.TilePosition;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Player;
@@ -23,10 +23,10 @@ import it.unibo.model.api.Tile;
  * Board implementation.
  */
 public final class BoardImpl implements Board {
-    private final Map<TileCoordinates, Tile> board;
+    private final Map<TilePosition, Tile> board;
     private final RoadManager roadManager = new RoadManagerImpl();
     private final PropertyManager propertyManager = new PropertyManagerImpl();
-    private TileCoordinates robberPosition;
+    private TilePosition robberPosition;
 
     /**
      * Constructor of the board.
@@ -38,12 +38,12 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public List<TileCoordinates> getTilePositions() {
+    public List<TilePosition> getTilePositions() {
         return this.board.keySet().stream().toList();
     }
 
     @Override
-    public int getTileNumber(final TileCoordinates pos) {
+    public int getTileNumber(final TilePosition pos) {
         if (!this.board.containsKey(pos)) {
             throw new IllegalArgumentException("Position not found");
         }
@@ -51,7 +51,7 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public TerrainType getTileTerrainType(final TileCoordinates pos) {
+    public TerrainType getTileTerrainType(final TilePosition pos) {
         if (!this.board.containsKey(pos)) {
             throw new IllegalArgumentException("Position not found");
         }
@@ -69,12 +69,12 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public Optional<TileCoordinates> getRobberPosition() {
+    public Optional<TilePosition> getRobberPosition() {
         return Optional.ofNullable(robberPosition);
     }
 
     @Override
-    public void setRobberPosition(final TileCoordinates coordinates) {
+    public void setRobberPosition(final TilePosition coordinates) {
         if (robberPosition != null && robberPosition.equals(coordinates)) {
             throw new IllegalArgumentException("Robber is already present in that coordinate.");
         }

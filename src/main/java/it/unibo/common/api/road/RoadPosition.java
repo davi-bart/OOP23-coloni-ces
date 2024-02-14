@@ -1,4 +1,7 @@
-package it.unibo.common.api;
+package it.unibo.common.api.road;
+
+import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.tile.TilePosition;
 
 /**
  * Road position.
@@ -7,7 +10,7 @@ public interface RoadPosition {
     /**
      * @return the coordinates of the tile
      */
-    TileCoordinates getCoordinates();
+    TilePosition getCoordinates();
 
     /**
      * @return the direction of the road

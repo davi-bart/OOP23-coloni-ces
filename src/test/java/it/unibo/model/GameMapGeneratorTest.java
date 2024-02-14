@@ -9,8 +9,8 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.common.api.TerrainType;
-import it.unibo.common.api.TileCoordinates;
+import it.unibo.common.api.tile.TerrainType;
+import it.unibo.common.api.tile.TilePosition;
 import it.unibo.model.api.Board;
 import it.unibo.model.impl.BeginnerGameMapGenerator;
 import it.unibo.model.impl.BoardImpl;
@@ -88,12 +88,12 @@ class GameMapGeneratorTest {
      * @param board board to test
      */
     private void testTerrains(final Board board) {
-        final List<TileCoordinates> positions = board.getTilePositions();
+        final List<TilePosition> positions = board.getTilePositions();
         final Map<TerrainType, Integer> terrainOccurrences = new HashMap<>();
         for (final TerrainType terrain : TerrainType.values()) {
             terrainOccurrences.put(terrain, 0);
         }
-        for (final TileCoordinates position : positions) {
+        for (final TilePosition position : positions) {
             final TerrainType terrain = board.getTileTerrainType(position);
             final int previousOccurrences = terrainOccurrences.get(terrain);
             terrainOccurrences.put(terrain, previousOccurrences + 1);
@@ -112,12 +112,12 @@ class GameMapGeneratorTest {
      * @param board board to test
      */
     private void testNumbers(final Board board) {
-        final List<TileCoordinates> positions = board.getTilePositions();
+        final List<TilePosition> positions = board.getTilePositions();
         final Map<Integer, Integer> numberOccurrences = new HashMap<>();
         for (int i = 2; i <= 12; i++) {
             numberOccurrences.put(i, 0);
         }
-        for (final TileCoordinates position : positions) {
+        for (final TilePosition position : positions) {
             final Integer number = board.getTileNumber(position);
             final int previousOccurrences = numberOccurrences.get(number);
             numberOccurrences.put(number, previousOccurrences + 1);
@@ -137,7 +137,7 @@ class GameMapGeneratorTest {
      * @param board board to test.
      */
     private void testPositions(final Board board) {
-        final List<TileCoordinates> positions = board.getTilePositions();
+        final List<TilePosition> positions = board.getTilePositions();
         assertEquals(positions.size(), 19);
     }
 }

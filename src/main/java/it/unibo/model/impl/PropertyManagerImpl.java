@@ -5,8 +5,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import it.unibo.common.api.PropertyPosition;
-import it.unibo.common.api.PropertyType;
+import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.property.PropertyType;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.Property;
 import it.unibo.model.api.PropertyManager;
