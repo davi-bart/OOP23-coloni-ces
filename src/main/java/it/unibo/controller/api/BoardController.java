@@ -41,7 +41,7 @@ public interface BoardController {
     /**
      * get the player's road positions.
      * 
-     * @param player the player
+     * @param playerName the player
      * @return the set of the road positions
      */
     Set<RoadPosition> getPlayerRoadPositions(String playerName);
@@ -49,7 +49,7 @@ public interface BoardController {
     /**
      * get the player's property positions.
      * 
-     * @param player the player
+     * @param playerName the player
      * @return the set of the property positions and their types
      */
     Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(String playerName);
@@ -80,7 +80,7 @@ public interface BoardController {
      * Build a settlement in the given position.
      * 
      * @param position where to build the settlement.
-     * @param player   who own the settlement.
+     * @param playerName the player
      */
     void buildSettlement(PropertyPosition position, String playerName);
 
@@ -88,7 +88,7 @@ public interface BoardController {
      * Build a city in the given position.
      * 
      * @param position where to build the city.
-     * @param player   who own the city.
+     * @param playerName the player
      */
     void buildCity(PropertyPosition position, String playerName);
 
@@ -96,7 +96,7 @@ public interface BoardController {
      * Builds the road at position {@code position}.
      * 
      * @param position position of the road
-     * @param player   owner of the road
+     * @param playerName the player
      */
     void buildRoad(RoadPosition position, String playerName);
 
@@ -119,7 +119,7 @@ public interface BoardController {
     boolean isNearToAnyProperty(PropertyPosition position);
 
     /**
-     * @param player
+     * @param playerName the player
      * @param position
      * @return true if the road in the given position is near to an other
      *         property of current player, false otherwise.
@@ -127,7 +127,7 @@ public interface BoardController {
     boolean isRoadNearToAnyOwnedProperty(String playerName, RoadPosition position);
 
     /**
-     * @param player
+     * @param playerName the player
      * @param position
      * @return true if the property in the given position is near to an other
      *         road of current player, false otherwise.
@@ -135,7 +135,7 @@ public interface BoardController {
     boolean isPropertyNearToAnyOwnerRoad(String playerName, PropertyPosition position);
 
     /**
-     * @param player
+     * @param playerName the player
      * @param position
      * @return true if the road in the given position is near to an other
      *         road of current player, false otherwise.

@@ -2,12 +2,8 @@ package it.unibo.controller.api;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.property.PropertyType;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
 
@@ -46,22 +42,6 @@ public interface MainController {
      * @return the victory points of the given player.
      */
     int getVictoryPoints(String playerName);
-
-    /**
-     * get the player's road positions.
-     * 
-     * @param playerName the player's name
-     * @return the set of the road positions
-     */
-    Set<RoadPosition> getPlayerRoadPositions(String playerName);
-
-    /**
-     * get the player's property positions.
-     * 
-     * @param playerName the player's name
-     * @return the set of the property positions and their types
-     */
-    Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(String playerName);
 
     /**
      * Build a settlement in the given position.
@@ -123,12 +103,6 @@ public interface MainController {
      * @return true if the given owner has the given resources, false otherwise
      */
     boolean hasResources(String playerName, Map<ResourceType, Integer> resources);
-
-    /**
-     * @param playerName
-     * @return the longest road length of the player with name {@code playerName}
-     */
-    int getLongestRoadLength(String playerName);
 
     /**
      * @return whether the current player can end the turn

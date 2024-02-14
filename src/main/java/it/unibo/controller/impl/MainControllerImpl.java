@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -90,16 +89,6 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
-        return boardController.getPlayerRoadPositions(playerName);
-    }
-
-    @Override
-    public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final String playerName) {
-        return boardController.getPlayerPropertyPositions(playerName);
-    }
-
-    @Override
     public String getCurrentPlayer() {
         return this.turnController.getCurrentPlayerTurn().getName();
     }
@@ -143,7 +132,7 @@ public final class MainControllerImpl implements MainController {
         final int cycle = turnController.getCycle();
         if (cycle <= 2) {
             return !this.boardController.isNearToAnyProperty(position)
-                    && getPlayerPropertyPositions(getCurrentPlayer()).size() < cycle;
+                    && this.boardController.getPlayerPropertyPositions(getCurrentPlayer()).size() < cycle;
         }
         return !this.boardController.isNearToAnyProperty(position)
                 && this.boardController.isPropertyNearToAnyOwnerRoad(getCurrentPlayer(), position)
@@ -164,7 +153,7 @@ public final class MainControllerImpl implements MainController {
         final int cycle = turnController.getCycle();
         if (cycle <= 2) {
             return this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(), position)
-                    && getPlayerRoadPositions(getCurrentPlayer()).size() < cycle;
+                    && this.boardController.getPlayerRoadPositions(getCurrentPlayer()).size() < cycle;
         }
         return (this.boardController.isRoadNearToAnyOwnedRoad(getCurrentPlayer(), position)
                 || this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(), position))
@@ -182,16 +171,11 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public int getLongestRoadLength(final String playerName) {
-        return boardController.getLongestRoadLength(playerName);
-    }
-
-    @Override
     public boolean canEndTurn() {
         final int cycle = turnController.getCycle();
         if (cycle <= 2) {
-            return getPlayerPropertyPositions(getCurrentPlayer()).size() == cycle
-                    && getPlayerRoadPositions(getCurrentPlayer()).size() == cycle;
+            return this.boardController.getPlayerPropertyPositions(getCurrentPlayer()).size() == cycle
+                    && this.boardController.getPlayerRoadPositions(getCurrentPlayer()).size() == cycle;
         }
         return true;
     }
