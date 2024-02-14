@@ -17,7 +17,6 @@ import it.unibo.controller.impl.MainControllerImpl;
  * Application.
  */
 public class AppViewImpl implements AppView {
-    private final MainController controller;
     private final Stage stage;
     private static final int DEFAULT_HEIGHT = 350;
     private final BoardView boardView;
@@ -31,7 +30,7 @@ public class AppViewImpl implements AppView {
      * @param stage the stage
      */
     public AppViewImpl(final Stage stage, final List<String> players) {
-        controller = new MainControllerImpl(this, players);
+        final MainController controller = new MainControllerImpl(this, players);
         this.stage = stage;
         boardView = new BoardView(controller);
         bankView = new BankView(controller);

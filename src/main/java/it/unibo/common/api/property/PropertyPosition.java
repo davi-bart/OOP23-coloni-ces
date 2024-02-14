@@ -3,7 +3,6 @@ package it.unibo.common.api.property;
 import java.util.List;
 
 import it.unibo.common.api.tile.TilePosition;
-import it.unibo.common.impl.property.PropertyPositionImpl;
 
 /**
  * Interface for the position of a property.
@@ -12,14 +11,17 @@ public interface PropertyPosition {
     /**
      * @return the coordinates of the tile
      */
-    TilePosition getCoordinates();
+    TilePosition getTilePosition();
 
     /**
      * @return the direction of the property
      */
     PropertyDirection getDirection();
 
-    List<PropertyPositionImpl> getAllPropertyPositions();
+    /**
+     * @return all the positions of the current property, each from a different tile
+     */
+    List<PropertyPosition> getEquivalentPositions();
 
     /**
      * 

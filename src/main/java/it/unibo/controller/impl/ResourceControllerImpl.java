@@ -76,23 +76,23 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-
-    public void addResources(ResourceOwner owner, Map<ResourceType, Integer> resources) {
+    public void addResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
         for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
             resourceManager.addResources(owner, resource.getKey(), resources.get(resource.getKey()));
         }
     }
 
     @Override
-    public void removeBankResources(Map<ResourceType, Integer> resources) {
+    public void removeBankResources(final Map<ResourceType, Integer> resources) {
         for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
             resourceManager.removeResources(bank, resource.getKey(), resource.getValue());
         }
     }
 
     @Override
-    public void acceptTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> givingResouces,
-            Map<ResourceType, Integer> recivingResources) {
+    public void acceptTrade(final ResourceOwner proposer, final ResourceOwner accepter,
+            final Map<ResourceType, Integer> givingResouces,
+            final Map<ResourceType, Integer> recivingResources) {
         resourceManager.acceptTrade(proposer, accepter, givingResouces, recivingResources);
     }
 }

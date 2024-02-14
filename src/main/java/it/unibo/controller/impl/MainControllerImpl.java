@@ -140,7 +140,6 @@ public final class MainControllerImpl implements MainController {
     public void buildSettlement(final PropertyPosition position) {
         this.boardController.buildSettlement(position, turnController.getCurrentPlayerTurn());
         this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
-        System.out.println(getPlayerPoints(getCurrentPlayer()));
         final int cycle = turnController.getCycle();
         if (cycle > 2) {
             this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
@@ -288,20 +287,19 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public void giveResources(int rollSum) {
-        for (String player : this.getPlayerNames()) {
+    public void giveResources(final int number) {
+        for (final String player : this.getPlayerNames()) {
             final Map<ResourceType, Integer> givenResource = new HashMap<>();
             List.of(ResourceType.values()).forEach(resource -> givenResource.put(resource, 0));
-            for (Pair<PropertyPosition, PropertyType> property : boardController
+            for (final Pair<PropertyPosition, PropertyType> property : boardController
                     .getPlayerPropertyPositions(getPlayerByName(player))) {
-                for (PropertyPositionImpl propertyPositions : property.getLeft().getAllPropertyPositions()) {
+                for (final PropertyPosition propertyPositions : property.getLeft().getEquivalentPositions()) {
                     try {
-                        if (getTileNumber(propertyPositions.getCoordinates()) == rollSum) {
-
+                        if (getTileNumber(propertyPositions.getTilePosition()) == number) {
                             // resourceController.addResources(getPlayerByName(player),
                             // property.getValue() == PropertyType.CITY ? 2 : 1);
                             final int amount = property.getValue() == PropertyType.CITY ? 2 : 1;
-                            switch (getTileTerrainType(propertyPositions.getCoordinates())) {
+                            switch (getTileTerrainType(propertyPositions.getTilePosition())) {
                                 case DESERT:
                                     break;
                                 case FIELD:
@@ -331,11 +329,12 @@ public final class MainControllerImpl implements MainController {
             }
             resourceController.addResources(getPlayerByName(player), givenResource);
             resourceController.removeBankResources(givenResource);
-            System.out.println(
-                    getPlayerByName(player).getName() + resourceController.getOwnerResources(getPlayerByName(player)));
+            // System.out.println(
+            // getPlayerByName(player).getName() +
+            // resourceController.getOwnerResources(getPlayerByName(player)));
         }
-        System.out.println(
-                "bank " + resourceController.getBankResources());
+        // System.out.println(
+        // "bank " + resourceController.getBankResources());
     }
 
     @Override
@@ -344,8 +343,9 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> proposedResources,
-            Map<ResourceType, Integer> wantedResources) {
+    public void acceptTrade(final String proposer, final String accepter,
+            final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
         resourceController.acceptTrade(getPlayerByName(proposer), getPlayerByName(accepter), proposedResources,
                 wantedResources);
     }

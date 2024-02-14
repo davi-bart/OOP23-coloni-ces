@@ -12,23 +12,23 @@ import java.util.List;
  * Implementation of PropertyPosition.
  */
 public final class PropertyPositionImpl implements PropertyPosition {
-    private final TilePosition coordinates;
+    private final TilePosition tilePosition;
     private final PropertyDirection direction;
 
     /**
      * Constructor.
      * 
-     * @param coordinates of the tile
-     * @param direction   of the property
+     * @param position  of the tile
+     * @param direction of the property
      */
-    public PropertyPositionImpl(final TilePosition coordinates, final PropertyDirection direction) {
-        this.coordinates = coordinates;
+    public PropertyPositionImpl(final TilePosition position, final PropertyDirection direction) {
+        this.tilePosition = position;
         this.direction = direction;
     }
 
     @Override
-    public TilePosition getCoordinates() {
-        return new TilePositionImpl(this.coordinates.getRow(), this.coordinates.getCol());
+    public TilePosition getTilePosition() {
+        return new TilePositionImpl(this.tilePosition.getRow(), this.tilePosition.getCol());
     }
 
     @Override
@@ -38,8 +38,9 @@ public final class PropertyPositionImpl implements PropertyPosition {
 
     @Override
     public int hashCode() {
-        return this.equalPositions().stream()
-                .mapToInt(position -> position.coordinates.hashCode() ^ position.direction.hashCode()).sum();
+        return this.getEquivalentPositions().stream()
+                .mapToInt(position -> position.getTilePosition().hashCode() ^ position.getTilePosition().hashCode())
+                .sum();
     }
 
     @Override
@@ -54,24 +55,11 @@ public final class PropertyPositionImpl implements PropertyPosition {
             return false;
         }
 
-        final List<PropertyPositionImpl> equalPositions = this.equalPositions();
-        final PropertyPositionImpl other = (PropertyPositionImpl) obj;
+        final List<PropertyPosition> equalPositions = getEquivalentPositions();
+        final PropertyPosition other = (PropertyPosition) obj;
         return equalPositions.stream().anyMatch(
-                position -> position.direction == other.direction && position.coordinates.equals(other.coordinates));
-    }
-
-    /**
-     * returns the positions equivalent to the current one.
-     * 
-     * @return the equivalent positions
-     */
-    private List<PropertyPositionImpl> equalPositions() {
-        final List<PropertyPositionImpl> positions = new ArrayList<>();
-        final PropertyPositionImpl nextPos = otherProperty();
-        positions.add(this);
-        positions.add(nextPos);
-        positions.add(nextPos.otherProperty());
-        return positions;
+                position -> position.getDirection() == other.getDirection()
+                        && position.getTilePosition().equals(other.getTilePosition()));
     }
 
     /**
@@ -80,33 +68,33 @@ public final class PropertyPositionImpl implements PropertyPosition {
      * 
      * @return the equivalent PropertyPosition
      */
-
     private PropertyPositionImpl otherProperty() {
-        final int colShift = (coordinates.getRow() % 2 + 2) % 2;
+        final int colShift = (tilePosition.getRow() % 2 + 2) % 2;
         return switch (this.direction) {
             case UP -> new PropertyPositionImpl(
-                    new TilePositionImpl(coordinates.getRow() - 1, coordinates.getCol() + colShift),
+                    new TilePositionImpl(tilePosition.getRow() - 1, tilePosition.getCol() + colShift),
                     PropertyDirection.DOWNLEFT);
             case UPLEFT -> new PropertyPositionImpl(
-                    new TilePositionImpl(coordinates.getRow() - 1, coordinates.getCol() - 1 + colShift),
+                    new TilePositionImpl(tilePosition.getRow() - 1, tilePosition.getCol() - 1 + colShift),
                     PropertyDirection.DOWN);
             case DOWNLEFT -> new PropertyPositionImpl(
-                    new TilePositionImpl(coordinates.getRow(), coordinates.getCol() - 1),
+                    new TilePositionImpl(tilePosition.getRow(), tilePosition.getCol() - 1),
                     PropertyDirection.DOWNRIGHT);
             case DOWN -> new PropertyPositionImpl(
-                    new TilePositionImpl(coordinates.getRow() + 1, coordinates.getCol() - 1 + colShift),
+                    new TilePositionImpl(tilePosition.getRow() + 1, tilePosition.getCol() - 1 + colShift),
                     PropertyDirection.UPRIGHT);
             case DOWNRIGHT -> new PropertyPositionImpl(
-                    new TilePositionImpl(coordinates.getRow() + 1, coordinates.getCol() + colShift),
+                    new TilePositionImpl(tilePosition.getRow() + 1, tilePosition.getCol() + colShift),
                     PropertyDirection.UP);
             case UPRIGHT -> new PropertyPositionImpl(
-                    new TilePositionImpl(coordinates.getRow(), coordinates.getCol() + 1),
+                    new TilePositionImpl(tilePosition.getRow(), tilePosition.getCol() + 1),
                     PropertyDirection.UPLEFT);
             default -> throw new IllegalArgumentException("Invalid road direction");
         };
     }
 
-    public List<PropertyPositionImpl> getAllPropertyPositions() {
+    @Override
+    public List<PropertyPosition> getEquivalentPositions() {
         return List.of(this, this.otherProperty(), this.otherProperty().otherProperty());
     }
 
@@ -127,14 +115,14 @@ public final class PropertyPositionImpl implements PropertyPosition {
         final List<PropertyPosition> near = new ArrayList<>();
         final List<PropertyDirection> directions = List.of(PropertyDirection.values());
         relativePositions.forEach(pos -> near
-                .add(new PropertyPositionImpl(pos.getCoordinates(),
+                .add(new PropertyPositionImpl(pos.getTilePosition(),
                         directions.get((directions.indexOf(pos.getDirection()) + 1) % directions.size()))));
         return near.contains(position);
     }
 
     @Override
     public String toString() {
-        return "Pos [" + coordinates + "," + direction + "]";
+        return "Pos [" + tilePosition + "," + direction + "]";
     }
 
 }

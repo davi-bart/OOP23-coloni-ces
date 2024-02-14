@@ -53,12 +53,12 @@ public final class TradeView {
     }
 
     private void showTradeStage() {
-        final int DEFAULT_WANTED_RESOURCES = 7;
         final Stage stage = new Stage();
         stage.setTitle("Trade window");
         final VBox resourcesContainer = new VBox();
         final HBox tradeContainer = new HBox();
         final VBox playersContainer = new VBox();
+        final int defaultWantedResources = 5;
 
         final HBox proposedResourcesBox = new HBox();
         final HBox wantedResourcesBox = new HBox();
@@ -85,7 +85,7 @@ public final class TradeView {
                         proposedResources.put(resource, newValue);
                     }));
             wantedResourcesBox.getChildren()
-                    .add(resourceAndComboBox(resource, DEFAULT_WANTED_RESOURCES, (options, oldValue, newValue) -> {
+                    .add(resourceAndComboBox(resource, defaultWantedResources, (options, oldValue, newValue) -> {
                         playerToButton.forEach((playerName, button) -> {
                             wantedResources.put(resource, newValue);
                             if (!controller.hasResources(playerName, wantedResources)) {
@@ -119,7 +119,8 @@ public final class TradeView {
         stage.show();
     }
 
-    private VBox resourceAndComboBox(ResourceType resource, int amount, ChangeListener<Integer> listener) {
+    private VBox resourceAndComboBox(final ResourceType resource, final int amount,
+            final ChangeListener<Integer> listener) {
         final VBox resourceBox = new VBox();
         resourceBox.getChildren().add(ResourcesViewFactory.generateResource(resource));
         final ComboBox<Integer> comboBox = new ComboBox<>();

@@ -90,8 +90,8 @@ public final class PropertyView extends Circle {
     }
 
     private void setCircle(final PropertyPosition position) {
-        final Pair<Double, Double> pos = Utility.getPositionFromTile(position.getCoordinates().getRow(),
-                position.getCoordinates().getCol());
+        final Pair<Double, Double> pos = Utility.getPositionFromTile(position.getTilePosition().getRow(),
+                position.getTilePosition().getCol());
         final var center = Utility
                 .getPropertyCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
                         position.getDirection());

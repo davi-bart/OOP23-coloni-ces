@@ -60,7 +60,7 @@ public class TileView extends Group {
             numberText.setTextOrigin(VPos.CENTER);
             super.getChildren().add(numberText);
         }
-        var robberPosition = controller.getRobberPosition();
+        final var robberPosition = controller.getRobberPosition();
         if (robberPosition.equals(coordinates)) {
             final Image robber = new Image("imgs/robber/robber.png", Utility.HEXAGON_RADIUS / 2,
                     Utility.HEXAGON_RADIUS / 2, true, true);
