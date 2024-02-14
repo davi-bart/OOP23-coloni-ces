@@ -74,10 +74,10 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
     /**
      * Returns the tile coordinates of a classic Catan map.
      * 
-     * {@code shape} is a list containing, for the i-th row, its starting column
-     * index and its length.
-     * The odd rows are inteded to be shifted of half a column, in order to fit
-     * between the hexagons on top and on.
+     * {@code shape} is a list containing, for each row, its starting column index
+     * and its length.
+     * The odd rows are intended to be shifted of half a column to the right, in
+     * order to fit between the hexagons above and below.
      * 
      * @return the list of the tile coordinates
      */

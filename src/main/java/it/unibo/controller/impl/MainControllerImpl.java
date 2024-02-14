@@ -1,6 +1,5 @@
 package it.unibo.controller.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,18 +11,13 @@ import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.property.PropertyType;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
-import it.unibo.common.impl.Recipes;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;
 import it.unibo.controller.api.TurnController;
 import it.unibo.model.api.GameManager;
 import it.unibo.model.api.Player;
-import it.unibo.model.api.ResourceOwner;
-import it.unibo.model.impl.BankImpl;
 import it.unibo.model.impl.GameManagerImpl;
-import it.unibo.model.impl.ResourceManagerImpl;
-import it.unibo.model.impl.TurnManagerImpl;
 import it.unibo.view.AppView;
 
 /**
@@ -49,13 +43,10 @@ public final class MainControllerImpl implements MainController {
                 .filter(p -> p.getName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
 
-        this.boardController = new BoardControllerImpl(getPlayerByName, this.gameManager.getBoard());
-        final List<ResourceOwner> owners = new ArrayList<>();
-        gameManager.getPlayers().forEach(owners::add);
-        final BankImpl bank = new BankImpl(19);
-        owners.add(bank);
-        this.resourceController = new ResourceControllerImpl(new ResourceManagerImpl(owners), bank);
-        this.turnController = new TurnControllerImpl(new TurnManagerImpl(this.gameManager.getPlayers()));
+        this.boardController = new BoardControllerImpl(getPlayerByName, this.gameManager.getBoard(),
+                this.gameManager.getPropertyManager(), this.gameManager.getRoadManager());
+        this.resourceController = new ResourceControllerImpl(gameManager.getResourceManager(), gameManager.getBank());
+        this.turnController = new TurnControllerImpl(gameManager.getTurnManager());
     }
 
     @Override
@@ -95,69 +86,86 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void buildSettlement(final PropertyPosition position) {
-        this.boardController.buildSettlement(position, getCurrentPlayer());
-        this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
-        final int cycle = turnController.getCycle();
-        if (cycle > 2) {
-            this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
-                    Recipes.getSettlementResources());
-        }
+        // this.boardController.buildSettlement(position, getCurrentPlayer());
+        // this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
+        // final int cycle = turnController.getCycle();
+        // if (cycle > 2) {
+        // this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
+        // Recipes.getSettlementResources());
+        // }
+        this.gameManager.buildSettlement(position, turnController.getCurrentPlayerTurn());
         this.appView.redrawCurrentPlayer();
         this.appView.redrawPlayers();
     }
 
     @Override
     public void buildCity(final PropertyPosition position) {
-        this.boardController.buildCity(position, getCurrentPlayer());
-        this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
-        this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
-        this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getCityResources());
+        // this.boardController.buildCity(position, getCurrentPlayer());
+        // this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
+        // this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
+        // this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
+        // Recipes.getCityResources());
+        gameManager.buildCity(position, turnController.getCurrentPlayerTurn());
         this.appView.redrawCurrentPlayer();
         this.appView.redrawPlayers();
     }
 
     @Override
     public void buildRoad(final RoadPosition position) {
-        this.boardController.buildRoad(position, getCurrentPlayer());
-        final int cycle = turnController.getCycle();
-        if (cycle > 2) {
-            this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getRoadResources());
-        }
+        // this.boardController.buildRoad(position, getCurrentPlayer());
+        // final int cycle = turnController.getCycle();
+        // if (cycle > 2) {
+        // this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
+        // Recipes.getRoadResources());
+        // }
+        gameManager.buildRoad(position, turnController.getCurrentPlayerTurn());
         this.appView.redrawCurrentPlayer();
         this.appView.redrawPlayers();
     }
 
     @Override
     public boolean canBuildSettlement(final PropertyPosition position) {
-        final int cycle = turnController.getCycle();
-        if (cycle <= 2) {
-            return !this.boardController.isNearToAnyProperty(position)
-                    && this.boardController.getPlayerPropertyPositions(getCurrentPlayer()).size() < cycle;
-        }
-        return !this.boardController.isNearToAnyProperty(position)
-                && this.boardController.isPropertyNearToAnyOwnerRoad(getCurrentPlayer(), position)
-                && this.resourceController.hasResourcesForSettlement(turnController.getCurrentPlayerTurn());
+        return gameManager.canBuildSettlement(position, turnController.getCurrentPlayerTurn());
+        // final int cycle = turnController.getCycle();
+        // if (cycle <= 2) {
+        // return !this.boardController.isNearToAnyProperty(position)
+        // && this.boardController.getPlayerPropertyPositions(getCurrentPlayer()).size()
+        // < cycle;
+        // }
+        // return !this.boardController.isNearToAnyProperty(position)
+        // && this.boardController.isPropertyNearToAnyOwnerRoad(getCurrentPlayer(),
+        // position)
+        // &&
+        // this.resourceController.hasResourcesForSettlement(turnController.getCurrentPlayerTurn());
     }
 
     @Override
     public boolean canBuildCity(final PropertyPosition position) {
-        if (turnController.getCycle() <= 2) {
-            return false;
-        }
-        return !this.boardController.isNearToAnyProperty(position)
-                && this.resourceController.hasResourcesForCity(turnController.getCurrentPlayerTurn());
+        return gameManager.canBuildCity(position, turnController.getCurrentPlayerTurn());
+        // if (turnController.getCycle() <= 2) {
+        // return false;
+        // }
+        // return !this.boardController.isNearToAnyProperty(position)
+        // &&
+        // this.resourceController.hasResourcesForCity(turnController.getCurrentPlayerTurn());
     }
 
     @Override
     public boolean canBuildRoad(final RoadPosition position) {
-        final int cycle = turnController.getCycle();
-        if (cycle <= 2) {
-            return this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(), position)
-                    && this.boardController.getPlayerRoadPositions(getCurrentPlayer()).size() < cycle;
-        }
-        return (this.boardController.isRoadNearToAnyOwnedRoad(getCurrentPlayer(), position)
-                || this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(), position))
-                && this.resourceController.hasResourcesForRoad(turnController.getCurrentPlayerTurn());
+        return gameManager.canBuildRoad(position, turnController.getCurrentPlayerTurn());
+        // final int cycle = turnController.getCycle();
+        // if (cycle <= 2) {
+        // return this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(),
+        // position)
+        // && this.boardController.getPlayerRoadPositions(getCurrentPlayer()).size() <
+        // cycle;
+        // }
+        // return (this.boardController.isRoadNearToAnyOwnedRoad(getCurrentPlayer(),
+        // position)
+        // || this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(),
+        // position))
+        // &&
+        // this.resourceController.hasResourcesForRoad(turnController.getCurrentPlayerTurn());
     }
 
     @Override

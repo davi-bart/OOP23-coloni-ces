@@ -23,8 +23,6 @@ import it.unibo.model.api.Board;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.PropertyManager;
 import it.unibo.model.api.RoadManager;
-import it.unibo.model.impl.PropertyManagerImpl;
-import it.unibo.model.impl.RoadManagerImpl;
 
 /**
  * Board controller implementation.
@@ -32,8 +30,8 @@ import it.unibo.model.impl.RoadManagerImpl;
 public final class BoardControllerImpl implements BoardController {
     private final Function<String, Player> getPlayerByName;
     private final Board board;
-    private final RoadManager roadManager = new RoadManagerImpl();
-    private final PropertyManager propertyManager = new PropertyManagerImpl();
+    private final RoadManager roadManager;
+    private final PropertyManager propertyManager;
 
     /**
      * Constructor of BoardControllerImpl.
@@ -41,9 +39,12 @@ public final class BoardControllerImpl implements BoardController {
      * @param controller the main controller
      * @param board      the board to start with
      */
-    public BoardControllerImpl(final Function<String, Player> getPlayerByName, final Board board) {
+    public BoardControllerImpl(final Function<String, Player> getPlayerByName, final Board board,
+            final PropertyManager propertyManager, final RoadManager roadManager) {
         this.getPlayerByName = getPlayerByName;
         this.board = board;
+        this.propertyManager = propertyManager;
+        this.roadManager = roadManager;
     }
 
     @Override
@@ -63,7 +64,8 @@ public final class BoardControllerImpl implements BoardController {
 
     @Override
     public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
-        return this.roadManager.getPlayerRoads(getPlayerByName.apply(playerName)).stream().map(r -> r.getPosition()).collect(Collectors.toSet());
+        return this.roadManager.getPlayerRoads(getPlayerByName.apply(playerName)).stream().map(r -> r.getPosition())
+                .collect(Collectors.toSet());
     }
 
     @Override
