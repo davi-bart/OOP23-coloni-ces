@@ -79,7 +79,7 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public int getLongestRoadLength(Player player) {
+    public int getLongestRoadLength(final Player player) {
         return this.board.getLongestRoadLength(player);
     }
 }

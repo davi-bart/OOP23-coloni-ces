@@ -243,7 +243,7 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public int getLongestRoadLength(String playerName) {
+    public int getLongestRoadLength(final String playerName) {
         return boardController.getLongestRoadLength(getPlayerByName(playerName));
     }
 
@@ -264,6 +264,6 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canRollDie() {
-        return !turnController.hasRolled() && turnController.getCycle()>2;
+        return !turnController.hasRolled() && turnController.getCycle() > 2;
     }
 }
