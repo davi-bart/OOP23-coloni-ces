@@ -56,6 +56,20 @@ public interface BoardController {
     Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(Player player);
 
     /**
+     * get all the road positions, including empty ones.
+     * 
+     * @return the set of the road positions
+     */
+    Set<RoadPosition> getAllRoadPositions();
+
+    /**
+     * get all the property positions, including empty ones.
+     * 
+     * @return the set of the property positions
+     */
+    Set<PropertyPosition> getAllPropertyPositions();
+
+    /**
      * get the property type of the property at the given position.
      * 
      * @param position the position of the property
@@ -97,4 +111,35 @@ public interface BoardController {
      * @return the position of the robber
      */
     TilePosition getRobberPosition();
+
+    /**
+     * @param position
+     * @return true if the property in the given position is near to an other
+     *         property, false otherwise.
+     */
+    boolean isNearToAnyProperty(PropertyPosition position);
+
+    /**
+     * @param player
+     * @param position
+     * @return true if the road in the given position is near to an other
+     *         property of current player, false otherwise.
+     */
+    boolean isRoadNearToAnyOwnedProperty(Player player, RoadPosition position);
+
+    /**
+     * @param player
+     * @param position
+     * @return true if the property in the given position is near to an other
+     *         road of current player, false otherwise.
+     */
+    boolean isPropertyNearToAnyOwnerRoad(Player player, PropertyPosition position);
+
+    /**
+     * @param player
+     * @param position
+     * @return true if the road in the given position is near to an other
+     *         road of current player, false otherwise.
+     */
+    boolean isRoadNearToAnyOwnedRoad(Player player, RoadPosition position);
 }

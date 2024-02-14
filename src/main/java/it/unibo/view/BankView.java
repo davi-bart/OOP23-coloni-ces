@@ -24,7 +24,7 @@ public final class BankView extends HBox {
      */
     public void draw() {
         super.getChildren().clear();
-        controller.getBankResources().entrySet().forEach(entry -> super.getChildren()
+        controller.getResourceController().getBankResources().entrySet().forEach(entry -> super.getChildren()
                 .add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue())));
     }
 }

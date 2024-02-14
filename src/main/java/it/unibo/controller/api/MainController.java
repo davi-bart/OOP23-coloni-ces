@@ -10,13 +10,26 @@ import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.property.PropertyType;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
-import it.unibo.common.api.tile.TerrainType;
-import it.unibo.common.api.tile.TilePosition;
 
 /**
  * Main controller.
  */
 public interface MainController {
+    /**
+     * @return the board controller
+     */
+    BoardController getBoardController();
+
+    /**
+     * @return the resource controller
+     */
+    ResourceController getResourceController();
+
+    /**
+     * @return the turn controller
+     */
+    TurnController getTurnController();
+
     /**
      * @return the list of the players' names
      */
@@ -29,38 +42,10 @@ public interface MainController {
     Map<ResourceType, Integer> getPlayerResources(String playerName);
 
     /**
-     * @return resources of the bank
-     */
-    Map<ResourceType, Integer> getBankResources();
-
-    /**
      * @param playerName
      * @return the victory points of the given player.
      */
     int getVictoryPoints(String playerName);
-
-    /**
-     * get the tile positions.
-     * 
-     * @return the list of the tile positions
-     */
-    List<TilePosition> getTilePositions();
-
-    /**
-     * get the tile number.
-     * 
-     * @param pos the position of the tile
-     * @return the number of the tile
-     */
-    int getTileNumber(TilePosition pos);
-
-    /**
-     * get the tile terrain type.
-     * 
-     * @param pos the position of the tile
-     * @return the terrain type of the tile
-     */
-    TerrainType getTileTerrainType(TilePosition pos);
 
     /**
      * get the player's road positions.
@@ -71,34 +56,12 @@ public interface MainController {
     Set<RoadPosition> getPlayerRoadPositions(String playerName);
 
     /**
-     * get all the road positions, including empty ones.
-     * 
-     * @return the set of the road positions
-     */
-    Set<RoadPosition> getAllRoadPositions();
-
-    /**
-     * get the property type of the property at the given position.
-     * 
-     * @param position the position of the property
-     * @return the type of the property
-     */
-    PropertyType getPropertyType(PropertyPosition position);
-
-    /**
      * get the player's property positions.
      * 
      * @param playerName the player's name
      * @return the set of the property positions and their types
      */
     Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(String playerName);
-
-    /**
-     * get all the property positions, including empty ones.
-     * 
-     * @return the set of the property positions
-     */
-    Set<PropertyPosition> getAllPropertyPositions();
 
     /**
      * Build a settlement in the given position.
@@ -145,23 +108,12 @@ public interface MainController {
     String getCurrentPlayer();
 
     /**
-     * end the current turn and updates the current player.
-     */
-    void endTurn();
-
-    /**
      * get the points of the specified player.
      * 
      * @param player the player
      * @return the points of the player
      */
     int getPlayerPoints(String player);
-
-    /**
-     * 
-     * @return the dice roll.
-     */
-    Pair<Integer, Integer> rollDie();
 
     /**
      * * Return if the given owner has the given resources.
@@ -197,12 +149,6 @@ public interface MainController {
     void giveResources(int rollSum);
 
     /**
-     * 
-     * @return the number of cycles.
-     */
-    int getCycle();
-
-    /**
      * Modify the resources of the owners into the trade.
      * 
      * @param proposer          is the owner that propose the trade
@@ -214,9 +160,4 @@ public interface MainController {
      */
     void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
-
-    /**
-     * @return the position of the robber
-     */
-    TilePosition getRobberPosition();
 }

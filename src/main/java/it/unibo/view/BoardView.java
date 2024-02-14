@@ -45,22 +45,23 @@ public final class BoardView extends StackPane {
 
     private List<Group> drawTiles() {
         final List<Group> tiles = new ArrayList<>();
-        this.controller.getTilePositions().forEach(coords -> {
-            tiles.add(new TileView(controller, coords, controller.getTileTerrainType(coords), controller.getTileNumber(coords)));
+        this.controller.getBoardController().getTilePositions().forEach(coords -> {
+            tiles.add(new TileView(controller, coords, controller.getBoardController().getTileTerrainType(coords),
+                    controller.getBoardController().getTileNumber(coords)));
         });
         return tiles;
     }
 
     private List<Line> drawRoads() {
         final List<Line> roads = new ArrayList<>();
-        this.controller.getAllRoadPositions().forEach(pos -> roads
+        this.controller.getBoardController().getAllRoadPositions().forEach(pos -> roads
                 .add(new RoadView(controller, pos, () -> this.playerColors.get(controller.getCurrentPlayer()))));
         return roads;
     }
 
     private List<PropertyView> drawProperties() {
         final List<PropertyView> properties = new ArrayList<>();
-        this.controller.getAllPropertyPositions().forEach(pos -> properties.add(
+        this.controller.getBoardController().getAllPropertyPositions().forEach(pos -> properties.add(
                 new PropertyView(controller, pos, () -> this.playerColors.get(controller.getCurrentPlayer()))));
         return properties;
     }

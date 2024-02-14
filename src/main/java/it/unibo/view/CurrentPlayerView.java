@@ -41,7 +41,7 @@ public final class CurrentPlayerView extends HBox {
         final Button endTurnButton = new Button("End turn");
         endTurnButton.setOnAction(e -> {
             if (controller.canEndTurn()) {
-                controller.endTurn();
+                controller.getTurnController().endTurn();
             }
             draw();
         });
@@ -52,7 +52,7 @@ public final class CurrentPlayerView extends HBox {
         final Button rollButton = new Button("Roll die");
         if (controller.canRollDie()) {
             rollButton.setOnAction(e -> {
-                var roll = controller.rollDie();
+                var roll = controller.getTurnController().rollDie();
                 var rollSum = roll.getLeft() + roll.getRight();
                 controller.giveResources(rollSum);
                 rollButton.setText(String.valueOf(rollSum) + roll);

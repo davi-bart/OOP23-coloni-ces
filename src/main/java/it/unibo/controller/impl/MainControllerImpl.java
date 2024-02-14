@@ -5,22 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.property.PropertyDirection;
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.property.PropertyType;
-import it.unibo.common.api.road.RoadDirection;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
-import it.unibo.common.api.tile.TerrainType;
-import it.unibo.common.api.tile.TilePosition;
 import it.unibo.common.impl.Recipes;
-import it.unibo.common.impl.property.PropertyPositionImpl;
-import it.unibo.common.impl.road.RoadPositionImpl;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;
@@ -62,6 +54,21 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
+    public BoardController getBoardController() {
+        return this.boardController;
+    }
+
+    @Override
+    public ResourceController getResourceController() {
+        return this.resourceController;
+    }
+
+    @Override
+    public TurnController getTurnController() {
+        return this.turnController;
+    }
+
+    @Override
     public List<String> getPlayerNames() {
         return gameManager.getPlayers().stream().map(p -> p.getName()).toList();
     }
@@ -72,28 +79,8 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public Map<ResourceType, Integer> getBankResources() {
-        return resourceController.getBankResources();
-    }
-
-    @Override
     public int getVictoryPoints(final String playerName) {
         return getPlayerByName(playerName).getVictoryPoints();
-    }
-
-    @Override
-    public List<TilePosition> getTilePositions() {
-        return boardController.getTilePositions();
-    }
-
-    @Override
-    public int getTileNumber(final TilePosition pos) {
-        return boardController.getTileNumber(pos);
-    }
-
-    @Override
-    public TerrainType getTileTerrainType(final TilePosition pos) {
-        return boardController.getTileTerrainType(pos);
     }
 
     @Override
@@ -102,38 +89,13 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public Set<RoadPosition> getAllRoadPositions() {
-        return this.getTilePositions().stream()
-                .flatMap(tilePos -> Stream.of(RoadDirection.values()).map(dir -> new RoadPositionImpl(tilePos, dir)))
-                .collect(Collectors.toSet());
-    }
-
-    @Override
     public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final String playerName) {
         return boardController.getPlayerPropertyPositions(getPlayerByName(playerName));
     }
 
     @Override
-    public Set<PropertyPosition> getAllPropertyPositions() {
-        return this.getTilePositions().stream()
-                .flatMap(tilePos -> Stream.of(PropertyDirection.values())
-                        .map(dir -> new PropertyPositionImpl(tilePos, dir)))
-                .collect(Collectors.toSet());
-    }
-
-    @Override
     public String getCurrentPlayer() {
         return this.turnController.getCurrentPlayerTurn().getName();
-    }
-
-    @Override
-    public void endTurn() {
-        this.turnController.endTurn();
-    }
-
-    @Override
-    public Pair<Integer, Integer> rollDie() {
-        return this.turnController.rollDie();
     }
 
     @Override
@@ -171,63 +133,14 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public PropertyType getPropertyType(final PropertyPosition position) {
-        return this.boardController.getPropertyType(position);
-    }
-
-    /**
-     * @param position
-     * 
-     * @return true if the property in the given position is near to an other
-     *         property, false otherwise.
-     */
-    private boolean isNearToAnyProperty(final PropertyPosition position) {
-        return this.getAllPropertyPositions().stream().anyMatch(propertyPosition -> {
-            if (!this.getPropertyType(propertyPosition).equals(PropertyType.EMPTY)) {
-                return propertyPosition.isNear(position);
-            }
-            return false;
-        });
-    }
-
-    /**
-     * @param position
-     * @return true if the road in the given position is near to an other
-     *         property in current player, false otherwise.
-     */
-    private boolean isRoadNearToAnyOwnedProperty(final RoadPosition position) {
-        return this.getPlayerPropertyPositions(getCurrentPlayer()).stream()
-                .anyMatch(propertyPosition -> {
-                    return position.isNearToProperty(propertyPosition.getKey());
-                });
-    }
-
-    private boolean isPropertyNearToAnyOwnerRoad(final PropertyPosition position) {
-        return this.getPlayerRoadPositions(getCurrentPlayer()).stream()
-                .anyMatch(roadPosition -> {
-                    return roadPosition.isNearToProperty(position);
-                });
-    }
-
-    /**
-     * @param position
-     * @return true if the road in the given position is near to an other
-     *         road in current player, false otherwise.
-     */
-    private boolean isRoadNearToAnyOwnedRoad(final RoadPosition position) {
-        return this.getPlayerRoadPositions(getCurrentPlayer()).stream().anyMatch(roadPosition -> {
-            return position.isNearby(roadPosition);
-        });
-    }
-
-    @Override
     public boolean canBuildSettlement(final PropertyPosition position) {
         final int cycle = turnController.getCycle();
         if (cycle <= 2) {
-            return !isNearToAnyProperty(position)
+            return !this.boardController.isNearToAnyProperty(position)
                     && getPlayerPropertyPositions(getCurrentPlayer()).size() < cycle;
         }
-        return !isNearToAnyProperty(position) && isPropertyNearToAnyOwnerRoad(position)
+        return !this.boardController.isNearToAnyProperty(position)
+                && this.boardController.isPropertyNearToAnyOwnerRoad(turnController.getCurrentPlayerTurn(), position)
                 && this.resourceController.hasResourcesForSettlement(turnController.getCurrentPlayerTurn());
     }
 
@@ -236,7 +149,7 @@ public final class MainControllerImpl implements MainController {
         if (turnController.getCycle() <= 2) {
             return false;
         }
-        return !isNearToAnyProperty(position)
+        return !this.boardController.isNearToAnyProperty(position)
                 && this.resourceController.hasResourcesForCity(turnController.getCurrentPlayerTurn());
     }
 
@@ -244,10 +157,11 @@ public final class MainControllerImpl implements MainController {
     public boolean canBuildRoad(final RoadPosition position) {
         final int cycle = turnController.getCycle();
         if (cycle <= 2) {
-            return isRoadNearToAnyOwnedProperty(position)
+            return this.boardController.isRoadNearToAnyOwnedProperty(turnController.getCurrentPlayerTurn(), position)
                     && getPlayerRoadPositions(getCurrentPlayer()).size() < cycle;
         }
-        return (isRoadNearToAnyOwnedRoad(position) || isRoadNearToAnyOwnedProperty(position))
+        return (this.boardController.isRoadNearToAnyOwnedRoad(turnController.getCurrentPlayerTurn(), position)
+                || this.boardController.isRoadNearToAnyOwnedProperty(turnController.getCurrentPlayerTurn(), position))
                 && this.resourceController.hasResourcesForRoad(turnController.getCurrentPlayerTurn());
     }
 
@@ -295,11 +209,11 @@ public final class MainControllerImpl implements MainController {
                     .getPlayerPropertyPositions(getPlayerByName(player))) {
                 for (final PropertyPosition propertyPositions : property.getLeft().getEquivalentPositions()) {
                     try {
-                        if (getTileNumber(propertyPositions.getTilePosition()) == number) {
+                        if (this.boardController.getTileNumber(propertyPositions.getTilePosition()) == number) {
                             // resourceController.addResources(getPlayerByName(player),
                             // property.getValue() == PropertyType.CITY ? 2 : 1);
                             final int amount = property.getValue() == PropertyType.CITY ? 2 : 1;
-                            switch (getTileTerrainType(propertyPositions.getTilePosition())) {
+                            switch (this.boardController.getTileTerrainType(propertyPositions.getTilePosition())) {
                                 case DESERT:
                                     break;
                                 case FIELD:
@@ -338,20 +252,10 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public int getCycle() {
-        return turnController.getCycle();
-    }
-
-    @Override
     public void acceptTrade(final String proposer, final String accepter,
             final Map<ResourceType, Integer> proposedResources,
             final Map<ResourceType, Integer> wantedResources) {
         resourceController.acceptTrade(getPlayerByName(proposer), getPlayerByName(accepter), proposedResources,
                 wantedResources);
-    }
-
-    @Override
-    public TilePosition getRobberPosition() {
-        return boardController.getRobberPosition();
     }
 }
