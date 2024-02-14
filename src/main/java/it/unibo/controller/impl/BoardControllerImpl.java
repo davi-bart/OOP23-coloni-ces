@@ -2,6 +2,7 @@ package it.unibo.controller.impl;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,6 +30,7 @@ import it.unibo.model.impl.RoadManagerImpl;
  * Board controller implementation.
  */
 public final class BoardControllerImpl implements BoardController {
+    private final Function<String, Player> getPlayerByName;
     private final Board board;
     private final RoadManager roadManager = new RoadManagerImpl();
     private final PropertyManager propertyManager = new PropertyManagerImpl();
@@ -36,9 +38,11 @@ public final class BoardControllerImpl implements BoardController {
     /**
      * Constructor of BoardControllerImpl.
      * 
-     * @param board the board to start with
+     * @param controller the main controller
+     * @param board      the board to start with
      */
-    public BoardControllerImpl(final Board board) {
+    public BoardControllerImpl(final Function<String, Player> getPlayerByName, final Board board) {
+        this.getPlayerByName = getPlayerByName;
         this.board = board;
     }
 
@@ -58,13 +62,13 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public Set<RoadPosition> getPlayerRoadPositions(final Player player) {
-        return this.roadManager.getPlayerRoads(player).stream().map(r -> r.getPosition()).collect(Collectors.toSet());
+    public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
+        return this.roadManager.getPlayerRoads(getPlayerByName.apply(playerName)).stream().map(r -> r.getPosition()).collect(Collectors.toSet());
     }
 
     @Override
-    public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final Player player) {
-        return this.propertyManager.getPlayerProperties(player).stream()
+    public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final String playerName) {
+        return this.propertyManager.getPlayerProperties(getPlayerByName.apply(playerName)).stream()
                 .map(p -> new ImmutablePair<PropertyPosition, PropertyType>(p.getPosition(), p.getPropertyType()))
                 .collect(Collectors.toSet());
     }
@@ -85,12 +89,12 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public void buildSettlement(final PropertyPosition position, final Player player) {
-        this.propertyManager.addSettlement(position, player);
+    public void buildSettlement(final PropertyPosition position, final String playerName) {
+        this.propertyManager.addSettlement(position, getPlayerByName.apply(playerName));
     }
 
     @Override
-    public void buildCity(final PropertyPosition position, final Player player) {
+    public void buildCity(final PropertyPosition position, final String playerName) {
         this.propertyManager.upgradeToCity(position);
     }
 
@@ -100,13 +104,13 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public void buildRoad(final RoadPosition position, final Player player) {
-        this.roadManager.addRoad(position, player);
+    public void buildRoad(final RoadPosition position, final String playerName) {
+        this.roadManager.addRoad(position, getPlayerByName.apply(playerName));
     }
 
     @Override
-    public int getLongestRoadLength(final Player player) {
-        return this.roadManager.getLongestRoadLength(player);
+    public int getLongestRoadLength(final String playerName) {
+        return this.roadManager.getLongestRoadLength(getPlayerByName.apply(playerName));
     }
 
     @Override
@@ -125,24 +129,24 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public boolean isRoadNearToAnyOwnedProperty(final Player player, final RoadPosition position) {
-        return this.getPlayerPropertyPositions(player).stream()
+    public boolean isRoadNearToAnyOwnedProperty(final String playerName, final RoadPosition position) {
+        return this.getPlayerPropertyPositions(playerName).stream()
                 .anyMatch(propertyPosition -> {
                     return position.isNearToProperty(propertyPosition.getKey());
                 });
     }
 
     @Override
-    public boolean isPropertyNearToAnyOwnerRoad(final Player player, final PropertyPosition position) {
-        return this.getPlayerRoadPositions(player).stream()
+    public boolean isPropertyNearToAnyOwnerRoad(final String playerName, final PropertyPosition position) {
+        return this.getPlayerRoadPositions(playerName).stream()
                 .anyMatch(roadPosition -> {
                     return roadPosition.isNearToProperty(position);
                 });
     }
 
     @Override
-    public boolean isRoadNearToAnyOwnedRoad(final Player player, final RoadPosition position) {
-        return this.getPlayerRoadPositions(player).stream().anyMatch(roadPosition -> {
+    public boolean isRoadNearToAnyOwnedRoad(final String playerName, final RoadPosition position) {
+        return this.getPlayerRoadPositions(playerName).stream().anyMatch(roadPosition -> {
             return position.isNearby(roadPosition);
         });
     }

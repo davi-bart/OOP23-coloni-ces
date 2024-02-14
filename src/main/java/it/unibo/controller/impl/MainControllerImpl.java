@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -44,7 +45,12 @@ public final class MainControllerImpl implements MainController {
     public MainControllerImpl(final AppView appView, final List<String> players) {
         this.appView = appView;
         this.gameManager = new GameManagerImpl(players);
-        this.boardController = new BoardControllerImpl(this.gameManager.getBoard());
+
+        final Function<String, Player> getPlayerByName = name -> gameManager.getPlayers().stream()
+                .filter(p -> p.getName().equals(name)).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
+
+        this.boardController = new BoardControllerImpl(getPlayerByName, this.gameManager.getBoard());
         final List<ResourceOwner> owners = new ArrayList<>();
         gameManager.getPlayers().forEach(owners::add);
         final BankImpl bank = new BankImpl(19);
@@ -85,12 +91,12 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
-        return boardController.getPlayerRoadPositions(getPlayerByName(playerName));
+        return boardController.getPlayerRoadPositions(playerName);
     }
 
     @Override
     public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final String playerName) {
-        return boardController.getPlayerPropertyPositions(getPlayerByName(playerName));
+        return boardController.getPlayerPropertyPositions(playerName);
     }
 
     @Override
@@ -100,7 +106,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void buildSettlement(final PropertyPosition position) {
-        this.boardController.buildSettlement(position, turnController.getCurrentPlayerTurn());
+        this.boardController.buildSettlement(position, getCurrentPlayer());
         this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
         final int cycle = turnController.getCycle();
         if (cycle > 2) {
@@ -113,7 +119,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void buildCity(final PropertyPosition position) {
-        this.boardController.buildCity(position, turnController.getCurrentPlayerTurn());
+        this.boardController.buildCity(position, getCurrentPlayer());
         this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
         this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
         this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getCityResources());
@@ -123,7 +129,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void buildRoad(final RoadPosition position) {
-        this.boardController.buildRoad(position, turnController.getCurrentPlayerTurn());
+        this.boardController.buildRoad(position, getCurrentPlayer());
         final int cycle = turnController.getCycle();
         if (cycle > 2) {
             this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getRoadResources());
@@ -140,7 +146,7 @@ public final class MainControllerImpl implements MainController {
                     && getPlayerPropertyPositions(getCurrentPlayer()).size() < cycle;
         }
         return !this.boardController.isNearToAnyProperty(position)
-                && this.boardController.isPropertyNearToAnyOwnerRoad(turnController.getCurrentPlayerTurn(), position)
+                && this.boardController.isPropertyNearToAnyOwnerRoad(getCurrentPlayer(), position)
                 && this.resourceController.hasResourcesForSettlement(turnController.getCurrentPlayerTurn());
     }
 
@@ -157,11 +163,11 @@ public final class MainControllerImpl implements MainController {
     public boolean canBuildRoad(final RoadPosition position) {
         final int cycle = turnController.getCycle();
         if (cycle <= 2) {
-            return this.boardController.isRoadNearToAnyOwnedProperty(turnController.getCurrentPlayerTurn(), position)
+            return this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(), position)
                     && getPlayerRoadPositions(getCurrentPlayer()).size() < cycle;
         }
-        return (this.boardController.isRoadNearToAnyOwnedRoad(turnController.getCurrentPlayerTurn(), position)
-                || this.boardController.isRoadNearToAnyOwnedProperty(turnController.getCurrentPlayerTurn(), position))
+        return (this.boardController.isRoadNearToAnyOwnedRoad(getCurrentPlayer(), position)
+                || this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(), position))
                 && this.resourceController.hasResourcesForRoad(turnController.getCurrentPlayerTurn());
     }
 
@@ -177,7 +183,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public int getLongestRoadLength(final String playerName) {
-        return boardController.getLongestRoadLength(getPlayerByName(playerName));
+        return boardController.getLongestRoadLength(playerName);
     }
 
     @Override
@@ -206,7 +212,7 @@ public final class MainControllerImpl implements MainController {
             final Map<ResourceType, Integer> givenResource = new HashMap<>();
             List.of(ResourceType.values()).forEach(resource -> givenResource.put(resource, 0));
             for (final Pair<PropertyPosition, PropertyType> property : boardController
-                    .getPlayerPropertyPositions(getPlayerByName(player))) {
+                    .getPlayerPropertyPositions(player)) {
                 for (final PropertyPosition propertyPositions : property.getLeft().getEquivalentPositions()) {
                     try {
                         if (this.boardController.getTileNumber(propertyPositions.getTilePosition()) == number) {

@@ -10,7 +10,6 @@ import it.unibo.common.api.property.PropertyType;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.TerrainType;
 import it.unibo.common.api.tile.TilePosition;
-import it.unibo.model.api.Player;
 
 /**
  * Board controller.
@@ -45,7 +44,7 @@ public interface BoardController {
      * @param player the player
      * @return the set of the road positions
      */
-    Set<RoadPosition> getPlayerRoadPositions(Player player);
+    Set<RoadPosition> getPlayerRoadPositions(String playerName);
 
     /**
      * get the player's property positions.
@@ -53,7 +52,7 @@ public interface BoardController {
      * @param player the player
      * @return the set of the property positions and their types
      */
-    Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(Player player);
+    Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(String playerName);
 
     /**
      * get all the road positions, including empty ones.
@@ -83,7 +82,7 @@ public interface BoardController {
      * @param position where to build the settlement.
      * @param player   who own the settlement.
      */
-    void buildSettlement(PropertyPosition position, Player player);
+    void buildSettlement(PropertyPosition position, String playerName);
 
     /**
      * Build a city in the given position.
@@ -91,7 +90,7 @@ public interface BoardController {
      * @param position where to build the city.
      * @param player   who own the city.
      */
-    void buildCity(PropertyPosition position, Player player);
+    void buildCity(PropertyPosition position, String playerName);
 
     /**
      * Builds the road at position {@code position}.
@@ -99,13 +98,13 @@ public interface BoardController {
      * @param position position of the road
      * @param player   owner of the road
      */
-    void buildRoad(RoadPosition position, Player player);
+    void buildRoad(RoadPosition position, String playerName);
 
     /**
      * @param player
      * @return the longest road length of {@code player}
      */
-    int getLongestRoadLength(Player player);
+    int getLongestRoadLength(String playerName);
 
     /**
      * @return the position of the robber
@@ -125,7 +124,7 @@ public interface BoardController {
      * @return true if the road in the given position is near to an other
      *         property of current player, false otherwise.
      */
-    boolean isRoadNearToAnyOwnedProperty(Player player, RoadPosition position);
+    boolean isRoadNearToAnyOwnedProperty(String playerName, RoadPosition position);
 
     /**
      * @param player
@@ -133,7 +132,7 @@ public interface BoardController {
      * @return true if the property in the given position is near to an other
      *         road of current player, false otherwise.
      */
-    boolean isPropertyNearToAnyOwnerRoad(Player player, PropertyPosition position);
+    boolean isPropertyNearToAnyOwnerRoad(String playerName, PropertyPosition position);
 
     /**
      * @param player
@@ -141,5 +140,5 @@ public interface BoardController {
      * @return true if the road in the given position is near to an other
      *         road of current player, false otherwise.
      */
-    boolean isRoadNearToAnyOwnedRoad(Player player, RoadPosition position);
+    boolean isRoadNearToAnyOwnedRoad(String playerName, RoadPosition position);
 }
