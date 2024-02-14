@@ -76,7 +76,7 @@ public class Menu {
         playButton.setOnMouseClicked(e -> {
             if (players.size() >= 1) {
                 stage.close();
-                new AppViewImpl(stage).draw();
+                new AppViewImpl(stage, players).draw();
             } else {
                 popUp.setHeaderText("You need atleast one player to start the game");
                 popUp.showAndWait();
