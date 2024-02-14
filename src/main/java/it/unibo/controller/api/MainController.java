@@ -157,12 +157,6 @@ public interface MainController {
      */
     int getPlayerPoints(String player);
 
-    /**
-     * increment the victory points of the given player.
-     * 
-     * @param player
-     */
-    void incrementVictoryPoints(String player);
 
     /**
      * 

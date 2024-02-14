@@ -15,12 +15,18 @@ import it.unibo.common.api.tile.TilePosition;
 import it.unibo.controller.api.BoardController;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.Player;
+import it.unibo.model.api.PropertyManager;
+import it.unibo.model.api.RoadManager;
+import it.unibo.model.impl.PropertyManagerImpl;
+import it.unibo.model.impl.RoadManagerImpl;
 
 /**
  * Board controller implementation.
  */
 public final class BoardControllerImpl implements BoardController {
     private final Board board;
+    private final RoadManager roadManager = new RoadManagerImpl();
+    private final PropertyManager propertyManager = new PropertyManagerImpl();
 
     /**
      * Constructor of BoardControllerImpl.
@@ -48,38 +54,38 @@ public final class BoardControllerImpl implements BoardController {
 
     @Override
     public Set<RoadPosition> getPlayerRoadPositions(final Player player) {
-        return this.board.getPlayerRoads(player).stream().map(r -> r.getPosition()).collect(Collectors.toSet());
+        return this.roadManager.getPlayerRoads(player).stream().map(r -> r.getPosition()).collect(Collectors.toSet());
     }
 
     @Override
     public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final Player player) {
-        return this.board.getPlayerProperties(player).stream()
+        return this.propertyManager.getPlayerProperties(player).stream()
                 .map(p -> new ImmutablePair<PropertyPosition, PropertyType>(p.getPosition(), p.getPropertyType()))
                 .collect(Collectors.toSet());
     }
 
     @Override
     public void buildSettlement(final PropertyPosition position, final Player player) {
-        this.board.buildSettlement(position, player);
+        this.propertyManager.addSettlement(position, player);
     }
 
     @Override
     public void buildCity(final PropertyPosition position, final Player player) {
-        this.board.buildCity(position, player);
+        this.propertyManager.upgradeToCity(position);
     }
 
     @Override
     public PropertyType getPropertyType(final PropertyPosition position) {
-        return this.board.getPropertyType(position);
+        return this.propertyManager.getPropertyType(position);
     }
 
     @Override
     public void buildRoad(final RoadPosition position, final Player player) {
-        this.board.buildRoad(position, player);
+        this.roadManager.addRoad(position, player);
     }
 
     @Override
     public int getLongestRoadLength(final Player player) {
-        return this.board.getLongestRoadLength(player);
+        return this.roadManager.getLongestRoadLength(player);
     }
 }

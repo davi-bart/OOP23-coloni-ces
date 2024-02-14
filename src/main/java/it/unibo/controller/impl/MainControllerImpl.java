@@ -136,16 +136,21 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buildSettlement(final PropertyPosition position) {
         this.boardController.buildSettlement(position, turnController.getCurrentPlayerTurn());
+        this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
+        System.out.println(getPlayerPoints(getCurrentPlayer()));
         final int cycle = turnController.getCycle();
         if (cycle > 2) {
             this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
                     Recipes.getSettlementResources());
         }
+
     }
 
     @Override
     public void buildCity(final PropertyPosition position) {
         this.boardController.buildCity(position, turnController.getCurrentPlayerTurn());
+        this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
+        this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
         this.resourceController.removeResources(turnController.getCurrentPlayerTurn(), Recipes.getCityResources());
     }
 
@@ -272,11 +277,6 @@ public final class MainControllerImpl implements MainController {
     @Override
     public boolean canRollDie() {
         return !turnController.hasRolled() && turnController.getCycle() > 2;
-    }
-
-    @Override
-    public void incrementVictoryPoints(String player) {
-        this.getPlayerByName(player).incrementVictoryPoints();
     }
 
     @Override
