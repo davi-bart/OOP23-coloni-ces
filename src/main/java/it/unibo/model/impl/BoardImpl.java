@@ -2,7 +2,6 @@ package it.unibo.model.impl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import it.unibo.common.api.tile.TerrainType;
 import it.unibo.common.api.tile.TilePosition;
@@ -24,6 +23,8 @@ public final class BoardImpl implements Board {
      */
     public BoardImpl(final GameMapGenerator generator) {
         this.board = generator.generate();
+        board.entrySet().stream().filter(e -> e.getValue().getTerrainType().equals(TerrainType.DESERT)).findFirst()
+                .ifPresent(e -> robberPosition = e.getKey());
     }
 
     @Override
@@ -48,13 +49,13 @@ public final class BoardImpl implements Board {
     }
 
     @Override
-    public Optional<TilePosition> getRobberPosition() {
-        return Optional.ofNullable(robberPosition);
+    public TilePosition getRobberPosition() {
+        return robberPosition;
     }
 
     @Override
     public void setRobberPosition(final TilePosition coordinates) {
-        if (robberPosition != null && robberPosition.equals(coordinates)) {
+        if (robberPosition.equals(coordinates)) {
             throw new IllegalArgumentException("Robber is already present in that coordinate.");
         }
         robberPosition = coordinates;
