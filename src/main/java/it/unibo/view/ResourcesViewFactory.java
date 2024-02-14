@@ -72,4 +72,21 @@ public final class ResourcesViewFactory {
         });
         return horizontalBox;
     }
+    /**
+     * @param resources the map with all the resources.
+     * @return the image view of the needed resource with a combobox.
+     */
+    public static HBox getRecivingResourceCombiBoxAmount(final Map<ResourceType, Integer> resources) {
+        final HBox horizontalBox = new HBox();
+        resources.forEach((resource, amount) -> {
+            final VBox resourceAndAmount = new VBox();
+            resourceAndAmount.getChildren().add(generateResource(resource));
+            final ComboBox<Integer> amountComboBox = new ComboBox<>();
+            amountComboBox.getItems().addAll(IntStream.range(0, amount + 1).boxed().collect(Collectors.toList()));
+            amountComboBox.getSelectionModel().selectFirst();
+            resourceAndAmount.getChildren().add(amountComboBox);
+            horizontalBox.getChildren().add(resourceAndAmount);
+        });
+        return horizontalBox;
+    }
 }

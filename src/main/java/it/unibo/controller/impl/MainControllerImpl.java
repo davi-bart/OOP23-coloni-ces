@@ -329,4 +329,9 @@ public final class MainControllerImpl implements MainController {
         System.out.println(
                 "bank " + resourceController.getBankResources());
     }
+
+    @Override
+    public int getCycle() {
+        return turnController.getCycle();
+    }
 }

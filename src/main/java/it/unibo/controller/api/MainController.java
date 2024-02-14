@@ -202,5 +202,10 @@ public interface MainController {
      * @param rollSum sum of the 2 dices.
      */
     void giveResources(int rollSum);
-    
+
+    /**
+     * 
+     * @return the number of cycles.
+     */
+    int getCycle();
 }
