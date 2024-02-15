@@ -150,8 +150,9 @@ public final class GameManagerImpl implements GameManager {
         if (turnManager.getCycle() <= 2) {
             return false;
         }
-        return isPropertyNearToAnyProperty(position)
-                && this.resourceManager.hasResources(turnManager.getCurrentPlayerTurn(), Recipes.getCityResources());
+        return this.propertyManager.getPlayerProperties(player).stream().map(property -> property.getPosition())
+                .anyMatch(propertyPosition -> position.equals(position))
+                && this.resourceManager.hasResources(player, Recipes.getCityResources());
     }
 
     @Override
