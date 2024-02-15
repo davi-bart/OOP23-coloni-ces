@@ -1,6 +1,7 @@
 package it.unibo.model.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -195,22 +196,42 @@ public final class GameManagerImpl implements GameManager {
                 TerrainType.HILL, ResourceType.BRICK,
                 TerrainType.MOUNTAIN, ResourceType.ORE,
                 TerrainType.PASTURE, ResourceType.WOOL);
+        /**
+         * Before assigning the produced resource, it is necessary to check whether the
+         * bank has enough amount of it to fulfill everyone's production. If it's not
+         * the case, no one receives any of that resource during that turn.
+         */
+        final Map<Player, Map<ResourceType, Integer>> playersResources = new HashMap<>();
+        players.forEach(player -> playersResources.put(player, new HashMap<>()));
+        players.forEach(player -> List.of(ResourceType.values())
+                .forEach(resource -> playersResources.get(player).put(resource, 0)));
         players.forEach(player -> {
             propertyManager.getPlayerProperties(player).forEach(property -> {
                 property.getPosition().getEquivalentPositions().stream()
                         .map(propertyPosition -> propertyPosition.getTilePosition())
                         .filter(tilePosition -> board.getTilePositions().contains(tilePosition))
+                        .filter(tilePosition -> board.getTileNumber(tilePosition) == number
+                                && !board.getRobberPosition().equals(
+                                        tilePosition))
                         .forEach(tilePosition -> {
-                            if (board.getTileNumber(tilePosition) == number
-                                    && !board.getRobberPosition().equals(tilePosition)) {
-                                final int amount = property.getPropertyType() == PropertyType.CITY ? 2 : 1;
-                                final ResourceType resource = terrainToResource
-                                        .get(board.getTileTerrainType(tilePosition));
-                                resourceManager.addResources(player, resource, amount);
-                                resourceManager.removeResources(resourceManager.getBank(), resource, amount);
-                            }
+                            final int amount = property.getPropertyType() == PropertyType.CITY ? 2 : 1;
+                            final ResourceType resource = terrainToResource
+                                    .get(board.getTileTerrainType(tilePosition));
+                            playersResources.get(player).compute(resource, (k, v) -> v + amount);
                         });
             });
+        });
+        final Map<ResourceType, Integer> producedResources = new HashMap<>();
+        List.of(ResourceType.values()).forEach(resource -> producedResources.put(resource, 0));
+        playersResources.values().forEach(map -> map.forEach((resource, amount) -> {
+            producedResources.compute(resource, (k, v) -> v + amount);
+        }));
+        producedResources.forEach((resource, amount) -> {
+            if (resourceManager.getResource(resourceManager.getBank(), resource) >= amount) {
+                players.forEach(player -> resourceManager.addResources(player, resource,
+                        playersResources.get(player).get(resource)));
+                resourceManager.removeResources(resourceManager.getBank(), resource, amount);
+            }
         });
     }
 
@@ -220,11 +241,18 @@ public final class GameManagerImpl implements GameManager {
      *         property
      */
     private boolean isPropertyNearToAnyProperty(final PropertyPosition position) {
-        return propertyManager.getAllPlayersProperties(getPlayers()).stream()
-                .map(property -> property.getPosition())
-                .anyMatch(propertyPosition -> {
-                    return propertyPosition.isNear(position);
-                });
+        // return players.forEach(player ->
+        // propertyManager.getPlayerProperties(player).stream()
+        // .map(property -> property.getPosition())
+        // .anyMatch(propertyPosition -> {
+        // return propertyPosition.isNear(position);
+        // }));
+        return players.stream()
+                .anyMatch(player -> propertyManager.getPlayerProperties(player).stream()
+                        .map(property -> property.getPosition())
+                        .anyMatch(propertyPosition -> {
+                            return propertyPosition.isNear(position);
+                        }));
     }
 
     /**
