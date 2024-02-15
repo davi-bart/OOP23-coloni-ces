@@ -54,13 +54,14 @@ public class Menu {
         stage.show();
     }
 
-    private void addPlayer(final int size, final ObservableList<String> list, final TextField textfield, final Alert alert) {
+    private void addPlayer(final int size, final ObservableList<String> list, final TextField textfield,
+            final Alert alert) {
         if (size < 4) {
-            if (list.contains(textfield.getText()) || textfield.getText().equals("bank")) {
+            if (list.contains(textfield.getText()) || "bank".equals(textfield.getText())) {
                 alert.setHeaderText("You cannot choose this name");
                 alert.showAndWait();
             } else {
-                if (textfield.getText().equals("")) {
+                if ("".equals(textfield.getText())) {
                     alert.setHeaderText("An empty text field is not a valid name");
                     alert.showAndWait();
                 } else {
@@ -88,9 +89,9 @@ public class Menu {
         final Button addButton = new Button("ADD PLAYER");
         final Scene scene = new Scene(root);
         final TextField textField = new TextField();
-        final TableView<String> tableView = new TableView<String>();
+        final TableView<String> tableView = new TableView<>();
         final Alert popUp = new Alert(AlertType.ERROR);
-        final TableColumn<String, String> playerName = new TableColumn<String, String>("Player Name");
+        final TableColumn<String, String> playerName = new TableColumn<>("Player Name");
         final int maxTableHeight = 140;
         final int maxTableWidth = 300;
         final int minTableHeight = 0;
@@ -120,16 +121,16 @@ public class Menu {
         });
 
         textField.setOnKeyPressed(e -> {
-            if (e.getCode() == (KeyCode.ENTER)) {
+            if (e.getCode() == KeyCode.ENTER) {
                 addPlayer(players.size(), players, textField, popUp);
             }
         });
 
-        Image image = new Image("imgs/menu/SettlersOfCesena.png");
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
+        final Image image = new Image("imgs/menu/SettlersOfCesena.png");
+        final BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        final BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        Background background = new Background(backgroundImage);
+        final Background background = new Background(backgroundImage);
 
         tableView.setItems(players);
         playerName.prefWidthProperty().bind(tableView.widthProperty());

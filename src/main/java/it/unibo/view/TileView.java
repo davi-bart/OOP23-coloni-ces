@@ -22,7 +22,7 @@ import javafx.scene.text.Text;
  * View of a tile.
  * Consists of the hexagon and the nearby roads and properties.
  */
-public class TileView extends Group {
+public final class TileView extends Group {
     static final int SIDES = 6;
     private final MainController controller;
     private final TilePosition coordinates;
@@ -56,8 +56,7 @@ public class TileView extends Group {
         final double x = pos.getLeft();
         final double y = pos.getRight();
         final Polygon hexagon = getHexagon(Utility.HEXAGON_RADIUS, x, y);
-        Image img = new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png");
-        hexagon.setFill(new ImagePattern(img));
+        hexagon.setFill(new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
         hexagon.setOnMouseClicked(eventHandler);
         super.getChildren().add(hexagon);
         if (terrainType != TerrainType.DESERT) {

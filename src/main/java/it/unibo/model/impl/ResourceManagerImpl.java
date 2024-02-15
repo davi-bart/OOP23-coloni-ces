@@ -32,7 +32,7 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public final void addResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
+    public void addResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
         if (amount >= 0) {
             allEntityResources.get(owner).compute(resource, (k, v) -> v + amount);
         } else {
@@ -41,7 +41,7 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public final void removeResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
+    public void removeResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
         if (allEntityResources.get(owner).get(resource) >= amount) {
             allEntityResources.get(owner).compute(resource, (k, v) -> v - amount);
         } else {
@@ -50,12 +50,12 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public final int getResource(final ResourceOwner owner, final ResourceType resource) {
+    public int getResource(final ResourceOwner owner, final ResourceType resource) {
         return allEntityResources.get(owner).get(resource);
     }
 
     @Override
-    public final void acceptTrade(final ResourceOwner proposer, final ResourceOwner accepter,
+    public void acceptTrade(final ResourceOwner proposer, final ResourceOwner accepter,
             final Map<ResourceType, Integer> givingResouces,
             final Map<ResourceType, Integer> recivingResources) {
 
@@ -71,7 +71,7 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public final boolean hasResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
+    public boolean hasResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
         for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
             if (resource.getValue() > getResource(owner, resource.getKey())) {
                 return false;
@@ -86,7 +86,7 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public Map<ResourceType, Integer> getResources(ResourceOwner owner) {
+    public Map<ResourceType, Integer> getResources(final ResourceOwner owner) {
         return allEntityResources.get(owner);
     }
 }

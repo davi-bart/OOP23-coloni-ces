@@ -52,7 +52,7 @@ public final class BoardView extends StackPane {
         });
     }
 
-    private void redrawTile(TilePosition coords) {
+    private void redrawTile(final TilePosition coords) {
         this.tiles.get(coords).draw();
     }
 

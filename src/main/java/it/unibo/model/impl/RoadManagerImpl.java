@@ -87,7 +87,6 @@ public final class RoadManagerImpl implements RoadManager {
     private void checkLongestRoad(final Player player) {
         final int minimumLongestRoadLength = 5;
         final int longestRoadVictoryPoints = 2;
-        System.out.println(getLongestRoadLength(player));
         if ((!longestRoadOwnerExists() && getLongestRoadLength(player) >= minimumLongestRoadLength)
                 || (longestRoadOwnerExists() && !player.equals(longestRoadOwner)
                         && getLongestRoadLength(player) > getLongestRoadLength(longestRoadOwner))) {

@@ -108,7 +108,7 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public void setRobberPosition(TilePosition coordinates) {
+    public void setRobberPosition(final TilePosition coordinates) {
         this.board.setRobberPosition(coordinates);
     }
 }

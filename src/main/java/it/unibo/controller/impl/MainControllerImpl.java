@@ -203,7 +203,7 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public void setRobberPosition(TilePosition coordinates) {
+    public void setRobberPosition(final TilePosition coordinates) {
         this.boardController.setRobberPosition(coordinates);
         this.mustPlaceRobber = false;
         this.appView.redrawCurrentPlayer();

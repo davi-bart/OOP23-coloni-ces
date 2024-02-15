@@ -105,7 +105,7 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public Map<ResourceType, Integer> getResources(String owner) {
+    public Map<ResourceType, Integer> getResources(final String owner) {
         return resourceManager.getResources(getResourceOwnerByName.apply(owner));
     }
 

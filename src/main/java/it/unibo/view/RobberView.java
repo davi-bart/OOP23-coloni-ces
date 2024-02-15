@@ -19,6 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * RobberView.
+ */
 public final class RobberView {
     private final MainController controller;
     private int sum;
@@ -33,9 +36,8 @@ public final class RobberView {
     }
 
     /**
-     * Get the trade button.
-     * 
-     * @return the trade button
+     * Evoke the robber.
+     * Test function.
      */
     public void evokeRobber() {
         if (controller.mustPlaceRobber()) {
@@ -76,7 +78,6 @@ public final class RobberView {
                     (options, oldValue, newValue) -> {
                         discardResources.put(resource, newValue);
                         reloadConfirmButton.run();
-                        System.out.println(discardResources);
                     }));
         });
         reloadConfirmButton.run();

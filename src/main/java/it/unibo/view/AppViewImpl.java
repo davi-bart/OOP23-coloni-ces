@@ -34,6 +34,7 @@ public final class AppViewImpl implements AppView {
      * Constructor of AppView.
      * 
      * @param stage the stage
+     * @param players the list of players names
      */
     public AppViewImpl(final Stage stage, final List<String> players) {
 
