@@ -1,6 +1,7 @@
 package it.unibo.view;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -55,6 +56,8 @@ public final class TradeView {
     }
 
     private void showTradeStage() {
+        boolean canTradeWithBankProposed;
+        boolean canTradeWithBankWanted;
         final Stage stage = new Stage();
         stage.setTitle("Trade window");
         final VBox resourcesContainer = new VBox();
@@ -67,7 +70,9 @@ public final class TradeView {
         final HBox wantedResourcesBox = new HBox();
 
         final Map<ResourceType, Integer> wantedResources = new HashMap<>();
+        List.of(ResourceType.values()).forEach(resource -> wantedResources.put(resource, 0));
         final Map<ResourceType, Integer> proposedResources = new HashMap<>();
+        List.of(ResourceType.values()).forEach(resource -> proposedResources.put(resource, 0));
 
         final Map<String, Button> playerToButton = new HashMap<>();
         controller.getPlayerNames().stream().filter(playerName -> !playerName.equals(controller.getCurrentPlayer()))
@@ -86,15 +91,16 @@ public final class TradeView {
                     controller.getPlayerResources(controller.getCurrentPlayer()).get(resource),
                     (options, oldValue, newValue) -> {
                         proposedResources.put(resource, newValue);
-                        
-                        tradeBank.setDisable(!(proposedResources.values().stream().filter(amount -> amount == 4)
-                                .count() == 1
-                                && proposedResources.values().stream().filter(amount -> amount == 0).count() == 4));
+                        System.out.println(proposedResources.values());
+                        tradeBank.setDisable(proposedResources.values().stream().mapToInt(i -> i).sum() < 4);
                     }));
             wantedResourcesBox.getChildren()
                     .add(resourceAndComboBox(resource, defaultWantedResources, (options, oldValue, newValue) -> {
                         playerToButton.forEach((playerName, button) -> {
-                            wantedResources.put(resource, newValue);
+                            wantedResources.replace(resource, newValue);
+                            // canTradeWithBankWanted = wantedResources.values().stream().filter(amount ->
+                            // amount == 1)
+                            // .count() == 1;
                             if (!controller.hasResources(playerName, wantedResources)) {
                                 button.setDisable(true);
                             } else {
@@ -103,10 +109,10 @@ public final class TradeView {
                         });
                     }));
         });
-
         tradeBank.setOnMouseClicked(e -> {
             controller.acceptTrade(controller.getCurrentPlayer(), controller.getBank(), proposedResources,
                     wantedResources);
+            stage.close();
         });
 
         resourcesContainer.getChildren().add(new Label("Select resources to offer"));
