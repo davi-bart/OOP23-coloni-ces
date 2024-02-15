@@ -21,15 +21,15 @@ public final class DevelopmentCardsImpl implements DevelopmentCards {
      * Constructor of DevelopmentCardsImpl.
      */
     public DevelopmentCardsImpl() {
-        final int knightCards = 15;
-        final int yearOfPlentyCards = 2;
+        final int freeSettlementCards = 5;
+        final int freeRoadCards = 5;
         final int monopolyCards = 2;
         final int victoryPointCards = 2;
-        /*final Map<CardType, Integer> cards = Map.of(CardType.KNIGHT, knightCards, CardType.ROADBUILD, roadBuildCards,
-                CardType.YEAROFPLENTY, yearOfPlentyCards, CardType.MONOPOLY, monopolyCards, CardType.VICTORYPOINT,
-                victoryPointCards);*/
-                final Map<CardType, Integer> cards = Map.of(CardType.MONOPOLY,
-                victoryPointCards);
+        final int knightCards = 6;
+
+        final Map<CardType, Integer> cards = Map.of(CardType.MONOPOLY, monopolyCards, CardType.KNIGHT, knightCards,
+                CardType.FREE_ROAD, freeRoadCards, CardType.FREE_SETTLEMENT, freeSettlementCards,
+                CardType.VICTORY_POINT, victoryPointCards);
         cards.forEach((card, amount) -> {
             deck.addAll(IntStream.range(0, amount).mapToObj(i -> card).collect(Collectors.toList()));
         });
