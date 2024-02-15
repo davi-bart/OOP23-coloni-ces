@@ -98,6 +98,7 @@ public final class TradeView {
             tradeBank.setDisable(!enable);
         };
 
+        reloadBankTradeButton.run();
         Stream.of(ResourceType.values()).forEach(resource -> {
             proposedResourcesBox.getChildren().add(resourceAndComboBox(resource,
                     controller.getPlayerResources(controller.getCurrentPlayer()).get(resource),
@@ -105,10 +106,10 @@ public final class TradeView {
                         proposedResources.put(resource, newValue);
                         reloadBankTradeButton.run();
                     }));
-            wantedResourcesBox.getChildren()
-                    .add(resourceAndComboBox(resource, defaultWantedResources, (options, oldValue, newValue) -> {
+            wantedResourcesBox.getChildren().add(resourceAndComboBox(resource,
+                    defaultWantedResources, (options, oldValue, newValue) -> {
+                        wantedResources.put(resource, newValue);
                         playerToButton.forEach((playerName, button) -> {
-                            wantedResources.put(resource, newValue);
                             if (!controller.hasResources(playerName, wantedResources)) {
                                 button.setDisable(true);
                             } else {
