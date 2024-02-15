@@ -1,6 +1,7 @@
 package it.unibo.view;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -56,20 +57,29 @@ public final class RobberView {
         final HBox discardResourcesBox = new HBox();
         final Button confirm = new Button("Confirm");
         final Map<ResourceType, Integer> discardResources = new HashMap<>();
+        List.of(ResourceType.values()).forEach(resource -> discardResources.put(resource, 0));
+
+        final Runnable reloadConfirmButton = () -> {
+            boolean enable = true;
+            if (discardResources.entrySet().stream()
+                    .mapToInt(e -> e.getValue())
+                    .sum() < controller.getResourceController().getResources(player).entrySet().stream()
+                            .mapToInt(e -> e.getValue()).sum() / 2) {
+                enable = false;
+            }
+            confirm.setDisable(!enable);
+        };
 
         Stream.of(ResourceType.values()).forEach(resource -> {
             discardResourcesBox.getChildren().add(resourceAndComboBox(resource,
                     controller.getPlayerResources(player).get(resource),
                     (options, oldValue, newValue) -> {
                         discardResources.put(resource, newValue);
-                        confirm.setDisable(discardResources.entrySet().stream()
-                                .mapToInt(e -> e.getValue())
-                                .sum() < controller.getResourceController().getResources(player).entrySet().stream()
-                                        .mapToInt(e -> e.getValue()).sum() / 2);
+                        reloadConfirmButton.run();
                         System.out.println(discardResources);
                     }));
         });
-
+        reloadConfirmButton.run();
         confirm.setOnMouseClicked(e -> {
             controller.acceptTrade(player, controller.getBank(), discardResources, new HashMap<>());
             stage.close();
