@@ -83,10 +83,9 @@ public final class CurrentPlayerView extends HBox {
         if (controller.canRollDie()) {
             rollButton.setOnAction(e -> {
                 var roll = controller.rollDie();
-                rolledValue.setText("Rolled value: " + roll.getLeft() + roll.getRight() + "(" + roll.getLeft() + ","
+                rolledValue.setText("Rolled value: " + (roll.getLeft() + roll.getRight()) + "(" + roll.getLeft() + ","
                         + roll.getRight() + ")");
-                rollButton.setText(String.valueOf(roll.getLeft() + roll.getRight()) + roll);
-                rollButton.setDisable(true);
+                rollButton.setText(String.valueOf(roll.getLeft() + roll.getRight()));
                 draw();
             });
         } else {
