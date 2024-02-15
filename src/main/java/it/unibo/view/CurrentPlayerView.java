@@ -39,11 +39,8 @@ public final class CurrentPlayerView extends HBox {
         drawResources();
 
         super.getChildren().add(tradeView.getTradeButton());
-
         super.getChildren().add(getEndTurnButton());
-
         super.getChildren().add(getRollButton());
-
         super.getChildren().add(new Label(controller.getCurrentPlayer()));
         if (!controller.canRollDie()) {
             super.getChildren().add(rolledValue);
@@ -68,30 +65,25 @@ public final class CurrentPlayerView extends HBox {
         endTurnButton.setOnAction(e -> {
             if (controller.canEndTurn()) {
                 controller.getTurnController().endTurn();
+                draw();
             }
-            draw();
         });
-        if (!controller.canEndTurn()) {
-            endTurnButton.setDisable(true);
-        }
-
+        endTurnButton.setDisable(!controller.canEndTurn());
         return endTurnButton;
     }
 
     private Button getRollButton() {
         final Button rollButton = new Button("Roll die");
-        if (controller.canRollDie()) {
-            rollButton.setOnAction(e -> {
+        rollButton.setOnAction(e -> {
+            if (controller.canRollDie()) {
                 var roll = controller.rollDie();
                 rolledValue.setText("Rolled value: " + (roll.getLeft() + roll.getRight()) + "(" + roll.getLeft() + ","
                         + roll.getRight() + ")");
                 rollButton.setText(String.valueOf(roll.getLeft() + roll.getRight()));
                 draw();
-            });
-        } else {
-            rollButton.setDisable(true);
-        }
-
+            }
+        });
+        rollButton.setDisable(!controller.canRollDie());
         return rollButton;
     }
 }

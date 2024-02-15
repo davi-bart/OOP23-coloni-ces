@@ -44,7 +44,7 @@ public final class BoardView extends StackPane {
             tiles.put(coords, new TileView(controller, coords, e -> {
                 final TilePosition robberPosition = controller.getBoardController().getRobberPosition();
                 if (controller.mustPlaceRobber() && !robberPosition.equals(coords)) {
-                    controller.getBoardController().setRobberPosition(coords);
+                    controller.setRobberPosition(coords);
                     redrawTile(robberPosition);
                     redrawTile(coords);
                 }
