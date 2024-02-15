@@ -96,21 +96,28 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buildSettlement(final PropertyPosition position) {
         this.gameManager.buildSettlement(position, turnController.getCurrentPlayerTurn());
-        this.appView.redrawCurrentPlayer();
+        redrawResourcesView();
         this.appView.redrawPlayers();
     }
 
     @Override
     public void buildCity(final PropertyPosition position) {
         gameManager.buildCity(position, turnController.getCurrentPlayerTurn());
-        this.appView.redrawCurrentPlayer();
+        redrawResourcesView();
         this.appView.redrawPlayers();
     }
 
     @Override
     public void buildRoad(final RoadPosition position) {
         gameManager.buildRoad(position, turnController.getCurrentPlayerTurn());
-        this.appView.redrawCurrentPlayer();
+        redrawResourcesView();
+        this.appView.redrawPlayers();
+    }
+
+    @Override
+    public void buyCard() {
+        this.gameManager.buyCard(turnController.getCurrentPlayerTurn());
+        redrawResourcesView();
         this.appView.redrawPlayers();
     }
 
@@ -147,6 +154,11 @@ public final class MainControllerImpl implements MainController {
                     && this.boardController.getPlayerRoadPositions(getCurrentPlayer()).size() == cycle;
         }
         return !mustPlaceRobber() && turnController.hasRolled();
+    }
+
+    @Override
+    public boolean canBuyCard() {
+        return this.gameManager.canBuyCard(turnController.getCurrentPlayerTurn());
     }
 
     private Player getPlayerByName(final String name) {
@@ -188,6 +200,7 @@ public final class MainControllerImpl implements MainController {
     public String getBank() {
         return "bank";
     }
+
 
     @Override
     public void setRobberPosition(TilePosition coordinates) {

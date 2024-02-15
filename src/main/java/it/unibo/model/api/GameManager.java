@@ -39,6 +39,12 @@ public interface GameManager {
     void buildRoad(RoadPosition position, Player player);
 
     /**
+     * Player {@code player} buys a development card.
+     * 
+     */
+    void buyCard(Player player);
+
+    /**
      * @param player
      * @param position
      * @return whether player {@code player} can build a settlement at position
@@ -61,6 +67,12 @@ public interface GameManager {
      *         {@code position}
      */
     boolean canBuildRoad(RoadPosition position, Player player);
+
+    /**
+     * @param player
+     * @return whether player {@code player} can buy a card
+     */
+    boolean canBuyCard(Player player);
 
     /**
      * Make each tile with number {@code number} produce its resource.
