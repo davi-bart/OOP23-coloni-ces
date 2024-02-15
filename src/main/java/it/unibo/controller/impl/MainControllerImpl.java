@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.api.tile.TilePosition;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;
@@ -115,17 +116,17 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canBuildSettlement(final PropertyPosition position) {
-        return gameManager.canBuildSettlement(position, turnController.getCurrentPlayerTurn());
+        return !mustPlaceRobber() && gameManager.canBuildSettlement(position, turnController.getCurrentPlayerTurn());
     }
 
     @Override
     public boolean canBuildCity(final PropertyPosition position) {
-        return gameManager.canBuildCity(position, turnController.getCurrentPlayerTurn());
+        return !mustPlaceRobber() && gameManager.canBuildCity(position, turnController.getCurrentPlayerTurn());
     }
 
     @Override
     public boolean canBuildRoad(final RoadPosition position) {
-        return gameManager.canBuildRoad(position, turnController.getCurrentPlayerTurn());
+        return !mustPlaceRobber() && gameManager.canBuildRoad(position, turnController.getCurrentPlayerTurn());
     }
 
     @Override
@@ -145,7 +146,7 @@ public final class MainControllerImpl implements MainController {
             return this.boardController.getPlayerPropertyPositions(getCurrentPlayer()).size() == cycle
                     && this.boardController.getPlayerRoadPositions(getCurrentPlayer()).size() == cycle;
         }
-        return turnController.hasRolled();
+        return !mustPlaceRobber() && turnController.hasRolled();
     }
 
     private Player getPlayerByName(final String name) {
@@ -175,7 +176,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canStartTrade() {
-        return turnController.getCycle() > 2 && turnController.hasRolled();
+        return !mustPlaceRobber() && turnController.getCycle() > 2 && turnController.hasRolled();
     }
 
     private void redrawResourcesView() {
@@ -186,6 +187,13 @@ public final class MainControllerImpl implements MainController {
     @Override
     public String getBank() {
         return "bank";
+    }
+
+    @Override
+    public void setRobberPosition(TilePosition coordinates) {
+        this.boardController.setRobberPosition(coordinates);
+        this.mustPlaceRobber = false;
+        this.appView.redrawCurrentPlayer();
     }
 
     @Override

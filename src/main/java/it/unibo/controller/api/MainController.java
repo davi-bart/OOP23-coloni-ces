@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.api.tile.TilePosition;
 
 /**
  * Main controller.
@@ -146,6 +147,14 @@ public interface MainController {
      * @return the bank name
      */
     String getBank();
+
+    /**
+     * Set the robber in the specified position, removing it from the previous
+     * location.
+     * 
+     * @param coordinates coordinates of the new robber's position
+     */
+    void setRobberPosition(TilePosition coordinates);
 
     /**
      * 
