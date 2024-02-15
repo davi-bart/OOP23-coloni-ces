@@ -1,5 +1,6 @@
 package it.unibo.model.api;
 
+import java.util.List;
 import java.util.Set;
 
 import it.unibo.common.api.property.PropertyPosition;
@@ -20,9 +21,15 @@ public interface PropertyManager {
 
     /**
      * @param player
-     * @return a set of the roads built by {@code player}
+     * @return a set of the properties built by {@code player}
      */
     Set<Property> getPlayerProperties(Player player);
+
+    /**
+     * @param player
+     * @return a set of the properties built by every player.
+     */
+    Set<Property> getAllPlayersProperties(List<Player> players);
 
     /**
      * get the property type of the property at the given position.

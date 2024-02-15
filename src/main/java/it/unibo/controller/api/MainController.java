@@ -110,6 +110,11 @@ public interface MainController {
     boolean canEndTurn();
 
     /**
+     * @return whether the current player can start a trade.
+     */
+    boolean canStartTrade();
+
+    /**
      * 
      * @return if the player can roll.
      */

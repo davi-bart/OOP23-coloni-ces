@@ -70,6 +70,11 @@ public interface ResourceController {
      */
     void addResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
 
+    /**
+     * Remove given resources from bank.
+     * 
+     * @param resources map from resource type to amount
+     */
     void removeBankResources(Map<ResourceType, Integer> resources);
 
     /**

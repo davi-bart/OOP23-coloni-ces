@@ -44,7 +44,7 @@ public final class TradeView {
     public Button getTradeButton() {
         final Button tradeButton = new Button("Trade");
         tradeButton.setOnMouseClicked(event -> {
-            if (controller.getTurnController().getCycle() > 2 && controller.getTurnController().hasRolled()) {
+            if (controller.getTurnController().getCycle() > 2) {
                 showTradeStage();
             }
         });
@@ -74,6 +74,11 @@ public final class TradeView {
                         controller.acceptTrade(controller.getCurrentPlayer(), playerName,
                                 proposedResources, wantedResources);
                         stage.close();
+                        /*
+                         * TODO: chiamare la CurrentPlayerView.drawResources()
+                         * e la BankView.draw()
+                         */
+
                     });
                     playerToButton.put(playerName, acceptTradeButton);
                 });

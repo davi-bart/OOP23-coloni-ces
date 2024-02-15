@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.property.PropertyType;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.impl.Recipes;
 import it.unibo.model.api.Board;
@@ -110,6 +109,7 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Can't build a settlement in position " + position);
         }
         propertyManager.addSettlement(position, player);
+        turnManager.getCurrentPlayerTurn().incrementVictoryPoints();
         if (turnManager.getCycle() > 2) {
             Recipes.getSettlementResources()
                     .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
@@ -122,6 +122,9 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Player " + player + " can't build a city at position " + position);
         }
         propertyManager.upgradeToCity(position);
+        turnManager.getCurrentPlayerTurn().incrementVictoryPoints();
+        turnManager.getCurrentPlayerTurn().incrementVictoryPoints();
+
         if (turnManager.getCycle() > 2) {
             Recipes.getCityResources()
                     .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
@@ -178,13 +181,10 @@ public final class GameManagerImpl implements GameManager {
      *         property
      */
     private boolean isPropertyNearToAnyProperty(final PropertyPosition position) {
-        return propertyManager.getPlayerProperties(turnManager.getCurrentPlayerTurn()).stream()
+        return propertyManager.getAllPlayersProperties(getPlayers()).stream()
                 .map(property -> property.getPosition())
                 .anyMatch(propertyPosition -> {
-                    if (!propertyManager.getPropertyType(position).equals(PropertyType.EMPTY)) {
-                        return propertyPosition.isNear(position);
-                    }
-                    return false;
+                    return propertyPosition.isNear(position);
                 });
     }
 

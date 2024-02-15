@@ -185,7 +185,7 @@ public final class MainControllerImpl implements MainController {
             return this.boardController.getPlayerPropertyPositions(getCurrentPlayer()).size() == cycle
                     && this.boardController.getPlayerRoadPositions(getCurrentPlayer()).size() == cycle;
         }
-        return true;
+        return turnController.hasRolled();
     }
 
     private Player getPlayerByName(final String name) {
@@ -255,5 +255,10 @@ public final class MainControllerImpl implements MainController {
             final Map<ResourceType, Integer> wantedResources) {
         resourceController.acceptTrade(getPlayerByName(proposer), getPlayerByName(accepter), proposedResources,
                 wantedResources);
+    }
+
+    @Override
+    public boolean canStartTrade() {
+        return turnController.getCycle() > 2 && turnController.hasRolled();
     }
 }
