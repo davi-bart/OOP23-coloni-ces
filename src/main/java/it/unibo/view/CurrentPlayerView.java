@@ -3,7 +3,10 @@ package it.unibo.view;
 import it.unibo.controller.api.MainController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * View class for the current player. It shows his resources and some buttons.
@@ -12,6 +15,8 @@ public final class CurrentPlayerView extends HBox {
     private final MainController controller;
     private final TradeView tradeView;
     private final RobberView robberView;
+    private final ImageView roll1;
+    private final ImageView roll2;
 
     /**
      * Constructor of CurrentPlayerView.
@@ -22,6 +27,10 @@ public final class CurrentPlayerView extends HBox {
         this.controller = controller;
         tradeView = new TradeView(this.controller);
         robberView = new RobberView(this.controller);
+        roll1 = new ImageView();
+        roll2 = new ImageView();
+        roll1.setVisible(false);
+        roll2.setVisible(false);
         draw();
     }
 
@@ -32,13 +41,23 @@ public final class CurrentPlayerView extends HBox {
         super.getChildren().clear();
         drawResources();
 
-        super.getChildren().add(tradeView.getTradeButton());
-        super.getChildren().add(getEndTurnButton());
-        super.getChildren().add(getRollButton());
+        final VBox info = new VBox();
 
-        super.getChildren().add(getBuyCardButton());
-        super.getChildren().add(new Label(controller.getCurrentPlayer()));
+        final HBox buttonsBox = new HBox();
+        buttonsBox.getChildren().add(tradeView.getTradeButton());
+        buttonsBox.getChildren().add(getEndTurnButton());
+        buttonsBox.getChildren().add(getRollButton());
+        buttonsBox.getChildren().add(getBuyCardButton());
+        buttonsBox.getChildren().add(new Label(controller.getCurrentPlayer()));
 
+        final HBox dieImages = new HBox();
+        dieImages.setSpacing(2);
+        dieImages.getChildren().add(roll1);
+        dieImages.getChildren().add(roll2);
+
+        info.getChildren().add(buttonsBox);
+        info.getChildren().add(dieImages);
+        super.getChildren().add(info);
     }
 
     /**
@@ -47,9 +66,7 @@ public final class CurrentPlayerView extends HBox {
     public void drawResources() {
         controller.getPlayerResources(controller.getCurrentPlayer()).entrySet().forEach(entry -> {
             super.getChildren().remove(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue()));
-
-            super.getChildren()
-                    .add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue()));
+            super.getChildren().add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue()));
         });
     }
 
@@ -58,7 +75,8 @@ public final class CurrentPlayerView extends HBox {
         endTurnButton.setOnAction(e -> {
             if (controller.canEndTurn()) {
                 controller.getTurnController().endTurn();
-                
+                roll1.setVisible(false);
+                roll2.setVisible(false);
                 draw();
             }
         });
@@ -67,12 +85,14 @@ public final class CurrentPlayerView extends HBox {
     }
 
     private Button getRollButton() {
-        final Button rollButton = new Button("Roll die");   
+        final Button rollButton = new Button("Roll die");
         rollButton.setOnAction(e -> {
             if (controller.canRollDie()) {
                 final var roll = controller.rollDie();
-                rollButton.setText(String.valueOf(roll.getLeft() + roll.getRight()));
-
+                roll1.setImage(new Image("imgs/dice/" + roll.getLeft() + ".png", 60, 60, true, true));
+                roll2.setImage(new Image("imgs/dice/" + roll.getRight() + ".png", 60, 60, true, true));
+                roll1.setVisible(true);
+                roll2.setVisible(true);
                 draw();
                 if (controller.mustPlaceRobber()) {
                     robberView.evokeRobber();
