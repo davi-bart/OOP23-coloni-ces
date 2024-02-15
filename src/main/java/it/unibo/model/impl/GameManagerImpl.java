@@ -146,7 +146,7 @@ public final class GameManagerImpl implements GameManager {
         Recipes.getCardResources()
                 .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
         if (developmentCards.getCard().equals(CardType.VICTORYPOINT)) {
-            turnManager.getCurrentPlayerTurn().incrementVictoryPoints();
+            turnManager.getCurrentPlayerTurn().incrementVictoryPoints(1);
             System.out.println(turnManager.getCurrentPlayerTurn().getVictoryPoints());
         }
 

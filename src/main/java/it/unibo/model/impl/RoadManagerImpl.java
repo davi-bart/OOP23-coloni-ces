@@ -73,14 +73,6 @@ public final class RoadManagerImpl implements RoadManager {
                 .mapToInt(graphPath -> graphPath.getLength()).reduce(0, Integer::max);
     }
 
-    /**
-     * @param road
-     * @return a set of roads nearby {@code road}
-     */
-    private Set<Road> getNearbyRoads(final Road road) {
-        return roads.stream().filter(r -> road.getPosition().isNearby(r.getPosition())).collect(Collectors.toSet());
-    }
-
     @Override
     public Player getLongestRoadOwner() {
         return longestRoadOwner;
