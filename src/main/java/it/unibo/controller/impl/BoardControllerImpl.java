@@ -121,6 +121,11 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
+    public void setRobberPosition(TilePosition coordinates) {
+        this.board.setRobberPosition(coordinates);
+    }
+
+    @Override
     public boolean isNearToAnyProperty(final PropertyPosition position) {
         return getAllPropertyPositions().stream().anyMatch(propertyPosition -> {
             if (!getPropertyType(propertyPosition).equals(PropertyType.EMPTY)) {

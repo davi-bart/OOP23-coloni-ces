@@ -79,7 +79,7 @@ public interface BoardController {
     /**
      * Build a settlement in the given position.
      * 
-     * @param position where to build the settlement.
+     * @param position   where to build the settlement.
      * @param playerName the player
      */
     void buildSettlement(PropertyPosition position, String playerName);
@@ -87,7 +87,7 @@ public interface BoardController {
     /**
      * Build a city in the given position.
      * 
-     * @param position where to build the city.
+     * @param position   where to build the city.
      * @param playerName the player
      */
     void buildCity(PropertyPosition position, String playerName);
@@ -95,7 +95,7 @@ public interface BoardController {
     /**
      * Builds the road at position {@code position}.
      * 
-     * @param position position of the road
+     * @param position   position of the road
      * @param playerName the player
      */
     void buildRoad(RoadPosition position, String playerName);
@@ -110,6 +110,14 @@ public interface BoardController {
      * @return the position of the robber
      */
     TilePosition getRobberPosition();
+
+    /**
+     * Set the robber in the specified position, removing it from the previous
+     * location.
+     * 
+     * @param coordinates coordinates of the new robber's position
+     */
+    void setRobberPosition(TilePosition coordinates);
 
     /**
      * @param position
