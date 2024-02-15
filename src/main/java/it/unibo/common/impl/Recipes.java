@@ -38,4 +38,12 @@ public final class Recipes {
         return Map.of(ResourceType.LUMBER, 1, ResourceType.BRICK, 1);
     }
 
+    /**
+     * @return a map containing the amount of each resources necessary to buy a
+     *         card
+     */
+    public static Map<ResourceType, Integer> getCardResources() {
+        return Map.of(ResourceType.LUMBER, 1, ResourceType.WOOL, 1, ResourceType.GRAIN, 1);
+    }
+
 }
