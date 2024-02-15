@@ -22,7 +22,6 @@ public final class DevelopmentCardsImpl implements DevelopmentCards {
      */
     public DevelopmentCardsImpl() {
         final int knightCards = 15;
-        final int roadBuildCards = 5;
         final int yearOfPlentyCards = 2;
         final int monopolyCards = 2;
         final int victoryPointCards = 2;
