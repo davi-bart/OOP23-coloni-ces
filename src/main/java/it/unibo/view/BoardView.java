@@ -1,7 +1,6 @@
 package it.unibo.view;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,30 +15,32 @@ import javafx.scene.shape.Line;
  */
 public final class BoardView extends StackPane {
     private final MainController controller;
-    private final Map<String, Color> playerColors = new HashMap<>();
+    // private final Map<String, Color> playerColors = new HashMap<>();
 
     /**
      * Constructor of BoardView.
      * 
      * @param controller the board controller
      */
-    public BoardView(final MainController controller) {
+    public BoardView(final MainController controller, Map<String, Color> playerColors) {
         this.controller = controller;
-        final var colors = List.of(Color.RED, Color.BLUE, Color.LIMEGREEN, Color.MAGENTA);
-        this.controller.getPlayerNames().stream().forEach(p -> playerColors.put(p, colors.get(playerColors.size())));
-        draw();
+        // final var colors = List.of(Color.RED, Color.BLUE, Color.LIMEGREEN,
+        // Color.MAGENTA);
+        // this.controller.getPlayerNames().stream().forEach(p -> playerColors.put(p,
+        // colors.get(playerColors.size())));
+        draw(playerColors);
     }
 
     /**
      * Draw the board.
      */
-    public void draw() {
+    public void draw(Map<String, Color> playerColors) {
         super.getChildren().clear();
         // add the exagons and properties/road to the board
         final Group group = new Group();
         group.getChildren().addAll(drawTiles());
-        group.getChildren().addAll(drawRoads());
-        group.getChildren().addAll(drawProperties());
+        group.getChildren().addAll(drawRoads(playerColors));
+        group.getChildren().addAll(drawProperties(playerColors));
         super.getChildren().add(0, group);
     }
 
@@ -52,17 +53,17 @@ public final class BoardView extends StackPane {
         return tiles;
     }
 
-    private List<Line> drawRoads() {
+    private List<Line> drawRoads(Map<String, Color> playerColors) {
         final List<Line> roads = new ArrayList<>();
         this.controller.getBoardController().getAllRoadPositions().forEach(pos -> roads
-                .add(new RoadView(controller, pos, () -> this.playerColors.get(controller.getCurrentPlayer()))));
+                .add(new RoadView(controller, pos, () -> playerColors.get(controller.getCurrentPlayer()))));
         return roads;
     }
 
-    private List<PropertyView> drawProperties() {
+    private List<PropertyView> drawProperties(Map<String, Color> playerColors) {
         final List<PropertyView> properties = new ArrayList<>();
         this.controller.getBoardController().getAllPropertyPositions().forEach(pos -> properties.add(
-                new PropertyView(controller, pos, () -> this.playerColors.get(controller.getCurrentPlayer()))));
+                new PropertyView(controller, pos, () -> playerColors.get(controller.getCurrentPlayer()))));
         return properties;
     }
 }

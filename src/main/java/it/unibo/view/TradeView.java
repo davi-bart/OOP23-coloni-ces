@@ -44,9 +44,9 @@ public final class TradeView {
     public Button getTradeButton() {
         final Button tradeButton = new Button("Trade");
         tradeButton.setOnMouseClicked(event -> {
-            // if (controller.getCycle() > 2) {
-            showTradeStage();
-            // }
+            if (controller.getTurnController().getCycle() > 2 && controller.getTurnController().hasRolled()) {
+                showTradeStage();
+            }
         });
 
         return tradeButton;
@@ -71,8 +71,8 @@ public final class TradeView {
                 .forEach(playerName -> {
                     final Button acceptTradeButton = new Button("Accept trade");
                     acceptTradeButton.setOnMouseClicked(e -> {
-                        controller.acceptTrade(controller.getCurrentPlayer(), playerName, wantedResources,
-                                proposedResources);
+                        controller.acceptTrade(controller.getCurrentPlayer(), playerName,
+                                proposedResources, wantedResources);
                         stage.close();
                     });
                     playerToButton.put(playerName, acceptTradeButton);

@@ -5,10 +5,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.impl.MainControllerImpl;
@@ -23,6 +26,7 @@ public class AppViewImpl implements AppView {
     private final BankView bankView;
     private final PlayersView playersView;
     private final CurrentPlayerView currentPlayerView;
+    private final Map<String, Color> playerColors = new HashMap<>();
 
     /**
      * Constructor of AppView.
@@ -30,11 +34,14 @@ public class AppViewImpl implements AppView {
      * @param stage the stage
      */
     public AppViewImpl(final Stage stage, final List<String> players) {
+
         final MainController controller = new MainControllerImpl(this, players);
+        final var colors = List.of(Color.RED, Color.ORANGE, Color.LIMEGREEN, Color.MAGENTA);
+        controller.getPlayerNames().stream().forEach(p -> playerColors.put(p, colors.get(playerColors.size())));
         this.stage = stage;
-        boardView = new BoardView(controller);
+        boardView = new BoardView(controller, playerColors);
         bankView = new BankView(controller);
-        playersView = new PlayersView(controller);
+        playersView = new PlayersView(controller, playerColors);
         currentPlayerView = new CurrentPlayerView(controller);
     }
 
@@ -85,7 +92,7 @@ public class AppViewImpl implements AppView {
 
     @Override
     public void redrawBoard() {
-        boardView.draw();
+        boardView.draw(playerColors);
     }
 
     @Override
@@ -100,6 +107,6 @@ public class AppViewImpl implements AppView {
 
     @Override
     public void redrawPlayers() {
-        playersView.draw();
+        playersView.draw(playerColors);
     }
 }
