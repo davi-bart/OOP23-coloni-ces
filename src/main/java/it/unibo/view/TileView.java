@@ -31,20 +31,20 @@ public class TileView extends Group {
      * Constructor.
      * 
      * @param coordinates coordinates of the tile
-     * @param terrainType terrain type
-     * @param number      number on the tile
      */
-    public TileView(final MainController controller, final TilePosition coordinates, final TerrainType terrainType,
-            final int number) {
+    public TileView(final MainController controller, final TilePosition coordinates) {
         this.controller = controller;
         this.coordinates = coordinates;
-        this.terrainType = terrainType;
-        this.number = number;
+        this.terrainType = controller.getBoardController().getTileTerrainType(coordinates);
+        this.number = controller.getBoardController().getTileNumber(coordinates);
         draw();
 
     }
 
-    private void draw() {
+    /**
+     * Draws the tile.
+     */
+    public void draw() {
         final Pair<Double, Double> pos = Utility.getPositionFromTile(coordinates.getRow(), coordinates.getCol());
         final double x = pos.getLeft();
         final double y = pos.getRight();

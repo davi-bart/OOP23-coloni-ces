@@ -47,8 +47,7 @@ public final class BoardView extends StackPane {
     private List<Group> drawTiles() {
         final List<Group> tiles = new ArrayList<>();
         this.controller.getBoardController().getTilePositions().forEach(coords -> {
-            tiles.add(new TileView(controller, coords, controller.getBoardController().getTileTerrainType(coords),
-                    controller.getBoardController().getTileNumber(coords)));
+            tiles.add(new TileView(controller, coords));
         });
         return tiles;
     }
