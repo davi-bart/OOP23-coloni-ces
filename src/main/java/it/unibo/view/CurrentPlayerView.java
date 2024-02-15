@@ -42,9 +42,6 @@ public final class CurrentPlayerView extends HBox {
         if (!controller.canRollDie()) {
             super.getChildren().add(rolledValue);
         }
-        if (controller.mustPlaceRobber()) {
-            robberView.evokeRobber();
-        }
     }
 
     /**
@@ -80,6 +77,9 @@ public final class CurrentPlayerView extends HBox {
                         + roll.getRight() + ")");
                 rollButton.setText(String.valueOf(roll.getLeft() + roll.getRight()));
                 draw();
+                if (controller.mustPlaceRobber()) {
+                    robberView.evokeRobber();
+                }
             }
         });
         rollButton.setDisable(!controller.canRollDie());

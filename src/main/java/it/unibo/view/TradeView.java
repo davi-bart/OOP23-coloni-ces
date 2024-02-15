@@ -96,7 +96,6 @@ public final class TradeView {
                 enable = false;
             }
             tradeBank.setDisable(!enable);
-
         };
 
         Stream.of(ResourceType.values()).forEach(resource -> {
