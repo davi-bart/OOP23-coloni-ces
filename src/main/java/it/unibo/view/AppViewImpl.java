@@ -2,6 +2,7 @@ package it.unibo.view;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -21,23 +22,20 @@ import it.unibo.controller.impl.MainControllerImpl;
  */
 public final class AppViewImpl implements AppView {
     private final Stage stage;
-    private static final int DEFAULT_HEIGHT = 350;
+    private static final int DEFAULT_HEIGHT = 450;
     private final BoardView boardView;
     private final BankView bankView;
     private final PlayersView playersView;
-
     private final CurrentPlayerView currentPlayerView;
-
     private final Map<String, Color> playerColors = new HashMap<>();
 
     /**
      * Constructor of AppView.
      * 
-     * @param stage the stage
+     * @param stage   the stage
      * @param players the list of players names
      */
     public AppViewImpl(final Stage stage, final List<String> players) {
-
         final MainController controller = new MainControllerImpl(this, players);
         final var colors = List.of(Color.RED, Color.ORANGE, Color.LIMEGREEN, Color.MAGENTA);
         controller.getPlayerNames().stream().forEach(p -> playerColors.put(p, colors.get(playerColors.size())));
@@ -73,6 +71,7 @@ public final class AppViewImpl implements AppView {
         final Scene scene = new Scene(root);
 
         rightSide.getChildren().add(costCard());
+        rightSide.getChildren().add(ruleButton());
         rightSide.getChildren().add(bankView);
         rightSide.getChildren().add(playersView);
         root.setBottom(currentPlayerView);
@@ -87,10 +86,26 @@ public final class AppViewImpl implements AppView {
      * @return an ImageView representing the cost card.
      */
     private ImageView costCard() {
-        final ImageView costCard = new ImageView("imgs/building-costs/building_cost_no_develop_cards.png");
+        final ImageView costCard = new ImageView("imgs/building-costs/building_cost.png");
         costCard.setFitHeight(DEFAULT_HEIGHT);
         costCard.setPreserveRatio(true);
         return costCard;
+    }
+
+    private Button ruleButton() {
+        final Button ruleButton = new Button("Rules");
+        final Stage stage = new Stage();
+        final BorderPane root = new BorderPane();
+        final ImageView imageView = new ImageView("imgs/rules/turn_rules.png");
+        imageView.setPreserveRatio(true);
+        imageView.fitHeightProperty().bind(stage.heightProperty());
+        root.setCenter(imageView);
+        stage.setScene(new Scene(root));
+        stage.setMaximized(true);
+        ruleButton.setOnAction(e -> {
+            stage.show();
+        });
+        return ruleButton;
     }
 
     @Override
