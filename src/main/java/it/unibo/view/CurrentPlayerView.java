@@ -12,7 +12,6 @@ public final class CurrentPlayerView extends HBox {
     private final MainController controller;
     private final TradeView tradeView;
     private final RobberView robberView;
-    private final Label rolledValue = new Label();
 
     /**
      * Constructor of CurrentPlayerView.
@@ -39,9 +38,7 @@ public final class CurrentPlayerView extends HBox {
 
         super.getChildren().add(getBuyCardButton());
         super.getChildren().add(new Label(controller.getCurrentPlayer()));
-        if (!controller.canRollDie()) {
-            super.getChildren().add(rolledValue);
-        }
+
     }
 
     /**
@@ -61,6 +58,7 @@ public final class CurrentPlayerView extends HBox {
         endTurnButton.setOnAction(e -> {
             if (controller.canEndTurn()) {
                 controller.getTurnController().endTurn();
+                
                 draw();
             }
         });
@@ -69,13 +67,12 @@ public final class CurrentPlayerView extends HBox {
     }
 
     private Button getRollButton() {
-        final Button rollButton = new Button("Roll die");
+        final Button rollButton = new Button("Roll die");   
         rollButton.setOnAction(e -> {
             if (controller.canRollDie()) {
                 final var roll = controller.rollDie();
-                rolledValue.setText("Rolled value: " + (roll.getLeft() + roll.getRight()) + "(" + roll.getLeft() + ","
-                        + roll.getRight() + ")");
                 rollButton.setText(String.valueOf(roll.getLeft() + roll.getRight()));
+
                 draw();
                 if (controller.mustPlaceRobber()) {
                     robberView.evokeRobber();
