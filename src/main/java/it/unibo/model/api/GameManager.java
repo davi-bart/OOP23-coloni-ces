@@ -63,6 +63,14 @@ public interface GameManager {
     boolean canBuildRoad(RoadPosition position, Player player);
 
     /**
+     * Make each tile with number {@code number} produce its resource.
+     * It automatically updates the resources of each player.
+     * 
+     * @param number
+     */
+    void produceResources(int number);
+
+    /**
      * @return the list of the players
      */
     List<Player> getPlayers();

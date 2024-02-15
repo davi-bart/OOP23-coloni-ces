@@ -2,9 +2,13 @@ package it.unibo.model.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import it.unibo.common.api.property.PropertyPosition;
+import it.unibo.common.api.property.PropertyType;
 import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.api.tile.TerrainType;
 import it.unibo.common.impl.Recipes;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.GameManager;
@@ -92,7 +96,6 @@ public final class GameManagerImpl implements GameManager {
         return resourceManager;
     }
 
-
     @Override
     public void buildSettlement(final PropertyPosition position, final Player player) {
         if (!canBuildSettlement(position, player)) {
@@ -164,6 +167,30 @@ public final class GameManagerImpl implements GameManager {
         }
         return (isRoadNearToAnyPlayerRoad(position, player) || isRoadNearToAnyPlayerProperty(position, player))
                 && resourceManager.hasResources(player, Recipes.getRoadResources());
+    }
+
+    @Override
+    public void produceResources(final int number) {
+        final Map<TerrainType, ResourceType> terrainToResource = Map.of(TerrainType.FIELD, ResourceType.GRAIN,
+                TerrainType.FOREST, ResourceType.LUMBER,
+                TerrainType.HILL, ResourceType.BRICK,
+                TerrainType.MOUNTAIN, ResourceType.ORE,
+                TerrainType.PASTURE, ResourceType.WOOL);
+        players.forEach(player -> {
+            propertyManager.getPlayerProperties(player).forEach(property -> {
+                property.getPosition().getEquivalentPositions().stream()
+                        .map(propertyPosition -> propertyPosition.getTilePosition()).forEach(tilePosition -> {
+                            if (board.getTileNumber(tilePosition) == number
+                                    && !board.getRobberPosition().equals(tilePosition)) {
+                                final int amount = property.getPropertyType() == PropertyType.CITY ? 2 : 1;
+                                final ResourceType resource = terrainToResource
+                                        .get(board.getTileTerrainType(tilePosition));
+                                resourceManager.addResources(player, resource, amount);
+                                resourceManager.removeResources(resourceManager.getBank(), resource, amount);
+                            }
+                        });
+            });
+        });
     }
 
     /**

@@ -125,7 +125,7 @@ public interface MainController {
      * 
      * @param rollSum sum of the 2 dices.
      */
-    void giveResources(int rollSum);
+    void produceResources(int rollSum);
 
     /**
      * Modify the resources of the owners into the trade.

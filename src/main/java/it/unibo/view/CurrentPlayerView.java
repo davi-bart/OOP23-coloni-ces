@@ -86,7 +86,7 @@ public final class CurrentPlayerView extends HBox {
                 var roll = controller.getTurnController().rollDie();
                 var rollSum = roll.getLeft() + roll.getRight();
                 rolledValue.setText("Rolled value: " + rollSum + "(" + roll.getLeft() + "," + roll.getRight() + ")");
-                controller.giveResources(rollSum);
+                controller.produceResources(rollSum);
                 rollButton.setText(String.valueOf(rollSum) + roll);
                 rollButton.setDisable(true);
                 draw();

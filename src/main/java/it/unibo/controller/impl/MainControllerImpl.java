@@ -1,14 +1,10 @@
 package it.unibo.controller.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.property.PropertyType;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
 import it.unibo.controller.api.BoardController;
@@ -199,56 +195,10 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public void giveResources(final int number) {
-        for (final String player : this.getPlayerNames()) {
-            final Map<ResourceType, Integer> givenResource = new HashMap<>();
-            List.of(ResourceType.values()).forEach(resource -> givenResource.put(resource, 0));
-            for (final Pair<PropertyPosition, PropertyType> property : boardController
-                    .getPlayerPropertyPositions(player)) {
-                for (final PropertyPosition propertyPositions : property.getLeft().getEquivalentPositions()) {
-                    try {
-                        if (this.boardController.getTileNumber(propertyPositions.getTilePosition()) == number) {
-                            // resourceController.addResources(getPlayerByName(player),
-                            // property.getValue() == PropertyType.CITY ? 2 : 1);
-                            final int amount = property.getValue() == PropertyType.CITY ? 2 : 1;
-                            switch (this.boardController.getTileTerrainType(propertyPositions.getTilePosition())) {
-                                case DESERT:
-                                    break;
-                                case FIELD:
-                                    givenResource.compute(ResourceType.GRAIN, (k, v) -> v + amount);
-                                    break;
-                                case FOREST:
-                                    givenResource.compute(ResourceType.LUMBER, (k, v) -> v + amount);
-                                    break;
-                                case HILL:
-                                    givenResource.compute(ResourceType.BRICK, (k, v) -> v + amount);
-                                    break;
-                                case MOUNTAIN:
-                                    givenResource.compute(ResourceType.ORE, (k, v) -> v + amount);
-                                    break;
-                                case PASTURE:
-                                    givenResource.compute(ResourceType.WOOL, (k, v) -> v + amount);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-
-                    } catch (Exception e) {
-                        // non esiste la tile (bordo)
-                    }
-                }
-            }
-            resourceController.addResources(player, givenResource);
-            resourceController.removeBankResources(givenResource);
-            this.appView.redrawCurrentPlayer();
-            this.appView.redrawBank();
-            // System.out.println(
-            // getPlayerByName(player).getName() +
-            // resourceController.getOwnerResources(getPlayerByName(player)));
-        }
-        // System.out.println(
-        // "bank " + resourceController.getBankResources());
+    public void produceResources(final int number) {
+        gameManager.produceResources(number);
+        this.appView.redrawCurrentPlayer();
+        this.appView.redrawBank();
     }
 
     @Override
