@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
@@ -26,6 +28,7 @@ public final class MainControllerImpl implements MainController {
     private final ResourceController resourceController;
     private final TurnController turnController;
     private final AppView appView;
+    private boolean mustPlaceRobber;
 
     /**
      * Constructor of the controller.
@@ -183,5 +186,18 @@ public final class MainControllerImpl implements MainController {
     @Override
     public String getBank() {
         return "bank";
+    }
+
+    @Override
+    public boolean mustPlaceRobber() {
+        return mustPlaceRobber;
+    }
+
+    @Override
+    public Pair<Integer, Integer> rollDie() {
+        final Pair<Integer, Integer> rolledValue = turnController.rollDie();
+        produceResources(rolledValue.getLeft() + rolledValue.getRight());
+        mustPlaceRobber = rolledValue.getLeft() + rolledValue.getRight() == 7;
+        return rolledValue;
     }
 }

@@ -3,6 +3,8 @@ package it.unibo.controller.api;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
@@ -144,4 +146,16 @@ public interface MainController {
      * @return the bank name
      */
     String getBank();
+
+    /**
+     * 
+     * @return true if the player must place the robber.
+     */
+    boolean mustPlaceRobber();
+
+    /**
+     * 
+     * @return the dice roll.
+     */
+    Pair<Integer, Integer> rollDie();
 }
