@@ -82,13 +82,6 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void buildSettlement(final PropertyPosition position) {
-        // this.boardController.buildSettlement(position, getCurrentPlayer());
-        // this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
-        // final int cycle = turnController.getCycle();
-        // if (cycle > 2) {
-        // this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
-        // Recipes.getSettlementResources());
-        // }
         this.gameManager.buildSettlement(position, turnController.getCurrentPlayerTurn());
         this.appView.redrawCurrentPlayer();
         this.appView.redrawPlayers();
@@ -96,11 +89,6 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void buildCity(final PropertyPosition position) {
-        // this.boardController.buildCity(position, getCurrentPlayer());
-        // this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
-        // this.getPlayerByName(getCurrentPlayer()).incrementVictoryPoints();
-        // this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
-        // Recipes.getCityResources());
         gameManager.buildCity(position, turnController.getCurrentPlayerTurn());
         this.appView.redrawCurrentPlayer();
         this.appView.redrawPlayers();
@@ -108,12 +96,6 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void buildRoad(final RoadPosition position) {
-        // this.boardController.buildRoad(position, getCurrentPlayer());
-        // final int cycle = turnController.getCycle();
-        // if (cycle > 2) {
-        // this.resourceController.removeResources(turnController.getCurrentPlayerTurn(),
-        // Recipes.getRoadResources());
-        // }
         gameManager.buildRoad(position, turnController.getCurrentPlayerTurn());
         this.appView.redrawCurrentPlayer();
         this.appView.redrawPlayers();
@@ -122,46 +104,16 @@ public final class MainControllerImpl implements MainController {
     @Override
     public boolean canBuildSettlement(final PropertyPosition position) {
         return gameManager.canBuildSettlement(position, turnController.getCurrentPlayerTurn());
-        // final int cycle = turnController.getCycle();
-        // if (cycle <= 2) {
-        // return !this.boardController.isNearToAnyProperty(position)
-        // && this.boardController.getPlayerPropertyPositions(getCurrentPlayer()).size()
-        // < cycle;
-        // }
-        // return !this.boardController.isNearToAnyProperty(position)
-        // && this.boardController.isPropertyNearToAnyOwnerRoad(getCurrentPlayer(),
-        // position)
-        // &&
-        // this.resourceController.hasResourcesForSettlement(turnController.getCurrentPlayerTurn());
     }
 
     @Override
     public boolean canBuildCity(final PropertyPosition position) {
         return gameManager.canBuildCity(position, turnController.getCurrentPlayerTurn());
-        // if (turnController.getCycle() <= 2) {
-        // return false;
-        // }
-        // return !this.boardController.isNearToAnyProperty(position)
-        // &&
-        // this.resourceController.hasResourcesForCity(turnController.getCurrentPlayerTurn());
     }
 
     @Override
     public boolean canBuildRoad(final RoadPosition position) {
         return gameManager.canBuildRoad(position, turnController.getCurrentPlayerTurn());
-        // final int cycle = turnController.getCycle();
-        // if (cycle <= 2) {
-        // return this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(),
-        // position)
-        // && this.boardController.getPlayerRoadPositions(getCurrentPlayer()).size() <
-        // cycle;
-        // }
-        // return (this.boardController.isRoadNearToAnyOwnedRoad(getCurrentPlayer(),
-        // position)
-        // || this.boardController.isRoadNearToAnyOwnedProperty(getCurrentPlayer(),
-        // position))
-        // &&
-        // this.resourceController.hasResourcesForRoad(turnController.getCurrentPlayerTurn());
     }
 
     @Override
@@ -197,8 +149,7 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void produceResources(final int number) {
         gameManager.produceResources(number);
-        this.appView.redrawCurrentPlayer();
-        this.appView.redrawBank();
+        redrawResourcesView();
     }
 
     @Override
@@ -207,12 +158,21 @@ public final class MainControllerImpl implements MainController {
             final Map<ResourceType, Integer> wantedResources) {
         resourceController.acceptTrade(proposer, accepter, proposedResources,
                 wantedResources);
-        this.appView.redrawCurrentPlayer();
-        this.appView.redrawBank();
+        redrawResourcesView();
     }
 
     @Override
     public boolean canStartTrade() {
         return turnController.getCycle() > 2 && turnController.hasRolled();
+    }
+
+    private void redrawResourcesView() {
+        this.appView.redrawCurrentPlayer();
+        this.appView.redrawBank();
+    }
+
+    @Override
+    public String getBank() {
+        return "bank";
     }
 }

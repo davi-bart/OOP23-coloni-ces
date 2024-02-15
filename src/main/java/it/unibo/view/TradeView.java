@@ -76,11 +76,6 @@ public final class TradeView {
                         controller.acceptTrade(controller.getCurrentPlayer(), playerName,
                                 proposedResources, wantedResources);
                         stage.close();
-                        /*
-                         * TODO: chiamare la CurrentPlayerView.drawResources()
-                         * e la BankView.draw()
-                         */
-
                     });
                     playerToButton.put(playerName, acceptTradeButton);
                 });
