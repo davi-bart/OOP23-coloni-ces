@@ -93,11 +93,6 @@ public class AppViewImpl implements AppView {
     }
 
     @Override
-    public void redrawBoard() {
-        boardView.draw();
-    }
-
-    @Override
     public void redrawCurrentPlayer() {
         currentPlayerView.draw();
     }

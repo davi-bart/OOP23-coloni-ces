@@ -29,19 +29,10 @@ public final class BoardView extends StackPane {
     public BoardView(final MainController controller, Map<String, Color> playerColors) {
         this.controller = controller;
         this.playerColors = playerColors;
-        draw();
-    }
-
-    /**
-     * Draw the board.
-     */
-    public void draw() {
-        super.getChildren().clear();
-
-        drawTiles();
 
         // add the exagons and properties/road to the board
         final Group group = new Group();
+        drawTiles();
         group.getChildren().addAll(this.tiles.values());
         group.getChildren().addAll(drawRoads());
         group.getChildren().addAll(drawProperties());
