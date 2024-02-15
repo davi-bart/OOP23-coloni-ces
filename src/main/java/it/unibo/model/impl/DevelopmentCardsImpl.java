@@ -39,8 +39,8 @@ public final class DevelopmentCardsImpl implements DevelopmentCards {
     @Override
     public CardType getCard() {
         if (!isDeckEmpty()) {
-            int index = random.nextInt(deck.size());
-            CardType pulledCard = deck.get(index);
+            final int index = random.nextInt(deck.size());
+            final CardType pulledCard = deck.get(index);
             deck.remove(index);
             return pulledCard;
         } else {
@@ -51,7 +51,7 @@ public final class DevelopmentCardsImpl implements DevelopmentCards {
 
     @Override
     public boolean isDeckEmpty() {
-        return deck.size() == 0;
+        return deck.isEmpty();
     }
 
 }

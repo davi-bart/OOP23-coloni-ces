@@ -49,7 +49,7 @@ public final class PropertyManagerImpl implements PropertyManager {
 
     @Override
     public Set<Property> getAllPlayersProperties(final List<Player> players) {
-        Set<Property> out = new HashSet<>();
+        final Set<Property> out = new HashSet<>();
         players.forEach(player -> {
             getPlayerProperties(player).forEach(property -> out.add(property));
         });

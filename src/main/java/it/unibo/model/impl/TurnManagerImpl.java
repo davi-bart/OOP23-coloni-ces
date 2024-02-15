@@ -18,8 +18,8 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public final class TurnManagerImpl implements TurnManager {
 
-    private boolean hasRolled = false;
-    private int turnNumber = 0;
+    private boolean hasRolled;
+    private int turnNumber;
     private int currentTurn;
     private final Iterator<Integer> iterator;
     private final List<Player> playerList = new ArrayList<>();
@@ -77,7 +77,7 @@ public final class TurnManagerImpl implements TurnManager {
 
     @Override
     public int getCycle() {
-        return (turnNumber / playerList.size()) + 1;
+        return turnNumber / playerList.size() + 1;
     }
 
     @Override

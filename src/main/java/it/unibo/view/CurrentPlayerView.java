@@ -31,11 +31,6 @@ public final class CurrentPlayerView extends HBox {
      */
     public void draw() {
         super.getChildren().clear();
-
-        // controller.getPlayerResources(controller.getCurrentPlayer()).entrySet().forEach(entry
-        // -> super.getChildren()
-        // .add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(),
-        // entry.getValue())));
         drawResources();
 
         super.getChildren().add(tradeView.getTradeButton());
@@ -80,7 +75,7 @@ public final class CurrentPlayerView extends HBox {
         final Button rollButton = new Button("Roll die");
         rollButton.setOnAction(e -> {
             if (controller.canRollDie()) {
-                var roll = controller.rollDie();
+                final var roll = controller.rollDie();
                 rolledValue.setText("Rolled value: " + (roll.getLeft() + roll.getRight()) + "(" + roll.getLeft() + ","
                         + roll.getRight() + ")");
                 rollButton.setText(String.valueOf(roll.getLeft() + roll.getRight()));

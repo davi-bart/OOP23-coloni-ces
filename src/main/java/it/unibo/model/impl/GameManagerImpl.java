@@ -147,7 +147,6 @@ public final class GameManagerImpl implements GameManager {
                 .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
         if (developmentCards.getCard().equals(CardType.VICTORYPOINT)) {
             turnManager.getCurrentPlayerTurn().incrementVictoryPoints(1);
-            System.out.println(turnManager.getCurrentPlayerTurn().getVictoryPoints());
         }
 
     }
@@ -155,7 +154,6 @@ public final class GameManagerImpl implements GameManager {
     @Override
     public boolean canBuildSettlement(final PropertyPosition position, final Player player) {
         final int cycle = turnManager.getCycle();
-        System.out.println(cycle);
         if (cycle <= 2) {
             return !isPropertyNearToAnyProperty(position)
                     && propertyManager.getPlayerProperties(player).size() < cycle;
@@ -170,7 +168,7 @@ public final class GameManagerImpl implements GameManager {
             return false;
         }
         return this.propertyManager.getPlayerProperties(player).stream().map(property -> property.getPosition())
-                .anyMatch(propertyPosition -> position.equals(position))
+                .anyMatch(propertyPosition -> propertyPosition.equals(position))
                 && this.resourceManager.hasResources(player, Recipes.getCityResources());
     }
 

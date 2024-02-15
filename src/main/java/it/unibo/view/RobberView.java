@@ -18,6 +18,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * RobberView.
+ */
 public final class RobberView {
     private final MainController controller;
     private int sum;
@@ -32,9 +35,8 @@ public final class RobberView {
     }
 
     /**
-     * Get the trade button.
-     * 
-     * @return the trade button
+     * Evoke the robber.
+     * Test function.
      */
     public void evokeRobber() {
         if (controller.mustPlaceRobber()) {
@@ -66,7 +68,6 @@ public final class RobberView {
                                 .mapToInt(e -> e.getValue())
                                 .sum() < controller.getResourceController().getResources(player).entrySet().stream()
                                         .mapToInt(e -> e.getValue()).sum() / 2);
-                        System.out.println(discardResources);
                     }));
         });
 
