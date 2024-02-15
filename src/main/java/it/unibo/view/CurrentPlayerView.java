@@ -41,6 +41,8 @@ public final class CurrentPlayerView extends HBox {
         super.getChildren().add(tradeView.getTradeButton());
         super.getChildren().add(getEndTurnButton());
         super.getChildren().add(getRollButton());
+
+        super.getChildren().add(getBuyCardButton());
         super.getChildren().add(new Label(controller.getCurrentPlayer()));
         if (!controller.canRollDie()) {
             super.getChildren().add(rolledValue);
@@ -87,5 +89,20 @@ public final class CurrentPlayerView extends HBox {
         });
         rollButton.setDisable(!controller.canRollDie());
         return rollButton;
+    }
+
+    private Button getBuyCardButton() {
+        final Button buyCardButton = new Button("Buy developement card");
+        buyCardButton.setOnAction(e -> {
+            if (controller.canBuyCard()) {
+                controller.buyCard();
+            }
+            draw();
+        });
+        if (!controller.canBuyCard()) {
+            buyCardButton.setDisable(true);
+        }
+
+        return buyCardButton;
     }
 }

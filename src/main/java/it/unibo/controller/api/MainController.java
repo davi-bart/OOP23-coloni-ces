@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
+import it.unibo.model.api.Player;
 import it.unibo.common.api.tile.TilePosition;
 
 /**
@@ -68,6 +69,11 @@ public interface MainController {
     void buildRoad(RoadPosition position);
 
     /**
+     * The current player buys a developement card.
+     */
+    void buyCard();
+
+    /**
      * @return whether the current player can build a settlement
      * @param position where to build the settlemet
      */
@@ -84,6 +90,11 @@ public interface MainController {
      * @param position where to build the rode
      */
     boolean canBuildRoad(RoadPosition position);
+
+    /**
+     * @return whether the current player can buy a developement card.
+     */
+    boolean canBuyCard();
 
     /**
      * @return get the name of the player whose turn it currently is.

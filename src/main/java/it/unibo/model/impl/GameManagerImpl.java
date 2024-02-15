@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import it.unibo.common.api.card.CardType;
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.property.PropertyType;
 import it.unibo.common.api.road.RoadPosition;
@@ -11,6 +12,7 @@ import it.unibo.common.api.tile.ResourceType;
 import it.unibo.common.api.tile.TerrainType;
 import it.unibo.common.impl.Recipes;
 import it.unibo.model.api.Board;
+import it.unibo.model.api.DevelopmentCards;
 import it.unibo.model.api.GameManager;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Player;
@@ -25,6 +27,7 @@ import it.unibo.model.api.TurnManager;
 public final class GameManagerImpl implements GameManager {
     private static final int DEFAULT_POINTS_TO_WIN = 10;
 
+    private final DevelopmentCards developmentCards;
     private final PropertyManager propertyManager;
     private final RoadManager roadManager;
     private final TurnManager turnManager;
@@ -46,6 +49,7 @@ public final class GameManagerImpl implements GameManager {
         playersNames.forEach(name -> players.add(new PlayerImpl(name)));
         this.pointsToWin = pointsToWin;
 
+        this.developmentCards = new DevelopmentCardsImpl();
         this.roadManager = new RoadManagerImpl();
         this.propertyManager = new PropertyManagerImpl();
         this.turnManager = new TurnManagerImpl(players);
@@ -137,6 +141,20 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
+    public void buyCard(Player player) {
+        if (!canBuyCard(player)) {
+            throw new IllegalArgumentException("Player " + player + " can't buy a card during the first turn cycles");
+        }
+        Recipes.getCardResources()
+                .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
+        if (developmentCards.getCard().equals(CardType.VICTORYPOINT)) {
+            turnManager.getCurrentPlayerTurn().incrementVictoryPoints();
+            System.out.println(turnManager.getCurrentPlayerTurn().getVictoryPoints());
+        }
+
+    }
+
+    @Override
     public boolean canBuildSettlement(final PropertyPosition position, final Player player) {
         final int cycle = turnManager.getCycle();
         System.out.println(cycle);
@@ -167,6 +185,11 @@ public final class GameManagerImpl implements GameManager {
         }
         return (isRoadNearToAnyPlayerRoad(position, player) || isRoadNearToAnyPlayerProperty(position, player))
                 && resourceManager.hasResources(player, Recipes.getRoadResources());
+    }
+
+    @Override
+    public boolean canBuyCard(Player player) {
+        return turnManager.getCycle() > 2 && resourceManager.hasResources(player, Recipes.getCardResources());
     }
 
     @Override
@@ -243,4 +266,5 @@ public final class GameManagerImpl implements GameManager {
                     return roadPosition.isNearToProperty(propertyPosition);
                 });
     }
+
 }
