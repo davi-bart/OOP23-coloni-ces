@@ -149,12 +149,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canEndTurn() {
-        final int cycle = turnController.getCycle();
-        if (cycle <= 2) {
-            return this.boardController.getPlayerPropertyPositions(getCurrentPlayer()).size() == cycle
-                    && this.boardController.getPlayerRoadPositions(getCurrentPlayer()).size() == cycle;
-        }
-        return !mustPlaceRobber() && turnController.hasRolled();
+        return !mustPlaceRobber() && gameManager.canEndTurn();
     }
 
     @Override
@@ -216,9 +211,9 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public Pair<Integer, Integer> rollDie() {
-        final Pair<Integer, Integer> rolledValue = turnController.rollDie();
-        produceResources(rolledValue.getLeft() + rolledValue.getRight());
-        mustPlaceRobber = rolledValue.getLeft() + rolledValue.getRight() == 7;
-        return rolledValue;
+        final Pair<Integer, Integer> rolledDies = turnController.rollDie();
+        produceResources(rolledDies.getLeft() + rolledDies.getRight());
+        mustPlaceRobber = (rolledDies.getLeft() + rolledDies.getRight()) == 7;
+        return rolledDies;
     }
 }

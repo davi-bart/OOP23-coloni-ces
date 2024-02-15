@@ -78,6 +78,11 @@ public interface GameManager {
     boolean canBuyCard(Player player);
 
     /**
+     * @return whether the current player can end the turn
+     */
+    boolean canEndTurn();
+
+    /**
      * Make each tile with number {@code number} produce its resource.
      * It automatically updates the resources of each player.
      * 
