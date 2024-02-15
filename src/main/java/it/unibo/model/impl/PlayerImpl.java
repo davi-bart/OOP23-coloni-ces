@@ -25,18 +25,6 @@ public final class PlayerImpl implements Player {
         victoryPoints = 0;
     }
 
-    /**
-     * Creates a Player.
-     * 
-     * @param name         the name of the player
-     * @param defaultValue the dafault value of the initial resources
-     */
-    public PlayerImpl(final String name, final int defaultValue) {
-        this.name = name;
-        this.defaultValue = defaultValue;
-        victoryPoints = 0;
-    }
-
     @Override
     public void incrementVictoryPoints(final int amount) {
         checkPointsAmount(amount);
