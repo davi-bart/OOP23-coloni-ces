@@ -241,12 +241,11 @@ public final class MainControllerImpl implements MainController {
             }
             resourceController.addResources(player, givenResource);
             resourceController.removeBankResources(givenResource);
-            this.appView.redrawCurrentPlayer();
-            this.appView.redrawBank();
             // System.out.println(
             // getPlayerByName(player).getName() +
             // resourceController.getOwnerResources(getPlayerByName(player)));
         }
+        updateView();
         // System.out.println(
         // "bank " + resourceController.getBankResources());
     }
@@ -264,5 +263,11 @@ public final class MainControllerImpl implements MainController {
     @Override
     public boolean canStartTrade() {
         return turnController.getCycle() > 2 && turnController.hasRolled();
+    }
+
+    @Override
+    public void updateView() {
+        this.appView.redrawCurrentPlayer();
+        this.appView.redrawBank();
     }
 }

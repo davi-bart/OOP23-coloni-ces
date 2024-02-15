@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public final class RobberView {
     private final MainController controller;
@@ -62,22 +63,18 @@ public final class RobberView {
 
         Stream.of(ResourceType.values()).forEach(resource -> {
             discardResourcesBox.getChildren().add(resourceAndComboBox(resource,
-                    controller.getPlayerResources(controller.getCurrentPlayer()).get(resource),
+                    controller.getPlayerResources(player).get(resource),
                     (options, oldValue, newValue) -> {
                         discardResources.put(resource, newValue);
                     }));
         });
+
         confirm.setOnMouseClicked(e -> {
             controller.getResourceController().removeResources(player, discardResources);
+            controller.updateView();
             stage.close();
-            System.out
-                    .println(player + controller.getResourceController()
-                            .getOwnerResources(player));
-            /*
-             * TODO: chiamare la CurrentPlayerView.drawResources()
-             * e la BankView.draw()
-             */
         });
+
         resourcesContainer.getChildren().add(new Label("Select card(s) to discard "
                 + controller.getResourceController().getResources(player).entrySet().stream()
                         .mapToInt(e -> e.getValue()).sum() / 2
@@ -91,10 +88,8 @@ public final class RobberView {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(stageScene);
         stage.setResizable(false);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
-        System.out
-                .println(player + controller.getResourceController()
-                        .getOwnerResources(player));
     }
 
     private VBox resourceAndComboBox(final ResourceType resource, final int amount,

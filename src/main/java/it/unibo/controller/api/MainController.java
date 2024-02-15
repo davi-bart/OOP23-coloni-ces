@@ -140,4 +140,8 @@ public interface MainController {
     void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 
+    /**
+     * Update the view.
+     */
+    void updateView();
 }
