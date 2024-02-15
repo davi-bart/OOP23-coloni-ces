@@ -118,7 +118,6 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void buyCard() {
-        this.gameManager.buyCard(turnController.getCurrentPlayerTurn());
         CardType card = gameManager.buyCard(turnController.getCurrentPlayerTurn());
         if (card.equals(CardType.KNIGHT)) {
             mustPlaceRobber = true;
