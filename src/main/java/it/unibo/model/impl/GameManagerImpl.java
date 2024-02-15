@@ -110,8 +110,10 @@ public final class GameManagerImpl implements GameManager {
         propertyManager.addSettlement(position, player);
         player.incrementVictoryPoints(1);
         if (turnManager.getCycle() > 2) {
-            Recipes.getSettlementResources()
-                    .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
+            Recipes.getSettlementResources().forEach((resource, amount) -> {
+                resourceManager.removeResources(player, resource, amount);
+                resourceManager.addResources(resourceManager.getBank(), resource, amount);
+            });
         }
     }
 
@@ -123,8 +125,10 @@ public final class GameManagerImpl implements GameManager {
         propertyManager.upgradeToCity(position);
         player.incrementVictoryPoints(1);
         if (turnManager.getCycle() > 2) {
-            Recipes.getCityResources()
-                    .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
+            Recipes.getCityResources().forEach((resource, amount) -> {
+                resourceManager.removeResources(player, resource, amount);
+                resourceManager.addResources(resourceManager.getBank(), resource, amount);
+            });
         }
     }
 
@@ -134,9 +138,12 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Player " + player + " can't build a road at position " + position);
         }
         roadManager.buildRoad(position, player);
+
         if (turnManager.getCycle() > 2) {
-            Recipes.getRoadResources()
-                    .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
+            Recipes.getRoadResources().forEach((resource, amount) -> {
+                resourceManager.removeResources(player, resource, amount);
+                resourceManager.addResources(resourceManager.getBank(), resource, amount);
+            });
         }
     }
 
@@ -151,17 +158,14 @@ public final class GameManagerImpl implements GameManager {
         switch (card) {
             case VICTORY_POINT:
                 player.incrementVictoryPoints(1);
-
                 break;
             case FREE_SETTLEMENT:
                 Recipes.getSettlementResources()
                         .forEach((resource, amount) -> resourceManager.addResources(player, resource, amount));
-
                 break;
             case FREE_ROAD:
                 Recipes.getRoadResources()
                         .forEach((resource, amount) -> resourceManager.addResources(player, resource, amount));
-
                 break;
             case MONOPOLY:
                 Random random = new Random();
@@ -171,7 +175,6 @@ public final class GameManagerImpl implements GameManager {
                     resourceManager.addResources(player, selectedType, resourceManager.getResource(p, selectedType));
                     resourceManager.removeResources(p, selectedType, resourceManager.getResource(p, selectedType));
                 });
-
                 break;
             default:
                 break;
