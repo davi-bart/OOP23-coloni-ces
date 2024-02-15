@@ -3,7 +3,6 @@ package it.unibo.controller.api;
 import java.util.Map;
 
 import it.unibo.common.api.tile.ResourceType;
-import it.unibo.model.api.ResourceOwner;
 
 /**
  * Resource controller.
@@ -13,7 +12,7 @@ public interface ResourceController {
      * @param owner is the owner.
      * @return a map with all the resources that the passed owner has.
      */
-    Map<ResourceType, Integer> getOwnerResources(ResourceOwner owner);
+    Map<ResourceType, Integer> getOwnerResources(String owner);
 
     /**
      * @return the bank resources
@@ -25,7 +24,7 @@ public interface ResourceController {
      * @param resource is the resource type.
      * @return the amount of the given resource of the given owner.
      */
-    int getOwnerResourceAmount(ResourceOwner owner, ResourceType resource);
+    int getOwnerResourceAmount(String owner, ResourceType resource);
 
     /**
      * * Return if the given owner has the given resources.
@@ -34,25 +33,25 @@ public interface ResourceController {
      * @param resources
      * @return true if the given owner has the given resources, false otherwise
      */
-    boolean hasResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
+    boolean hasResources(String owner, Map<ResourceType, Integer> resources);
 
     /**
      * @param player
      * @return whether {@code player} can build a settlement
      */
-    boolean hasResourcesForSettlement(ResourceOwner player);
+    boolean hasResourcesForSettlement(String player);
 
     /**
      * @param player
      * @return whether {@code player} can build a city
      */
-    boolean hasResourcesForCity(ResourceOwner player);
+    boolean hasResourcesForCity(String player);
 
     /**
      * @param player
      * @return whether {@code player} can build a road
      */
-    boolean hasResourcesForRoad(ResourceOwner player);
+    boolean hasResourcesForRoad(String player);
 
     /**
      * Removes resources {@code resources} from player {@code owner}.
@@ -60,7 +59,7 @@ public interface ResourceController {
      * @param owner     owner of the resources
      * @param resources map from resource type to amount
      */
-    void removeResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
+    void removeResources(String owner, Map<ResourceType, Integer> resources);
 
     /**
      * Add resources {@code resources} to player {@code owner}.
@@ -68,7 +67,7 @@ public interface ResourceController {
      * @param owner     owner of the resources
      * @param resources map from resource type to amount
      */
-    void addResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
+    void addResources(String owner, Map<ResourceType, Integer> resources);
 
     /**
      * Remove given resources from bank.
@@ -87,6 +86,13 @@ public interface ResourceController {
      * @param recivingResources are the resources that the accepter give to the
      *                          proposer
      */
-    void acceptTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> givingResouces,
+    void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> givingResouces,
             Map<ResourceType, Integer> recivingResources);
+
+    /**
+     * 
+     * @param owner
+     * @return all the resources owned by the owner.
+     */
+    Map<ResourceType, Integer> getResources(String owner);
 }

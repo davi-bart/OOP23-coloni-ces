@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import it.unibo.common.api.tile.ResourceType;
+import it.unibo.model.api.Player;
 import it.unibo.model.api.ResourceManager;
 import it.unibo.model.api.ResourceOwner;
 
@@ -15,6 +16,7 @@ import it.unibo.model.api.ResourceOwner;
 public class ResourceManagerImpl implements ResourceManager {
 
     private final Map<ResourceOwner, Map<ResourceType, Integer>> allEntityResources = new HashMap<>();
+    private final ResourceOwner bank;
 
     /**
      * Create the ResourceManager from the list of the resource owner(such as
@@ -22,8 +24,10 @@ public class ResourceManagerImpl implements ResourceManager {
      * 
      * @param resourceOwners
      */
-    public ResourceManagerImpl(final List<ResourceOwner> resourceOwners) {
-        resourceOwners.forEach(ro -> allEntityResources.put(ro, ro.getDefaultResources()));
+    public ResourceManagerImpl(final List<Player> players, final int bankResourcesAmount) {
+        players.forEach(ro -> allEntityResources.put(ro, ro.getDefaultResources()));
+        bank = new BankImpl(bankResourcesAmount);
+        allEntityResources.put(bank, bank.getDefaultResources());
     }
 
     @Override
@@ -73,5 +77,15 @@ public class ResourceManagerImpl implements ResourceManager {
             }
         }
         return true;
+    }
+
+    @Override
+    public ResourceOwner getBank() {
+        return this.bank;
+    }
+
+    @Override
+    public Map<ResourceType, Integer> getResources(ResourceOwner owner) {
+        return allEntityResources.get(owner);
     }
 }

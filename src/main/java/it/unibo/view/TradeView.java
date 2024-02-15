@@ -48,7 +48,9 @@ public final class TradeView {
                 showTradeStage();
             }
         });
-
+        if (!controller.canStartTrade()) {
+            tradeButton.setDisable(true);
+        }
         return tradeButton;
     }
 

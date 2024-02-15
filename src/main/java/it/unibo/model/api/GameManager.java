@@ -75,11 +75,6 @@ public interface GameManager {
     Board getBoard();
 
     /**
-     * @return the bank
-     */
-    ResourceOwner getBank();
-
-    /**
      * @return the property manager
      */
     PropertyManager getPropertyManager();

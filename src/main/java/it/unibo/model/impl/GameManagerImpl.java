@@ -2,7 +2,6 @@ package it.unibo.model.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.road.RoadPosition;
@@ -13,7 +12,6 @@ import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.PropertyManager;
 import it.unibo.model.api.ResourceManager;
-import it.unibo.model.api.ResourceOwner;
 import it.unibo.model.api.RoadManager;
 import it.unibo.model.api.TurnManager;
 
@@ -28,8 +26,6 @@ public final class GameManagerImpl implements GameManager {
     private final TurnManager turnManager;
     private final ResourceManager resourceManager;
     private final Board board;
-    private final ResourceOwner bank;
-
     private final List<Player> players = new ArrayList<>();
     private final int pointsToWin;
 
@@ -49,9 +45,7 @@ public final class GameManagerImpl implements GameManager {
         this.roadManager = new RoadManagerImpl();
         this.propertyManager = new PropertyManagerImpl();
         this.turnManager = new TurnManagerImpl(players);
-        this.bank = new BankImpl(bankResourcesAmount);
-        this.resourceManager = new ResourceManagerImpl(
-                Stream.concat(players.stream(), List.of(bank).stream()).toList());
+        this.resourceManager = new ResourceManagerImpl(players, bankResourcesAmount);
         this.board = new BoardImpl(generator);
     }
 
@@ -98,10 +92,6 @@ public final class GameManagerImpl implements GameManager {
         return resourceManager;
     }
 
-    @Override
-    public ResourceOwner getBank() {
-        return bank;
-    }
 
     @Override
     public void buildSettlement(final PropertyPosition position, final Player player) {

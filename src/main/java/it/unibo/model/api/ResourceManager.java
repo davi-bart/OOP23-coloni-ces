@@ -58,4 +58,17 @@ public interface ResourceManager {
      * @return true if the given owner has the given resources, false otherwise
      */
     boolean hasResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
+
+    /**
+     * 
+     * @return the bank
+     */
+    ResourceOwner getBank();
+
+    /**
+     * 
+     * @param owner
+     * @return all the resources owned by the owner.
+     */
+    Map<ResourceType, Integer> getResources(ResourceOwner owner);
 }

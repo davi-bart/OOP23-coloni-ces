@@ -45,7 +45,7 @@ public final class MainControllerImpl implements MainController {
 
         this.boardController = new BoardControllerImpl(getPlayerByName, this.gameManager.getBoard(),
                 this.gameManager.getPropertyManager(), this.gameManager.getRoadManager());
-        this.resourceController = new ResourceControllerImpl(gameManager.getResourceManager(), gameManager.getBank());
+        this.resourceController = new ResourceControllerImpl(getPlayerByName, gameManager.getResourceManager());
         this.turnController = new TurnControllerImpl(gameManager.getTurnManager());
     }
 
@@ -71,7 +71,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public Map<ResourceType, Integer> getPlayerResources(final String playerName) {
-        return resourceController.getOwnerResources(getPlayerByName(playerName));
+        return resourceController.getOwnerResources(playerName);
     }
 
     @Override
@@ -175,7 +175,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean hasResources(final String playerName, final Map<ResourceType, Integer> resources) {
-        return resourceController.hasResources(getPlayerByName(playerName), resources);
+        return resourceController.hasResources(playerName, resources);
     }
 
     @Override
@@ -239,8 +239,10 @@ public final class MainControllerImpl implements MainController {
                     }
                 }
             }
-            resourceController.addResources(getPlayerByName(player), givenResource);
+            resourceController.addResources(player, givenResource);
             resourceController.removeBankResources(givenResource);
+            this.appView.redrawCurrentPlayer();
+            this.appView.redrawBank();
             // System.out.println(
             // getPlayerByName(player).getName() +
             // resourceController.getOwnerResources(getPlayerByName(player)));
@@ -253,8 +255,10 @@ public final class MainControllerImpl implements MainController {
     public void acceptTrade(final String proposer, final String accepter,
             final Map<ResourceType, Integer> proposedResources,
             final Map<ResourceType, Integer> wantedResources) {
-        resourceController.acceptTrade(getPlayerByName(proposer), getPlayerByName(accepter), proposedResources,
+        resourceController.acceptTrade(proposer, accepter, proposedResources,
                 wantedResources);
+        this.appView.redrawCurrentPlayer();
+        this.appView.redrawBank();
     }
 
     @Override

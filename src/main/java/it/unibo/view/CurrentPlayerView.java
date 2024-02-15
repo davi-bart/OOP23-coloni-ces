@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 public final class CurrentPlayerView extends HBox {
     private final MainController controller;
     private final TradeView tradeView;
+    private final RobberView robberView;
     private final Label rolledValue = new Label();
 
     /**
@@ -21,6 +22,7 @@ public final class CurrentPlayerView extends HBox {
     public CurrentPlayerView(final MainController controller) {
         this.controller = controller;
         tradeView = new TradeView(this.controller);
+        robberView = new RobberView(this.controller);
         draw();
     }
 
@@ -35,19 +37,18 @@ public final class CurrentPlayerView extends HBox {
         // .add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(),
         // entry.getValue())));
         drawResources();
-        if (controller.canStartTrade()) {
-            super.getChildren().add(tradeView.getTradeButton());
-        }
-        if (controller.canEndTurn()) {
-            super.getChildren().add(getEndTurnButton());
-        }
-        if (controller.canRollDie()) {
-            super.getChildren().add(getRollButton());
-        }
+
+        super.getChildren().add(tradeView.getTradeButton());
+
+        super.getChildren().add(getEndTurnButton());
+
+        super.getChildren().add(getRollButton());
+
         super.getChildren().add(new Label(controller.getCurrentPlayer()));
         if (!controller.canRollDie()) {
             super.getChildren().add(rolledValue);
         }
+        super.getChildren().add(robberView.getRobberButton());
     }
 
     /**
@@ -70,6 +71,9 @@ public final class CurrentPlayerView extends HBox {
             }
             draw();
         });
+        if (!controller.canEndTurn()) {
+            endTurnButton.setDisable(true);
+        }
 
         return endTurnButton;
     }
@@ -81,13 +85,16 @@ public final class CurrentPlayerView extends HBox {
                 System.out.println("ho rollato");
                 var roll = controller.getTurnController().rollDie();
                 var rollSum = roll.getLeft() + roll.getRight();
-                rolledValue.setText("Rolled value: " + rollSum);
+                rolledValue.setText("Rolled value: " + rollSum + "(" + roll.getLeft() + "," + roll.getRight() + ")");
                 controller.giveResources(rollSum);
                 rollButton.setText(String.valueOf(rollSum) + roll);
                 rollButton.setDisable(true);
                 draw();
             });
+        } else {
+            rollButton.setDisable(true);
         }
+
         return rollButton;
     }
 }
