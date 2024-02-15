@@ -94,7 +94,7 @@ public class AppViewImpl implements AppView {
 
     @Override
     public void redrawBoard() {
-        boardView.draw(playerColors);
+        boardView.draw();
     }
 
     @Override

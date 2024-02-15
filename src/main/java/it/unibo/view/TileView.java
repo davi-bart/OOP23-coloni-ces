@@ -7,10 +7,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import it.unibo.common.api.tile.TerrainType;
 import it.unibo.common.api.tile.TilePosition;
 import it.unibo.controller.api.MainController;
+import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
@@ -26,17 +28,20 @@ public class TileView extends Group {
     private final TilePosition coordinates;
     private final TerrainType terrainType;
     private final int number;
+    private final EventHandler<MouseEvent> eventHandler;
 
     /**
      * Constructor.
      * 
      * @param coordinates coordinates of the tile
      */
-    public TileView(final MainController controller, final TilePosition coordinates) {
+    public TileView(final MainController controller, final TilePosition coordinates,
+            final EventHandler<MouseEvent> eventHandler) {
         this.controller = controller;
         this.coordinates = coordinates;
         this.terrainType = controller.getBoardController().getTileTerrainType(coordinates);
         this.number = controller.getBoardController().getTileNumber(coordinates);
+        this.eventHandler = eventHandler;
         draw();
 
     }
@@ -49,8 +54,9 @@ public class TileView extends Group {
         final double x = pos.getLeft();
         final double y = pos.getRight();
         final Polygon hexagon = getHexagon(Utility.HEXAGON_RADIUS, x, y);
-        hexagon.setFill(
-                new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
+        Image img = new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png");
+        hexagon.setFill(new ImagePattern(img));
+        hexagon.setOnMouseClicked(eventHandler);
         super.getChildren().add(hexagon);
         if (terrainType != TerrainType.DESERT) {
             final int fontSize = 30;
