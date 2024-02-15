@@ -158,7 +158,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canBuyCard() {
-        return this.gameManager.canBuyCard(turnController.getCurrentPlayerTurn());
+        return !mustPlaceRobber() && this.gameManager.canBuyCard(turnController.getCurrentPlayerTurn());
     }
 
     private Player getPlayerByName(final String name) {
@@ -200,7 +200,6 @@ public final class MainControllerImpl implements MainController {
     public String getBank() {
         return "bank";
     }
-
 
     @Override
     public void setRobberPosition(TilePosition coordinates) {
