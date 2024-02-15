@@ -56,8 +56,6 @@ public final class TradeView {
     }
 
     private void showTradeStage() {
-        boolean canTradeWithBankProposed;
-        boolean canTradeWithBankWanted;
         final Stage stage = new Stage();
         stage.setTitle("Trade window");
         final VBox resourcesContainer = new VBox();
@@ -86,27 +84,39 @@ public final class TradeView {
                     playerToButton.put(playerName, acceptTradeButton);
                 });
 
+        final Runnable reloadBankTradeButton = () -> {
+            boolean enable = true;
+            if (!proposedResources.values().stream().anyMatch(amount -> amount == 4)) {
+                enable = false;
+            }
+            if (proposedResources.values().stream().mapToInt(i -> i).sum() != 4) {
+                enable = false;
+            }
+            if (wantedResources.values().stream().mapToInt(i -> i).sum() != 1) {
+                enable = false;
+            }
+            tradeBank.setDisable(!enable);
+
+        };
+
         Stream.of(ResourceType.values()).forEach(resource -> {
             proposedResourcesBox.getChildren().add(resourceAndComboBox(resource,
                     controller.getPlayerResources(controller.getCurrentPlayer()).get(resource),
                     (options, oldValue, newValue) -> {
                         proposedResources.put(resource, newValue);
-                        System.out.println(proposedResources.values());
-                        tradeBank.setDisable(proposedResources.values().stream().mapToInt(i -> i).sum() < 4);
+                        reloadBankTradeButton.run();
                     }));
             wantedResourcesBox.getChildren()
                     .add(resourceAndComboBox(resource, defaultWantedResources, (options, oldValue, newValue) -> {
                         playerToButton.forEach((playerName, button) -> {
-                            wantedResources.replace(resource, newValue);
-                            // canTradeWithBankWanted = wantedResources.values().stream().filter(amount ->
-                            // amount == 1)
-                            // .count() == 1;
+                            wantedResources.put(resource, newValue);
                             if (!controller.hasResources(playerName, wantedResources)) {
                                 button.setDisable(true);
                             } else {
                                 button.setDisable(false);
                             }
                         });
+                        reloadBankTradeButton.run();
                     }));
         });
         tradeBank.setOnMouseClicked(e -> {
