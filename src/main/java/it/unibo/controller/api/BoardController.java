@@ -77,30 +77,6 @@ public interface BoardController {
     PropertyType getPropertyType(PropertyPosition position);
 
     /**
-     * Build a settlement in the given position.
-     * 
-     * @param position   where to build the settlement.
-     * @param playerName the player
-     */
-    void buildSettlement(PropertyPosition position, String playerName);
-
-    /**
-     * Build a city in the given position.
-     * 
-     * @param position   where to build the city.
-     * @param playerName the player
-     */
-    void buildCity(PropertyPosition position, String playerName);
-
-    /**
-     * Builds the road at position {@code position}.
-     * 
-     * @param position   position of the road
-     * @param playerName the player
-     */
-    void buildRoad(RoadPosition position, String playerName);
-
-    /**
      * @param player
      * @return the longest road length of {@code player}
      */

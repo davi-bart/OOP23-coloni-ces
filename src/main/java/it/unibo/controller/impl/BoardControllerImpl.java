@@ -91,23 +91,8 @@ public final class BoardControllerImpl implements BoardController {
     }
 
     @Override
-    public void buildSettlement(final PropertyPosition position, final String playerName) {
-        this.propertyManager.addSettlement(position, getPlayerByName.apply(playerName));
-    }
-
-    @Override
-    public void buildCity(final PropertyPosition position, final String playerName) {
-        this.propertyManager.upgradeToCity(position);
-    }
-
-    @Override
     public PropertyType getPropertyType(final PropertyPosition position) {
         return this.propertyManager.getPropertyType(position);
-    }
-
-    @Override
-    public void buildRoad(final RoadPosition position, final String playerName) {
-        this.roadManager.addRoad(position, getPlayerByName.apply(playerName));
     }
 
     @Override
