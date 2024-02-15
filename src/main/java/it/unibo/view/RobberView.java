@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 public final class RobberView {
     private final MainController controller;
+    private int sum;
 
     /**
      * RobberView.
@@ -35,20 +36,16 @@ public final class RobberView {
      * 
      * @return the trade button
      */
-    public Button getRobberButton() {
-        final Button robberButton = new Button("Robber");
-        robberButton.setOnMouseClicked(event -> {
+    public void evokeRobber() {
+        if (controller.mustPlaceRobber()) {
             controller.getPlayerNames().forEach(player -> {
-
-                int sum = controller.getResourceController().getResources(player).entrySet().stream()
+                sum = controller.getResourceController().getResources(player).entrySet().stream()
                         .mapToInt(e -> e.getValue()).sum();
                 if (sum > 7) {
                     showRobberStage(player);
                 }
             });
-        });
-
-        return robberButton;
+        }
     }
 
     private void showRobberStage(final String player) {
@@ -65,6 +62,11 @@ public final class RobberView {
                     controller.getPlayerResources(player).get(resource),
                     (options, oldValue, newValue) -> {
                         discardResources.put(resource, newValue);
+                        confirm.setDisable(discardResources.entrySet().stream()
+                                .mapToInt(e -> e.getValue())
+                                .sum() < controller.getResourceController().getResources(player).entrySet().stream()
+                                        .mapToInt(e -> e.getValue()).sum() / 2);
+                        System.out.println(discardResources);
                     }));
         });
 

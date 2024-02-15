@@ -45,7 +45,9 @@ public final class CurrentPlayerView extends HBox {
         if (!controller.canRollDie()) {
             super.getChildren().add(rolledValue);
         }
-        super.getChildren().add(robberView.getRobberButton());
+        if (controller.mustPlaceRobber()) {
+            robberView.evokeRobber();
+        }
     }
 
     /**

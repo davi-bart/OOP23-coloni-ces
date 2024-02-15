@@ -61,6 +61,7 @@ public final class TradeView {
         final HBox tradeContainer = new HBox();
         final VBox playersContainer = new VBox();
         final int defaultWantedResources = 5;
+        final Button tradeBank = new Button("Trade with bank");
 
         final HBox proposedResourcesBox = new HBox();
         final HBox wantedResourcesBox = new HBox();
@@ -85,6 +86,10 @@ public final class TradeView {
                     controller.getPlayerResources(controller.getCurrentPlayer()).get(resource),
                     (options, oldValue, newValue) -> {
                         proposedResources.put(resource, newValue);
+                        
+                        tradeBank.setDisable(!(proposedResources.values().stream().filter(amount -> amount == 4)
+                                .count() == 1
+                                && proposedResources.values().stream().filter(amount -> amount == 0).count() == 4));
                     }));
             wantedResourcesBox.getChildren()
                     .add(resourceAndComboBox(resource, defaultWantedResources, (options, oldValue, newValue) -> {
@@ -97,6 +102,11 @@ public final class TradeView {
                             }
                         });
                     }));
+        });
+
+        tradeBank.setOnMouseClicked(e -> {
+            controller.acceptTrade(controller.getCurrentPlayer(), controller.getBank(), proposedResources,
+                    wantedResources);
         });
 
         resourcesContainer.getChildren().add(new Label("Select resources to offer"));
@@ -112,6 +122,8 @@ public final class TradeView {
             playerBox.getChildren().add(button);
             playersContainer.getChildren().add(playerBox);
         });
+
+        playersContainer.getChildren().add(tradeBank);
         tradeContainer.getChildren().add(playersContainer);
         final Scene stageScene = new Scene(tradeContainer, 500,
                 300);
