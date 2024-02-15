@@ -15,7 +15,7 @@ public interface RoadManager {
      * @param position the position of the road
      * @param player   the player who owns the road
      */
-    void addRoad(RoadPosition position, Player player);
+    void buildRoad(RoadPosition position, Player player);
 
     /**
      * @param player
@@ -25,8 +25,14 @@ public interface RoadManager {
 
     /**
      * @param player
-     * @return the length of the longest road owned by {@code player}
+     * @return the length of the longest road (without cycles) owned by
+     *         {@code player}
      */
     int getLongestRoadLength(Player player);
+
+    /**
+     * @return the player owning the longest road
+     */
+    Player getLongestRoadOwner();
 
 }

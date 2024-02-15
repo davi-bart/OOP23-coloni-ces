@@ -1,5 +1,7 @@
 package it.unibo.common.api.road;
 
+import java.util.List;
+
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.tile.TilePosition;
 
@@ -25,9 +27,13 @@ public interface RoadPosition {
     boolean isNearby(RoadPosition other);
 
     /**
-     * 
      * @param position
      * @return true if this road is near the property in the given position.
      */
     boolean isNearToProperty(PropertyPosition position);
+
+    /**
+     * @return the list of the positions nearby the current road
+     */
+    List<PropertyPosition> getNearbyProperties();
 }

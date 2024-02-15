@@ -13,7 +13,7 @@ import it.unibo.model.api.ResourceOwner;
 /**
  * An implementation of ResourceManager.
  */
-public class ResourceManagerImpl implements ResourceManager {
+public final class ResourceManagerImpl implements ResourceManager {
 
     private final Map<ResourceOwner, Map<ResourceType, Integer>> allEntityResources = new HashMap<>();
     private final ResourceOwner bank;
@@ -22,7 +22,8 @@ public class ResourceManagerImpl implements ResourceManager {
      * Create the ResourceManager from the list of the resource owner(such as
      * players and bank).
      * 
-     * @param resourceOwners
+     * @param players             the list of players
+     * @param bankResourcesAmount the amount of resources in the bank
      */
     public ResourceManagerImpl(final List<Player> players, final int bankResourcesAmount) {
         players.forEach(ro -> allEntityResources.put(ro, ro.getDefaultResources()));

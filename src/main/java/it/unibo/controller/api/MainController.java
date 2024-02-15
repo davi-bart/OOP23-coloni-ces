@@ -8,7 +8,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
-import it.unibo.model.api.Player;
 import it.unibo.common.api.tile.TilePosition;
 
 /**

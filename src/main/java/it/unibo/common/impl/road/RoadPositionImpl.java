@@ -123,6 +123,11 @@ public final class RoadPositionImpl implements RoadPosition {
 
     @Override
     public boolean isNearToProperty(final PropertyPosition position) {
+        return getNearbyProperties().contains(position);
+    }
+
+    @Override
+    public List<PropertyPosition> getNearbyProperties() {
         final List<PropertyPosition> nearRoadProperty = new ArrayList<>();
         switch (getDirection()) {
             case UPLEFT:
@@ -152,7 +157,7 @@ public final class RoadPositionImpl implements RoadPosition {
             default:
                 break;
         }
-        return nearRoadProperty.contains(position);
+        return nearRoadProperty;
     }
 
 }

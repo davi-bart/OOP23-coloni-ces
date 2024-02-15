@@ -34,6 +34,7 @@ public final class MainControllerImpl implements MainController {
     /**
      * Constructor of the controller.
      * 
+     * @param appView the main view
      * @param players list of players' names
      */
     public MainControllerImpl(final AppView appView, final List<String> players) {
@@ -158,7 +159,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canBuyCard() {
-        return this.gameManager.canBuyCard(turnController.getCurrentPlayerTurn());
+        return !mustPlaceRobber() && this.gameManager.canBuyCard(turnController.getCurrentPlayerTurn());
     }
 
     private Player getPlayerByName(final String name) {
@@ -200,7 +201,6 @@ public final class MainControllerImpl implements MainController {
     public String getBank() {
         return "bank";
     }
-
 
     @Override
     public void setRobberPosition(TilePosition coordinates) {

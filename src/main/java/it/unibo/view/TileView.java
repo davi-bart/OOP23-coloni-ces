@@ -33,7 +33,9 @@ public class TileView extends Group {
     /**
      * Constructor.
      * 
-     * @param coordinates coordinates of the tile
+     * @param controller   the main controller
+     * @param coordinates  coordinates of the tile
+     * @param eventHandler event handler for clicking on the tile
      */
     public TileView(final MainController controller, final TilePosition coordinates,
             final EventHandler<MouseEvent> eventHandler) {

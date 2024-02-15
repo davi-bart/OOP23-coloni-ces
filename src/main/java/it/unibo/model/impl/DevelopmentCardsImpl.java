@@ -10,10 +10,16 @@ import java.util.Map;
 import it.unibo.common.api.card.CardType;
 import it.unibo.model.api.DevelopmentCards;
 
-public class DevelopmentCardsImpl implements DevelopmentCards {
+/**
+ * Development cards implementation.
+ */
+public final class DevelopmentCardsImpl implements DevelopmentCards {
     private final List<CardType> deck = new ArrayList<>();
     private final Random random = new Random();
 
+    /**
+     * Constructor of DevelopmentCardsImpl.
+     */
     public DevelopmentCardsImpl() {
         final int knightCards = 15;
         final int roadBuildCards = 5;

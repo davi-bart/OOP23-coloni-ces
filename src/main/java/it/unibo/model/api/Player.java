@@ -5,9 +5,18 @@ package it.unibo.model.api;
  */
 public interface Player extends ResourceOwner {
     /**
-     * Increment the victory points of the player.
+     * Increments the victory points of the player of {@code amount} points.
+     * 
+     * @param amount
      */
-    void incrementVictoryPoints();
+    void incrementVictoryPoints(int amount);
+
+    /**
+     * Decrements the victory points of the player of {@code amount} points.
+     * 
+     * @param amount
+     */
+    void decrementVictoryPoints(int amount);
 
     /**
      * Get the victory points of the player.

@@ -19,7 +19,7 @@ import it.unibo.controller.impl.MainControllerImpl;
 /**
  * Application.
  */
-public class AppViewImpl implements AppView {
+public final class AppViewImpl implements AppView {
     private final Stage stage;
     private static final int DEFAULT_HEIGHT = 350;
     private final BoardView boardView;
