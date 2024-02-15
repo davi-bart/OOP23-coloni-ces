@@ -56,8 +56,8 @@ public class Menu {
 
     private void addPlayer(int size, ObservableList<String> list, TextField textfield, Alert alert) {
         if (size < 4) {
-            if (list.contains(textfield.getText())) {
-                alert.setHeaderText("The chosen name is already taken");
+            if (list.contains(textfield.getText()) || textfield.getText().equals("bank")) {
+                alert.setHeaderText("You cannot choose this name");
                 alert.showAndWait();
             } else {
                 if (textfield.getText().equals("")) {

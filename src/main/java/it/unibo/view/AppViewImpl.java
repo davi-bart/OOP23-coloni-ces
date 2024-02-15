@@ -25,7 +25,9 @@ public class AppViewImpl implements AppView {
     private final BoardView boardView;
     private final BankView bankView;
     private final PlayersView playersView;
+
     private final CurrentPlayerView currentPlayerView;
+
     private final Map<String, Color> playerColors = new HashMap<>();
 
     /**

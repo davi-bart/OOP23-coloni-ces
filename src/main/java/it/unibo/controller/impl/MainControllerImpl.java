@@ -13,6 +13,7 @@ import it.unibo.controller.api.ResourceController;
 import it.unibo.controller.api.TurnController;
 import it.unibo.model.api.GameManager;
 import it.unibo.model.api.Player;
+import it.unibo.model.api.ResourceOwner;
 import it.unibo.model.impl.GameManagerImpl;
 import it.unibo.view.AppView;
 
@@ -39,9 +40,17 @@ public final class MainControllerImpl implements MainController {
                 .filter(p -> p.getName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
 
+        final Function<String, ResourceOwner> getResourceOwnerByName = name -> {
+            if (name.equals(getBank())) {
+                return gameManager.getResourceManager().getBank();
+            }
+            return gameManager.getPlayers().stream()
+                    .filter(p -> p.getName().equals(name)).findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
+        };
         this.boardController = new BoardControllerImpl(getPlayerByName, this.gameManager.getBoard(),
                 this.gameManager.getPropertyManager(), this.gameManager.getRoadManager());
-        this.resourceController = new ResourceControllerImpl(getPlayerByName, gameManager.getResourceManager());
+        this.resourceController = new ResourceControllerImpl(getResourceOwnerByName, gameManager.getResourceManager());
         this.turnController = new TurnControllerImpl(gameManager.getTurnManager());
     }
 

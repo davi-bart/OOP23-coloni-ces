@@ -17,7 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public final class RobberView {
     private final MainController controller;
@@ -70,8 +69,7 @@ public final class RobberView {
         });
 
         confirm.setOnMouseClicked(e -> {
-            controller.acceptTrade(player, controller.getBank(), discardResources, discardResources);
-            // controller.getResourceController().removeResources(player, discardResources);
+            controller.acceptTrade(player, controller.getBank(), discardResources, new HashMap<>());
             stage.close();
         });
 
@@ -88,7 +86,6 @@ public final class RobberView {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(stageScene);
         stage.setResizable(false);
-        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
 
