@@ -11,8 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.common.api.tile.ResourceType;
+import it.unibo.model.api.Player;
 import it.unibo.model.api.ResourceManager;
-import it.unibo.model.api.ResourceOwner;
 import it.unibo.model.impl.PlayerImpl;
 import it.unibo.model.impl.ResourceManagerImpl;
 
@@ -23,14 +23,14 @@ import it.unibo.model.impl.ResourceManagerImpl;
 class ResourceManagerTest {
 
     private ResourceManager resourceManager;
-    private static final ResourceOwner PLAYER1 = new PlayerImpl("luca");
-    private static final ResourceOwner PLAYER2 = new PlayerImpl("andrea");
-    private static final ResourceOwner PLAYER3 = new PlayerImpl("alex");
-    private static final ResourceOwner PLAYER4 = new PlayerImpl("sbara");
+    private static final Player PLAYER1 = new PlayerImpl("luca");
+    private static final Player PLAYER2 = new PlayerImpl("andrea");
+    private static final Player PLAYER3 = new PlayerImpl("alex");
+    private static final Player PLAYER4 = new PlayerImpl("sbara");
 
     @BeforeEach
     void init() {
-        this.resourceManager = new ResourceManagerImpl(List.of(PLAYER1, PLAYER2, PLAYER3, PLAYER4));
+        this.resourceManager = new ResourceManagerImpl(List.of(PLAYER1, PLAYER2, PLAYER3, PLAYER4), 19);
     }
 
     /**
