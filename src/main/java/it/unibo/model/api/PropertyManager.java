@@ -26,7 +26,9 @@ public interface PropertyManager {
     Set<Property> getPlayerProperties(Player player);
 
     /**
-     * @param player
+     * Get all the properties built by the specified players.
+     * 
+     * @param players
      * @return a set of the properties built by every player.
      */
     Set<Property> getAllPlayersProperties(List<Player> players);

@@ -20,6 +20,7 @@ public interface GameManager {
      * Build a settlement of player {@code player} at position {@code position}.
      * 
      * @param position where to build the settlement.
+     * @param player   the player who wants to build the settlement.
      */
     void buildSettlement(PropertyPosition position, Player player);
 
@@ -35,12 +36,14 @@ public interface GameManager {
      * Build a road of player {@code player} at position {@code position}.
      * 
      * @param position where to build the road
+     * @param player   the player who wants to build the road
      */
     void buildRoad(RoadPosition position, Player player);
 
     /**
      * Player {@code player} buys a development card.
      * 
+     * @param player the player who wants to buy a card
      */
     void buyCard(Player player);
 
@@ -53,8 +56,8 @@ public interface GameManager {
     boolean canBuildSettlement(PropertyPosition position, Player player);
 
     /**
-     * @param city
-     * @param position
+     * @param position where the city will be built
+     * @param player   the player who wants to build the city
      * @return whether player {@code player} can build a city at position
      *         {@code position}
      */

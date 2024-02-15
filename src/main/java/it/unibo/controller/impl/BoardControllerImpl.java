@@ -36,8 +36,10 @@ public final class BoardControllerImpl implements BoardController {
     /**
      * Constructor of BoardControllerImpl.
      * 
-     * @param controller the main controller
-     * @param board      the board to start with
+     * @param getPlayerByName the function to get the player by name
+     * @param board           the board
+     * @param propertyManager the property manager
+     * @param roadManager     the road manager
      */
     public BoardControllerImpl(final Function<String, Player> getPlayerByName, final Board board,
             final PropertyManager propertyManager, final RoadManager roadManager) {
@@ -108,38 +110,5 @@ public final class BoardControllerImpl implements BoardController {
     @Override
     public void setRobberPosition(TilePosition coordinates) {
         this.board.setRobberPosition(coordinates);
-    }
-
-    @Override
-    public boolean isNearToAnyProperty(final PropertyPosition position) {
-        return getAllPropertyPositions().stream().anyMatch(propertyPosition -> {
-            if (!getPropertyType(propertyPosition).equals(PropertyType.EMPTY)) {
-                return propertyPosition.isNear(position);
-            }
-            return false;
-        });
-    }
-
-    @Override
-    public boolean isRoadNearToAnyOwnedProperty(final String playerName, final RoadPosition position) {
-        return this.getPlayerPropertyPositions(playerName).stream()
-                .anyMatch(propertyPosition -> {
-                    return position.isNearToProperty(propertyPosition.getKey());
-                });
-    }
-
-    @Override
-    public boolean isPropertyNearToAnyOwnerRoad(final String playerName, final PropertyPosition position) {
-        return this.getPlayerRoadPositions(playerName).stream()
-                .anyMatch(roadPosition -> {
-                    return roadPosition.isNearToProperty(position);
-                });
-    }
-
-    @Override
-    public boolean isRoadNearToAnyOwnedRoad(final String playerName, final RoadPosition position) {
-        return this.getPlayerRoadPositions(playerName).stream().anyMatch(roadPosition -> {
-            return position.isNearby(roadPosition);
-        });
     }
 }

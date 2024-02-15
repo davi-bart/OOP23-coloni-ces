@@ -27,15 +27,12 @@ public interface RoadPosition {
     boolean isNearby(RoadPosition other);
 
     /**
-     * 
      * @param position
      * @return true if this road is near the property in the given position.
      */
     boolean isNearToProperty(PropertyPosition position);
 
     /**
-     * 
-     * @param position
      * @return the list of the positions nearby the current road
      */
     List<PropertyPosition> getNearbyProperties();

@@ -139,7 +139,7 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void buyCard(Player player) {
+    public void buyCard(final Player player) {
         if (!canBuyCard(player)) {
             throw new IllegalArgumentException("Player " + player + " can't buy a card during the first turn cycles");
         }
@@ -186,7 +186,7 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public boolean canBuyCard(Player player) {
+    public boolean canBuyCard(final Player player) {
         return turnManager.getCycle() > 2 && resourceManager.hasResources(player, Recipes.getCardResources());
     }
 

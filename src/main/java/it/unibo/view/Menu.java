@@ -54,7 +54,7 @@ public class Menu {
         stage.show();
     }
 
-    private void addPlayer(int size, ObservableList<String> list, TextField textfield, Alert alert) {
+    private void addPlayer(final int size, final ObservableList<String> list, final TextField textfield, final Alert alert) {
         if (size < 4) {
             if (list.contains(textfield.getText()) || textfield.getText().equals("bank")) {
                 alert.setHeaderText("You cannot choose this name");

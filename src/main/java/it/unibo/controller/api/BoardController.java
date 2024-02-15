@@ -77,7 +77,7 @@ public interface BoardController {
     PropertyType getPropertyType(PropertyPosition position);
 
     /**
-     * @param player
+     * @param playerName the player
      * @return the longest road length of {@code player}
      */
     int getLongestRoadLength(String playerName);
@@ -94,35 +94,4 @@ public interface BoardController {
      * @param coordinates coordinates of the new robber's position
      */
     void setRobberPosition(TilePosition coordinates);
-
-    /**
-     * @param position
-     * @return true if the property in the given position is near to an other
-     *         property, false otherwise.
-     */
-    boolean isNearToAnyProperty(PropertyPosition position);
-
-    /**
-     * @param playerName the player
-     * @param position
-     * @return true if the road in the given position is near to an other
-     *         property of current player, false otherwise.
-     */
-    boolean isRoadNearToAnyOwnedProperty(String playerName, RoadPosition position);
-
-    /**
-     * @param playerName the player
-     * @param position
-     * @return true if the property in the given position is near to an other
-     *         road of current player, false otherwise.
-     */
-    boolean isPropertyNearToAnyOwnerRoad(String playerName, PropertyPosition position);
-
-    /**
-     * @param playerName the player
-     * @param position
-     * @return true if the road in the given position is near to an other
-     *         road of current player, false otherwise.
-     */
-    boolean isRoadNearToAnyOwnedRoad(String playerName, RoadPosition position);
 }

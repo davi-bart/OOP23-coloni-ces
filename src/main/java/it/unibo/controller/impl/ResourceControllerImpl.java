@@ -23,8 +23,8 @@ public final class ResourceControllerImpl implements ResourceController {
     /**
      * Constructor of resource controller.
      * 
-     * @param resourceManager
-     * @param bank
+     * @param getResourceOwnerByName the function to get the resource owner by name
+     * @param resourceManager        the resource manager
      */
     public ResourceControllerImpl(final Function<String, ResourceOwner> getResourceOwnerByName,
             final ResourceManager resourceManager) {

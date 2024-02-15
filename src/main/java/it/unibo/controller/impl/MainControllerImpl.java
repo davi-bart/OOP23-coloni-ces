@@ -34,6 +34,7 @@ public final class MainControllerImpl implements MainController {
     /**
      * Constructor of the controller.
      * 
+     * @param appView the main view
      * @param players list of players' names
      */
     public MainControllerImpl(final AppView appView, final List<String> players) {

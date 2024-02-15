@@ -74,6 +74,11 @@ public final class PlayerImpl implements Player {
     }
 
     @Override
+    public int hashCode() {
+        return this.name.hashCode();
+    }
+
+    @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
             return true;

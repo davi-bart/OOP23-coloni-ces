@@ -26,7 +26,7 @@ public final class BoardView extends StackPane {
      * @param controller   the board controller
      * @param playerColors the colors of the players
      */
-    public BoardView(final MainController controller, Map<String, Color> playerColors) {
+    public BoardView(final MainController controller, final Map<String, Color> playerColors) {
         this.controller = controller;
         this.playerColors = playerColors;
 

@@ -17,6 +17,7 @@ public final class PlayersView extends VBox {
      * Constructor of BankView.
      * 
      * @param controller the main controller
+     * @param playerColors the colors of the players
      */
     public PlayersView(final MainController controller, final Map<String, Color> playerColors) {
         this.controller = controller;
