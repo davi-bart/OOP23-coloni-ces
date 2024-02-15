@@ -28,7 +28,7 @@ public final class DevelopmentCardsImpl implements DevelopmentCards {
         /*final Map<CardType, Integer> cards = Map.of(CardType.KNIGHT, knightCards, CardType.ROADBUILD, roadBuildCards,
                 CardType.YEAROFPLENTY, yearOfPlentyCards, CardType.MONOPOLY, monopolyCards, CardType.VICTORYPOINT,
                 victoryPointCards);*/
-                final Map<CardType, Integer> cards = Map.of(CardType.VICTORYPOINT,
+                final Map<CardType, Integer> cards = Map.of(CardType.MONOPOLY,
                 victoryPointCards);
         cards.forEach((card, amount) -> {
             deck.addAll(IntStream.range(0, amount).mapToObj(i -> card).collect(Collectors.toList()));

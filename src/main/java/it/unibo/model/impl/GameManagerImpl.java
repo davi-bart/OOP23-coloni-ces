@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import it.unibo.common.api.card.CardType;
 import it.unibo.common.api.property.PropertyPosition;
@@ -107,7 +108,7 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Can't build a settlement in position " + position);
         }
         propertyManager.addSettlement(position, player);
-        turnManager.getCurrentPlayerTurn().incrementVictoryPoints(1);
+        player.incrementVictoryPoints(1);
         if (turnManager.getCycle() > 2) {
             Recipes.getSettlementResources()
                     .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
@@ -120,7 +121,7 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Player " + player + " can't build a city at position " + position);
         }
         propertyManager.upgradeToCity(position);
-        turnManager.getCurrentPlayerTurn().incrementVictoryPoints(2);
+        player.incrementVictoryPoints(1);
         if (turnManager.getCycle() > 2) {
             Recipes.getCityResources()
                     .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
@@ -140,16 +141,42 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void buyCard(final Player player) {
+    public CardType buyCard(final Player player) {
         if (!canBuyCard(player)) {
             throw new IllegalArgumentException("Player " + player + " can't buy a card during the first turn cycles");
         }
         Recipes.getCardResources()
                 .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
-        if (developmentCards.getCard().equals(CardType.VICTORYPOINT)) {
-            turnManager.getCurrentPlayerTurn().incrementVictoryPoints(1);
-        }
+        final CardType card = developmentCards.getCard();
+        switch (card) {
+            case VICTORY_POINT:
+                player.incrementVictoryPoints(1);
 
+                break;
+            case FREE_SETTLEMENT:
+                Recipes.getSettlementResources()
+                        .forEach((resource, amount) -> resourceManager.addResources(player, resource, amount));
+
+                break;
+            case FREE_ROAD:
+                Recipes.getRoadResources()
+                        .forEach((resource, amount) -> resourceManager.addResources(player, resource, amount));
+
+                break;
+            case MONOPOLY:
+                Random random = new Random();
+                ResourceType selectedType = List.of(ResourceType.values())
+                        .get(random.nextInt(ResourceType.values().length));
+                this.players.stream().filter(p -> !p.equals(player)).forEach(p -> {
+                    resourceManager.addResources(player, selectedType, resourceManager.getResource(p, selectedType));
+                    resourceManager.removeResources(p, selectedType, resourceManager.getResource(p, selectedType));
+                });
+
+                break;
+            default:
+                break;
+        }
+        return card;
     }
 
     @Override
@@ -187,6 +214,16 @@ public final class GameManagerImpl implements GameManager {
     @Override
     public boolean canBuyCard(final Player player) {
         return turnManager.getCycle() > 2 && resourceManager.hasResources(player, Recipes.getCardResources());
+    }
+
+    @Override
+    public boolean canEndTurn() {
+        final int cycle = turnManager.getCycle();
+        if (cycle <= 2) {
+            return this.propertyManager.getPlayerProperties(turnManager.getCurrentPlayerTurn()).size() == cycle
+                    && this.roadManager.getPlayerRoads(turnManager.getCurrentPlayerTurn()).size() == cycle;
+        }
+        return turnManager.hasRolled();
     }
 
     @Override
@@ -291,16 +328,6 @@ public final class GameManagerImpl implements GameManager {
                 .anyMatch(propertyPosition -> {
                     return roadPosition.isNearToProperty(propertyPosition);
                 });
-    }
-
-    @Override
-    public boolean canEndTurn() {
-        final int cycle = turnManager.getCycle();
-        if (cycle < 2) {
-            return this.propertyManager.getPlayerProperties(turnManager.getCurrentPlayerTurn()).size() == cycle
-                    && this.roadManager.getPlayerRoads(turnManager.getCurrentPlayerTurn()).size() == cycle;
-        }
-        return turnManager.hasRolled();
     }
 
 }

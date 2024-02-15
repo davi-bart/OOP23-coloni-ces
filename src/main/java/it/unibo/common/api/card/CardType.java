@@ -5,5 +5,5 @@ package it.unibo.common.api.card;
  */
 // CHECKSTYLE: JavadocVariable OFF
 public enum CardType {
-    KNIGHT, YEAROFPLENTY, MONOPOLY, VICTORYPOINT;
+    KNIGHT, FREE_SETTLEMENT, FREE_ROAD, MONOPOLY, VICTORY_POINT;
 }

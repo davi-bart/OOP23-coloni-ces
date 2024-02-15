@@ -6,6 +6,7 @@ import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import it.unibo.common.api.card.CardType;
 import it.unibo.common.api.property.PropertyPosition;
 import it.unibo.common.api.road.RoadPosition;
 import it.unibo.common.api.tile.ResourceType;
@@ -118,6 +119,10 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buyCard() {
         this.gameManager.buyCard(turnController.getCurrentPlayerTurn());
+        CardType card = gameManager.buyCard(turnController.getCurrentPlayerTurn());
+        if (card.equals(CardType.KNIGHT)) {
+            mustPlaceRobber = true;
+        }
         redrawResourcesView();
         this.appView.redrawPlayers();
     }
@@ -154,7 +159,8 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canBuyCard() {
-        return !mustPlaceRobber() && this.gameManager.canBuyCard(turnController.getCurrentPlayerTurn());
+        return turnController.hasRolled() && !mustPlaceRobber()
+                && this.gameManager.canBuyCard(turnController.getCurrentPlayerTurn());
     }
 
     private Player getPlayerByName(final String name) {
