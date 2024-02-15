@@ -29,7 +29,9 @@ public final class PlayersView extends VBox {
     public void draw(final Map<String, Color> playerColors) {
         super.getChildren().clear();
         controller.getPlayerNames().forEach(playerName -> {
-            Label playerInfo = new Label(playerName + ": " + controller.getPlayerPoints(playerName) + " points");
+            Label playerInfo = new Label(playerName + ": " + controller.getPlayerPoints(playerName)
+                    + " points, longest road length: " + controller
+                            .getBoardController().getLongestRoadLength(playerName));
             playerInfo.setTextFill(playerColors.get(playerName));
             super.getChildren().add(playerInfo);
         });

@@ -106,7 +106,7 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Can't build a settlement in position " + position);
         }
         propertyManager.addSettlement(position, player);
-        turnManager.getCurrentPlayerTurn().incrementVictoryPoints();
+        turnManager.getCurrentPlayerTurn().incrementVictoryPoints(1);
         if (turnManager.getCycle() > 2) {
             Recipes.getSettlementResources()
                     .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
@@ -119,9 +119,7 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Player " + player + " can't build a city at position " + position);
         }
         propertyManager.upgradeToCity(position);
-        turnManager.getCurrentPlayerTurn().incrementVictoryPoints();
-        turnManager.getCurrentPlayerTurn().incrementVictoryPoints();
-
+        turnManager.getCurrentPlayerTurn().incrementVictoryPoints(2);
         if (turnManager.getCycle() > 2) {
             Recipes.getCityResources()
                     .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
@@ -133,7 +131,7 @@ public final class GameManagerImpl implements GameManager {
         if (!canBuildRoad(position, player)) {
             throw new IllegalArgumentException("Player " + player + " can't build a road at position " + position);
         }
-        roadManager.addRoad(position, player);
+        roadManager.buildRoad(position, player);
         if (turnManager.getCycle() > 2) {
             Recipes.getRoadResources()
                     .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
@@ -202,7 +200,9 @@ public final class GameManagerImpl implements GameManager {
         players.forEach(player -> {
             propertyManager.getPlayerProperties(player).forEach(property -> {
                 property.getPosition().getEquivalentPositions().stream()
-                        .map(propertyPosition -> propertyPosition.getTilePosition()).forEach(tilePosition -> {
+                        .map(propertyPosition -> propertyPosition.getTilePosition())
+                        .filter(tilePosition -> board.getTilePositions().contains(tilePosition))
+                        .forEach(tilePosition -> {
                             if (board.getTileNumber(tilePosition) == number
                                     && !board.getRobberPosition().equals(tilePosition)) {
                                 final int amount = property.getPropertyType() == PropertyType.CITY ? 2 : 1;
