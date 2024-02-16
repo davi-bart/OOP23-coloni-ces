@@ -31,14 +31,14 @@ public interface ResourceController {
     /**
      * Modify the resources of the players into the trade.
      * 
-     * @param proposer         is the player that propose the trade
-     * @param accepter         is the player that accept the trade
-     * @param proposedResouces are the resources that the proposer give to the
-     *                         accepter
-     * @param wantedResources  are the resources that the accepter give to the
-     *                         proposer
+     * @param proposer          is the player that propose the trade
+     * @param accepter          is the player that accept the trade
+     * @param proposedResources are the resources that the proposer give to the
+     *                          accepter
+     * @param wantedResources   are the resources that the accepter give to the
+     *                          proposer
      */
-    void tradeWithPlayer(String proposer, String accepter, Map<ResourceType, Integer> proposedResouces,
+    void tradeWithPlayer(String proposer, String accepter, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 
     /**
@@ -69,29 +69,29 @@ public interface ResourceController {
 
     /**
      * 
-     * @param proposer         is the player that propose the trade
-     * @param accepter         is the player that accept the trade
-     * @param proposedResouces are the resources that the proposer give to the
-     *                         accepter
-     * @param wantedResources  are the resources that the accepter give to the
-     *                         proposer
-     * @return wheter the two player involved in the trade have the resources.
+     * @param proposer          is the player that propose the trade
+     * @param accepter          is the player that accept the trade
+     * @param proposedResources are the resources that the proposer give to the
+     *                          accepter
+     * @param wantedResources   are the resources that the accepter give to the
+     *                          proposer
+     * @return whether the two player involved in the trade have the resources.
      */
     boolean canTradeWithPlayer(String proposer, String accepter,
-            Map<ResourceType, Integer> proposedResouces,
+            Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 
     /***
      * 
-     * @param proposer         is the player that propose the trade
-     * @param proposedResouces are the resources that the proposer want to give to
-     *                         the
-     *                         bank
-     * @param wantedResources  are the resources that the bank want to give to the
-     *                         proposer
-     * @return wheter the proposer and the bank have the resources.
+     * @param proposer          is the player that propose the trade
+     * @param proposedResources are the resources that the proposer want to give to
+     *                          the
+     *                          bank
+     * @param wantedResources   are the resources that the bank want to give to the
+     *                          proposer
+     * @return whether the proposer and the bank have the resources.
      */
-    boolean canTradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
+    boolean canTradeWithBank(String proposer, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 
     /**

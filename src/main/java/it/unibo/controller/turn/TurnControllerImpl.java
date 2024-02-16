@@ -13,7 +13,7 @@ public final class TurnControllerImpl implements TurnController {
     private final TurnManager turnManager;
 
     /**
-     * Constructori of TurnControllerImpl.
+     * Constructor of TurnControllerImpl.
      * 
      * @param turnManager
      */

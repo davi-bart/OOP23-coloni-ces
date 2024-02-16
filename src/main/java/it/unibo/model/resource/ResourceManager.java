@@ -47,14 +47,14 @@ public interface ResourceManager {
     /**
      * Modify the resources of the owners into the trade.
      * 
-     * @param proposer         is the owner that propose the trade
-     * @param accepter         is the owner that accept the trade
-     * @param proposedResouces are the resources that the proposer give to the
-     *                         accepter
-     * @param wantedResources  are the resources that the accepter give to the
-     *                         proposer
+     * @param proposer          is the owner that propose the trade
+     * @param accepter          is the owner that accept the trade
+     * @param proposedResources are the resources that the proposer give to the
+     *                          accepter
+     * @param wantedResources   are the resources that the accepter give to the
+     *                          proposer
      */
-    void trade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
+    void trade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 
     /**
@@ -83,12 +83,12 @@ public interface ResourceManager {
      * 
      * @param proposer
      * @param accepter
-     * @param proposedResouces
+     * @param proposedResources
      * @param wantedResources
      * @return whether proposer can trade with accepter based on the resources
      *         provided.
      */
-    boolean canTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
+    boolean canTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 
     /***
@@ -109,7 +109,7 @@ public interface ResourceManager {
     /**
      * 
      * @param playerName
-     * @return whether the player shold discard cards.
+     * @return whether the player should discard cards.
      */
     boolean shouldDiscard(ResourceOwner playerName);
 }

@@ -1,15 +1,11 @@
 package it.unibo.view;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.common.road.RoadPosition;
 import it.unibo.controller.main.MainController;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -71,11 +67,5 @@ public final class RoadView extends Line {
         super.setEndX(endpoints.getRight().getLeft());
         super.setEndY(endpoints.getRight().getRight());
         super.setStrokeWidth(12);
-    }
-
-    private boolean warningPropertyStage() {
-        final Alert alert = ResourcesViewFactory.getAlert("Are you sure you want to build a road here?");
-        final Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get().equals(ButtonType.OK);
     }
 }
