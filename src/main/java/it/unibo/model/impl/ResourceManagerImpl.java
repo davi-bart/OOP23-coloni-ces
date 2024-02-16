@@ -89,4 +89,30 @@ public final class ResourceManagerImpl implements ResourceManager {
     public Map<ResourceType, Integer> getResources(final ResourceOwner owner) {
         return allEntityResources.get(owner);
     }
+
+    @Override
+    public boolean canTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
+            Map<ResourceType, Integer> wantedResources) {
+        initializeResourceMap(proposedResouces);
+        initializeResourceMap(wantedResources);
+        if (proposedResouces.values().stream().allMatch(amount -> amount == 0)
+                && wantedResources.values().stream().allMatch(amount -> amount == 0)) {
+            return false;
+        }
+        if (!(hasResources(proposer, proposedResouces) && hasResources(accepter, wantedResources))) {
+            return false;
+        }
+        if (accepter.equals(bank)) {
+            return proposedResouces.values().stream().anyMatch(amount -> amount == 4)
+                    && proposedResouces.values().stream().mapToInt(i -> i).sum() == 4
+                    && wantedResources.values().stream().mapToInt(i -> i).sum() == 1;
+        }
+        return !(proposedResouces.values().stream().allMatch(amount -> amount == 0)
+                || wantedResources.values().stream().allMatch(amount -> amount == 0));
+    }
+
+    private void initializeResourceMap(final Map<ResourceType, Integer> map) {
+        List.of(ResourceType.values()).forEach(resource -> map.putIfAbsent(resource, 0));
+    }
+
 }

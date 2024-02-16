@@ -40,15 +40,15 @@ public interface ResourceManager {
     /**
      * Modify the resources of the owners into the trade.
      * 
-     * @param proposer          is the owner that propose the trade
-     * @param accepter          is the owner that accept the trade
-     * @param givingResouces    are the resources that the proposer give to the
-     *                          accepter
-     * @param recivingResources are the resources that the accepter give to the
-     *                          proposer
+     * @param proposer         is the owner that propose the trade
+     * @param accepter         is the owner that accept the trade
+     * @param proposedResouces are the resources that the proposer give to the
+     *                         accepter
+     * @param wantedResources  are the resources that the accepter give to the
+     *                         proposer
      */
-    void acceptTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> givingResouces,
-            Map<ResourceType, Integer> recivingResources);
+    void acceptTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
+            Map<ResourceType, Integer> wantedResources);
 
     /**
      * * Return if the given owner has the given resources.
@@ -71,4 +71,16 @@ public interface ResourceManager {
      * @return all the resources owned by the owner.
      */
     Map<ResourceType, Integer> getResources(ResourceOwner owner);
+
+    /**
+     * 
+     * @param proposer
+     * @param accepter
+     * @param proposedResouces
+     * @param wantedResources
+     * @return whether proposer can trade with accepter based on the resources
+     *         provided.
+     */
+    boolean canTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
+            Map<ResourceType, Integer> wantedResources);
 }
