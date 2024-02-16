@@ -20,15 +20,6 @@ public interface ResourceController {
     Map<ResourceType, Integer> getBankResources();
 
     /**
-     * * Return if the given owner has the given resources.
-     * 
-     * @param owner     owner
-     * @param resources
-     * @return true if the given owner has the given resources, false otherwise
-     */
-    boolean hasResources(String owner, Map<ResourceType, Integer> resources);
-
-    /**
      * Modify the resources of the players into the trade.
      * 
      * @param proposer          is the player that propose the trade

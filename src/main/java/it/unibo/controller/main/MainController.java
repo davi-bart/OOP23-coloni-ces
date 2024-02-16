@@ -26,11 +26,6 @@ public interface MainController {
      */
     ResourceController getResourceController();
 
-    // /**
-    // * @return the turn controller
-    // */
-    // TurnController getTurnController();
-
     /**
      * @return the list of the players' names
      */
@@ -113,13 +108,6 @@ public interface MainController {
      * @return if the player can roll.
      */
     boolean canRollDie();
-
-    /**
-     * give the resources produced by the tile with the given number.
-     * 
-     * @param rollSum sum of the 2 dices.
-     */
-    void produceResources(int rollSum);
 
     /**
      * Modify the resources of the owners into the trade.

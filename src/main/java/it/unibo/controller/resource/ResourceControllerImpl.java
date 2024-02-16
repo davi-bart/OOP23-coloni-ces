@@ -38,11 +38,6 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public boolean hasResources(final String owner, final Map<ResourceType, Integer> resource) {
-        return resourceManager.hasResources(getPlayerByName.apply(owner), resource);
-    }
-
-    @Override
     public Map<ResourceType, Integer> getBankResources() {
         return resourceManager.getResources(resourceManager.getBank());
     }

@@ -144,8 +144,12 @@ public final class MainControllerImpl implements MainController {
         return !turnController.hasRolled() && turnController.getCycle() > 2; //
     }
 
-    @Override
-    public void produceResources(final int number) {
+    /**
+     * give the resources produced by the tiles with the given number.
+     * 
+     * @param rollSum sum of the 2 dices.
+     */
+    private void produceResources(final int number) {
         final Map<Player, Map<ResourceType, Integer>> producedResources = gameManager.produceResources(number);
         producedResources.forEach((player, resources) -> {
             resources.entrySet().stream().filter(entry -> entry.getValue() > 0)

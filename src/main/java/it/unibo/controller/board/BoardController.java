@@ -3,8 +3,6 @@ package it.unibo.controller.board;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.property.PropertyType;
 import it.unibo.common.road.RoadPosition;
@@ -37,22 +35,6 @@ public interface BoardController {
      * @return the terrain type of the tile
      */
     TerrainType getTileTerrainType(TilePosition pos);
-
-    /**
-     * get the player's road positions.
-     * 
-     * @param playerName the player
-     * @return the set of the road positions
-     */
-    Set<RoadPosition> getPlayerRoadPositions(String playerName);
-
-    /**
-     * get the player's property positions.
-     * 
-     * @param playerName the player
-     * @return the set of the property positions and their types
-     */
-    Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(String playerName);
 
     /**
      * get all the road positions, including empty ones.
