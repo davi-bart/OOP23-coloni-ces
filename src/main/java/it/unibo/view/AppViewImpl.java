@@ -1,6 +1,5 @@
 package it.unibo.view;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -9,7 +8,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,11 +50,7 @@ public final class AppViewImpl implements AppView {
     @Override
     public void draw() {
         stage.setTitle("I Coloni di Cesena");
-        try {
-            stage.setScene(getScene());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        stage.setScene(getScene());
         stage.setMaximized(true);
         stage.show();
     }
@@ -64,11 +58,10 @@ public final class AppViewImpl implements AppView {
     /**
      * getScene.
      * 
-     * @throws IOException exception
      * @return the scene
      */
-    public Scene getScene() throws IOException {
-        final BorderPane root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
+    public Scene getScene() {
+        final BorderPane root = new BorderPane();
         final VBox rightSide = new VBox();
 
         final Scene scene = new Scene(root);
