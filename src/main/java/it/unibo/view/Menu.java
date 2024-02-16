@@ -3,7 +3,6 @@ package it.unibo.view;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -78,12 +77,10 @@ public class Menu {
     /**
      * getScene.
      * 
-     * @throws IOException exception
      * @return the scene
      */
-    public Scene getScene() throws IOException {
-
-        final BorderPane root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
+    public Scene getScene() {
+        final BorderPane root = new BorderPane();
         final VBox playBox = new VBox();
         final Button playButton = new Button("PLAY");
         final Button addButton = new Button("ADD PLAYER");
