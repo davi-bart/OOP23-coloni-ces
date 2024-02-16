@@ -22,8 +22,8 @@ public final class TurnControllerImpl implements TurnController {
     }
 
     @Override
-    public Player getCurrentPlayerTurn() {
-        return this.turnManager.getCurrentPlayerTurn();
+    public Player getCurrentPlayer() {
+        return this.turnManager.getCurrentPlayer();
     }
 
     @Override

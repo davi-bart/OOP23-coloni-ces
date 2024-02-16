@@ -49,7 +49,7 @@ public final class CurrentPlayerView extends HBox {
         buttonsBox.getChildren().add(getEndTurnButton());
         buttonsBox.getChildren().add(getRollButton());
         buttonsBox.getChildren().add(getBuyCardButton());
-        buttonsBox.getChildren().add(new Label(controller.getCurrentPlayer()));
+        buttonsBox.getChildren().add(new Label(controller.getCurrentPlayerName()));
 
         final HBox dieImages = new HBox();
         dieImages.setSpacing(2);
@@ -65,7 +65,7 @@ public final class CurrentPlayerView extends HBox {
      * Draw only the resources amount of the current player.
      */
     public void drawResources() {
-        controller.getResourceController().getPlayerResources(controller.getCurrentPlayer()).entrySet()
+        controller.getResourceController().getPlayerResources(controller.getCurrentPlayerName()).entrySet()
                 .forEach(entry -> {
                     super.getChildren()
                             .remove(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue()));

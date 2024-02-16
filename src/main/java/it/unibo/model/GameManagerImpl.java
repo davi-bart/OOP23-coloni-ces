@@ -229,8 +229,8 @@ public final class GameManagerImpl implements GameManager {
     public boolean canEndTurn() {
         final int cycle = turnManager.getCycle();
         if (cycle <= 2) {
-            return this.propertyManager.getPlayerProperties(turnManager.getCurrentPlayerTurn()).size() == cycle
-                    && this.roadManager.getPlayerRoads(turnManager.getCurrentPlayerTurn()).size() == cycle;
+            return this.propertyManager.getPlayerProperties(turnManager.getCurrentPlayer()).size() == cycle
+                    && this.roadManager.getPlayerRoads(turnManager.getCurrentPlayer()).size() == cycle;
         }
         return turnManager.hasRolled();
     }

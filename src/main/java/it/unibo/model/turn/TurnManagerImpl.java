@@ -51,7 +51,7 @@ public final class TurnManagerImpl implements TurnManager {
     }
 
     @Override
-    public Player getCurrentPlayerTurn() {
+    public Player getCurrentPlayer() {
         return playerList.get(currentTurn);
     }
 

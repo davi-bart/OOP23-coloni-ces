@@ -26,13 +26,14 @@ import it.unibo.view.AppView;
  * Main controller implementation.
  */
 public final class MainControllerImpl implements MainController {
+    private static final int ROBBER_NUMBER = 7;
     private final GameManager gameManager;
     private final BoardController boardController;
     private final ResourceController resourceController;
     private final TurnController turnController;
     private final AppView appView;
     private boolean mustPlaceRobber;
-    private static final int ROBBER_NUMBER = 7;
+    private final Function<String, Player> getPlayerByName;
 
     /**
      * Constructor of the controller.
@@ -44,8 +45,8 @@ public final class MainControllerImpl implements MainController {
         this.appView = appView;
         this.gameManager = new GameManagerImpl(players);
 
-        final Function<String, Player> getPlayerByName = name -> gameManager.getPlayers().stream()
-                .filter(p -> p.getName().equals(name)).findFirst()
+        this.getPlayerByName = name -> gameManager.getPlayers().stream().filter(p -> p.getName().equals(name))
+                .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
 
         this.boardController = new BoardControllerImpl(getPlayerByName, this.gameManager.getBoard(),
@@ -64,45 +65,40 @@ public final class MainControllerImpl implements MainController {
         return this.resourceController;
     }
 
-    // @Override
-    // public TurnController getTurnController() {
-    // return this.turnController;
-    // }
-
     @Override
     public List<String> getPlayerNames() {
         return gameManager.getPlayers().stream().map(p -> p.getName()).toList();
     }
 
     @Override
-    public String getCurrentPlayer() {
-        return this.turnController.getCurrentPlayerTurn().getName();
+    public String getCurrentPlayerName() {
+        return this.turnController.getCurrentPlayer().getName();
     }
 
     @Override
     public void buildSettlement(final PropertyPosition position) {
-        this.gameManager.buildSettlement(position, turnController.getCurrentPlayerTurn());
+        this.gameManager.buildSettlement(position, turnController.getCurrentPlayer());
         redrawResourcesView();
         this.appView.redrawPlayers();
     }
 
     @Override
     public void buildCity(final PropertyPosition position) {
-        gameManager.buildCity(position, turnController.getCurrentPlayerTurn());
+        gameManager.buildCity(position, turnController.getCurrentPlayer());
         redrawResourcesView();
         this.appView.redrawPlayers();
     }
 
     @Override
     public void buildRoad(final RoadPosition position) {
-        gameManager.buildRoad(position, turnController.getCurrentPlayerTurn());
+        gameManager.buildRoad(position, turnController.getCurrentPlayer());
         redrawResourcesView();
         this.appView.redrawPlayers();
     }
 
     @Override
     public void buyCard() {
-        final CardType card = gameManager.buyCard(turnController.getCurrentPlayerTurn());
+        final CardType card = gameManager.buyCard(turnController.getCurrentPlayer());
         if (card.equals(CardType.KNIGHT)) {
             mustPlaceRobber = true;
         }
@@ -112,22 +108,22 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public boolean canBuildSettlement(final PropertyPosition position) {
-        return !mustPlaceRobber() && gameManager.canBuildSettlement(position, turnController.getCurrentPlayerTurn());
+        return !mustPlaceRobber() && gameManager.canBuildSettlement(position, turnController.getCurrentPlayer());
     }
 
     @Override
     public boolean canBuildCity(final PropertyPosition position) {
-        return !mustPlaceRobber() && gameManager.canBuildCity(position, turnController.getCurrentPlayerTurn());
+        return !mustPlaceRobber() && gameManager.canBuildCity(position, turnController.getCurrentPlayer());
     }
 
     @Override
     public boolean canBuildRoad(final RoadPosition position) {
-        return !mustPlaceRobber() && gameManager.canBuildRoad(position, turnController.getCurrentPlayerTurn());
+        return !mustPlaceRobber() && gameManager.canBuildRoad(position, turnController.getCurrentPlayer());
     }
 
     @Override
     public int getPlayerPoints(final String player) {
-        return getPlayerByName(player).getVictoryPoints();
+        return getPlayerByName.apply(player).getVictoryPoints();
     }
 
     @Override
@@ -138,7 +134,7 @@ public final class MainControllerImpl implements MainController {
     @Override
     public boolean canBuyCard() {
         return turnController.hasRolled() && !mustPlaceRobber()
-                && this.gameManager.canBuyCard(turnController.getCurrentPlayerTurn());
+                && this.gameManager.canBuyCard(turnController.getCurrentPlayer());
     }
 
     @Override
@@ -203,10 +199,4 @@ public final class MainControllerImpl implements MainController {
         this.appView.redrawCurrentPlayer();
         this.appView.redrawBank();
     }
-
-    private Player getPlayerByName(final String name) {
-        return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
-    }
-
 }

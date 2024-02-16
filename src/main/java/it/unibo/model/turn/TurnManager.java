@@ -11,9 +11,9 @@ public interface TurnManager {
 
     /**
      * 
-     * @return get the player whose turn it currently is.
+     * @return get the player currently playing.
      */
-    Player getCurrentPlayerTurn();
+    Player getCurrentPlayer();
 
     /**
      * end the current turn and updates the current player.

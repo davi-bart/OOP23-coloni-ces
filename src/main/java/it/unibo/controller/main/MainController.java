@@ -86,9 +86,9 @@ public interface MainController {
     boolean canBuyCard();
 
     /**
-     * @return get the name of the player whose turn it currently is.
+     * @return get the name of the player currently playing.
      */
-    String getCurrentPlayer();
+    String getCurrentPlayerName();
 
     /**
      * get the points of the specified player.
