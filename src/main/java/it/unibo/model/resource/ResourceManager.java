@@ -35,7 +35,7 @@ public interface ResourceManager {
 
     /**
      * 
-     * @param owner
+     * @param owner owner of the resources
      * @return all the resources owned by the owner.
      */
     int getResourcesAmount(ResourceOwner owner);
@@ -57,54 +57,48 @@ public interface ResourceManager {
      * * Return if the given owner has the given resources.
      * 
      * @param owner     owner
-     * @param resources
+     * @param resources map from resource to amount
      * @return true if the given owner has the given resources, false otherwise
      */
     boolean hasResources(ResourceOwner owner, Map<ResourceType, Integer> resources);
 
     /**
-     * 
      * @return the bank
      */
     ResourceOwner getBank();
 
     /**
-     * 
-     * @param owner
+     * @param owner owner of the resources
      * @return all the resources owned by the owner.
      */
     Map<ResourceType, Integer> getResources(ResourceOwner owner);
 
     /**
-     * 
-     * @param proposer
-     * @param accepter
-     * @param proposedResources
-     * @param wantedResources
+     * @param proposer          is the owner that proposes the trade
+     * @param accepter          is the owner that accepts the trade
+     * @param proposedResources are the resources proposed by the proposer
+     * @param wantedResources   are the resources wanted by the proposer
      * @return whether proposer can trade with accepter based on the resources
      *         provided.
      */
     boolean canTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 
-    /***
-     * 
-     * @param amount
+    /**
+     * @param amount the total number of resources of a player.
      * @return the amount of card that the player must discard.
      */
     int getResourcesToDiscard(int amount);
 
     /**
-     * 
-     * @param proposer
-     * @param amount
+     * @param owner  is the owner of the resources
+     * @param amount the amount of resources he has to discard
      * @return whether the player proposer can discard the amount.
      */
-    boolean canDiscard(ResourceOwner proposer, int amount);
+    boolean canDiscard(ResourceOwner owner, int amount);
 
     /**
-     * 
-     * @param playerName
+     * @param playerName the player that has to discard
      * @return whether the player should discard cards.
      */
     boolean shouldDiscard(ResourceOwner playerName);

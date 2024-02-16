@@ -1,9 +1,32 @@
 package it.unibo.common.road;
 
 /**
- * RoadDirection.
+ * Direction of a road regarding the hexagonal tile. The possible directions
+ * represent the directions of an edge of the hexagon.
  */
-// CHECKSTYLE: JavadocVariable OFF
 public enum RoadDirection {
-    UPRIGHT, RIGHT, DOWNRIGHT, DOWNLEFT, LEFT, UPLEFT
+    /**
+     * Up right.
+     */
+    UPRIGHT,
+    /**
+     * Right.
+     */
+    RIGHT,
+    /**
+     * Down right.
+     */
+    DOWNRIGHT,
+    /**
+     * Down left.
+     */
+    DOWNLEFT,
+    /**
+     * Left.
+     */
+    LEFT,
+    /**
+     * Up left.
+     */
+    UPLEFT
 }

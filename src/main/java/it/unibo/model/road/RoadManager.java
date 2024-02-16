@@ -12,7 +12,7 @@ import it.unibo.model.player.Player;
 public interface RoadManager {
 
     /**
-     * @param position
+     * @param position the position of the road
      * @return whether a road can be built at position {@code position}
      */
     boolean canBuildRoad(RoadPosition position);
@@ -28,13 +28,13 @@ public interface RoadManager {
     void buildRoad(RoadPosition position, Player player);
 
     /**
-     * @param player
+     * @param player the player
      * @return a set of the roads built by {@code player}
      */
     Set<Road> getPlayerRoads(Player player);
 
     /**
-     * @param player
+     * @param player the player
      * @return the length of the longest road (without cycles) owned by
      *         {@code player}
      */

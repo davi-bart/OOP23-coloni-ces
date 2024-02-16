@@ -16,7 +16,7 @@ public final class TurnControllerImpl implements TurnController {
     /**
      * Constructor of TurnControllerImpl.
      * 
-     * @param turnManager
+     * @param turnManager the turn manager
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The turn manager needs to be updated")
     public TurnControllerImpl(final TurnManager turnManager) {

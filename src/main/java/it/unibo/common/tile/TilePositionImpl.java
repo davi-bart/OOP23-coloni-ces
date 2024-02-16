@@ -14,8 +14,8 @@ public final class TilePositionImpl implements TilePosition {
     /**
      * Constructor.
      * 
-     * @param row
-     * @param col
+     * @param row the row of the tile
+     * @param col the col of the tile
      */
     public TilePositionImpl(final int row, final int col) {
         this.coordinates = new ImmutablePair<>(row, col);

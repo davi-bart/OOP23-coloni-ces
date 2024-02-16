@@ -28,8 +28,8 @@ public interface GameManager {
     /**
      * Build a settlement of player {@code player} at position {@code position}.
      * 
-     * @param position
-     * @param player
+     * @param position the position where the settlement will be built
+     * @param player   the player who wants to build the settlement
      * @throws IllegalArgumentException if {@link #canBuildSettlement} fails
      */
     void buildSettlement(PropertyPosition position, Player player);
@@ -37,8 +37,8 @@ public interface GameManager {
     /**
      * Build a city of player {@code player} at position {@code position}.
      * 
-     * @param player
-     * @param position
+     * @param position the position where the city will be built
+     * @param player   the player who wants to build the city
      * @throws IllegalArgumentException if {@link #canBuildCity} fails
      */
     void buildCity(PropertyPosition position, Player player);
@@ -46,8 +46,8 @@ public interface GameManager {
     /**
      * Build a road of player {@code player} at position {@code position}.
      * 
-     * @param position
-     * @param player
+     * @param position the position where the road will be built
+     * @param player   the player who wants to build the road
      * @throws IllegalArgumentException if {@link #canBuildRoad} fails
      */
     void buildRoad(RoadPosition position, Player player);
@@ -61,8 +61,8 @@ public interface GameManager {
     CardType buyCard(Player player);
 
     /**
-     * @param player
-     * @param position
+     * @param player   the player who wants to build a settlement
+     * @param position the position where he wants to build
      * @return whether player {@code player} can build a settlement at position
      *         {@code position}
      */
@@ -77,15 +77,15 @@ public interface GameManager {
     boolean canBuildCity(PropertyPosition position, Player player);
 
     /**
-     * @param player
-     * @param position
+     * @param position the position where he wants to build
+     * @param player   the player who wants to build a road
      * @return whether player {@code player} can build a road at position
      *         {@code position}
      */
     boolean canBuildRoad(RoadPosition position, Player player);
 
     /**
-     * @param player
+     * @param player the player who wants to buy a card
      * @return whether player {@code player} can buy a card
      */
     boolean canBuyCard(Player player);
@@ -99,7 +99,7 @@ public interface GameManager {
      * Makes each tile with number {@code number} produce its resource.
      * It automatically updates the resources of each player.
      * 
-     * @param number
+     * @param number the rolled number
      * @return a map from each player to the resources produced by the tiles near
      *         its properties
      */

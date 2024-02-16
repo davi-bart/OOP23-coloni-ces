@@ -9,14 +9,14 @@ public interface Player extends ResourceOwner {
     /**
      * Increments the victory points of the player of {@code amount} points.
      * 
-     * @param amount
+     * @param amount the amount of points to add
      */
     void incrementVictoryPoints(int amount);
 
     /**
      * Decrements the victory points of the player of {@code amount} points.
      * 
-     * @param amount
+     * @param amount the amount of points to remove
      */
     void decrementVictoryPoints(int amount);
 

@@ -24,7 +24,7 @@ public class JavaFXApp extends Application {
     /**
      * Program's entry point.
      * 
-     * @param args
+     * @param args command line arguments
      */
     public static void run(final String... args) {
         launch(args);

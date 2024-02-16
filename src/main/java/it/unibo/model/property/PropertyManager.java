@@ -22,7 +22,7 @@ public interface PropertyManager {
     void addSettlement(PropertyPosition position, Player player);
 
     /**
-     * @param player
+     * @param player the player
      * @return a set of the properties built by {@code player}
      */
     Set<Property> getPlayerProperties(Player player);
@@ -30,7 +30,7 @@ public interface PropertyManager {
     /**
      * Get all the properties built by the specified players.
      * 
-     * @param players
+     * @param players the players
      * @return a set of the properties built by every player.
      */
     Set<Property> getAllPlayersProperties(List<Player> players);

@@ -19,8 +19,8 @@ public final class RoadPositionImpl implements RoadPosition {
     /**
      * Constructor.
      * 
-     * @param coordinates
-     * @param direction
+     * @param coordinates the coordinates of the road
+     * @param direction   the direction of the road
      */
     public RoadPositionImpl(final TilePosition coordinates, final RoadDirection direction) {
         this.coordinates = coordinates;

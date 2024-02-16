@@ -10,7 +10,7 @@ public final class App {
     /**
      * Program's entry point.
      * 
-     * @param args
+     * @param args command line arguments
      */
     public static void main(final String... args) {
         JavaFXApp.run(args);

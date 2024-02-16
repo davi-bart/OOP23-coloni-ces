@@ -24,13 +24,14 @@ public final class ResourcesViewFactory {
     }
 
     /**
-     * @param resource
+     * @param resourceType resource type.
      * @return the image view of the needed resource.
      */
-    public static VBox generateResource(final ResourceType resource) {
+    public static VBox generateResource(final ResourceType resourceType) {
         final int defaultHeight = 100;
         final VBox resourceCard = new VBox();
-        final Image resourceImage = new Image("imgs/resources/" + resource.toString().toLowerCase(Locale.US) + ".png");
+        final Image resourceImage = new Image(
+                "imgs/resources/" + resourceType.toString().toLowerCase(Locale.US) + ".png");
         final ImageView image = new ImageView(resourceImage);
 
         resourceCard.setAlignment(Pos.CENTER);
@@ -41,8 +42,8 @@ public final class ResourcesViewFactory {
     }
 
     /**
-     * @param resource
-     * @param amount
+     * @param resource resource type.
+     * @param amount   amount of resource.
      * @return the image view of the needed resource with a label representing the
      *         amount.
      */

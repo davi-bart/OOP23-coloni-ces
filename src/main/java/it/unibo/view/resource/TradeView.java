@@ -28,7 +28,7 @@ public final class TradeView {
     /**
      * TradeView.
      * 
-     * @param controller
+     * @param controller the main controller
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public TradeView(final MainController controller) {

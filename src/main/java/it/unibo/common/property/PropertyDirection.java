@@ -1,9 +1,32 @@
 package it.unibo.common.property;
 
 /**
- * PropertyDirection.
+ * Direction of a property regarding the hexagonal tile. The possible directions
+ * represent the directions of a vertex of the hexagon.
  */
-// CHECKSTYLE: JavadocVariable OFF
 public enum PropertyDirection {
-    UP, UPRIGHT, DOWNRIGHT, DOWN, DOWNLEFT, UPLEFT
+    /**
+     * Up.
+     */
+    UP,
+    /**
+     * Up right.
+     */
+    UPRIGHT,
+    /**
+     * Down right.
+     */
+    DOWNRIGHT,
+    /**
+     * Down.
+     */
+    DOWN,
+    /**
+     * Down left.
+     */
+    DOWNLEFT,
+    /**
+     * Up left.
+     */
+    UPLEFT
 }

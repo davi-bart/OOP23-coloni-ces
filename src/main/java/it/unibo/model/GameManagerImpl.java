@@ -70,8 +70,7 @@ public final class GameManagerImpl implements GameManager {
     }
 
     /**
-     * @param playersNames
-     * @see GameManagerImpl#GameManagerImpl(GameMapGenerator, List, int)
+     * @param playersNames list of players' names
      */
     public GameManagerImpl(final List<String> playersNames) {
         this(new RandomGameMapGenerator(), playersNames, DEFAULT_POINTS_TO_WIN, DEFAULT_BANK_RESOURCES);

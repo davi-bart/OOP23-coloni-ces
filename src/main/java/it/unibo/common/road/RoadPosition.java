@@ -20,14 +20,14 @@ public interface RoadPosition {
     RoadDirection getDirection();
 
     /**
-     * @param other
+     * @param other the position of the road to check
      * @return whether the road at the current position is nearby a road at
      *         {@code position}
      */
     boolean isNearby(RoadPosition other);
 
     /**
-     * @param position
+     * @param position the position to check
      * @return true if this road is near the property in the given position.
      */
     boolean isNearToProperty(PropertyPosition position);

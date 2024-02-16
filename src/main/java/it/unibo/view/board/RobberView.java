@@ -26,7 +26,7 @@ public final class RobberView {
     /**
      * RobberView.
      * 
-     * @param controller
+     * @param controller the main controller
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public RobberView(final MainController controller) {

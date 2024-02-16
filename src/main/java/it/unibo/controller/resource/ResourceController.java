@@ -45,21 +45,18 @@ public interface ResourceController {
             Map<ResourceType, Integer> wantedResources);
 
     /**
-     * 
-     * @param owner
+     * @param owner owner of the resources
      * @return all the resources owned by the owner.
      */
     int getResourcesAmount(String owner);
 
-    /***
-     * 
-     * @param amount
+    /**
+     * @param amount the number of resources of a player.
      * @return the amount of card that the player must discard.
      */
     int getResourcesToDiscard(int amount);
 
     /**
-     * 
      * @param proposer          is the player that propose the trade
      * @param accepter          is the player that accept the trade
      * @param proposedResources are the resources that the proposer give to the
@@ -95,7 +92,7 @@ public interface ResourceController {
 
     /**
      * 
-     * @param player
+     * @param player the player that has to discard
      * @return whether the player should discard cards.
      */
     boolean shouldDiscard(String player);
