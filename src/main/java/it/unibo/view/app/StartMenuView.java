@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.app;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * Application.
  */
-public class Menu {
+public class StartMenuView {
     private final Stage stage;
     private final ObservableList<String> players = FXCollections.observableArrayList();
 
@@ -36,7 +36,7 @@ public class Menu {
      * 
      * @param stage the stage
      */
-    public Menu(final Stage stage) {
+    public StartMenuView(final Stage stage) {
         this.stage = stage;
 
     }
@@ -56,7 +56,7 @@ public class Menu {
     private void addPlayer(final int size, final ObservableList<String> list, final TextField textfield,
             final Alert alert) {
         if (size < 4) {
-            if (list.contains(textfield.getText()) || "bank".equals(textfield.getText())) {
+            if (list.contains(textfield.getText())) {
                 alert.setHeaderText("You cannot choose this name");
                 alert.showAndWait();
             } else {

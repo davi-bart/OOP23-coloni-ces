@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.app;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +14,11 @@ import java.util.Map;
 
 import it.unibo.controller.main.MainController;
 import it.unibo.controller.main.MainControllerImpl;
+import it.unibo.view.board.BoardView;
+import it.unibo.view.log.LogView;
+import it.unibo.view.player.CurrentPlayerView;
+import it.unibo.view.player.PlayersView;
+import it.unibo.view.resource.BankView;
 
 /**
  * Application.

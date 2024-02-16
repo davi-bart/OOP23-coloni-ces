@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.app;
 
 import it.unibo.controller.main.MainController;
 import javafx.scene.Scene;

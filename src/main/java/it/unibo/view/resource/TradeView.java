@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.resource;
 
 import java.util.HashMap;
 import java.util.List;

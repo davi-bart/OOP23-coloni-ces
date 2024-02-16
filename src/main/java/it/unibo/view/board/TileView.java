@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.board;
 
 import java.util.Locale;
 
@@ -52,11 +52,12 @@ public final class TileView extends Group {
      * Draws the tile.
      */
     public void draw() {
-        final Pair<Double, Double> pos = Utility.getPositionFromTile(coordinates.getRow(), coordinates.getCol());
+        final Pair<Double, Double> pos = Coordinates.getPositionFromTile(coordinates.getRow(), coordinates.getCol());
         final double x = pos.getLeft();
         final double y = pos.getRight();
-        final Polygon hexagon = getHexagon(Utility.HEXAGON_RADIUS, x, y);
-        hexagon.setFill(new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
+        final Polygon hexagon = getHexagon(Coordinates.HEXAGON_RADIUS, x, y);
+        hexagon.setFill(
+                new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
         hexagon.setOnMouseClicked(eventHandler);
         super.getChildren().add(hexagon);
         if (terrainType != TerrainType.DESERT) {
@@ -69,8 +70,8 @@ public final class TileView extends Group {
         }
         final var robberPosition = controller.getBoardController().getRobberPosition();
         if (robberPosition.equals(coordinates)) {
-            final Image robber = new Image("imgs/robber/robber.png", Utility.HEXAGON_RADIUS / 2,
-                    Utility.HEXAGON_RADIUS / 2, true, true);
+            final Image robber = new Image("imgs/robber/robber.png", Coordinates.HEXAGON_RADIUS / 2,
+                    Coordinates.HEXAGON_RADIUS / 2, true, true);
             final ImageView robberView = new ImageView(robber);
             robberView.setTranslateX(x - robber.getWidth() / 2);
             robberView.setTranslateY(y + robber.getHeight() / 2);
@@ -88,7 +89,7 @@ public final class TileView extends Group {
      */
     private Polygon getHexagon(final double radius, final double x, final double y) {
         final Polygon hex = new Polygon();
-        for (final var point : Utility.getHexagonCoordinates(radius, x, y)) {
+        for (final var point : Coordinates.getHexagonCoordinates(radius, x, y)) {
             hex.getPoints().addAll(point.getKey(), point.getValue());
         }
         return hex;

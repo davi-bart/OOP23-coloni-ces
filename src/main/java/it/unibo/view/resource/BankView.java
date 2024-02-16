@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.resource;
 
 import it.unibo.controller.main.MainController;
 import javafx.scene.layout.HBox;

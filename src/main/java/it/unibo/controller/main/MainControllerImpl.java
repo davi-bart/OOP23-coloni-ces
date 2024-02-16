@@ -21,7 +21,7 @@ import it.unibo.controller.turn.TurnControllerImpl;
 import it.unibo.model.GameManager;
 import it.unibo.model.GameManagerImpl;
 import it.unibo.model.player.Player;
-import it.unibo.view.AppView;
+import it.unibo.view.app.AppView;
 
 /**
  * Main controller implementation.

@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.log;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.TableColumn;

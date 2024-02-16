@@ -1,5 +1,6 @@
 package it.unibo.view;
 
+import it.unibo.view.app.StartMenuView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -16,7 +17,7 @@ public class JavaFXApp extends Application {
      */
     @Override
     public void start(final Stage stage) throws Exception {
-        final Menu menu = new Menu(stage);
+        final StartMenuView menu = new StartMenuView(stage);
         menu.draw();
     }
 

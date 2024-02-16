@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.board;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -53,9 +53,10 @@ public final class RoadView extends Line {
     }
 
     private void setLine(final RoadPosition position) {
-        final Pair<Double, Double> pos = Utility.getPositionFromTile(position.getCoordinates().getRow(),
+        final Pair<Double, Double> pos = Coordinates.getPositionFromTile(position.getCoordinates().getRow(),
                 position.getCoordinates().getCol());
-        final var endpoints = Utility.getRoadCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(),
+        final var endpoints = Coordinates.getRoadCoordinates(Coordinates.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2),
+                pos.getLeft(),
                 pos.getRight(), position.getDirection());
         super.setStartX(endpoints.getLeft().getLeft());
         super.setStartY(endpoints.getLeft().getRight());

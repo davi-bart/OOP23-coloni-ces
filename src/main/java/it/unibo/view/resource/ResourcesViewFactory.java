@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.resource;
 
 import java.util.Locale;
 import java.util.stream.Collectors;

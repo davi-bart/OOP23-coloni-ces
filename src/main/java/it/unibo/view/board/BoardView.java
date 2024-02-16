@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.board;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.board;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +10,16 @@ import it.unibo.common.property.PropertyDirection;
 import it.unibo.common.road.RoadDirection;
 
 /**
- * Utility class.
+ * Utility class for managing coordinates of roads,tiles and properties.
  */
-public final class Utility {
+public final class Coordinates {
     private static final int SIDES = 6;
     /**
      * The radius of the hexagon in pixels.
      */
     public static final int HEXAGON_RADIUS = 70;
 
-    private Utility() {
+    private Coordinates() {
     }
 
     /**

@@ -1,4 +1,4 @@
-package it.unibo.view;
+package it.unibo.view.board;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import it.unibo.common.tile.ResourceType;
 import it.unibo.controller.main.MainController;
+import it.unibo.view.resource.ResourcesViewFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

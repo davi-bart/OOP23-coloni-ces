@@ -1,6 +1,9 @@
-package it.unibo.view;
+package it.unibo.view.player;
 
 import it.unibo.controller.main.MainController;
+import it.unibo.view.board.RobberView;
+import it.unibo.view.resource.ResourcesViewFactory;
+import it.unibo.view.resource.TradeView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
