@@ -45,16 +45,10 @@ public interface ResourceController {
             Map<ResourceType, Integer> wantedResources);
 
     /**
-     * @param owner owner of the resources
-     * @return all the resources owned by the owner.
-     */
-    int getResourcesAmount(String owner);
-
-    /**
-     * @param amount the number of resources of a player.
+     * @param playerName name of the player.
      * @return the amount of card that the player must discard.
      */
-    int getResourcesToDiscard(int amount);
+    int getResourcesToDiscard(String playerName);
 
     /**
      * @param proposer          is the player that propose the trade

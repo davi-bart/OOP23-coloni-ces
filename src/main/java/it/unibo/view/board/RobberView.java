@@ -82,8 +82,7 @@ public final class RobberView {
         });
 
         resourcesContainer.getChildren().add(new Label("Select card(s) to discard "
-                + controller.getResourceController()
-                        .getResourcesToDiscard(controller.getResourceController().getResourcesAmount(player))
+                + controller.getResourceController().getResourcesToDiscard(player)
                 + " cards"));
         resourcesContainer.getChildren().add(discardResourcesBox);
         discardContainer.getChildren().add(resourcesContainer);

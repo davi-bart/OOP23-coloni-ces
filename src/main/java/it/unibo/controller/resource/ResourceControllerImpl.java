@@ -56,11 +56,6 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public int getResourcesAmount(final String owner) {
-        return resourceManager.getResourcesAmount(getPlayerByName.apply(owner));
-    }
-
-    @Override
     public boolean canTradeWithPlayer(final String proposer, final String accepter,
             final Map<ResourceType, Integer> proposedResources, final Map<ResourceType, Integer> wantedResources) {
         return resourceManager.canTrade(getPlayerByName.apply(proposer), getPlayerByName.apply(accepter),
@@ -76,13 +71,13 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public int getResourcesToDiscard(final int amount) {
-        return resourceManager.getResourcesToDiscard(amount);
+    public int getResourcesToDiscard(final String player) {
+        return resourceManager.getAmountToDiscard(getPlayerByName.apply(player));
     }
 
     @Override
     public boolean canDiscard(final String proposer, final Map<ResourceType, Integer> discardResources) {
-        return resourceManager.canDiscard(getPlayerByName.apply(proposer),
+        return resourceManager.isValidDiscard(getPlayerByName.apply(proposer),
                 discardResources.values().stream().mapToInt(Integer::intValue).sum());
     }
 
