@@ -38,6 +38,13 @@ public interface ResourceManager {
     int getResource(ResourceOwner owner, ResourceType resource);
 
     /**
+     * 
+     * @param owner
+     * @return all the resources owned by the owner.
+     */
+    int getResourcesAmount(ResourceOwner owner);
+
+    /**
      * Modify the resources of the owners into the trade.
      * 
      * @param proposer         is the owner that propose the trade
@@ -47,7 +54,7 @@ public interface ResourceManager {
      * @param wantedResources  are the resources that the accepter give to the
      *                         proposer
      */
-    void acceptTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
+    void trade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
             Map<ResourceType, Integer> wantedResources);
 
     /**
@@ -83,4 +90,26 @@ public interface ResourceManager {
      */
     boolean canTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
             Map<ResourceType, Integer> wantedResources);
+
+    /***
+     * 
+     * @param amount
+     * @return the amount of card that the player must discard.
+     */
+    int getResourcesToDiscard(int amount);
+
+    /**
+     * 
+     * @param proposer
+     * @param amount
+     * @return whether the player proposer can discard the amount.
+     */
+    boolean canDiscard(ResourceOwner proposer, int amount);
+
+    /**
+     * 
+     * @param playerName
+     * @return whether the player shold discard cards.
+     */
+    boolean shouldDiscard(ResourceOwner playerName);
 }

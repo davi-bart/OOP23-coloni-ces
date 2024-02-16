@@ -74,7 +74,7 @@ class ResourceManagerTest {
         assertTrue(resourceManager.hasResources(PLAYER1, recivingResource));
         givingResource.put(ResourceType.LUMBER, 2);
         givingResource.put(ResourceType.ORE, 4);
-        resourceManager.acceptTrade(PLAYER2, PLAYER1, givingResource, recivingResource);
+        resourceManager.trade(PLAYER2, PLAYER1, givingResource, recivingResource);
         assertEquals(3, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
         assertEquals(2, resourceManager.getResource(PLAYER1, ResourceType.WOOL));
         assertEquals(3, resourceManager.getResource(PLAYER2, ResourceType.LUMBER));

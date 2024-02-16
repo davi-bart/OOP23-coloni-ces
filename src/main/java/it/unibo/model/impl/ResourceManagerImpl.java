@@ -17,6 +17,7 @@ public final class ResourceManagerImpl implements ResourceManager {
 
     private final Map<ResourceOwner, Map<ResourceType, Integer>> allEntityResources = new HashMap<>();
     private final ResourceOwner bank;
+    static final int DISCARD_THRESHOLD = 7;
 
     /**
      * Create the ResourceManager from the list of the resource owner(such as
@@ -55,7 +56,7 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public void acceptTrade(final ResourceOwner proposer, final ResourceOwner accepter,
+    public void trade(final ResourceOwner proposer, final ResourceOwner accepter,
             final Map<ResourceType, Integer> givingResouces,
             final Map<ResourceType, Integer> recivingResources) {
 
@@ -93,6 +94,9 @@ public final class ResourceManagerImpl implements ResourceManager {
     @Override
     public boolean canTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
             Map<ResourceType, Integer> wantedResources) {
+        /**
+         * 
+         */
         initializeResourceMap(proposedResouces);
         initializeResourceMap(wantedResources);
         if (proposedResouces.values().stream().allMatch(amount -> amount == 0)
@@ -113,6 +117,29 @@ public final class ResourceManagerImpl implements ResourceManager {
 
     private void initializeResourceMap(final Map<ResourceType, Integer> map) {
         List.of(ResourceType.values()).forEach(resource -> map.putIfAbsent(resource, 0));
+    }
+
+    @Override
+    public int getResourcesToDiscard(int amount) {
+        if (amount <= DISCARD_THRESHOLD) {
+            return 0;
+        }
+        return amount / 2;
+    }
+
+    @Override
+    public boolean canDiscard(ResourceOwner proposer, int amount) {
+        return amount == getResourcesToDiscard(getResourcesAmount(proposer));
+    }
+
+    @Override
+    public int getResourcesAmount(ResourceOwner owner) {
+        return getResources(owner).values().stream().mapToInt(Integer::intValue).sum();
+    }
+
+    @Override
+    public boolean shouldDiscard(ResourceOwner playerName) {
+        return getResourcesAmount(playerName) > DISCARD_THRESHOLD;
     }
 
 }
