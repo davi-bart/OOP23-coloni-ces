@@ -135,11 +135,6 @@ public interface MainController {
             Map<ResourceType, Integer> wantedResources);
 
     /**
-     * @return the bank name
-     */
-    String getBank();
-
-    /**
      * Set the robber in the specified position, removing it from the previous
      * location.
      * 

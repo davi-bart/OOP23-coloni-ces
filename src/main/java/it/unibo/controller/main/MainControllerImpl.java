@@ -167,11 +167,6 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public String getBank() {
-        return "bank";
-    }
-
-    @Override
     public void setRobberPosition(final TilePosition coordinates) {
         this.boardController.setRobberPosition(coordinates);
         this.mustPlaceRobber = false;
