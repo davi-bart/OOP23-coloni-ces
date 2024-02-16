@@ -1,7 +1,6 @@
 package it.unibo.view.board;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -59,7 +58,6 @@ public final class RobberView {
         final HBox discardResourcesBox = new HBox();
         final Button confirm = new Button("Confirm");
         final Map<ResourceType, Integer> discardResources = new HashMap<>();
-        List.of(ResourceType.values()).forEach(resource -> discardResources.put(resource, 0));
 
         final Runnable reloadConfirmButton = () -> {
             confirm.setDisable(!controller.getResourceController().canDiscard(player, discardResources));

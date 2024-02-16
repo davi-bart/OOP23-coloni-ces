@@ -96,11 +96,6 @@ public final class ResourceManagerImpl implements ResourceManager {
     public boolean canTrade(final ResourceOwner proposer, final ResourceOwner accepter,
             final Map<ResourceType, Integer> proposedResources,
             final Map<ResourceType, Integer> wantedResources) {
-        /**
-         * 
-         */
-        initializeResourceMap(proposedResources);
-        initializeResourceMap(wantedResources);
         if (proposedResources.values().stream().allMatch(amount -> amount == 0)
                 && wantedResources.values().stream().allMatch(amount -> amount == 0)) {
             return false;
@@ -115,10 +110,6 @@ public final class ResourceManagerImpl implements ResourceManager {
         }
         return !(proposedResources.values().stream().allMatch(amount -> amount == 0)
                 || wantedResources.values().stream().allMatch(amount -> amount == 0));
-    }
-
-    private void initializeResourceMap(final Map<ResourceType, Integer> map) {
-        List.of(ResourceType.values()).forEach(resource -> map.putIfAbsent(resource, 0));
     }
 
     @Override
@@ -145,7 +136,8 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     /**
-     * Bank.
+     * Bank. 
+     * 
      */
     private final class Bank implements ResourceOwner {
 

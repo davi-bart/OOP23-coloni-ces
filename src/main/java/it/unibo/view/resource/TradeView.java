@@ -1,8 +1,7 @@
 package it.unibo.view.resource;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+    import java.util.Map;
 import java.util.stream.Stream;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -62,9 +61,7 @@ public final class TradeView {
         final HBox wantedResourcesBox = new HBox();
 
         final Map<ResourceType, Integer> wantedResources = new HashMap<>();
-        List.of(ResourceType.values()).forEach(resource -> wantedResources.put(resource, 0));
         final Map<ResourceType, Integer> proposedResources = new HashMap<>();
-        List.of(ResourceType.values()).forEach(resource -> proposedResources.put(resource, 0));
         final Map<Button, Runnable> buttonToAction = new HashMap<>();
         final Runnable reloadBankTradeButton = getBankTradeButtonAction(tradeBank, proposedResources, wantedResources);
         final Map<String, Button> playerToButton = new HashMap<>();
