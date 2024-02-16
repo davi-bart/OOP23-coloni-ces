@@ -107,7 +107,7 @@ public class Menu {
                 stage.close();
                 new AppViewImpl(stage, players).draw();
             } else {
-                popUp.setHeaderText("You need atleast one player to start the game");
+                popUp.setHeaderText("You need at least one player to start the game");
                 popUp.showAndWait();
             }
 

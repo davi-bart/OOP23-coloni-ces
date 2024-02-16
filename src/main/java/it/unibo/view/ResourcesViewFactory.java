@@ -57,12 +57,11 @@ public final class ResourcesViewFactory {
     }
 
     /**
-     * 
      * @param resource resource type.
      * @param amount   amount of resource.
      * @param listener action to perform on change.
      * @return the image view of the needed resource with a combobox representing
-     *         the amout.
+     *         the amount.
      */
     public static VBox resourceAndComboBox(final ResourceType resource, final int amount,
             final ChangeListener<Integer> listener) {

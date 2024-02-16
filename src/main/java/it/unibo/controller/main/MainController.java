@@ -58,13 +58,13 @@ public interface MainController {
     void buildRoad(RoadPosition position);
 
     /**
-     * The current player buys a developement card.
+     * The current player buys a development card.
      */
     void buyCard();
 
     /**
      * @return whether the current player can build a settlement
-     * @param position where to build the settlemet
+     * @param position where to build the settlement
      */
     boolean canBuildSettlement(PropertyPosition position);
 
@@ -81,7 +81,7 @@ public interface MainController {
     boolean canBuildRoad(RoadPosition position);
 
     /**
-     * @return whether the current player can buy a developement card.
+     * @return whether the current player can buy a development card.
      */
     boolean canBuyCard();
 
