@@ -3,7 +3,25 @@ package it.unibo.common.tile;
 /**
  * ResourceType.
  */
-// CHECKSTYLE: JavadocVariable OFF
 public enum ResourceType {
-    BRICK, GRAIN, LUMBER, ORE, WOOL;
+    /**
+     * Brick, produced by hill.
+     */
+    BRICK,
+    /**
+     * Grain, produced by field.
+     */
+    GRAIN,
+    /**
+     * Lumber, produced by forest.
+     */
+    LUMBER,
+    /**
+     * Ore, produced by mountain.
+     */
+    ORE,
+    /**
+     * Wool, produced by pasture.
+     */
+    WOOL;
 }

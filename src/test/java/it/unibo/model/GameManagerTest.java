@@ -15,7 +15,6 @@ import it.unibo.common.road.RoadPositionImpl;
 import it.unibo.common.tile.ResourceType;
 import it.unibo.common.tile.TilePosition;
 import it.unibo.common.tile.TilePositionImpl;
-import it.unibo.model.mapgenerator.BeginnerGameMapGenerator;
 import it.unibo.model.player.Player;
 import it.unibo.model.player.PlayerImpl;
 
@@ -83,7 +82,9 @@ class GameManagerTest {
         gameManager.getResourceManager().addResources(player, Recipes.getSettlementResources());
     }
 
-    private void addResourcesForCity(final GameManager gameManager, final Player player) {
-        gameManager.getResourceManager().addResources(player, Recipes.getCityResources());
-    }
+    // private void addResourcesForCity(final GameManager gameManager, final Player
+    // player) {
+    // gameManager.getResourceManager().addResources(player,
+    // Recipes.getCityResources());
+    // }
 }

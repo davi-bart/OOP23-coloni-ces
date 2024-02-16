@@ -78,7 +78,7 @@ public interface ResourceManager {
             Map<ResourceType, Integer> wantedResources);
 
     /**
-     * @param amount the total number of resources of a player.
+     * @param player that must discard.
      * @return the amount of card that the player must discard.
      */
     int getAmountToDiscard(ResourceOwner player);

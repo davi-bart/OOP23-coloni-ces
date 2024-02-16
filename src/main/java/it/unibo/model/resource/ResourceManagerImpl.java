@@ -114,7 +114,7 @@ public final class ResourceManagerImpl implements ResourceManager {
 
     @Override
     public int getAmountToDiscard(final ResourceOwner player) {
-        int amount = getResourcesAmount(player);
+        final int amount = getResourcesAmount(player);
         if (amount <= DISCARD_THRESHOLD) {
             return 0;
         }
@@ -136,10 +136,9 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     /**
-     * Bank. 
-     * 
+     * Bank.
      */
-    private final class Bank implements ResourceOwner {
+    private static final class Bank implements ResourceOwner {
 
     }
 }

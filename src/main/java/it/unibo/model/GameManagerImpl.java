@@ -41,6 +41,7 @@ import it.unibo.model.turn.TurnManagerImpl;
 /**
  * Implementation of GameManager.
  */
+@SuppressWarnings("PMD.AvoidDuplicateLiterals") // Triggered by the suppressed warning string.
 public final class GameManagerImpl implements GameManager {
     private final DevelopmentCards developmentCards;
     private final PropertyManager propertyManager;
@@ -54,7 +55,6 @@ public final class GameManagerImpl implements GameManager {
 
     /**
      * @param playersNames list of players' names
-     * @see #GameManagerImpl(MapType,List,int)
      */
     public GameManagerImpl(final List<String> playersNames) {
         playersNames.forEach(name -> players.add(new PlayerImpl(name)));
@@ -337,7 +337,7 @@ public final class GameManagerImpl implements GameManager {
      * Class which represents the settings of the game customized by players, which
      * are the amount of points necessary to win and the type of map to play with.
      */
-    private class GameSettings {
+    private static final class GameSettings {
 
         private enum MapType {
             /**
@@ -352,7 +352,7 @@ public final class GameManagerImpl implements GameManager {
 
         private static final String DEFAULT_MAP_FIELD = "beginner";
         private static final MapType DEFAULT_MAP_TYPE = MapType.BEGINNER;
-        private static final Map<String, MapType> fieldToMapType = Map.of(DEFAULT_MAP_FIELD, DEFAULT_MAP_TYPE,
+        private static final Map<String, MapType> FIELD_TO_MAP_TYPE = Map.of(DEFAULT_MAP_FIELD, DEFAULT_MAP_TYPE,
                 "random", MapType.RANDOM);
         private static final int DEFAULT_POINTS = 10;
 
@@ -368,10 +368,10 @@ public final class GameManagerImpl implements GameManager {
             try {
                 final ObjectMapper objectMapper = new ObjectMapper();
                 final JsonNode settings = objectMapper.readTree(ClassLoader.getSystemResourceAsStream(settingsPath));
-                final String MAP_FIELD_NAME = "map";
-                final String POINTS_FIELD_NAME = "points";
-                setMapType(Optional.ofNullable(settings.get(MAP_FIELD_NAME)));
-                setPoints(Optional.ofNullable(settings.get(POINTS_FIELD_NAME)));
+                final String mapFieldName = "map";
+                final String pointsFieldName = "points";
+                setMapType(Optional.ofNullable(settings.get(mapFieldName)));
+                setPoints(Optional.ofNullable(settings.get(pointsFieldName)));
             } catch (IOException e) {
                 setDefaultMapType();
                 setDefaultPoints();
@@ -389,9 +389,9 @@ public final class GameManagerImpl implements GameManager {
             };
         }
 
-        private void setMapType(Optional<JsonNode> selectedMap) {
+        private void setMapType(final Optional<JsonNode> selectedMap) {
             if (selectedMap.isPresent()) {
-                mapType = fieldToMapType.getOrDefault(
+                mapType = FIELD_TO_MAP_TYPE.getOrDefault(
                         selectedMap.get().asText(DEFAULT_MAP_FIELD).toLowerCase(Locale.US),
                         DEFAULT_MAP_TYPE);
             } else {
@@ -403,7 +403,7 @@ public final class GameManagerImpl implements GameManager {
             mapType = DEFAULT_MAP_TYPE;
         }
 
-        private void setPoints(Optional<JsonNode> selectedPoints) {
+        private void setPoints(final Optional<JsonNode> selectedPoints) {
             if (selectedPoints.isPresent()) {
                 points = selectedPoints.get().asInt(DEFAULT_POINTS);
             } else {
