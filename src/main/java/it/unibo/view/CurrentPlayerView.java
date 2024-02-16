@@ -64,10 +64,13 @@ public final class CurrentPlayerView extends HBox {
      * Draw only the resources amount of the current player.
      */
     public void drawResources() {
-        controller.getPlayerResources(controller.getCurrentPlayer()).entrySet().forEach(entry -> {
-            super.getChildren().remove(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue()));
-            super.getChildren().add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue()));
-        });
+        controller.getResourceController().getPlayerResources(controller.getCurrentPlayer()).entrySet()
+                .forEach(entry -> {
+                    super.getChildren()
+                            .remove(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue()));
+                    super.getChildren()
+                            .add(ResourcesViewFactory.getResourceLabelAmount(entry.getKey(), entry.getValue()));
+                });
     }
 
     private Button getEndTurnButton() {

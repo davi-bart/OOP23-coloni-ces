@@ -24,7 +24,6 @@ import javafx.stage.Stage;
  */
 public final class RobberView {
     private final MainController controller;
-    private int sum;
 
     /**
      * RobberView.
@@ -42,18 +41,16 @@ public final class RobberView {
     public void evokeRobber() {
         if (controller.mustPlaceRobber()) {
             controller.getPlayerNames().forEach(player -> {
-                sum = controller.getResourceController().getResources(player).entrySet().stream()
-                        .mapToInt(e -> e.getValue()).sum();
-                if (sum > 7) {
-                    showRobberStage(player);
+                if (controller.getResourceController().shouldDiscard(player)) {
+                    showDiscardStage(player);
                 }
             });
         }
     }
 
-    private void showRobberStage(final String player) {
+    private void showDiscardStage(final String player) {
         final Stage stage = new Stage();
-        stage.setTitle("Robber window of " + player);
+        stage.setTitle("Discard window of " + player);
         final VBox resourcesContainer = new VBox();
         final HBox discardContainer = new HBox();
         final HBox discardResourcesBox = new HBox();
@@ -62,33 +59,28 @@ public final class RobberView {
         List.of(ResourceType.values()).forEach(resource -> discardResources.put(resource, 0));
 
         final Runnable reloadConfirmButton = () -> {
-            boolean enable = true;
-            if (discardResources.entrySet().stream()
-                    .mapToInt(e -> e.getValue())
-                    .sum() < controller.getResourceController().getResources(player).entrySet().stream()
-                            .mapToInt(e -> e.getValue()).sum() / 2) {
-                enable = false;
-            }
-            confirm.setDisable(!enable);
+            confirm.setDisable(!controller.getResourceController().canDiscard(player, discardResources));
         };
 
+        reloadConfirmButton.run();
         Stream.of(ResourceType.values()).forEach(resource -> {
             discardResourcesBox.getChildren().add(resourceAndComboBox(resource,
-                    controller.getPlayerResources(player).get(resource),
+                    controller.getResourceController().getPlayerResources(player).get(resource),
                     (options, oldValue, newValue) -> {
                         discardResources.put(resource, newValue);
                         reloadConfirmButton.run();
                     }));
         });
-        reloadConfirmButton.run();
+
         confirm.setOnMouseClicked(e -> {
-            controller.acceptTrade(player, controller.getBank(), discardResources, new HashMap<>());
+            controller.tradeWithBank(player, discardResources,
+                    new HashMap<>());
             stage.close();
         });
 
         resourcesContainer.getChildren().add(new Label("Select card(s) to discard "
-                + controller.getResourceController().getResources(player).entrySet().stream()
-                        .mapToInt(e -> e.getValue()).sum() / 2
+                + controller.getResourceController()
+                        .getResourcesToDiscard(controller.getResourceController().getResourcesAmount(player))
                 + " cards"));
         resourcesContainer.getChildren().add(discardResourcesBox);
         discardContainer.getChildren().add(resourcesContainer);

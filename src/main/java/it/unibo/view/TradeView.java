@@ -44,11 +44,7 @@ public final class TradeView {
      */
     public Button getTradeButton() {
         final Button tradeButton = new Button("Trade");
-        tradeButton.setOnMouseClicked(event -> {
-            if (controller.getTurnController().getCycle() > 2) {
-                showTradeStage();
-            }
-        });
+        tradeButton.setOnMouseClicked(event -> showTradeStage());
         if (!controller.canStartTrade()) {
             tradeButton.setDisable(true);
         }
@@ -71,37 +67,31 @@ public final class TradeView {
         List.of(ResourceType.values()).forEach(resource -> wantedResources.put(resource, 0));
         final Map<ResourceType, Integer> proposedResources = new HashMap<>();
         List.of(ResourceType.values()).forEach(resource -> proposedResources.put(resource, 0));
+        Map<Button, Runnable> buttonToAction = new HashMap<>();
 
         final Map<String, Button> playerToButton = new HashMap<>();
         controller.getPlayerNames().stream().filter(playerName -> !playerName.equals(controller.getCurrentPlayer()))
                 .forEach(playerName -> {
                     final Button acceptTradeButton = new Button("Accept trade");
                     acceptTradeButton.setOnMouseClicked(e -> {
-                        controller.acceptTrade(controller.getCurrentPlayer(), playerName,
+                        controller.tradeWithPlayer(controller.getCurrentPlayer(), playerName,
                                 proposedResources, wantedResources);
                         stage.close();
                     });
                     playerToButton.put(playerName, acceptTradeButton);
+                    buttonToAction.put(acceptTradeButton,
+                            setTradePlayerButton(acceptTradeButton, playerName, proposedResources, wantedResources));
                 });
 
         final Runnable reloadBankTradeButton = () -> {
-            boolean enable = true;
-            if (!proposedResources.values().stream().anyMatch(amount -> amount == 4)) {
-                enable = false;
-            }
-            if (proposedResources.values().stream().mapToInt(i -> i).sum() != 4) {
-                enable = false;
-            }
-            if (wantedResources.values().stream().mapToInt(i -> i).sum() != 1) {
-                enable = false;
-            }
-            tradeBank.setDisable(!enable);
+            tradeBank.setDisable(!controller.getResourceController().canTradeWithBank(controller.getCurrentPlayer(),
+                    proposedResources, wantedResources));
         };
-
         reloadBankTradeButton.run();
+        buttonToAction.forEach((button, action) -> action.run());
         Stream.of(ResourceType.values()).forEach(resource -> {
             proposedResourcesBox.getChildren().add(resourceAndComboBox(resource,
-                    controller.getPlayerResources(controller.getCurrentPlayer()).get(resource),
+                    controller.getResourceController().getPlayerResources(controller.getCurrentPlayer()).get(resource),
                     (options, oldValue, newValue) -> {
                         proposedResources.put(resource, newValue);
                         reloadBankTradeButton.run();
@@ -109,18 +99,13 @@ public final class TradeView {
             wantedResourcesBox.getChildren().add(resourceAndComboBox(resource,
                     defaultWantedResources, (options, oldValue, newValue) -> {
                         wantedResources.put(resource, newValue);
-                        playerToButton.forEach((playerName, button) -> {
-                            if (!controller.hasResources(playerName, wantedResources)) {
-                                button.setDisable(true);
-                            } else {
-                                button.setDisable(false);
-                            }
-                        });
+                        buttonToAction.forEach((button, action) -> action.run());
                         reloadBankTradeButton.run();
                     }));
         });
+
         tradeBank.setOnMouseClicked(e -> {
-            controller.acceptTrade(controller.getCurrentPlayer(), controller.getBank(), proposedResources,
+            controller.tradeWithBank(controller.getCurrentPlayer(), proposedResources,
                     wantedResources);
             stage.close();
         });
@@ -159,5 +144,14 @@ public final class TradeView {
         comboBox.getSelectionModel().selectedItemProperty().addListener(listener);
         resourceBox.getChildren().add(comboBox);
         return resourceBox;
+    }
+
+    private Runnable setTradePlayerButton(final Button button, final String playerName,
+            final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
+        return () -> {
+            button.setDisable(!controller.getResourceController().canTradeWithPlayer(
+                    controller.getCurrentPlayer(), playerName, proposedResources, wantedResources));
+        };
     }
 }
