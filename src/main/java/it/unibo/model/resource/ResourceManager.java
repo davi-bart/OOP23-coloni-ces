@@ -18,7 +18,7 @@ public interface ResourceManager {
      * @param amount   amount of resource
      */
     void addResources(ResourceOwner owner, ResourceType resource, int amount);
-
+        
     /**
      * Remove the given amount of the given resource to the given owner.
      * 

@@ -54,13 +54,13 @@ public final class ResourceManagerImpl implements ResourceManager {
 
     @Override
     public void trade(final ResourceOwner proposer, final ResourceOwner accepter,
-            final Map<ResourceType, Integer> givingResouces,
-            final Map<ResourceType, Integer> recivingResources) {
-        givingResouces.entrySet().forEach(resource -> {
+            final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
+        proposedResources.entrySet().forEach(resource -> {
             removeResources(proposer, resource.getKey(), resource.getValue());
             addResources(accepter, resource.getKey(), resource.getValue());
         });
-        recivingResources.entrySet().forEach(resource -> {
+        wantedResources.entrySet().forEach(resource -> {
             addResources(proposer, resource.getKey(), resource.getValue());
             removeResources(accepter, resource.getKey(), resource.getValue());
         });

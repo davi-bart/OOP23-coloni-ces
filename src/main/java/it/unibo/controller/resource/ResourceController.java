@@ -9,10 +9,10 @@ import it.unibo.common.tile.ResourceType;
  */
 public interface ResourceController {
     /**
-     * @param owner is the owner.
+     * @param player is the owner.
      * @return a map with all the resources that the passed owner has.
      */
-    Map<ResourceType, Integer> getPlayerResources(String owner);
+    Map<ResourceType, Integer> getPlayerResources(String player);
 
     /**
      * @return the bank resources
