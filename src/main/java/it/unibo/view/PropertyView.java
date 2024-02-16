@@ -1,6 +1,5 @@
 package it.unibo.view;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -8,9 +7,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.property.PropertyType;
 import it.unibo.controller.main.MainController;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -90,11 +86,5 @@ public final class PropertyView extends Circle {
                         position.getDirection());
         super.setCenterX(center.getLeft());
         super.setCenterY(center.getRight());
-    }
-
-    private boolean warningPropertyAlert() {
-        final Alert alert = ResourcesViewFactory.getAlert("Are you sure you want to build a property here?");
-        final Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get().equals(ButtonType.OK);
     }
 }
