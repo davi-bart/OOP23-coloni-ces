@@ -16,27 +16,6 @@ import it.unibo.controller.resource.ResourceController;
  * Main controller.
  */
 public interface MainController {
-    /**
-     * @return the board controller
-     */
-    BoardController getBoardController();
-
-    /**
-     * @return the resource controller
-     */
-    ResourceController getResourceController();
-
-    /**
-     * @return the list of the players' names
-     */
-    List<String> getPlayerNames();
-
-    /**
-     * Build a settlement in the given position.
-     * 
-     * @param position where to build the settlement.
-     */
-    void buildSettlement(PropertyPosition position);
 
     /**
      * Build a city in the given position.
@@ -44,6 +23,13 @@ public interface MainController {
      * @param position where to build the city.
      */
     void buildCity(PropertyPosition position);
+
+    /**
+     * Build a settlement in the given position.
+     * 
+     * @param position where to build the settlement.
+     */
+    void buildSettlement(PropertyPosition position);
 
     /**
      * Build a road in the given position.
@@ -58,16 +44,16 @@ public interface MainController {
     void buyCard();
 
     /**
-     * @return whether the current player can build a settlement
-     * @param position where to build the settlement
-     */
-    boolean canBuildSettlement(PropertyPosition position);
-
-    /**
      * @return whether the current player can build a city
      * @param position where to build the city
      */
     boolean canBuildCity(PropertyPosition position);
+
+    /**
+     * @return whether the current player can build a settlement
+     * @param position where to build the settlement
+     */
+    boolean canBuildSettlement(PropertyPosition position);
 
     /**
      * @return whether the current player can build a road
@@ -81,27 +67,29 @@ public interface MainController {
     boolean canBuyCard();
 
     /**
-     * @return get the name of the player currently playing.
-     */
-    String getCurrentPlayerName();
-
-    /**
-     * get the points of the specified player.
-     * 
-     * @param player the player
-     * @return the points of the player
-     */
-    int getPlayerPoints(String player);
-
-    /**
      * @return whether the current player can end the turn
      */
     boolean canEndTurn();
 
     /**
-     * @return whether the current player can start a trade.
+     * Set the robber in the specified position, removing it from the previous
+     * location.
+     * 
+     * @param coordinates coordinates of the new robber's position
      */
-    boolean canStartTrade();
+    void setRobberPosition(TilePosition coordinates);
+
+    /**
+     * 
+     * @return true if the player must place the robber.
+     */
+    boolean mustPlaceRobber();
+
+    /**
+     * 
+     * @return the dice roll.
+     */
+    Pair<Integer, Integer> rollDie();
 
     /**
      * 
@@ -123,31 +111,6 @@ public interface MainController {
             Map<ResourceType, Integer> wantedResources);
 
     /**
-     * Set the robber in the specified position, removing it from the previous
-     * location.
-     * 
-     * @param coordinates coordinates of the new robber's position
-     */
-    void setRobberPosition(TilePosition coordinates);
-
-    /**
-     * 
-     * @return true if the player must place the robber.
-     */
-    boolean mustPlaceRobber();
-
-    /**
-     * end the current turn and updates the current player.
-     */
-    void endTurn();
-
-    /**
-     * 
-     * @return the dice roll.
-     */
-    Pair<Integer, Integer> rollDie();
-
-    /**
      * Modify the resources of the owners into the trade (player and bank).
      * 
      * @param proposer          is the player that propose the trade
@@ -158,4 +121,42 @@ public interface MainController {
      */
     void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
+
+    /**
+     * @return whether the current player can start a trade.
+     */
+    boolean canStartTrade();
+
+    /**
+     * end the current turn and updates the current player.
+     */
+    void endTurn();
+
+    /**
+     * @return the board controller
+     */
+    BoardController getBoardController();
+
+    /**
+     * @return the resource controller
+     */
+    ResourceController getResourceController();
+
+    /**
+     * @return the list of the players' names
+     */
+    List<String> getPlayerNames();
+
+    /**
+     * @return get the name of the player currently playing.
+     */
+    String getCurrentPlayerName();
+
+    /**
+     * get the points of the specified player.
+     * 
+     * @param player the player
+     * @return the points of the player
+     */
+    int getPlayerPoints(String player);
 }
