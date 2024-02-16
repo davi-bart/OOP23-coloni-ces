@@ -3,6 +3,7 @@ package it.unibo.view;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.HashMap;
 
 import it.unibo.common.tile.TilePosition;
@@ -66,7 +67,10 @@ public final class BoardView extends StackPane {
     private List<PropertyView> drawProperties() {
         final List<PropertyView> properties = new ArrayList<>();
         this.controller.getBoardController().getAllPropertyPositions().forEach(pos -> properties.add(
-                new PropertyView(controller, pos, () -> playerColors.get(controller.getCurrentPlayerName()))));
+                new PropertyView(controller, pos, (p) -> {
+                    Optional<String> playerName = controller.getBoardController().getPropertyOwner(p);
+                    return playerName.isPresent() ? playerColors.get(playerName.get()) : Color.GRAY;
+                })));
         return properties;
     }
 }

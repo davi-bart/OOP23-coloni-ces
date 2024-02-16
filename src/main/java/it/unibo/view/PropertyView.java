@@ -1,6 +1,6 @@
 package it.unibo.view;
 
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -21,37 +21,32 @@ import javafx.scene.shape.Circle;
 public final class PropertyView extends Circle {
     private final MainController controller;
     private final PropertyPosition propertyPosition;
-    private PropertyType propertyType;
-    private Color currentColor;
-    private final Supplier<Color> getCurrentColor;
+    private final Function<PropertyPosition, Color> getPropertyColor;
 
     /**
      * Constructor.
      * 
      * @param controller       the main controller
      * @param propertyPosition the position of the property
-     * @param getCurrentColor  the supplier of the current color
+     * @param getPropertyColor get the color of the property
      */
     public PropertyView(final MainController controller, final PropertyPosition propertyPosition,
-            final Supplier<Color> getCurrentColor) {
+            final Function<PropertyPosition, Color> getPropertyColor) {
         this.controller = controller;
         this.propertyPosition = propertyPosition;
-        this.propertyType = PropertyType.EMPTY;
-        this.currentColor = Color.GRAY;
-        this.getCurrentColor = getCurrentColor;
+        this.getPropertyColor = getPropertyColor;
         draw();
     }
 
     private void draw() {
+        final PropertyType propertyType = controller.getBoardController().getPropertyType(propertyPosition);
         setCircle(propertyPosition);
         if (propertyType == PropertyType.EMPTY) {
             super.setRadius(12);
-            super.setFill(currentColor);
+            super.setFill(getPropertyColor.apply(propertyPosition));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (controller.canBuildSettlement(propertyPosition)) {
-                    this.currentColor = getCurrentColor.get();
                     controller.buildSettlement(propertyPosition);
-                    this.propertyType = controller.getBoardController().getPropertyType(propertyPosition);
                     draw();
                 }
             });
@@ -59,20 +54,18 @@ public final class PropertyView extends Circle {
             super.setRadius(26);
             final Image img = new Image("imgs/property/settlement.png");
             super.setFill(new ImagePattern(img));
-            super.setEffect(new Lighting(new Light.Distant(45, 45, currentColor)));
+            super.setEffect(new Lighting(new Light.Distant(45, 45, getPropertyColor.apply(propertyPosition))));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (controller.canBuildCity(propertyPosition)) {
                     controller.buildCity(propertyPosition);
-                    this.propertyType = controller.getBoardController().getPropertyType(propertyPosition);
                     draw();
                 }
             });
-
         } else if (propertyType == PropertyType.CITY) {
             super.setRadius(26);
             final Image img = new Image("imgs/property/city.png");
             super.setFill(new ImagePattern(img));
-            super.setEffect(new Lighting(new Light.Distant(45, 45, currentColor)));
+            super.setEffect(new Lighting(new Light.Distant(45, 45, getPropertyColor.apply(propertyPosition))));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
             });
         }
@@ -81,9 +74,8 @@ public final class PropertyView extends Circle {
     private void setCircle(final PropertyPosition position) {
         final Pair<Double, Double> pos = Utility.getPositionFromTile(position.getTilePosition().getRow(),
                 position.getTilePosition().getCol());
-        final var center = Utility
-                .getPropertyCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
-                        position.getDirection());
+        final var center = Utility.getPropertyCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2),
+                pos.getLeft(), pos.getRight(), position.getDirection());
         super.setCenterX(center.getLeft());
         super.setCenterY(center.getRight());
     }
