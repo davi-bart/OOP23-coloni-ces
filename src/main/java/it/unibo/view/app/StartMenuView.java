@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -84,6 +85,7 @@ public class StartMenuView {
      */
     public Scene getScene() {
         final BorderPane root = new BorderPane();
+        final ComboBox<String> mapChoice = new ComboBox<>();
         final VBox playBox = new VBox();
         final Button playButton = new Button("PLAY");
         final Button addButton = new Button("ADD PLAYER");
@@ -104,7 +106,6 @@ public class StartMenuView {
 
         playButton.setOnMouseClicked(e -> {
             if (players.size() >= 1) {
-                stage.close();
                 new AppViewImpl(stage, players).draw();
             } else {
                 popUp.setHeaderText("You need at least one player to start the game");
@@ -131,9 +132,12 @@ public class StartMenuView {
 
         tableView.setItems(players);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        mapChoice.setPromptText("Choose a map");
+        mapChoice.getItems().add("Beginner Map");
+        mapChoice.getItems().add("Random Map");
         textField.setPromptText("Insert player name");
         textField.setMaxSize(maxTextAreaWidth, maxTextAreaHeight);
-        playBox.getChildren().addAll(textField, addButton, tableView, playButton);
+        playBox.getChildren().addAll(textField, addButton, tableView, playButton, mapChoice);
         playBox.setSpacing(childrenSpacing);
         tableView.setPlaceholder(new Label(""));
 
