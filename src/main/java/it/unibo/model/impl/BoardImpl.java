@@ -3,8 +3,8 @@ package it.unibo.model.impl;
 import java.util.List;
 import java.util.Map;
 
-import it.unibo.common.api.tile.TerrainType;
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.tile.TerrainType;
+import it.unibo.common.tile.TilePosition;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;

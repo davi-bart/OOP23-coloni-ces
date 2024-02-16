@@ -6,11 +6,11 @@ import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.card.CardType;
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.road.RoadPosition;
-import it.unibo.common.api.tile.ResourceType;
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.card.CardType;
+import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.road.RoadPosition;
+import it.unibo.common.tile.ResourceType;
+import it.unibo.common.tile.TilePosition;
 import it.unibo.controller.api.BoardController;
 import it.unibo.controller.api.MainController;
 import it.unibo.controller.api.ResourceController;

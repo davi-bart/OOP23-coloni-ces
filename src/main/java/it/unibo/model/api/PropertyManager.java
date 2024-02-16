@@ -3,8 +3,8 @@ package it.unibo.model.api;
 import java.util.List;
 import java.util.Set;
 
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.property.PropertyType;
+import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.property.PropertyType;
 
 /**
  * Property manager.

@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.property.PropertyType;
+import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.property.PropertyType;
 import it.unibo.controller.api.MainController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

@@ -4,8 +4,8 @@ import java.util.Locale;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.tile.TerrainType;
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.tile.TerrainType;
+import it.unibo.common.tile.TilePosition;
 import it.unibo.controller.api.MainController;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;

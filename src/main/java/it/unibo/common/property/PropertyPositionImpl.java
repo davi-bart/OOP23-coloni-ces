@@ -1,9 +1,7 @@
-package it.unibo.common.impl.property;
+package it.unibo.common.property;
 
-import it.unibo.common.api.property.PropertyDirection;
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.tile.TilePosition;
-import it.unibo.common.impl.tile.TilePositionImpl;
+import it.unibo.common.tile.TilePosition;
+import it.unibo.common.tile.TilePositionImpl;
 
 import java.util.ArrayList;
 import java.util.List;

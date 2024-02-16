@@ -3,7 +3,7 @@ package it.unibo.model.api;
 import java.util.Optional;
 import java.util.Set;
 
-import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.road.RoadPosition;
 
 /**
  * Road manager.

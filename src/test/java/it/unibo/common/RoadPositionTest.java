@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.common.api.road.RoadDirection;
-import it.unibo.common.api.road.RoadPosition;
-import it.unibo.common.impl.road.RoadPositionImpl;
-import it.unibo.common.impl.tile.TilePositionImpl;
+import it.unibo.common.road.RoadDirection;
+import it.unibo.common.road.RoadPosition;
+import it.unibo.common.road.RoadPositionImpl;
+import it.unibo.common.tile.TilePositionImpl;
 
 /**
  * Test class for RoadPosition.

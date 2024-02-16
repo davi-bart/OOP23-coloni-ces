@@ -10,9 +10,9 @@ import java.util.stream.IntStream;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.tile.TerrainType;
-import it.unibo.common.api.tile.TilePosition;
-import it.unibo.common.impl.tile.TilePositionImpl;
+import it.unibo.common.tile.TerrainType;
+import it.unibo.common.tile.TilePosition;
+import it.unibo.common.tile.TilePositionImpl;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;
 

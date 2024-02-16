@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.common.api.property.PropertyDirection;
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.impl.property.PropertyPositionImpl;
-import it.unibo.common.impl.tile.TilePositionImpl;
+import it.unibo.common.property.PropertyDirection;
+import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.property.PropertyPositionImpl;
+import it.unibo.common.tile.TilePositionImpl;
 
 /**
  * Test class for PropertyPosition.

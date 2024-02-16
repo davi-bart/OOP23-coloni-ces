@@ -1,8 +1,8 @@
-package it.unibo.common.impl;
+package it.unibo.common;
 
 import java.util.Map;
 
-import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.tile.ResourceType;
 
 /**
  * Utility class used for getting the amount of resources needed to perform

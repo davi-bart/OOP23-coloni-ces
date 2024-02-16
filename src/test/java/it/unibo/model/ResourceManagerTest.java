@@ -10,7 +10,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.tile.ResourceType;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.ResourceManager;
 import it.unibo.model.impl.PlayerImpl;

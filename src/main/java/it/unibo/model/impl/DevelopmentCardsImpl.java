@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.Map;
 
-import it.unibo.common.api.card.CardType;
+import it.unibo.common.card.CardType;
 import it.unibo.model.api.DevelopmentCards;
 
 /**

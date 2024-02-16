@@ -1,11 +1,9 @@
-package it.unibo.common.impl.tile;
+package it.unibo.common.tile;
 
 import java.util.Objects;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-
-import it.unibo.common.api.tile.TilePosition;
 
 /**
  * Implementation of a tile position.

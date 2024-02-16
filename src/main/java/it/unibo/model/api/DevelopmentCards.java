@@ -1,6 +1,6 @@
 package it.unibo.model.api;
 
-import it.unibo.common.api.card.CardType;
+import it.unibo.common.card.CardType;
 
 /**
  * DevelopmentCards interface.

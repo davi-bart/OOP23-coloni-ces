@@ -3,9 +3,9 @@ package it.unibo.model.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.unibo.common.api.tile.TerrainType;
-import it.unibo.common.api.tile.TilePosition;
-import it.unibo.common.impl.tile.TilePositionImpl;
+import it.unibo.common.tile.TerrainType;
+import it.unibo.common.tile.TilePosition;
+import it.unibo.common.tile.TilePositionImpl;
 import it.unibo.model.api.GameMapGenerator;
 import it.unibo.model.api.Tile;
 

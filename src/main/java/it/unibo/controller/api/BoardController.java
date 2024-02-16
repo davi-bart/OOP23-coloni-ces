@@ -5,11 +5,11 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.property.PropertyType;
-import it.unibo.common.api.road.RoadPosition;
-import it.unibo.common.api.tile.TerrainType;
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.property.PropertyType;
+import it.unibo.common.road.RoadPosition;
+import it.unibo.common.tile.TerrainType;
+import it.unibo.common.tile.TilePosition;
 
 /**
  * Board controller.

@@ -1,12 +1,10 @@
-package it.unibo.common.impl.road;
+package it.unibo.common.road;
 
-import it.unibo.common.api.property.PropertyDirection;
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.road.RoadDirection;
-import it.unibo.common.api.road.RoadPosition;
-import it.unibo.common.api.tile.TilePosition;
-import it.unibo.common.impl.property.PropertyPositionImpl;
-import it.unibo.common.impl.tile.TilePositionImpl;
+import it.unibo.common.property.PropertyDirection;
+import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.property.PropertyPositionImpl;
+import it.unibo.common.tile.TilePosition;
+import it.unibo.common.tile.TilePositionImpl;
 
 import java.util.ArrayList;
 import java.util.List;

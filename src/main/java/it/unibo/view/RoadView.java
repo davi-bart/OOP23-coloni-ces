@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.road.RoadPosition;
 import it.unibo.controller.api.MainController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

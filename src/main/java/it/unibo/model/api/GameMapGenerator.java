@@ -2,7 +2,7 @@ package it.unibo.model.api;
 
 import java.util.Map;
 
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.tile.TilePosition;
 
 /**
  * Game map generator.

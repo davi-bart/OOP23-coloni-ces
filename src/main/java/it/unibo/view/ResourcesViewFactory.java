@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.tile.ResourceType;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;

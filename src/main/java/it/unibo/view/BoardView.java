@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.tile.TilePosition;
 import it.unibo.controller.api.MainController;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;

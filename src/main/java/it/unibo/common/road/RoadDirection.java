@@ -1,4 +1,4 @@
-package it.unibo.common.api.road;
+package it.unibo.common.road;
 
 /**
  * RoadDirection.

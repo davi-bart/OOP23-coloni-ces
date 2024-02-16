@@ -9,8 +9,8 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.common.api.tile.TerrainType;
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.tile.TerrainType;
+import it.unibo.common.tile.TilePosition;
 import it.unibo.model.api.Board;
 import it.unibo.model.impl.BeginnerGameMapGenerator;
 import it.unibo.model.impl.BoardImpl;

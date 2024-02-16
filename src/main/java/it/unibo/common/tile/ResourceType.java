@@ -1,4 +1,4 @@
-package it.unibo.common.api.tile;
+package it.unibo.common.tile;
 
 /**
  * ResourceType.

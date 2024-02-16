@@ -1,4 +1,4 @@
-package it.unibo.common.api.property;
+package it.unibo.common.property;
 
 /**
  * PropertyDirection.

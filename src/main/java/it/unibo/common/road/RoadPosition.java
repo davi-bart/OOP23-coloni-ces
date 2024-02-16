@@ -1,9 +1,9 @@
-package it.unibo.common.api.road;
+package it.unibo.common.road;
 
 import java.util.List;
 
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.tile.TilePosition;
 
 /**
  * Road position.

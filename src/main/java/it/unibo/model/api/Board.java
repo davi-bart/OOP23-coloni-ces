@@ -2,8 +2,8 @@ package it.unibo.model.api;
 
 import java.util.List;
 
-import it.unibo.common.api.tile.TerrainType;
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.tile.TerrainType;
+import it.unibo.common.tile.TilePosition;
 
 /**
  * Game board.

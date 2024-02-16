@@ -2,7 +2,7 @@ package it.unibo.model.api;
 
 import java.util.Map;
 
-import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.tile.ResourceType;
 
 /**
  * A manager that monitor the amount of resources of all players, by adding or

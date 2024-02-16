@@ -3,7 +3,7 @@ package it.unibo.model.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import it.unibo.common.api.tile.ResourceType;
+import it.unibo.common.tile.ResourceType;
 import it.unibo.model.api.ResourceOwner;
 
 /**

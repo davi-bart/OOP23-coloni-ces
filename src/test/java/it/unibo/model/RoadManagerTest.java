@@ -8,9 +8,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.common.api.road.RoadDirection;
-import it.unibo.common.impl.road.RoadPositionImpl;
-import it.unibo.common.impl.tile.TilePositionImpl;
+import it.unibo.common.road.RoadDirection;
+import it.unibo.common.road.RoadPositionImpl;
+import it.unibo.common.tile.TilePositionImpl;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.RoadManager;
 import it.unibo.model.impl.PlayerImpl;

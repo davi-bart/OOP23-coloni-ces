@@ -1,8 +1,8 @@
-package it.unibo.common.api.property;
+package it.unibo.common.property;
 
 import java.util.List;
 
-import it.unibo.common.api.tile.TilePosition;
+import it.unibo.common.tile.TilePosition;
 
 /**
  * Interface for the position of a property.

@@ -1,4 +1,4 @@
-package it.unibo.common.api.card;
+package it.unibo.common.card;
 
 /**
  * CardType.

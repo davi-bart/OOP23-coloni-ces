@@ -10,8 +10,8 @@ import org.jgrapht.alg.shortestpath.AllDirectedPaths;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.road.RoadPosition;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.Road;
 import it.unibo.model.api.RoadManager;

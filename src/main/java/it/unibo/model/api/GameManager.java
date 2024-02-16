@@ -2,9 +2,9 @@ package it.unibo.model.api;
 
 import java.util.List;
 
-import it.unibo.common.api.card.CardType;
-import it.unibo.common.api.property.PropertyPosition;
-import it.unibo.common.api.road.RoadPosition;
+import it.unibo.common.card.CardType;
+import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.road.RoadPosition;
 
 /**
  * GameManager.

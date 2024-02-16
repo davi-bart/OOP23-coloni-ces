@@ -1,6 +1,6 @@
 package it.unibo.model.impl;
 
-import it.unibo.common.api.tile.TerrainType;
+import it.unibo.common.tile.TerrainType;
 import it.unibo.model.api.Tile;
 
 /**
