@@ -93,8 +93,7 @@ public final class PropertyView extends Circle {
     }
 
     private boolean warningPropertyAlert() {
-        final Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText("Are you sure to build here?");
+        final Alert alert = ResourcesViewFactory.getAlert("Are you sure you want to build a property here?");
         final Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get().equals(ButtonType.OK);
     }

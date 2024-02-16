@@ -74,8 +74,7 @@ public final class RoadView extends Line {
     }
 
     private boolean warningPropertyStage() {
-        final Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText("Are you sure to build here?");
+        final Alert alert = ResourcesViewFactory.getAlert("Are you sure you want to build a road here?");
         final Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get().equals(ButtonType.OK);
     }

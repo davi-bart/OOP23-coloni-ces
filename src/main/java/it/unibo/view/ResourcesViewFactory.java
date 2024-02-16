@@ -4,7 +4,9 @@ import java.util.Locale;
 
 import it.unibo.common.api.tile.ResourceType;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -48,5 +50,11 @@ public final class ResourcesViewFactory {
         amountLabel.setAlignment(Pos.CENTER);
         resourceAndAmount.getChildren().add(amountLabel);
         return resourceAndAmount;
+    }
+
+    public static Alert getAlert(final String text) {
+        final Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setHeaderText(text);
+        return alert;
     }
 }
