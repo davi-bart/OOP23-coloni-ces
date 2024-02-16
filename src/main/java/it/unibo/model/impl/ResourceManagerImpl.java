@@ -92,8 +92,9 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public boolean canTrade(ResourceOwner proposer, ResourceOwner accepter, Map<ResourceType, Integer> proposedResouces,
-            Map<ResourceType, Integer> wantedResources) {
+    public boolean canTrade(final ResourceOwner proposer, final ResourceOwner accepter,
+            final Map<ResourceType, Integer> proposedResouces,
+            final Map<ResourceType, Integer> wantedResources) {
         /**
          * 
          */
@@ -120,7 +121,7 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public int getResourcesToDiscard(int amount) {
+    public int getResourcesToDiscard(final int amount) {
         if (amount <= DISCARD_THRESHOLD) {
             return 0;
         }
@@ -128,18 +129,18 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public boolean canDiscard(ResourceOwner proposer, int amount) {
+    public boolean canDiscard(final ResourceOwner proposer, final int amount) {
         return amount == getResourcesToDiscard(getResourcesAmount(proposer));
     }
 
     @Override
-    public int getResourcesAmount(ResourceOwner owner) {
+    public int getResourcesAmount(final ResourceOwner owner) {
         return getResources(owner).values().stream().mapToInt(Integer::intValue).sum();
     }
 
     @Override
-    public boolean shouldDiscard(ResourceOwner playerName) {
-        return getResourcesAmount(playerName) > DISCARD_THRESHOLD;
+    public boolean shouldDiscard(final ResourceOwner player) {
+        return getResourcesAmount(player) > DISCARD_THRESHOLD;
     }
 
 }

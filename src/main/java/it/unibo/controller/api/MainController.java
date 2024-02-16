@@ -162,6 +162,15 @@ public interface MainController {
      */
     Pair<Integer, Integer> rollDie();
 
-    void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
+    /**
+     * Modify the resources of the owners into the trade (player and bank).
+     * 
+     * @param proposer          is the player that propose the trade
+     * @param proposedResources are the resources that the proposer give to the
+     *                          bank
+     * @param wantedResources   are the resources that the bank give to the
+     *                          proposer
+     */
+    void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 }

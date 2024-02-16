@@ -63,8 +63,8 @@ public final class TradeView {
         List.of(ResourceType.values()).forEach(resource -> wantedResources.put(resource, 0));
         final Map<ResourceType, Integer> proposedResources = new HashMap<>();
         List.of(ResourceType.values()).forEach(resource -> proposedResources.put(resource, 0));
-        Map<Button, Runnable> buttonToAction = new HashMap<>();
-
+        final Map<Button, Runnable> buttonToAction = new HashMap<>();
+        final Runnable reloadBankTradeButton = getBankTradeButtonAction(tradeBank, proposedResources, wantedResources);
         final Map<String, Button> playerToButton = new HashMap<>();
         controller.getPlayerNames().stream().filter(playerName -> !playerName.equals(controller.getCurrentPlayer()))
                 .forEach(playerName -> {
@@ -76,13 +76,10 @@ public final class TradeView {
                     });
                     playerToButton.put(playerName, acceptTradeButton);
                     buttonToAction.put(acceptTradeButton,
-                            setTradePlayerButton(acceptTradeButton, playerName, proposedResources, wantedResources));
+                            getPlayerTradeButtonAction(acceptTradeButton, playerName, proposedResources,
+                                    wantedResources));
                 });
 
-        final Runnable reloadBankTradeButton = () -> {
-            tradeBank.setDisable(!controller.getResourceController().canTradeWithBank(controller.getCurrentPlayer(),
-                    proposedResources, wantedResources));
-        };
         reloadBankTradeButton.run();
         buttonToAction.forEach((button, action) -> action.run());
         Stream.of(ResourceType.values()).forEach(resource -> {
@@ -130,12 +127,21 @@ public final class TradeView {
         stage.show();
     }
 
-    private Runnable setTradePlayerButton(final Button button, final String playerName,
+    private Runnable getPlayerTradeButtonAction(final Button button, final String playerName,
             final Map<ResourceType, Integer> proposedResources,
             final Map<ResourceType, Integer> wantedResources) {
         return () -> {
             button.setDisable(!controller.getResourceController().canTradeWithPlayer(
                     controller.getCurrentPlayer(), playerName, proposedResources, wantedResources));
+        };
+    }
+
+    private Runnable getBankTradeButtonAction(final Button tradeBank,
+            final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
+        return () -> {
+            tradeBank.setDisable(!controller.getResourceController().canTradeWithBank(controller.getCurrentPlayer(),
+                    proposedResources, wantedResources));
         };
     }
 }

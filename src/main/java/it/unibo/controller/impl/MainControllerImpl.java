@@ -30,6 +30,7 @@ public final class MainControllerImpl implements MainController {
     private final TurnController turnController;
     private final AppView appView;
     private boolean mustPlaceRobber;
+    private static final int ROBBER_NUMBER = 7;
 
     /**
      * Constructor of the controller.
@@ -99,7 +100,7 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void buyCard() {
-        CardType card = gameManager.buyCard(turnController.getCurrentPlayerTurn());
+        final CardType card = gameManager.buyCard(turnController.getCurrentPlayerTurn());
         if (card.equals(CardType.KNIGHT)) {
             mustPlaceRobber = true;
         }
@@ -184,14 +185,14 @@ public final class MainControllerImpl implements MainController {
     public Pair<Integer, Integer> rollDie() {
         final Pair<Integer, Integer> rolledDies = turnController.rollDie();
         produceResources(rolledDies.getLeft() + rolledDies.getRight());
-        mustPlaceRobber = (rolledDies.getLeft() + rolledDies.getRight()) == 7;
+        mustPlaceRobber = rolledDies.getLeft() + rolledDies.getRight() == ROBBER_NUMBER;
         return rolledDies;
     }
 
     @Override
-    public void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
-            Map<ResourceType, Integer> wantedResources) {
-        this.resourceController.tradeWithBank(proposer, proposedResouces, wantedResources);
+    public void tradeWithBank(final String proposer, final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
+        this.resourceController.tradeWithBank(proposer, proposedResources, wantedResources);
         redrawResourcesView();
 
     }

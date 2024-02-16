@@ -45,6 +45,7 @@ public interface GameManager {
      * Player {@code player} buys a development card.
      * 
      * @param player the player who wants to buy a card
+     * @return return the card
      */
     CardType buyCard(Player player);
 

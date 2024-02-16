@@ -76,7 +76,7 @@ public final class RoadManagerImpl implements RoadManager {
                 .forEach(nearPosition -> graph.addEdge(propertyPos, nearPosition)));
 
         final AllDirectedPaths<PropertyPosition, DefaultEdge> allPaths = new AllDirectedPaths<>(graph);
-        return allPaths.getAllPaths(propertyPositions, propertyPositions, true, 20).stream()
+        return allPaths.getAllPaths(propertyPositions, propertyPositions, true, null).stream()
                 .mapToInt(graphPath -> graphPath.getLength()).reduce(0, Integer::max);
     }
 
@@ -95,7 +95,7 @@ public final class RoadManagerImpl implements RoadManager {
     private void checkLongestRoadOwner(final Player player) {
         final int minimumLongestRoadLength = 5;
         final int longestRoadVictoryPoints = 2;
-        if ((longestRoadOwner.isEmpty() && getLongestRoadLength(player) >= minimumLongestRoadLength)
+        if (longestRoadOwner.isEmpty() && getLongestRoadLength(player) >= minimumLongestRoadLength
                 || (longestRoadOwner.isPresent() && !player.equals(longestRoadOwner.get())
                         && getLongestRoadLength(player) > getLongestRoadLength(longestRoadOwner.get()))) {
             if (longestRoadOwner.isPresent()) {

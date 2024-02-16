@@ -50,11 +50,11 @@ public final class ResourceControllerImpl implements ResourceController {
 
     @Override
     public void tradeWithPlayer(final String proposer, final String accepter,
-            final Map<ResourceType, Integer> givingResouces,
-            final Map<ResourceType, Integer> recivingResources) {
+            final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
         resourceManager.trade(getPlayerByName.apply(proposer), getPlayerByName.apply(accepter),
-                givingResouces,
-                recivingResources);
+                proposedResources,
+                wantedResources);
     }
 
     @Override
@@ -63,40 +63,40 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public boolean canTradeWithPlayer(String proposer, String accepter,
-            Map<ResourceType, Integer> proposedResouces, Map<ResourceType, Integer> wantedResources) {
+    public boolean canTradeWithPlayer(final String proposer, final String accepter,
+            final Map<ResourceType, Integer> proposedResources, final Map<ResourceType, Integer> wantedResources) {
         return resourceManager.canTrade(getPlayerByName.apply(proposer), getPlayerByName.apply(accepter),
-                proposedResouces, wantedResources);
+                proposedResources, wantedResources);
     }
 
     @Override
-    public boolean canTradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
-            Map<ResourceType, Integer> wantedResources) {
+    public boolean canTradeWithBank(final String proposer, final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
         return resourceManager.canTrade(getPlayerByName.apply(proposer), resourceManager.getBank(),
-                proposedResouces,
+                proposedResources,
                 wantedResources);
     }
 
     @Override
-    public int getResourcesToDiscard(int amount) {
+    public int getResourcesToDiscard(final int amount) {
         return resourceManager.getResourcesToDiscard(amount);
     }
 
     @Override
-    public boolean canDiscard(String proposer, Map<ResourceType, Integer> discardResources) {
+    public boolean canDiscard(final String proposer, final Map<ResourceType, Integer> discardResources) {
         return resourceManager.canDiscard(getPlayerByName.apply(proposer),
                 discardResources.values().stream().mapToInt(Integer::intValue).sum());
     }
 
     @Override
-    public boolean shouldDiscard(String playerName) {
+    public boolean shouldDiscard(final String playerName) {
         return resourceManager.shouldDiscard(getPlayerByName.apply(playerName));
     }
 
     @Override
-    public void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
-            Map<ResourceType, Integer> wantedResources) {
-        resourceManager.trade(getPlayerByName.apply(proposer), resourceManager.getBank(), proposedResouces,
+    public void tradeWithBank(final String proposer, final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
+        resourceManager.trade(getPlayerByName.apply(proposer), resourceManager.getBank(), proposedResources,
                 wantedResources);
     }
 

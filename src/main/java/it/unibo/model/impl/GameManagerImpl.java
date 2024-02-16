@@ -28,6 +28,7 @@ import it.unibo.model.api.TurnManager;
  */
 public final class GameManagerImpl implements GameManager {
     private static final int DEFAULT_POINTS_TO_WIN = 10;
+    private static final int DEFAULT_BANK_RESOURCES = 19;
 
     private final DevelopmentCards developmentCards;
     private final PropertyManager propertyManager;
@@ -64,7 +65,7 @@ public final class GameManagerImpl implements GameManager {
      * @see GameManagerImpl#GameManagerImpl(GameMapGenerator, List, int)
      */
     public GameManagerImpl(final List<String> playersNames) {
-        this(new RandomGameMapGenerator(), playersNames, DEFAULT_POINTS_TO_WIN, 19);
+        this(new RandomGameMapGenerator(), playersNames, DEFAULT_POINTS_TO_WIN, DEFAULT_BANK_RESOURCES);
     }
 
     @Override
@@ -164,8 +165,8 @@ public final class GameManagerImpl implements GameManager {
                         .forEach((resource, amount) -> resourceManager.addResources(player, resource, amount));
                 break;
             case MONOPOLY:
-                Random random = new Random();
-                ResourceType selectedType = List.of(ResourceType.values())
+                final Random random = new Random();
+                final ResourceType selectedType = List.of(ResourceType.values())
                         .get(random.nextInt(ResourceType.values().length));
                 this.players.stream().filter(p -> !p.equals(player)).forEach(p -> {
                     resourceManager.addResources(player, selectedType, resourceManager.getResource(p, selectedType));
@@ -201,13 +202,12 @@ public final class GameManagerImpl implements GameManager {
 
     @Override
     public boolean canBuildRoad(final RoadPosition position, final Player player) {
-        final int cycle = turnManager.getCycle();
         if (!roadManager.canBuildRoad(position)) {
             return false;
         }
-        if (cycle <= 2) {
+        if (turnManager.getCycle() <= 2) {
             return isRoadNearToAnyPlayerProperty(position, player)
-                    && this.roadManager.getPlayerRoads(player).size() < cycle;
+                    && this.roadManager.getPlayerRoads(player).size() < turnManager.getCycle();
         }
         return (isRoadNearToAnyPlayerRoad(position, player) || isRoadNearToAnyPlayerProperty(position, player))
                 && resourceManager.hasResources(player, Recipes.getRoadResources());

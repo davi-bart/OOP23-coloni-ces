@@ -56,6 +56,14 @@ public final class ResourcesViewFactory {
         return resourceAndAmount;
     }
 
+    /**
+     * 
+     * @param resource resource type.
+     * @param amount   amount of resource.
+     * @param listener action to perform on change.
+     * @return the image view of the needed resource with a combobox representing
+     *         the amout.
+     */
     public static VBox resourceAndComboBox(final ResourceType resource, final int amount,
             final ChangeListener<Integer> listener) {
         final VBox resourceBox = new VBox();
@@ -68,6 +76,11 @@ public final class ResourcesViewFactory {
         return resourceBox;
     }
 
+    /**
+     * 
+     * @param text text to put on the header.
+     * @return an alert with the text on the header.
+     */
     public static Alert getAlert(final String text) {
         final Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setHeaderText(text);

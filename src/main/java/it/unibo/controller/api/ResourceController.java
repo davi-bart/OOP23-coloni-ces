@@ -29,10 +29,10 @@ public interface ResourceController {
     boolean hasResources(String owner, Map<ResourceType, Integer> resources);
 
     /**
-     * Modify the resources of the owners into the trade.
+     * Modify the resources of the players into the trade.
      * 
-     * @param proposer         is the owner that propose the trade
-     * @param accepter         is the owner that accept the trade
+     * @param proposer         is the player that propose the trade
+     * @param accepter         is the player that accept the trade
      * @param proposedResouces are the resources that the proposer give to the
      *                         accepter
      * @param wantedResources  are the resources that the accepter give to the
@@ -42,13 +42,15 @@ public interface ResourceController {
             Map<ResourceType, Integer> wantedResources);
 
     /**
+     * Modify the resources of the owners into the trade (player and bank).
      * 
-     * @param proposer
-     * @param accepter
-     * @param proposedResouces
-     * @param wantedResources
+     * @param proposer          is the player that propose the trade
+     * @param proposedResources are the resources that the proposer give to the
+     *                          bank
+     * @param wantedResources   are the resources that the bank give to the
+     *                          proposer
      */
-    void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
+    void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 
     /**
@@ -65,13 +67,15 @@ public interface ResourceController {
      */
     int getResourcesToDiscard(int amount);
 
-    /***
+    /**
      * 
-     * @param proposer
-     * @param accepter
-     * @param proposedResouces
-     * @param wantedResources
-     * @return
+     * @param proposer         is the player that propose the trade
+     * @param accepter         is the player that accept the trade
+     * @param proposedResouces are the resources that the proposer give to the
+     *                         accepter
+     * @param wantedResources  are the resources that the accepter give to the
+     *                         proposer
+     * @return wheter the two player involved in the trade have the resources.
      */
     boolean canTradeWithPlayer(String proposer, String accepter,
             Map<ResourceType, Integer> proposedResouces,
@@ -79,26 +83,29 @@ public interface ResourceController {
 
     /***
      * 
-     * @param proposer
-     * @param proposedResouces
-     * @param wantedResources
-     * @return
+     * @param proposer         is the player that propose the trade
+     * @param proposedResouces are the resources that the proposer want to give to
+     *                         the
+     *                         bank
+     * @param wantedResources  are the resources that the bank want to give to the
+     *                         proposer
+     * @return wheter the proposer and the bank have the resources.
      */
     boolean canTradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
             Map<ResourceType, Integer> wantedResources);
 
     /**
      * 
-     * @param proposer
-     * @param amount
+     * @param player           player that have to discard
+     * @param discardResources map of the resources
      * @return whether the player proposer can discard the amount.
      */
-    boolean canDiscard(String proposer, Map<ResourceType, Integer> discardResources);
+    boolean canDiscard(String player, Map<ResourceType, Integer> discardResources);
 
     /**
      * 
-     * @param playerName
-     * @return whether the player shold discard cards.
+     * @param player
+     * @return whether the player should discard cards.
      */
-    boolean shouldDiscard(String playerName);
+    boolean shouldDiscard(String player);
 }
