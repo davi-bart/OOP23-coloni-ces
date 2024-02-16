@@ -19,6 +19,7 @@ import it.unibo.model.mapgenerator.BeginnerGameMapGenerator;
 import it.unibo.model.player.Player;
 import it.unibo.model.player.PlayerImpl;
 
+// CHECKSTYLE: MagicNumber OFF
 class GameManagerTest {
 
     @BeforeEach
@@ -29,14 +30,13 @@ class GameManagerTest {
     void testProduceResources() {
         final Player player1 = new PlayerImpl("first");
         final Player player2 = new PlayerImpl("second");
-        GameManager gameManager = new GameManagerImpl(new BeginnerGameMapGenerator(),
+        final GameManager gameManager = new GameManagerImpl(new BeginnerGameMapGenerator(),
                 List.of(player1.getName(), player2.getName()), 10,
                 19);
 
         final TilePosition tile1 = new TilePositionImpl(1, 0);
         final TilePosition tile2 = new TilePositionImpl(3, 2);
         final TilePosition tile3 = new TilePositionImpl(2, 0);
-        final TilePosition tile4 = new TilePositionImpl(4, 2);
 
         // turn 1
         gameManager.buildSettlement(new PropertyPositionImpl(tile1, PropertyDirection.DOWN), player1);

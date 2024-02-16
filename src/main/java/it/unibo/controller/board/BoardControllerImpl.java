@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.property.PropertyDirection;
 import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.property.PropertyPositionImpl;
@@ -38,6 +39,7 @@ public final class BoardControllerImpl implements BoardController {
      * @param propertyManager the property manager
      * @param roadManager     the road manager
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The model objects need to be updated")
     public BoardControllerImpl(final Function<String, Player> getPlayerByName, final Board board,
             final PropertyManager propertyManager, final RoadManager roadManager) {
         this.getPlayerByName = getPlayerByName;

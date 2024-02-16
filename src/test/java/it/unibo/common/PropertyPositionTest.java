@@ -54,5 +54,3 @@ class PropertyPositionTest {
                 assertTrue(property1.isNear(near2));
         }
 }
-
-// CHECKSTYLE: MagicNumber ON

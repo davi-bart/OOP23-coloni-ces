@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.Recipes;
 import it.unibo.common.card.CardType;
 import it.unibo.common.property.PropertyPosition;
@@ -44,6 +45,7 @@ public final class GameManagerImpl implements GameManager {
     private final ResourceManager resourceManager;
     private final Board board;
     private final List<Player> players = new ArrayList<>();
+    private final Random random = new Random();
     private final int pointsToWin;
 
     /**
@@ -76,38 +78,43 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public boolean isGameOver() {
-        return players.stream().anyMatch(p -> p.getVictoryPoints() >= pointsToWin);
-    }
-
-    @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The board needs to be modifiable")
     public Board getBoard() {
         return this.board;
     }
 
     @Override
-    public List<Player> getPlayers() {
-        return new ArrayList<>(this.players);
-    }
-
-    @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The board needs to be modifiable")
     public PropertyManager getPropertyManager() {
         return propertyManager;
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The road manager needs to be modifiable")
     public RoadManager getRoadManager() {
         return roadManager;
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The turn manager needs to be modifiable")
     public TurnManager getTurnManager() {
         return turnManager;
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The resource manager needs to be modifiable")
     public ResourceManager getResourceManager() {
         return resourceManager;
+    }
+
+    @Override
+    public boolean isGameOver() {
+        return players.stream().anyMatch(p -> p.getVictoryPoints() >= pointsToWin);
+    }
+
+    @Override
+    public List<Player> getPlayers() {
+        return new ArrayList<>(this.players);
     }
 
     @Override
@@ -162,7 +169,6 @@ public final class GameManagerImpl implements GameManager {
                 resourceManager.addResources(player, Recipes.getRoadResources());
                 break;
             case MONOPOLY:
-                final Random random = new Random();
                 final ResourceType selectedType = List.of(ResourceType.values())
                         .get(random.nextInt(ResourceType.values().length));
                 this.players.stream().filter(p -> !p.equals(player)).forEach(p -> {

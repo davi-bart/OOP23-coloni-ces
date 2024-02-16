@@ -16,12 +16,13 @@ import it.unibo.model.player.PlayerImpl;
 import it.unibo.model.road.RoadManager;
 import it.unibo.model.road.RoadManagerImpl;
 
+// CHECKSTYLE: MagicNumber OFF
 class RoadManagerTest {
 
-    final RoadManager roadManager = new RoadManagerImpl();
-    final Player player1 = new PlayerImpl("first");
-    final Player player2 = new PlayerImpl("second");
-    final List<Player> players = List.of(player1, player2);
+    private final RoadManager roadManager = new RoadManagerImpl();
+    private final Player player1 = new PlayerImpl("first");
+    private final Player player2 = new PlayerImpl("second");
+    private final List<Player> players = List.of(player1, player2);
 
     @Test
     void testBuildRoad() {

@@ -1,5 +1,6 @@
 package it.unibo.view.resource;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.main.MainController;
 import javafx.scene.layout.HBox;
 
@@ -14,6 +15,7 @@ public final class BankView extends HBox {
      * 
      * @param controller the main controller
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public BankView(final MainController controller) {
         this.controller = controller;
         draw();

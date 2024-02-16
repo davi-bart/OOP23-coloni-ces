@@ -4,6 +4,7 @@ import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.property.PropertyType;
 import it.unibo.controller.main.MainController;
@@ -30,6 +31,7 @@ public final class PropertyView extends Circle {
      * @param propertyPosition the position of the property
      * @param getPropertyColor get the color of the property
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public PropertyView(final MainController controller, final PropertyPosition propertyPosition,
             final Function<PropertyPosition, Color> getPropertyColor) {
         this.controller = controller;

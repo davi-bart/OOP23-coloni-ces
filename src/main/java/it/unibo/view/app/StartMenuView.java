@@ -24,6 +24,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Application.
  */
@@ -36,6 +38,7 @@ public class StartMenuView {
      * 
      * @param stage the stage
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The stage needs to be updated")
     public StartMenuView(final Stage stage) {
         this.stage = stage;
 

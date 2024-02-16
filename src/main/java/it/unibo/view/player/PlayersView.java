@@ -2,6 +2,7 @@ package it.unibo.view.player;
 
 import java.util.Map;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.main.MainController;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -16,9 +17,10 @@ public final class PlayersView extends VBox {
     /**
      * Constructor of BankView.
      * 
-     * @param controller the main controller
+     * @param controller   the main controller
      * @param playerColors the colors of the players
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated from outside")
     public PlayersView(final MainController controller, final Map<String, Color> playerColors) {
         this.controller = controller;
         draw(playerColors);

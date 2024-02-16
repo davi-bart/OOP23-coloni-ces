@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 
+// CHECKSTYLE: MagicNumber OFF
 /**
  * Test class for the player.
  */

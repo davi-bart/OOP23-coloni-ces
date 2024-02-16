@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.main.MainController;
 import it.unibo.controller.main.MainControllerImpl;
 import it.unibo.view.board.BoardView;
@@ -40,6 +41,7 @@ public final class AppViewImpl implements AppView {
      * @param stage   the stage
      * @param players the list of players names
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The stage needs to be updated")
     public AppViewImpl(final Stage stage, final List<String> players) {
         final MainController controller = new MainControllerImpl(this, players);
         final var colors = List.of(Color.RED, Color.ORANGE, Color.LIMEGREEN, Color.MAGENTA);

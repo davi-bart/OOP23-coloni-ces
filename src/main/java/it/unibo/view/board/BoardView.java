@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.HashMap;
 
 import it.unibo.common.tile.TilePosition;
@@ -27,6 +30,7 @@ public final class BoardView extends StackPane {
      * @param controller   the board controller
      * @param playerColors the colors of the players
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public BoardView(final MainController controller, final Map<String, Color> playerColors) {
         this.controller = controller;
         this.playerColors = playerColors;

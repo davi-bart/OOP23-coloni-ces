@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.tile.ResourceType;
 import it.unibo.controller.main.MainController;
 import it.unibo.view.resource.ResourcesViewFactory;
@@ -27,6 +28,7 @@ public final class RobberView {
      * 
      * @param controller
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public RobberView(final MainController controller) {
         this.controller = controller;
     }

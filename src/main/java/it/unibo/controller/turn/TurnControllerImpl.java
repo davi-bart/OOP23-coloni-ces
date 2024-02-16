@@ -2,6 +2,7 @@ package it.unibo.controller.turn;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.player.Player;
 import it.unibo.model.turn.TurnManager;
 
@@ -17,6 +18,7 @@ public final class TurnControllerImpl implements TurnController {
      * 
      * @param turnManager
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The turn manager needs to be updated")
     public TurnControllerImpl(final TurnManager turnManager) {
         this.turnManager = turnManager;
     }

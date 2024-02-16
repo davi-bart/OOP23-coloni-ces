@@ -1,5 +1,6 @@
 package it.unibo.view.app;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.main.MainController;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -22,6 +23,7 @@ public final class EndGameView {
      * @param controller controller
      * @param stage      the stage
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public EndGameView(final MainController controller, final Stage stage) {
         this.controller = controller;
         this.stage = stage;

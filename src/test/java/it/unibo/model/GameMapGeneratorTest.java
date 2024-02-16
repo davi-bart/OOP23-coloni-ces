@@ -141,4 +141,3 @@ class GameMapGeneratorTest {
         assertEquals(positions.size(), 19);
     }
 }
-// CHECKSTYLE: MagicNumber ON

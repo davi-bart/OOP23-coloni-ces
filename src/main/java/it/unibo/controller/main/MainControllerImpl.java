@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.card.CardType;
 import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.road.RoadPosition;
@@ -170,11 +171,13 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The board controller needs to be modifiable")
     public BoardController getBoardController() {
         return this.boardController;
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The resource controller needs to be modifiable")
     public ResourceController getResourceController() {
         return this.resourceController;
     }

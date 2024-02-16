@@ -5,6 +5,7 @@ import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.road.RoadPosition;
 import it.unibo.controller.main.MainController;
 import javafx.scene.input.MouseEvent;
@@ -26,6 +27,7 @@ public final class RoadView extends Line {
      * @param roadPosition the position of the road
      * @param getRoadColor get the color of the property
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public RoadView(final MainController controller, final RoadPosition roadPosition,
             final Function<RoadPosition, Color> getRoadColor) {
         this.controller = controller;

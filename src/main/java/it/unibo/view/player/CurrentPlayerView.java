@@ -1,5 +1,6 @@
 package it.unibo.view.player;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.main.MainController;
 import it.unibo.view.board.RobberView;
 import it.unibo.view.resource.ResourcesViewFactory;
@@ -26,6 +27,7 @@ public final class CurrentPlayerView extends HBox {
      * 
      * @param controller the main controller
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public CurrentPlayerView(final MainController controller) {
         this.controller = controller;
         tradeView = new TradeView(this.controller);

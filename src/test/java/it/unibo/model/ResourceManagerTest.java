@@ -85,6 +85,4 @@ class ResourceManagerTest {
         assertEquals(4, resourceManager.getResource(PLAYER2, ResourceType.ORE));
 
     }
-    // CHECKSTYLE: MagicNumber ON
-
 }

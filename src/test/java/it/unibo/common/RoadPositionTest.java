@@ -42,5 +42,3 @@ class RoadPositionTest {
         assertFalse(road1.isNearby(notNear1));
     }
 }
-
-// CHECKSTYLE: MagicNumber ON

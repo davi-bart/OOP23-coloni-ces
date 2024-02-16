@@ -2,6 +2,9 @@ package it.unibo.controller.resource;
 
 import java.util.Map;
 import java.util.function.Function;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +26,7 @@ public final class ResourceControllerImpl implements ResourceController {
      * @param getPlayerByName the function to get the resource owner by name
      * @param resourceManager the resource manager
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The resource manager needs to be updated")
     public ResourceControllerImpl(final Function<String, Player> getPlayerByName,
             final ResourceManager resourceManager) {
         this.getPlayerByName = getPlayerByName;

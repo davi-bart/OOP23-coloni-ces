@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.tile.TerrainType;
 import it.unibo.common.tile.TilePosition;
 import it.unibo.controller.main.MainController;
@@ -37,6 +38,7 @@ public final class TileView extends Group {
      * @param coordinates  coordinates of the tile
      * @param eventHandler event handler for clicking on the tile
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The controller needs to be updated")
     public TileView(final MainController controller, final TilePosition coordinates,
             final EventHandler<MouseEvent> eventHandler) {
         this.controller = controller;
