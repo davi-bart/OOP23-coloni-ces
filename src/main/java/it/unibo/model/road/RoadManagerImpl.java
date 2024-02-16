@@ -83,6 +83,11 @@ public final class RoadManagerImpl implements RoadManager {
         return longestRoadOwner;
     }
 
+    @Override
+    public Optional<Player> getRoadOwner(final RoadPosition position) {
+        return roads.stream().filter(r -> r.getPosition().equals(position)).findFirst().map(r -> r.getOwner());
+    }
+
     /**
      * Checks whether player {@code player} can become the longest road owner.
      * If that is the case, it updates the longest road owner and the victory
@@ -91,11 +96,8 @@ public final class RoadManagerImpl implements RoadManager {
      * @param player
      */
     private void checkLongestRoadOwner(final Player player) {
-        final int minimumLongestRoadLength = 5;
         final int longestRoadVictoryPoints = 2;
-        if (longestRoadOwner.isEmpty() && getLongestRoadLength(player) >= minimumLongestRoadLength
-                || (longestRoadOwner.isPresent() && !player.equals(longestRoadOwner.get())
-                        && getLongestRoadLength(player) > getLongestRoadLength(longestRoadOwner.get()))) {
+        if (isFirstLongestRoadOwner(player) || isNewLongestRoadOwner(player)) {
             if (longestRoadOwner.isPresent()) {
                 longestRoadOwner.get().decrementVictoryPoints(longestRoadVictoryPoints);
             }
@@ -104,9 +106,14 @@ public final class RoadManagerImpl implements RoadManager {
         }
     }
 
-    @Override
-    public Optional<Player> getRoadOwner(final RoadPosition position) {
-        return roads.stream().filter(r -> r.getPosition().equals(position)).findFirst().map(r -> r.getOwner());
+    private boolean isFirstLongestRoadOwner(final Player player) {
+        final int minimumLongestRoadLength = 5;
+        return longestRoadOwner.isEmpty() && getLongestRoadLength(player) >= minimumLongestRoadLength;
+    }
+
+    private boolean isNewLongestRoadOwner(final Player player) {
+        return longestRoadOwner.isPresent() && !player.equals(longestRoadOwner.get())
+                && getLongestRoadLength(player) > getLongestRoadLength(longestRoadOwner.get());
     }
 
 }
