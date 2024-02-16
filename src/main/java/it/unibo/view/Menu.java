@@ -94,8 +94,6 @@ public class Menu {
         final TableColumn<String, String> playerName = new TableColumn<>("Player Name");
         final int maxTableHeight = 140;
         final int maxTableWidth = 300;
-        final int minTableHeight = 0;
-        final int minTableWidth = 300;
         final int childrenSpacing = 5;
         final int maxTextAreaHeight = 200;
         final int maxTextAreaWidth = 200;
@@ -103,7 +101,6 @@ public class Menu {
         playerName.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue()));
         tableView.getColumns().add(playerName);
         tableView.setMaxSize(maxTableWidth, maxTableHeight);
-        tableView.setMinSize(minTableWidth, minTableHeight);
 
         playButton.setOnMouseClicked(e -> {
             if (players.size() >= 1) {
@@ -133,7 +130,7 @@ public class Menu {
         final Background background = new Background(backgroundImage);
 
         tableView.setItems(players);
-        playerName.prefWidthProperty().bind(tableView.widthProperty());
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         textField.setPromptText("Insert player name");
         textField.setMaxSize(maxTextAreaWidth, maxTextAreaHeight);
         playBox.getChildren().addAll(textField, addButton, tableView, playButton);

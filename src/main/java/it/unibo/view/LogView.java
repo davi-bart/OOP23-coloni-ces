@@ -1,32 +1,36 @@
 package it.unibo.view;
 
-import it.unibo.controller.main.MainController;
-import javafx.scene.control.Label;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * View of the log.
+ */
+public class LogView extends TableView<MessageView> {
+    private final TableColumn<MessageView, String> player = new TableColumn<>("Player Name");
+    private final TableColumn<MessageView, String> message = new TableColumn<>("Message");
 
-public class LogView extends TableView<String>{
-    
-    MainController controller;
-    final TableColumn<String, String> player = new TableColumn<>("Player Name");
-    final TableColumn<String, String> log = new TableColumn<>("Message");
-
-
-
+    /**
+     * Constructor.
+     */
     public LogView() {
-        draw();
-    }
-
-    public void draw(){
+        player.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().playerName()));
+        message.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().message()));
         super.getChildren().clear();
         super.getColumns().add(player);
-        super.getColumns().add(log);
-        super.setPlaceholder(new Label(""));
+        super.getColumns().add(message);
+        super.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    public void update(String playerName, String message){
-        super.getItems().set(0, playerName);
-        super.getItems().set(1, message);
+    /**
+     * Update the log, adding a new message.
+     * 
+     * @param playerName the player name
+     * @param message    the message
+     */
+    public void update(String playerName, String message) {
+        System.out.println("LogView: " + playerName + " " + message);
+        super.getItems().add(0, new MessageView(playerName, message));
     }
 }
