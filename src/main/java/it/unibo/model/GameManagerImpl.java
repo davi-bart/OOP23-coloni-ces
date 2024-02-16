@@ -334,7 +334,8 @@ public final class GameManagerImpl implements GameManager {
     }
 
     /**
-     * Represents
+     * Class which represents the settings of the game customized by players, which
+     * are the amount of points necessary to win and the type of map to play with.
      */
     private class GameSettings {
 
@@ -359,8 +360,7 @@ public final class GameManagerImpl implements GameManager {
         private MapType mapType;
 
         /**
-         * Class which represents the settings of the game customized by players, which
-         * are the amount of points necessary to win and the type of map to play with.
+         * Game settings constructor.
          * 
          * @param settingsPath path of settings file in CLASSPATH
          */
