@@ -135,7 +135,7 @@ public interface MainController {
      * @param wantedResources   are the resources that the accepter give to the
      *                          proposer
      */
-    void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> proposedResources,
+    void tradeWithPlayer(String proposer, String accepter, Map<ResourceType, Integer> proposedResources,
             Map<ResourceType, Integer> wantedResources);
 
     /**
@@ -162,4 +162,7 @@ public interface MainController {
      * @return the dice roll.
      */
     Pair<Integer, Integer> rollDie();
+
+    void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
+            Map<ResourceType, Integer> wantedResources);
 }

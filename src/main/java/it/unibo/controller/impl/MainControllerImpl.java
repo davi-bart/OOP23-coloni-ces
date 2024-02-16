@@ -17,7 +17,6 @@ import it.unibo.controller.api.ResourceController;
 import it.unibo.controller.api.TurnController;
 import it.unibo.model.api.GameManager;
 import it.unibo.model.api.Player;
-import it.unibo.model.api.ResourceOwner;
 import it.unibo.model.impl.GameManagerImpl;
 import it.unibo.view.AppView;
 
@@ -46,17 +45,9 @@ public final class MainControllerImpl implements MainController {
                 .filter(p -> p.getName().equals(name)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
 
-        final Function<String, ResourceOwner> getResourceOwnerByName = name -> {
-            if (name.equals(getBank())) {
-                return gameManager.getResourceManager().getBank();
-            }
-            return gameManager.getPlayers().stream()
-                    .filter(p -> p.getName().equals(name)).findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
-        };
         this.boardController = new BoardControllerImpl(getPlayerByName, this.gameManager.getBoard(),
                 this.gameManager.getPropertyManager(), this.gameManager.getRoadManager());
-        this.resourceController = new ResourceControllerImpl(getResourceOwnerByName, gameManager.getResourceManager());
+        this.resourceController = new ResourceControllerImpl(getPlayerByName, gameManager.getResourceManager());
         this.turnController = new TurnControllerImpl(gameManager.getTurnManager());
     }
 
@@ -169,10 +160,10 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public void acceptTrade(final String proposer, final String accepter,
+    public void tradeWithPlayer(final String proposer, final String accepter,
             final Map<ResourceType, Integer> proposedResources,
             final Map<ResourceType, Integer> wantedResources) {
-        resourceController.acceptTrade(proposer, accepter, proposedResources,
+        resourceController.tradeWithPlayer(proposer, accepter, proposedResources,
                 wantedResources);
         redrawResourcesView();
     }
@@ -210,5 +201,13 @@ public final class MainControllerImpl implements MainController {
         produceResources(rolledDies.getLeft() + rolledDies.getRight());
         mustPlaceRobber = (rolledDies.getLeft() + rolledDies.getRight()) == 7;
         return rolledDies;
+    }
+
+    @Override
+    public void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
+            Map<ResourceType, Integer> wantedResources) {
+        this.resourceController.tradeWithBank(proposer, proposedResouces, wantedResources);
+        redrawResourcesView();
+
     }
 }

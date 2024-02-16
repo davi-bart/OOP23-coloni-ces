@@ -3,7 +3,6 @@ package it.unibo.controller.api;
 import java.util.Map;
 
 import it.unibo.common.api.tile.ResourceType;
-import it.unibo.model.api.ResourceOwner;
 
 /**
  * Resource controller.
@@ -19,13 +18,6 @@ public interface ResourceController {
      * @return the bank resources
      */
     Map<ResourceType, Integer> getBankResources();
-
-    /**
-     * @param owner    is the owner.
-     * @param resource is the resource type.
-     * @return the amount of the given resource of the given owner.
-     */
-    int getOwnerResourceAmount(String owner, ResourceType resource);
 
     /**
      * * Return if the given owner has the given resources.
@@ -46,7 +38,17 @@ public interface ResourceController {
      * @param wantedResources  are the resources that the accepter give to the
      *                         proposer
      */
-    void acceptTrade(String proposer, String accepter, Map<ResourceType, Integer> proposedResouces,
+    void tradeWithPlayer(String proposer, String accepter, Map<ResourceType, Integer> proposedResouces,
+            Map<ResourceType, Integer> wantedResources);
+
+    /**
+     * 
+     * @param proposer
+     * @param accepter
+     * @param proposedResouces
+     * @param wantedResources
+     */
+    void tradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
             Map<ResourceType, Integer> wantedResources);
 
     /**
@@ -54,7 +56,14 @@ public interface ResourceController {
      * @param owner
      * @return all the resources owned by the owner.
      */
-    Map<ResourceType, Integer> getResources(String owner);
+    int getResourcesAmount(String owner);
+
+    /***
+     * 
+     * @param amount
+     * @return the amount of card that the player must discard.
+     */
+    int getResourcesToDiscard(int amount);
 
     /***
      * 
@@ -77,4 +86,19 @@ public interface ResourceController {
      */
     boolean canTradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
             Map<ResourceType, Integer> wantedResources);
+
+    /**
+     * 
+     * @param proposer
+     * @param amount
+     * @return whether the player proposer can discard the amount.
+     */
+    boolean canDiscard(String proposer, Map<ResourceType, Integer> discardResources);
+
+    /**
+     * 
+     * @param playerName
+     * @return whether the player shold discard cards.
+     */
+    boolean shouldDiscard(String playerName);
 }
