@@ -114,11 +114,6 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public int getPlayerPoints(final String player) {
-        return getPlayerByName.apply(player).getVictoryPoints();
-    }
-
-    @Override
     public boolean canEndTurn() {
         return !mustPlaceRobber() && gameManager.canEndTurn();
     }
@@ -192,6 +187,11 @@ public final class MainControllerImpl implements MainController {
     @Override
     public String getCurrentPlayerName() {
         return this.turnController.getCurrentPlayer().getName();
+    }
+
+    @Override
+    public int getPlayerPoints(final String player) {
+        return getPlayerByName.apply(player).getVictoryPoints();
     }
 
     /**
