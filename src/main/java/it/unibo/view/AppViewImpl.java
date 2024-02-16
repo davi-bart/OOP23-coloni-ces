@@ -28,6 +28,7 @@ public final class AppViewImpl implements AppView {
     private final PlayersView playersView;
     private final CurrentPlayerView currentPlayerView;
     private final Map<String, Color> playerColors = new HashMap<>();
+    private final LogView logView;
 
     /**
      * Constructor of AppView.
@@ -44,6 +45,8 @@ public final class AppViewImpl implements AppView {
         bankView = new BankView(controller);
         playersView = new PlayersView(controller, playerColors);
         currentPlayerView = new CurrentPlayerView(controller);
+        logView = new LogView();
+        
     }
 
     @Override
@@ -69,11 +72,12 @@ public final class AppViewImpl implements AppView {
         final VBox rightSide = new VBox();
 
         final Scene scene = new Scene(root);
-
+        
         rightSide.getChildren().add(costCard());
         rightSide.getChildren().add(ruleButton());
         rightSide.getChildren().add(bankView);
         rightSide.getChildren().add(playersView);
+        rightSide.getChildren().add(logView);
         root.setBottom(currentPlayerView);
         root.setRight(rightSide);
         root.setCenter(boardView);
