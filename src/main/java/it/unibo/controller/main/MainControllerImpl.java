@@ -57,35 +57,17 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public BoardController getBoardController() {
-        return this.boardController;
-    }
-
-    @Override
-    public ResourceController getResourceController() {
-        return this.resourceController;
-    }
-
-    @Override
-    public List<String> getPlayerNames() {
-        return gameManager.getPlayers().stream().map(p -> p.getName()).toList();
-    }
-
-    @Override
-    public String getCurrentPlayerName() {
-        return this.turnController.getCurrentPlayer().getName();
-    }
-
-    @Override
-    public void buildSettlement(final PropertyPosition position) {
-        this.gameManager.buildSettlement(position, turnController.getCurrentPlayer());
+    public void buildCity(final PropertyPosition position) {
+        gameManager.buildCity(position, turnController.getCurrentPlayer());
+        checkGameOver();
         redrawResourcesView();
         this.appView.redrawPlayers();
     }
 
     @Override
-    public void buildCity(final PropertyPosition position) {
-        gameManager.buildCity(position, turnController.getCurrentPlayer());
+    public void buildSettlement(final PropertyPosition position) {
+        this.gameManager.buildSettlement(position, turnController.getCurrentPlayer());
+        checkGameOver();
         redrawResourcesView();
         this.appView.redrawPlayers();
     }
@@ -93,6 +75,7 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buildRoad(final RoadPosition position) {
         gameManager.buildRoad(position, turnController.getCurrentPlayer());
+        checkGameOver();
         redrawResourcesView();
         this.appView.redrawPlayers();
     }
@@ -100,7 +83,8 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buyCard() {
         final CardType card = gameManager.buyCard(turnController.getCurrentPlayer());
-        appView.updateLog(getCurrentPlayerName(), createCardMessage(card));
+        logCard(card);
+        checkGameOver();
         if (card.equals(CardType.KNIGHT)) {
             mustPlaceRobber = true;
         }
@@ -109,18 +93,24 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public boolean canBuildSettlement(final PropertyPosition position) {
-        return !mustPlaceRobber() && gameManager.canBuildSettlement(position, turnController.getCurrentPlayer());
-    }
-
-    @Override
     public boolean canBuildCity(final PropertyPosition position) {
         return !mustPlaceRobber() && gameManager.canBuildCity(position, turnController.getCurrentPlayer());
     }
 
     @Override
+    public boolean canBuildSettlement(final PropertyPosition position) {
+        return !mustPlaceRobber() && gameManager.canBuildSettlement(position, turnController.getCurrentPlayer());
+    }
+
+    @Override
     public boolean canBuildRoad(final RoadPosition position) {
         return !mustPlaceRobber() && gameManager.canBuildRoad(position, turnController.getCurrentPlayer());
+    }
+
+    @Override
+    public boolean canBuyCard() {
+        return turnController.hasRolled() && !mustPlaceRobber()
+                && this.gameManager.canBuyCard(turnController.getCurrentPlayer());
     }
 
     @Override
@@ -131,45 +121,6 @@ public final class MainControllerImpl implements MainController {
     @Override
     public boolean canEndTurn() {
         return !mustPlaceRobber() && gameManager.canEndTurn();
-    }
-
-    @Override
-    public boolean canBuyCard() {
-        return turnController.hasRolled() && !mustPlaceRobber()
-                && this.gameManager.canBuyCard(turnController.getCurrentPlayer());
-    }
-
-    @Override
-    public boolean canRollDie() {
-        return !turnController.hasRolled() && turnController.getCycle() > 2; //
-    }
-
-    /**
-     * give the resources produced by the tiles with the given number.
-     * 
-     * @param rollSum sum of the 2 dices.
-     */
-    private void produceResources(final int number) {
-        final Map<Player, Map<ResourceType, Integer>> producedResources = gameManager.produceResources(number);
-        producedResources.forEach((player, resources) -> {
-            resources.entrySet().stream().filter(entry -> entry.getValue() > 0)
-                    .forEach(e -> appView.updateLog(player.getName(), createResourceMessage(e.getKey(), e.getValue())));
-        });
-        redrawResourcesView();
-    }
-
-    @Override
-    public void tradeWithPlayer(final String proposer, final String accepter,
-            final Map<ResourceType, Integer> proposedResources,
-            final Map<ResourceType, Integer> wantedResources) {
-        resourceController.tradeWithPlayer(proposer, accepter, proposedResources,
-                wantedResources);
-        redrawResourcesView();
-    }
-
-    @Override
-    public boolean canStartTrade() {
-        return !mustPlaceRobber() && turnController.getCycle() > 2 && turnController.hasRolled();
     }
 
     @Override
@@ -193,11 +144,29 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
+    public boolean canRollDie() {
+        return !turnController.hasRolled() && turnController.getCycle() > 2; //
+    }
+
+    @Override
+    public void tradeWithPlayer(final String proposer, final String accepter,
+            final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
+        resourceController.tradeWithPlayer(proposer, accepter, proposedResources,
+                wantedResources);
+        redrawResourcesView();
+    }
+
+    @Override
     public void tradeWithBank(final String proposer, final Map<ResourceType, Integer> proposedResources,
             final Map<ResourceType, Integer> wantedResources) {
         this.resourceController.tradeWithBank(proposer, proposedResources, wantedResources);
         redrawResourcesView();
+    }
 
+    @Override
+    public boolean canStartTrade() {
+        return !mustPlaceRobber() && turnController.getCycle() > 2 && turnController.hasRolled();
     }
 
     @Override
@@ -205,16 +174,74 @@ public final class MainControllerImpl implements MainController {
         turnController.endTurn();
     }
 
+    @Override
+    public BoardController getBoardController() {
+        return this.boardController;
+    }
+
+    @Override
+    public ResourceController getResourceController() {
+        return this.resourceController;
+    }
+
+    @Override
+    public List<String> getPlayerNames() {
+        return gameManager.getPlayers().stream().map(p -> p.getName()).toList();
+    }
+
+    @Override
+    public String getCurrentPlayerName() {
+        return this.turnController.getCurrentPlayer().getName();
+    }
+
+    /**
+     * Redraw the view of the resources.
+     */
     private void redrawResourcesView() {
         this.appView.redrawCurrentPlayer();
         this.appView.redrawBank();
     }
 
-    private String createCardMessage(CardType card) {
-        return "used " + card.toString().toLowerCase(Locale.US).replace("_", " ") + " card";
+    /**
+     * Checks whether the game is over.
+     * If so, updates the view and show the end of
+     * the game.
+     */
+    private void checkGameOver() {
+        if (gameManager.isGameOver()) {
+            // TODO: draw end game
+        }
     }
 
-    private String createResourceMessage(ResourceType resource, int amount) {
+    /**
+     * Makes each tile with number {@code number} produce its resources and log the
+     * results.
+     * 
+     * @param number number rolled
+     */
+    private void produceResources(final int number) {
+        final Map<Player, Map<ResourceType, Integer>> producedResources = gameManager.produceResources(number);
+        logResources(producedResources);
+        redrawResourcesView();
+    }
+
+    private void logResources(final Map<Player, Map<ResourceType, Integer>> producedResources) {
+        producedResources.forEach((player, resources) -> {
+            resources.entrySet().stream().filter(entry -> entry.getValue() > 0)
+                    .forEach(e -> appView.updateLog(player.getName(),
+                            getResourcesLogMessage(e.getKey(), e.getValue())));
+        });
+    }
+
+    private String getResourcesLogMessage(final ResourceType resource, final int amount) {
         return "got " + amount + " " + resource.toString().toLowerCase(Locale.US);
+    }
+
+    private void logCard(final CardType card) {
+        appView.updateLog(getCurrentPlayerName(), getCardLogMessage(card));
+    }
+
+    private String getCardLogMessage(final CardType card) {
+        return "used " + card.toString().toLowerCase(Locale.US).replace("_", " ") + " card";
     }
 }
