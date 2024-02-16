@@ -2,12 +2,8 @@ package it.unibo.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +13,6 @@ import it.unibo.common.property.PropertyPositionImpl;
 import it.unibo.common.road.RoadDirection;
 import it.unibo.common.road.RoadPositionImpl;
 import it.unibo.common.tile.ResourceType;
-import it.unibo.common.tile.TerrainType;
 import it.unibo.common.tile.TilePosition;
 import it.unibo.common.tile.TilePositionImpl;
 import it.unibo.model.mapgenerator.BeginnerGameMapGenerator;
@@ -42,7 +37,6 @@ public class GameManagerTest {
         final TilePosition tile2 = new TilePositionImpl(3, 2);
         final TilePosition tile3 = new TilePositionImpl(2, 0);
         final TilePosition tile4 = new TilePositionImpl(4, 2);
-        Set<TilePosition> fieldTiles = Set.of(tile1, tile2, tile3, tile4);
 
         // turn 1
         gameManager.buildSettlement(new PropertyPositionImpl(tile1, PropertyDirection.DOWN), player1);
@@ -70,9 +64,7 @@ public class GameManagerTest {
         assertEquals(1, gameManager.getResourceManager().getResource(player1, ResourceType.GRAIN));
 
         addResourcesForSettlement(gameManager, player1);
-        // addResourcesForSettlement(gameManager, player1);
         addResourcesForRoad(gameManager, player1);
-        // addResourcesForRoad(gameManager, player1);
 
         gameManager.buildRoad(new RoadPositionImpl(tile3, RoadDirection.DOWNRIGHT), player1);
         gameManager.buildSettlement(new PropertyPositionImpl(tile3, PropertyDirection.DOWN), player1);
@@ -86,20 +78,14 @@ public class GameManagerTest {
     }
 
     private void addResourcesForRoad(final GameManager gameManager, final Player player) {
-        Recipes.getRoadResources().forEach((resource, amount) -> {
-            gameManager.getResourceManager().addResources(player, resource, amount);
-        });
+        gameManager.getResourceManager().addResources(player, Recipes.getRoadResources());
     }
 
     private void addResourcesForSettlement(final GameManager gameManager, final Player player) {
-        Recipes.getSettlementResources().forEach((resource, amount) -> {
-            gameManager.getResourceManager().addResources(player, resource, amount);
-        });
+        gameManager.getResourceManager().addResources(player, Recipes.getSettlementResources());
     }
 
     private void addResourcesForCity(final GameManager gameManager, final Player player) {
-        Recipes.getCityResources().forEach((resource, amount) -> {
-            gameManager.getResourceManager().addResources(player, resource, amount);
-        });
+        gameManager.getResourceManager().addResources(player, Recipes.getCityResources());
     }
 }

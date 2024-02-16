@@ -70,7 +70,10 @@ class RoadManagerTest {
 
     @Test
     void testLongestRoadOwner() {
+        assertEquals(0, player1.getVictoryPoints());
+        assertEquals(0, player2.getVictoryPoints());
         assertTrue(roadManager.getLongestRoadOwner().isEmpty());
+
         roadManager.buildRoad(new RoadPositionImpl(new TilePositionImpl(3, 0), RoadDirection.DOWNLEFT), player1);
         roadManager.buildRoad(new RoadPositionImpl(new TilePositionImpl(3, 0), RoadDirection.DOWNRIGHT), player1);
         roadManager.buildRoad(new RoadPositionImpl(new TilePositionImpl(3, 1), RoadDirection.DOWNLEFT), player1);
@@ -79,6 +82,8 @@ class RoadManagerTest {
         roadManager.buildRoad(new RoadPositionImpl(new TilePositionImpl(3, 2), RoadDirection.DOWNLEFT), player1);
         assertTrue(roadManager.getLongestRoadOwner().isPresent());
         assertEquals(player1, roadManager.getLongestRoadOwner().get());
+        assertEquals(2, player1.getVictoryPoints());
+        assertEquals(0, player2.getVictoryPoints());
 
         roadManager.buildRoad(new RoadPositionImpl(new TilePositionImpl(1, 0), RoadDirection.DOWNLEFT), player2);
         roadManager.buildRoad(new RoadPositionImpl(new TilePositionImpl(1, 0), RoadDirection.DOWNRIGHT), player2);
@@ -88,10 +93,14 @@ class RoadManagerTest {
         assertEquals(player1, roadManager.getLongestRoadOwner().get());
         roadManager.buildRoad(new RoadPositionImpl(new TilePositionImpl(1, 2), RoadDirection.DOWNRIGHT), player2);
         assertEquals(player2, roadManager.getLongestRoadOwner().get());
+        assertEquals(0, player1.getVictoryPoints());
+        assertEquals(2, player2.getVictoryPoints());
 
         roadManager.buildRoad(new RoadPositionImpl(new TilePositionImpl(3, 2), RoadDirection.DOWNRIGHT), player1);
         roadManager.buildRoad(new RoadPositionImpl(new TilePositionImpl(3, 3), RoadDirection.DOWNLEFT), player1);
         assertEquals(player1, roadManager.getLongestRoadOwner().get());
+        assertEquals(2, player1.getVictoryPoints());
+        assertEquals(0, player2.getVictoryPoints());
     }
 
 }
