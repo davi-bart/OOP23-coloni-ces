@@ -3,7 +3,6 @@ package it.unibo.model.resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import it.unibo.common.tile.ResourceType;
 import it.unibo.model.player.Player;
@@ -57,26 +56,20 @@ public final class ResourceManagerImpl implements ResourceManager {
     public void trade(final ResourceOwner proposer, final ResourceOwner accepter,
             final Map<ResourceType, Integer> givingResouces,
             final Map<ResourceType, Integer> recivingResources) {
-
-        for (final Entry<ResourceType, Integer> resource : givingResouces.entrySet()) {
+        givingResouces.entrySet().forEach(resource -> {
             removeResources(proposer, resource.getKey(), resource.getValue());
             addResources(accepter, resource.getKey(), resource.getValue());
-        }
-
-        for (final Entry<ResourceType, Integer> resource : recivingResources.entrySet()) {
+        });
+        recivingResources.entrySet().forEach(resource -> {
             addResources(proposer, resource.getKey(), resource.getValue());
             removeResources(accepter, resource.getKey(), resource.getValue());
-        }
+        });
     }
 
     @Override
     public boolean hasResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
-        for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
-            if (resource.getValue() > getResource(owner, resource.getKey())) {
-                return false;
-            }
-        }
-        return true;
+        return resources.entrySet().stream()
+                .allMatch(resource -> resource.getValue() <= getResource(owner, resource.getKey()));
     }
 
     @Override

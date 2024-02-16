@@ -1,6 +1,7 @@
 package it.unibo.model.player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import it.unibo.common.tile.ResourceType;
@@ -44,9 +45,7 @@ public final class PlayerImpl implements Player {
     @Override
     public Map<ResourceType, Integer> getDefaultResources() {
         final Map<ResourceType, Integer> resources = new HashMap<>();
-        for (final ResourceType resource : ResourceType.values()) {
-            resources.put(resource, defaultValue);
-        }
+        List.of(ResourceType.values()).forEach(resource -> resources.put(resource, defaultValue));
         return resources;
     }
 

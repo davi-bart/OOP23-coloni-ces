@@ -3,6 +3,7 @@ package it.unibo.controller.resource;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.HashMap;
+import java.util.List;
 
 import it.unibo.common.tile.ResourceType;
 import it.unibo.model.player.Player;
@@ -31,9 +32,8 @@ public final class ResourceControllerImpl implements ResourceController {
     @Override
     public Map<ResourceType, Integer> getPlayerResources(final String owner) {
         final Map<ResourceType, Integer> out = new HashMap<>();
-        for (final ResourceType resource : ResourceType.values()) {
-            out.put(resource, resourceManager.getResource(getPlayerByName.apply(owner), resource));
-        }
+        List.of(ResourceType.values()).forEach(
+                resource -> out.put(resource, resourceManager.getResource(getPlayerByName.apply(owner), resource)));
         return out;
     }
 

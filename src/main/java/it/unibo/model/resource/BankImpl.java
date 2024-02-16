@@ -1,6 +1,7 @@
 package it.unibo.model.resource;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import it.unibo.common.tile.ResourceType;
@@ -24,9 +25,7 @@ public final class BankImpl implements ResourceOwner {
     @Override
     public Map<ResourceType, Integer> getDefaultResources() {
         final Map<ResourceType, Integer> resources = new HashMap<>();
-        for (final ResourceType resource : ResourceType.values()) {
-            resources.put(resource, defaultResourceAmount);
-        }
+        List.of(ResourceType.values()).forEach(resource -> resources.put(resource, defaultResourceAmount));
         return resources;
     }
 }

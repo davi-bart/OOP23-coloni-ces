@@ -41,7 +41,6 @@ class ResourceManagerTest {
         assertEquals(0, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
         resourceManager.addResources(PLAYER1, ResourceType.BRICK, 3);
         assertEquals(3, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
-
     }
 
     /**
@@ -53,7 +52,6 @@ class ResourceManagerTest {
         resourceManager.addResources(PLAYER1, ResourceType.BRICK, 5);
         resourceManager.removeResources(PLAYER1, ResourceType.BRICK, 3);
         assertEquals(2, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
-
     }
 
     /**
@@ -74,6 +72,7 @@ class ResourceManagerTest {
         assertTrue(resourceManager.hasResources(PLAYER1, recivingResource));
         givingResource.put(ResourceType.LUMBER, 2);
         givingResource.put(ResourceType.ORE, 4);
+        assertTrue(resourceManager.canTrade(PLAYER2, PLAYER1, givingResource, recivingResource));
         resourceManager.trade(PLAYER2, PLAYER1, givingResource, recivingResource);
         assertEquals(3, resourceManager.getResource(PLAYER1, ResourceType.BRICK));
         assertEquals(2, resourceManager.getResource(PLAYER1, ResourceType.WOOL));
