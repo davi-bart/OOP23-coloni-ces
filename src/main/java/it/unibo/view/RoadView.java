@@ -1,6 +1,7 @@
 package it.unibo.view;
 
-import java.util.function.Supplier;
+import java.util.Optional;
+import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -16,41 +17,36 @@ import javafx.scene.shape.Line;
 public final class RoadView extends Line {
     private final MainController controller;
     private final RoadPosition roadPosition;
-    private Color currentColor;
-    private final Supplier<Color> getCurrentColor;
-    private boolean built;
+    private final Function<RoadPosition, Color> getRoadColor;
 
     /**
      * Constructor.
      * 
-     * @param controller      the main controller
-     * @param roadPosition    the position of the property
-     * @param getCurrentColor the supplier of the current color
+     * @param controller   the main controller
+     * @param roadPosition the position of the road
+     * @param getRoadColor get the color of the property
      */
     public RoadView(final MainController controller, final RoadPosition roadPosition,
-            final Supplier<Color> getCurrentColor) {
+            final Function<RoadPosition, Color> getRoadColor) {
         this.controller = controller;
         this.roadPosition = roadPosition;
-        this.currentColor = Color.LIGHTGRAY;
-        this.getCurrentColor = getCurrentColor;
-        built = false;
+        this.getRoadColor = getRoadColor;
         draw();
     }
 
     private void draw() {
         setLine(roadPosition);
-        if (!built) {
-            super.setStroke(currentColor);
+        Optional<String> roadOwner = controller.getBoardController().getRoadOwner(roadPosition);
+        if (!roadOwner.isPresent()) {
+            super.setStroke(getRoadColor.apply(roadPosition));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (controller.canBuildRoad(roadPosition)) {
-                    this.currentColor = getCurrentColor.get();
                     controller.buildRoad(roadPosition);
-                    built = true;
                     draw();
                 }
             });
         } else {
-            super.setStroke(currentColor);
+            super.setStroke(getRoadColor.apply(roadPosition));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
             });
         }
@@ -59,9 +55,8 @@ public final class RoadView extends Line {
     private void setLine(final RoadPosition position) {
         final Pair<Double, Double> pos = Utility.getPositionFromTile(position.getCoordinates().getRow(),
                 position.getCoordinates().getCol());
-        final var endpoints = Utility
-                .getRoadCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(), pos.getRight(),
-                        position.getDirection());
+        final var endpoints = Utility.getRoadCoordinates(Utility.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2), pos.getLeft(),
+                pos.getRight(), position.getDirection());
         super.setStartX(endpoints.getLeft().getLeft());
         super.setStartY(endpoints.getLeft().getRight());
         super.setEndX(endpoints.getRight().getLeft());

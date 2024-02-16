@@ -60,7 +60,10 @@ public final class BoardView extends StackPane {
     private List<Line> drawRoads() {
         final List<Line> roads = new ArrayList<>();
         this.controller.getBoardController().getAllRoadPositions().forEach(pos -> roads
-                .add(new RoadView(controller, pos, () -> playerColors.get(controller.getCurrentPlayerName()))));
+                .add(new RoadView(controller, pos, (p) -> {
+                    Optional<String> playerName = controller.getBoardController().getRoadOwner(p);
+                    return playerName.isPresent() ? playerColors.get(playerName.get()) : Color.LIGHTGRAY;
+                })));
         return roads;
     }
 
