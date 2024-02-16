@@ -19,14 +19,15 @@ import it.unibo.controller.main.MainControllerImpl;
  * Application.
  */
 public final class AppViewImpl implements AppView {
-    private final Stage stage;
     private static final int DEFAULT_HEIGHT = 450;
+    private final Stage stage;
     private final BoardView boardView;
     private final BankView bankView;
     private final PlayersView playersView;
     private final CurrentPlayerView currentPlayerView;
     private final Map<String, Color> playerColors = new HashMap<>();
     private final LogView logView;
+    private final EndGameView endGameView;
 
     /**
      * Constructor of AppView.
@@ -44,6 +45,7 @@ public final class AppViewImpl implements AppView {
         playersView = new PlayersView(controller, playerColors);
         currentPlayerView = new CurrentPlayerView(controller);
         logView = new LogView();
+        endGameView = new EndGameView(controller, stage);
 
     }
 
@@ -123,5 +125,10 @@ public final class AppViewImpl implements AppView {
     @Override
     public void updateLog(final String name, final String message) {
         logView.update(name, message);
+    }
+
+    @Override
+    public void drawEndGame() {
+        endGameView.draw();
     }
 }

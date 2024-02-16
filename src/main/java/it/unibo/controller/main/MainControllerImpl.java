@@ -209,7 +209,7 @@ public final class MainControllerImpl implements MainController {
      */
     private void checkGameOver() {
         if (gameManager.isGameOver()) {
-            // TODO: draw end game
+            appView.drawEndGame();
         }
     }
 

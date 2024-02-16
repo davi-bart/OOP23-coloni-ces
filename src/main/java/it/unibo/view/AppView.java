@@ -28,4 +28,9 @@ public interface AppView {
      * update the log.
      */
     void updateLog(String name, String message);
+
+    /**
+     * Draws the end game window.
+     */
+    void drawEndGame();
 }
