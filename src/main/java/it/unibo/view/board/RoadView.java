@@ -36,7 +36,7 @@ public final class RoadView extends Line {
 
     private void draw() {
         setLine(roadPosition);
-        Optional<String> roadOwner = controller.getBoardController().getRoadOwner(roadPosition);
+        final Optional<String> roadOwner = controller.getBoardController().getRoadOwner(roadPosition);
         if (!roadOwner.isPresent()) {
             super.setStroke(getRoadColor.apply(roadPosition));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
@@ -53,6 +53,7 @@ public final class RoadView extends Line {
     }
 
     private void setLine(final RoadPosition position) {
+        final int strokeWidth = 12;
         final Pair<Double, Double> pos = Coordinates.getPositionFromTile(position.getCoordinates().getRow(),
                 position.getCoordinates().getCol());
         final var endpoints = Coordinates.getRoadCoordinates(Coordinates.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2),
@@ -62,6 +63,6 @@ public final class RoadView extends Line {
         super.setStartY(endpoints.getLeft().getRight());
         super.setEndX(endpoints.getRight().getLeft());
         super.setEndY(endpoints.getRight().getRight());
-        super.setStrokeWidth(12);
+        super.setStrokeWidth(strokeWidth);
     }
 }

@@ -33,7 +33,6 @@ public final class RobberView {
 
     /**
      * Evoke the robber.
-     * Test function.
      */
     public void evokeRobber() {
         if (controller.mustPlaceRobber()) {
@@ -45,6 +44,11 @@ public final class RobberView {
         }
     }
 
+    /**
+     * Shows the stage with resources to discard.
+     * 
+     * @param player player
+     */
     private void showDiscardStage(final String player) {
         final Stage stage = new Stage();
         stage.setTitle("Discard window of " + player);

@@ -105,7 +105,7 @@ public final class RoadManagerImpl implements RoadManager {
     }
 
     @Override
-    public Optional<Player> getRoadOwner(RoadPosition position) {
+    public Optional<Player> getRoadOwner(final RoadPosition position) {
         return roads.stream().filter(r -> r.getPosition().equals(position)).findFirst().map(r -> r.getOwner());
     }
 

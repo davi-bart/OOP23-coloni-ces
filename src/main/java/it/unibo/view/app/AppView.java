@@ -25,7 +25,10 @@ public interface AppView {
     void redrawPlayers();
 
     /**
-     * update the log.
+     * Log the action.
+     * 
+     * @param name    name of the player
+     * @param message message to display
      */
     void updateLog(String name, String message);
 

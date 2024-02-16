@@ -29,12 +29,12 @@ public final class ResourceManagerImpl implements ResourceManager {
         allEntityResources.put(bank, bank.getDefaultResources());
     }
 
-    private boolean checkResourcesPositive(Map<ResourceType, Integer> resources) {
+    private boolean checkResourcesPositive(final Map<ResourceType, Integer> resources) {
         return resources.values().stream().allMatch(amount -> amount >= 0);
     }
 
     @Override
-    public void addResources(ResourceOwner owner, Map<ResourceType, Integer> resources) {
+    public void addResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
         if (!checkResourcesPositive(resources)) {
             throw new IllegalArgumentException("amount must be positive");
         }
@@ -42,7 +42,7 @@ public final class ResourceManagerImpl implements ResourceManager {
     }
 
     @Override
-    public void removeResources(ResourceOwner owner, Map<ResourceType, Integer> resources) {
+    public void removeResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
         if (!checkResourcesPositive(resources)) {
             throw new IllegalArgumentException("amount must be positive");
         }

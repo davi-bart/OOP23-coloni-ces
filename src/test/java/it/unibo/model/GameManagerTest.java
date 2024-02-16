@@ -19,7 +19,7 @@ import it.unibo.model.mapgenerator.BeginnerGameMapGenerator;
 import it.unibo.model.player.Player;
 import it.unibo.model.player.PlayerImpl;
 
-public class GameManagerTest {
+class GameManagerTest {
 
     @BeforeEach
     void initializeGame() {

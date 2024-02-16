@@ -61,7 +61,7 @@ public final class BoardView extends StackPane {
         final List<Line> roads = new ArrayList<>();
         this.controller.getBoardController().getAllRoadPositions().forEach(pos -> roads
                 .add(new RoadView(controller, pos, (p) -> {
-                    Optional<String> playerName = controller.getBoardController().getRoadOwner(p);
+                    final Optional<String> playerName = controller.getBoardController().getRoadOwner(p);
                     return playerName.isPresent() ? playerColors.get(playerName.get()) : Color.LIGHTGRAY;
                 })));
         return roads;
@@ -71,7 +71,7 @@ public final class BoardView extends StackPane {
         final List<PropertyView> properties = new ArrayList<>();
         this.controller.getBoardController().getAllPropertyPositions().forEach(pos -> properties.add(
                 new PropertyView(controller, pos, (p) -> {
-                    Optional<String> playerName = controller.getBoardController().getPropertyOwner(p);
+                    final Optional<String> playerName = controller.getBoardController().getPropertyOwner(p);
                     return playerName.isPresent() ? playerColors.get(playerName.get()) : Color.GRAY;
                 })));
         return properties;

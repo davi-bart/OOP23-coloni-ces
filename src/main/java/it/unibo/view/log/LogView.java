@@ -29,8 +29,7 @@ public class LogView extends TableView<MessageView> {
      * @param playerName the player name
      * @param message    the message
      */
-    public void update(String playerName, String message) {
-        System.out.println("LogView: " + playerName + " " + message);
+    public void update(final String playerName, final String message) {
         super.getItems().add(0, new MessageView(playerName, message));
     }
 }

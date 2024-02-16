@@ -55,7 +55,7 @@ public final class PropertyManagerImpl implements PropertyManager {
     }
 
     @Override
-    public Optional<Player> getPropertyOwner(PropertyPosition position) {
+    public Optional<Player> getPropertyOwner(final PropertyPosition position) {
         return properties.stream().filter(p -> p.getPosition().equals(position))
                 .findFirst().map(p -> p.getOwner());
     }

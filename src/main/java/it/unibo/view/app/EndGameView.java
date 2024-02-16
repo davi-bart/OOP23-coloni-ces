@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 /**
  * End game view.
  */
-public class EndGameView {
+public final class EndGameView {
 
     private final BorderPane root = new BorderPane();
     private final Stage stage;
@@ -19,13 +19,17 @@ public class EndGameView {
     /**
      * Constructor of Menu.
      * 
-     * @param stage the stage
+     * @param controller controller
+     * @param stage      the stage
      */
     public EndGameView(final MainController controller, final Stage stage) {
         this.controller = controller;
         this.stage = stage;
     }
 
+    /**
+     * Draw.
+     */
     public void draw() {
         final VBox playersBox = new VBox();
         controller.getPlayerNames().forEach(playerName -> {

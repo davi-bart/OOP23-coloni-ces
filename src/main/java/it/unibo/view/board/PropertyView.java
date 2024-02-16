@@ -40,9 +40,10 @@ public final class PropertyView extends Circle {
 
     private void draw() {
         final PropertyType propertyType = controller.getBoardController().getPropertyType(propertyPosition);
+        final int azimuth = 45, elevation = 45, radius = 26, emptyRadius = 12;
         setCircle(propertyPosition);
         if (propertyType == PropertyType.EMPTY) {
-            super.setRadius(12);
+            super.setRadius(emptyRadius);
             super.setFill(getPropertyColor.apply(propertyPosition));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (controller.canBuildSettlement(propertyPosition)) {
@@ -51,10 +52,11 @@ public final class PropertyView extends Circle {
                 }
             });
         } else if (propertyType == PropertyType.SETTLEMENT) {
-            super.setRadius(26);
+            super.setRadius(radius);
             final Image img = new Image("imgs/property/settlement.png");
             super.setFill(new ImagePattern(img));
-            super.setEffect(new Lighting(new Light.Distant(45, 45, getPropertyColor.apply(propertyPosition))));
+            super.setEffect(
+                    new Lighting(new Light.Distant(azimuth, elevation, getPropertyColor.apply(propertyPosition))));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
                 if (controller.canBuildCity(propertyPosition)) {
                     controller.buildCity(propertyPosition);
@@ -62,10 +64,11 @@ public final class PropertyView extends Circle {
                 }
             });
         } else if (propertyType == PropertyType.CITY) {
-            super.setRadius(26);
+            super.setRadius(radius);
             final Image img = new Image("imgs/property/city.png");
             super.setFill(new ImagePattern(img));
-            super.setEffect(new Lighting(new Light.Distant(45, 45, getPropertyColor.apply(propertyPosition))));
+            super.setEffect(
+                    new Lighting(new Light.Distant(azimuth, elevation, getPropertyColor.apply(propertyPosition))));
             super.setEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
             });
         }
