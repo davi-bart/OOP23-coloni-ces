@@ -83,4 +83,10 @@ public interface BoardController {
      * @return the name of the owner of the property at the given position
      */
     Optional<String> getPropertyOwner(PropertyPosition position);
+
+    /**
+     * @param position the position of the road
+     * @return the owner of the road at the given position
+     */
+    Optional<String> getRoadOwner(RoadPosition position);
 }

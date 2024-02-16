@@ -100,4 +100,9 @@ public final class BoardControllerImpl implements BoardController {
     public Optional<String> getPropertyOwner(PropertyPosition position) {
         return this.propertyManager.getPropertyOwner(position).map(Player::getName);
     }
+
+    @Override
+    public Optional<String> getRoadOwner(RoadPosition position) {
+        return this.roadManager.getRoadOwner(position).map(Player::getName);
+    }
 }

@@ -46,4 +46,10 @@ public interface RoadManager {
      */
     Optional<Player> getLongestRoadOwner();
 
+    /**
+     * @param position the position of the road
+     * @return the owner of the road at the given position
+     */
+    Optional<Player> getRoadOwner(RoadPosition position);
+
 }
