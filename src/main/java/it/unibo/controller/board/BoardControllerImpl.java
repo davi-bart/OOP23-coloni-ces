@@ -1,6 +1,7 @@
 package it.unibo.controller.board;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -93,5 +94,10 @@ public final class BoardControllerImpl implements BoardController {
     @Override
     public void setRobberPosition(final TilePosition coordinates) {
         this.board.setRobberPosition(coordinates);
+    }
+
+    @Override
+    public Optional<String> getPropertyOwner(PropertyPosition position) {
+        return this.propertyManager.getPropertyOwner(position).map(Player::getName);
     }
 }

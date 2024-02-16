@@ -1,6 +1,7 @@
 package it.unibo.model.property;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.common.property.PropertyPosition;
@@ -48,4 +49,10 @@ public interface PropertyManager {
      * @param position of the settlement.
      */
     void upgradeToCity(PropertyPosition position);
+
+    /**
+     * @param position the position of the property
+     * @return the owner of the property at the given position
+     */
+    Optional<Player> getPropertyOwner(PropertyPosition position);
 }

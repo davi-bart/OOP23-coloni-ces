@@ -1,6 +1,7 @@
 package it.unibo.controller.board;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.common.property.PropertyPosition;
@@ -76,4 +77,10 @@ public interface BoardController {
      * @param coordinates coordinates of the new robber's position
      */
     void setRobberPosition(TilePosition coordinates);
+
+    /**
+     * @param position the position of the property
+     * @return the name of the owner of the property at the given position
+     */
+    Optional<String> getPropertyOwner(PropertyPosition position);
 }
