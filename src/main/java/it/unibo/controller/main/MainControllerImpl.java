@@ -17,9 +17,9 @@ import it.unibo.controller.resource.ResourceController;
 import it.unibo.controller.resource.ResourceControllerImpl;
 import it.unibo.controller.turn.TurnController;
 import it.unibo.controller.turn.TurnControllerImpl;
-import it.unibo.model.api.GameManager;
-import it.unibo.model.api.Player;
-import it.unibo.model.impl.GameManagerImpl;
+import it.unibo.model.GameManager;
+import it.unibo.model.GameManagerImpl;
+import it.unibo.model.player.Player;
 import it.unibo.view.AppView;
 
 /**

@@ -2,7 +2,7 @@ package it.unibo.model;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.model.impl.PlayerImpl;
+import it.unibo.model.player.PlayerImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

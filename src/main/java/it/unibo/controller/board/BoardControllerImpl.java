@@ -18,10 +18,10 @@ import it.unibo.common.road.RoadPosition;
 import it.unibo.common.road.RoadPositionImpl;
 import it.unibo.common.tile.TerrainType;
 import it.unibo.common.tile.TilePosition;
-import it.unibo.model.api.Board;
-import it.unibo.model.api.Player;
-import it.unibo.model.api.PropertyManager;
-import it.unibo.model.api.RoadManager;
+import it.unibo.model.board.Board;
+import it.unibo.model.player.Player;
+import it.unibo.model.property.PropertyManager;
+import it.unibo.model.road.RoadManager;
 
 /**
  * Board controller implementation.

@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 import it.unibo.common.road.RoadDirection;
 import it.unibo.common.road.RoadPositionImpl;
 import it.unibo.common.tile.TilePositionImpl;
-import it.unibo.model.api.Player;
-import it.unibo.model.api.RoadManager;
-import it.unibo.model.impl.PlayerImpl;
-import it.unibo.model.impl.RoadManagerImpl;
+import it.unibo.model.player.Player;
+import it.unibo.model.player.PlayerImpl;
+import it.unibo.model.road.RoadManager;
+import it.unibo.model.road.RoadManagerImpl;
 
 class RoadManagerTest {
 

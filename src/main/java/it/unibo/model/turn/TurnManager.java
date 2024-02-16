@@ -1,13 +1,13 @@
-package it.unibo.controller.turn;
+package it.unibo.model.turn;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.model.player.Player;
 
 /**
- * interface of TurnController.
+ * interface of TurnManager.
  */
-public interface TurnController {
+public interface TurnManager {
 
     /**
      * 
@@ -25,6 +25,12 @@ public interface TurnController {
      * @return the dice roll.
      */
     Pair<Integer, Integer> rollDie();
+
+    /**
+     * 
+     * @return the number of the current turn.
+     */
+    int getTurnNumber();
 
     /**
      * 

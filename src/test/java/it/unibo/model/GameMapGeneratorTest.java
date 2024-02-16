@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.common.tile.TerrainType;
 import it.unibo.common.tile.TilePosition;
-import it.unibo.model.api.Board;
-import it.unibo.model.impl.BeginnerGameMapGenerator;
-import it.unibo.model.impl.BoardImpl;
-import it.unibo.model.impl.RandomGameMapGenerator;
+import it.unibo.model.board.Board;
+import it.unibo.model.board.BoardImpl;
+import it.unibo.model.mapgenerator.BeginnerGameMapGenerator;
+import it.unibo.model.mapgenerator.RandomGameMapGenerator;
 
 /**
  * Test for a trader istance.

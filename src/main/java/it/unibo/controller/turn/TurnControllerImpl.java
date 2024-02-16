@@ -2,8 +2,8 @@ package it.unibo.controller.turn;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import it.unibo.model.api.Player;
-import it.unibo.model.api.TurnManager;
+import it.unibo.model.player.Player;
+import it.unibo.model.turn.TurnManager;
 
 /**
  * Turn controller implementation.

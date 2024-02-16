@@ -20,11 +20,9 @@ import it.unibo.common.tile.ResourceType;
 import it.unibo.common.tile.TerrainType;
 import it.unibo.common.tile.TilePosition;
 import it.unibo.common.tile.TilePositionImpl;
-import it.unibo.model.api.GameManager;
-import it.unibo.model.api.Player;
-import it.unibo.model.impl.BeginnerGameMapGenerator;
-import it.unibo.model.impl.GameManagerImpl;
-import it.unibo.model.impl.PlayerImpl;
+import it.unibo.model.mapgenerator.BeginnerGameMapGenerator;
+import it.unibo.model.player.Player;
+import it.unibo.model.player.PlayerImpl;
 
 public class GameManagerTest {
 

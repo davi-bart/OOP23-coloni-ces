@@ -5,8 +5,8 @@ import java.util.function.Function;
 import java.util.HashMap;
 
 import it.unibo.common.tile.ResourceType;
-import it.unibo.model.api.Player;
-import it.unibo.model.api.ResourceManager;
+import it.unibo.model.player.Player;
+import it.unibo.model.resource.ResourceManager;
 
 /**
  * Resource controller implementation.
