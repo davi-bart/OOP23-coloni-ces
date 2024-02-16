@@ -1,12 +1,16 @@
 package it.unibo.view;
 
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import it.unibo.common.api.tile.ResourceType;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -50,6 +54,18 @@ public final class ResourcesViewFactory {
         amountLabel.setAlignment(Pos.CENTER);
         resourceAndAmount.getChildren().add(amountLabel);
         return resourceAndAmount;
+    }
+
+    public static VBox resourceAndComboBox(final ResourceType resource, final int amount,
+            final ChangeListener<Integer> listener) {
+        final VBox resourceBox = new VBox();
+        resourceBox.getChildren().add(ResourcesViewFactory.generateResource(resource));
+        final ComboBox<Integer> comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(IntStream.range(0, amount + 1).boxed().collect(Collectors.toList()));
+        comboBox.getSelectionModel().selectFirst();
+        comboBox.getSelectionModel().selectedItemProperty().addListener(listener);
+        resourceBox.getChildren().add(comboBox);
+        return resourceBox;
     }
 
     public static Alert getAlert(final String text) {

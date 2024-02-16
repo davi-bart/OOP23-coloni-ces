@@ -77,7 +77,7 @@ public final class CurrentPlayerView extends HBox {
         final Button endTurnButton = new Button("End turn");
         endTurnButton.setOnAction(e -> {
             if (controller.canEndTurn()) {
-                controller.getTurnController().endTurn();
+                controller.endTurn();
                 roll1.setVisible(false);
                 roll2.setVisible(false);
                 draw();

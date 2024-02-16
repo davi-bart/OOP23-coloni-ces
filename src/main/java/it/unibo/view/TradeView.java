@@ -3,16 +3,12 @@ package it.unibo.view;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import it.unibo.common.api.tile.ResourceType;
 import it.unibo.controller.api.MainController;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 import javafx.scene.layout.HBox;
@@ -90,13 +86,13 @@ public final class TradeView {
         reloadBankTradeButton.run();
         buttonToAction.forEach((button, action) -> action.run());
         Stream.of(ResourceType.values()).forEach(resource -> {
-            proposedResourcesBox.getChildren().add(resourceAndComboBox(resource,
+            proposedResourcesBox.getChildren().add(ResourcesViewFactory.resourceAndComboBox(resource,
                     controller.getResourceController().getPlayerResources(controller.getCurrentPlayer()).get(resource),
                     (options, oldValue, newValue) -> {
                         proposedResources.put(resource, newValue);
                         reloadBankTradeButton.run();
                     }));
-            wantedResourcesBox.getChildren().add(resourceAndComboBox(resource,
+            wantedResourcesBox.getChildren().add(ResourcesViewFactory.resourceAndComboBox(resource,
                     defaultWantedResources, (options, oldValue, newValue) -> {
                         wantedResources.put(resource, newValue);
                         buttonToAction.forEach((button, action) -> action.run());
@@ -132,18 +128,6 @@ public final class TradeView {
         stage.setScene(stageScene);
         stage.setResizable(false);
         stage.show();
-    }
-
-    private VBox resourceAndComboBox(final ResourceType resource, final int amount,
-            final ChangeListener<Integer> listener) {
-        final VBox resourceBox = new VBox();
-        resourceBox.getChildren().add(ResourcesViewFactory.generateResource(resource));
-        final ComboBox<Integer> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll(IntStream.range(0, amount + 1).boxed().collect(Collectors.toList()));
-        comboBox.getSelectionModel().selectFirst();
-        comboBox.getSelectionModel().selectedItemProperty().addListener(listener);
-        resourceBox.getChildren().add(comboBox);
-        return resourceBox;
     }
 
     private Runnable setTradePlayerButton(final Button button, final String playerName,

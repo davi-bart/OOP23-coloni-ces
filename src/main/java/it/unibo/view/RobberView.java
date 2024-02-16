@@ -3,16 +3,12 @@ package it.unibo.view;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import it.unibo.common.api.tile.ResourceType;
 import it.unibo.controller.api.MainController;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -64,7 +60,7 @@ public final class RobberView {
 
         reloadConfirmButton.run();
         Stream.of(ResourceType.values()).forEach(resource -> {
-            discardResourcesBox.getChildren().add(resourceAndComboBox(resource,
+            discardResourcesBox.getChildren().add(ResourcesViewFactory.resourceAndComboBox(resource,
                     controller.getResourceController().getPlayerResources(player).get(resource),
                     (options, oldValue, newValue) -> {
                         discardResources.put(resource, newValue);
@@ -92,17 +88,5 @@ public final class RobberView {
         stage.setScene(stageScene);
         stage.setResizable(false);
         stage.show();
-    }
-
-    private VBox resourceAndComboBox(final ResourceType resource, final int amount,
-            final ChangeListener<Integer> listener) {
-        final VBox resourceBox = new VBox();
-        resourceBox.getChildren().add(ResourcesViewFactory.generateResource(resource));
-        final ComboBox<Integer> comboBox = new ComboBox<>();
-        comboBox.getItems().addAll(IntStream.range(0, amount + 1).boxed().collect(Collectors.toList()));
-        comboBox.getSelectionModel().selectFirst();
-        comboBox.getSelectionModel().selectedItemProperty().addListener(listener);
-        resourceBox.getChildren().add(comboBox);
-        return resourceBox;
     }
 }
