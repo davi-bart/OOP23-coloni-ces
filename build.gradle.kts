@@ -36,9 +36,6 @@ dependencies {
     // Apache Commons (common data structures (such as Pair))
     val apacheCommonsVersion = "3.14.0"
     implementation("org.apache.commons:commons-lang3:$apacheCommonsVersion")
-    // JSON
-    val jsonVersion = "20231013"
-    implementation("org.json:json:$jsonVersion")
     // JGraphT (graph data structures and algorithms)
     val jGraphTVersion = "1.5.2"
     implementation("org.jgrapht:jgrapht-core:$jGraphTVersion")
