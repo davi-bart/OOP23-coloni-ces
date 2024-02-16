@@ -1,4 +1,4 @@
-package it.unibo.controller.api;
+package it.unibo.controller.board;
 
 import java.util.List;
 import java.util.Set;

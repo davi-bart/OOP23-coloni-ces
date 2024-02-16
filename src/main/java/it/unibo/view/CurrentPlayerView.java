@@ -1,7 +1,7 @@
 package it.unibo.view;
 
 import it.unibo.common.card.CardType;
-import it.unibo.controller.api.MainController;
+import it.unibo.controller.main.MainController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

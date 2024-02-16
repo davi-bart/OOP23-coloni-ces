@@ -7,7 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.property.PropertyType;
-import it.unibo.controller.api.MainController;
+import it.unibo.controller.main.MainController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;

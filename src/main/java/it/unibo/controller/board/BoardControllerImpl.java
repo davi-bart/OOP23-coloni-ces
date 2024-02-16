@@ -1,4 +1,4 @@
-package it.unibo.controller.impl;
+package it.unibo.controller.board;
 
 import java.util.List;
 import java.util.Set;
@@ -18,7 +18,6 @@ import it.unibo.common.road.RoadPosition;
 import it.unibo.common.road.RoadPositionImpl;
 import it.unibo.common.tile.TerrainType;
 import it.unibo.common.tile.TilePosition;
-import it.unibo.controller.api.BoardController;
 import it.unibo.model.api.Board;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.PropertyManager;

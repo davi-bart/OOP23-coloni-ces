@@ -1,6 +1,6 @@
 package it.unibo.view;
 
-import it.unibo.controller.api.MainController;
+import it.unibo.controller.main.MainController;
 import javafx.scene.layout.HBox;
 
 /**

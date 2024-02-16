@@ -6,7 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.common.tile.TerrainType;
 import it.unibo.common.tile.TilePosition;
-import it.unibo.controller.api.MainController;
+import it.unibo.controller.main.MainController;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.Group;

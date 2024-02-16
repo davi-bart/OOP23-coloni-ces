@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import it.unibo.common.tile.ResourceType;
-import it.unibo.controller.api.MainController;
+import it.unibo.controller.main.MainController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

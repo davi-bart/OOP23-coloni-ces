@@ -1,4 +1,4 @@
-package it.unibo.controller.impl;
+package it.unibo.controller.main;
 
 import java.util.List;
 import java.util.Map;
@@ -11,10 +11,12 @@ import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.road.RoadPosition;
 import it.unibo.common.tile.ResourceType;
 import it.unibo.common.tile.TilePosition;
-import it.unibo.controller.api.BoardController;
-import it.unibo.controller.api.MainController;
-import it.unibo.controller.api.ResourceController;
-import it.unibo.controller.api.TurnController;
+import it.unibo.controller.board.BoardController;
+import it.unibo.controller.board.BoardControllerImpl;
+import it.unibo.controller.resource.ResourceController;
+import it.unibo.controller.resource.ResourceControllerImpl;
+import it.unibo.controller.turn.TurnController;
+import it.unibo.controller.turn.TurnControllerImpl;
 import it.unibo.model.api.GameManager;
 import it.unibo.model.api.Player;
 import it.unibo.model.impl.GameManagerImpl;

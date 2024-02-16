@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import it.unibo.controller.api.MainController;
-import it.unibo.controller.impl.MainControllerImpl;
+import it.unibo.controller.main.MainController;
+import it.unibo.controller.main.MainControllerImpl;
 
 /**
  * Application.

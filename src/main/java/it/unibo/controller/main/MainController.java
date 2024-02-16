@@ -1,4 +1,4 @@
-package it.unibo.controller.api;
+package it.unibo.controller.main;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +9,8 @@ import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.road.RoadPosition;
 import it.unibo.common.tile.ResourceType;
 import it.unibo.common.tile.TilePosition;
+import it.unibo.controller.board.BoardController;
+import it.unibo.controller.resource.ResourceController;
 
 /**
  * Main controller.

@@ -1,11 +1,10 @@
-package it.unibo.controller.impl;
+package it.unibo.controller.resource;
 
 import java.util.Map;
 import java.util.function.Function;
 import java.util.HashMap;
 
 import it.unibo.common.tile.ResourceType;
-import it.unibo.controller.api.ResourceController;
 import it.unibo.model.api.Player;
 import it.unibo.model.api.ResourceManager;
 
