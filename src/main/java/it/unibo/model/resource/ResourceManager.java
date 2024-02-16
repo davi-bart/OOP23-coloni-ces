@@ -17,8 +17,8 @@ public interface ResourceManager {
      * @param resource resource type
      * @param amount   amount of resource
      */
-    void addResources(ResourceOwner owner, ResourceType resource, int amount);
-        
+    void addResources(ResourceOwner owner, Map<ResourceType, Integer> proposedResources);
+
     /**
      * Remove the given amount of the given resource to the given owner.
      * 
@@ -26,7 +26,7 @@ public interface ResourceManager {
      * @param resource resource type
      * @param amount   amount of resource
      */
-    void removeResources(ResourceOwner owner, ResourceType resource, int amount);
+    void removeResources(ResourceOwner owner, Map<ResourceType, Integer> proposedResources);
 
     /**
      * Get the amount of the given resource of the given owner.

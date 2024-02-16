@@ -118,10 +118,7 @@ public final class GameManagerImpl implements GameManager {
         propertyManager.addSettlement(position, player);
         player.incrementVictoryPoints(1);
         if (turnManager.getCycle() > 2) {
-            Recipes.getSettlementResources().forEach((resource, amount) -> {
-                resourceManager.removeResources(player, resource, amount);
-                resourceManager.addResources(resourceManager.getBank(), resource, amount);
-            });
+            resourceManager.removeResources(player, Recipes.getSettlementResources());
         }
     }
 
@@ -133,10 +130,8 @@ public final class GameManagerImpl implements GameManager {
         propertyManager.upgradeToCity(position);
         player.incrementVictoryPoints(1);
         if (turnManager.getCycle() > 2) {
-            Recipes.getCityResources().forEach((resource, amount) -> {
-                resourceManager.removeResources(player, resource, amount);
-                resourceManager.addResources(resourceManager.getBank(), resource, amount);
-            });
+            resourceManager.removeResources(player, Recipes.getCityResources());
+            resourceManager.addResources(resourceManager.getBank(), Recipes.getCityResources());
         }
     }
 
@@ -144,10 +139,8 @@ public final class GameManagerImpl implements GameManager {
     public void buildRoad(final RoadPosition position, final Player player) {
         roadManager.buildRoad(position, player);
         if (turnManager.getCycle() > 2) {
-            Recipes.getRoadResources().forEach((resource, amount) -> {
-                resourceManager.removeResources(player, resource, amount);
-                resourceManager.addResources(resourceManager.getBank(), resource, amount);
-            });
+            resourceManager.removeResources(player, Recipes.getRoadResources());
+            resourceManager.addResources(resourceManager.getBank(), Recipes.getRoadResources());
         }
     }
 
@@ -156,28 +149,27 @@ public final class GameManagerImpl implements GameManager {
         if (!canBuyCard(player)) {
             throw new IllegalArgumentException("Player " + player + " can't buy a card during the first turn cycles");
         }
-        Recipes.getCardResources()
-                .forEach((resource, amount) -> resourceManager.removeResources(player, resource, amount));
+        resourceManager.removeResources(player, Recipes.getCardResources());
         final CardType card = developmentCards.getCard();
         switch (card) {
             case VICTORY_POINT:
                 player.incrementVictoryPoints(1);
                 break;
             case FREE_SETTLEMENT:
-                Recipes.getSettlementResources()
-                        .forEach((resource, amount) -> resourceManager.addResources(player, resource, amount));
+                resourceManager.addResources(player, Recipes.getSettlementResources());
                 break;
             case FREE_ROAD:
-                Recipes.getRoadResources()
-                        .forEach((resource, amount) -> resourceManager.addResources(player, resource, amount));
+                resourceManager.addResources(player, Recipes.getRoadResources());
                 break;
             case MONOPOLY:
                 final Random random = new Random();
                 final ResourceType selectedType = List.of(ResourceType.values())
                         .get(random.nextInt(ResourceType.values().length));
                 this.players.stream().filter(p -> !p.equals(player)).forEach(p -> {
-                    resourceManager.addResources(player, selectedType, resourceManager.getResource(p, selectedType));
-                    resourceManager.removeResources(p, selectedType, resourceManager.getResource(p, selectedType));
+                    resourceManager.addResources(player,
+                            Map.of(selectedType, resourceManager.getResource(p, selectedType)));
+                    resourceManager.removeResources(p,
+                            Map.of(selectedType, resourceManager.getResource(p, selectedType)));
                 });
                 break;
             default:
@@ -274,9 +266,9 @@ public final class GameManagerImpl implements GameManager {
         }));
         producedResources.forEach((resource, amount) -> {
             if (resourceManager.getResource(resourceManager.getBank(), resource) >= amount) {
-                players.forEach(player -> resourceManager.addResources(player, resource,
-                        playersResources.get(player).get(resource)));
-                resourceManager.removeResources(resourceManager.getBank(), resource, amount);
+                players.forEach(player -> resourceManager.addResources(player, Map.of(resource,
+                        playersResources.get(player).get(resource))));
+                resourceManager.removeResources(resourceManager.getBank(), Map.of(resource, amount));
             } else {
                 players.forEach(player -> playersResources.get(player).put(resource, 0));
             }

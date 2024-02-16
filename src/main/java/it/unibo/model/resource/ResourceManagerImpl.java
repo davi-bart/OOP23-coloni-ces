@@ -29,22 +29,27 @@ public final class ResourceManagerImpl implements ResourceManager {
         allEntityResources.put(bank, bank.getDefaultResources());
     }
 
-    @Override
-    public void addResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
-        if (amount >= 0) {
-            allEntityResources.get(owner).compute(resource, (k, v) -> v + amount);
-        } else {
-            throw new IllegalArgumentException("amount must be positive");
-        }
+    private boolean checkResourcesPositive(Map<ResourceType, Integer> resources) {
+        return resources.values().stream().allMatch(amount -> amount >= 0);
     }
 
     @Override
-    public void removeResources(final ResourceOwner owner, final ResourceType resource, final int amount) {
-        if (allEntityResources.get(owner).get(resource) >= amount) {
-            allEntityResources.get(owner).compute(resource, (k, v) -> v - amount);
-        } else {
+    public void addResources(ResourceOwner owner, Map<ResourceType, Integer> resources) {
+        if (!checkResourcesPositive(resources)) {
+            throw new IllegalArgumentException("amount must be positive");
+        }
+        resources.forEach((resource, amount) -> allEntityResources.get(owner).compute(resource, (k, v) -> v + amount));
+    }
+
+    @Override
+    public void removeResources(ResourceOwner owner, Map<ResourceType, Integer> resources) {
+        if (!checkResourcesPositive(resources)) {
+            throw new IllegalArgumentException("amount must be positive");
+        }
+        if (!hasResources(owner, resources)) {
             throw new IllegalArgumentException("amount must be lower than the total resource");
         }
+        resources.forEach((resource, amount) -> allEntityResources.get(owner).compute(resource, (k, v) -> v - amount));
     }
 
     @Override
@@ -56,14 +61,11 @@ public final class ResourceManagerImpl implements ResourceManager {
     public void trade(final ResourceOwner proposer, final ResourceOwner accepter,
             final Map<ResourceType, Integer> proposedResources,
             final Map<ResourceType, Integer> wantedResources) {
-        proposedResources.entrySet().forEach(resource -> {
-            removeResources(proposer, resource.getKey(), resource.getValue());
-            addResources(accepter, resource.getKey(), resource.getValue());
-        });
-        wantedResources.entrySet().forEach(resource -> {
-            addResources(proposer, resource.getKey(), resource.getValue());
-            removeResources(accepter, resource.getKey(), resource.getValue());
-        });
+
+        addResources(proposer, wantedResources);
+        addResources(accepter, proposedResources);
+        removeResources(proposer, proposedResources);
+        removeResources(accepter, wantedResources);
     }
 
     @Override
