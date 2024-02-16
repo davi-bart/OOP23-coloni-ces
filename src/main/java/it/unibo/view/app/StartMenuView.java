@@ -124,7 +124,7 @@ public class StartMenuView {
             }
         });
 
-        final Image image = new Image("imgs/menu/SettlersOfCesena.png");
+        final Image image = new Image(ClassLoader.getSystemResourceAsStream("imgs/menu/SettlersOfCesena.png"));
         final BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         final BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);

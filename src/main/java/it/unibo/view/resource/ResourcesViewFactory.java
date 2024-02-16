@@ -31,7 +31,8 @@ public final class ResourcesViewFactory {
         final int defaultHeight = 100;
         final VBox resourceCard = new VBox();
         final Image resourceImage = new Image(
-                "imgs/resources/" + resourceType.toString().toLowerCase(Locale.US) + ".png");
+                ClassLoader.getSystemResourceAsStream(
+                        "imgs/resources/" + resourceType.toString().toLowerCase(Locale.US) + ".png"));
         final ImageView image = new ImageView(resourceImage);
 
         resourceCard.setAlignment(Pos.CENTER);

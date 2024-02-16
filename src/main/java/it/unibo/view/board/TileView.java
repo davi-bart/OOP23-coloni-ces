@@ -59,7 +59,8 @@ public final class TileView extends Group {
         final double y = pos.getRight();
         final Polygon hexagon = getHexagon(Coordinates.HEXAGON_RADIUS, x, y);
         hexagon.setFill(
-                new ImagePattern(new Image("imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png")));
+                new ImagePattern(new Image(ClassLoader.getSystemResourceAsStream(
+                        "imgs/hexes/" + terrainType.toString().toLowerCase(Locale.US) + ".png"))));
         hexagon.setOnMouseClicked(eventHandler);
         super.getChildren().add(hexagon);
         if (terrainType != TerrainType.DESERT) {
@@ -72,7 +73,8 @@ public final class TileView extends Group {
         }
         final var robberPosition = controller.getBoardController().getRobberPosition();
         if (robberPosition.equals(coordinates)) {
-            final Image robber = new Image("imgs/robber/robber.png", Coordinates.HEXAGON_RADIUS / 2,
+            final Image robber = new Image(
+                    ClassLoader.getSystemResourceAsStream("imgs/robber/robber.png"), Coordinates.HEXAGON_RADIUS / 2,
                     Coordinates.HEXAGON_RADIUS / 2, true, true);
             final ImageView robberView = new ImageView(robber);
             robberView.setTranslateX(x - robber.getWidth() / 2);

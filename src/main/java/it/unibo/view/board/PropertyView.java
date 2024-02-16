@@ -55,7 +55,7 @@ public final class PropertyView extends Circle {
             });
         } else if (propertyType == PropertyType.SETTLEMENT) {
             super.setRadius(radius);
-            final Image img = new Image("imgs/property/settlement.png");
+            final Image img = new Image(ClassLoader.getSystemResourceAsStream("imgs/property/settlement.png"));
             super.setFill(new ImagePattern(img));
             super.setEffect(
                     new Lighting(new Light.Distant(azimuth, elevation, getPropertyColor.apply(propertyPosition))));
@@ -67,7 +67,7 @@ public final class PropertyView extends Circle {
             });
         } else if (propertyType == PropertyType.CITY) {
             super.setRadius(radius);
-            final Image img = new Image("imgs/property/city.png");
+            final Image img = new Image(ClassLoader.getSystemResourceAsStream("imgs/property/city.png"));
             super.setFill(new ImagePattern(img));
             super.setEffect(
                     new Lighting(new Light.Distant(azimuth, elevation, getPropertyColor.apply(propertyPosition))));

@@ -98,8 +98,10 @@ public final class CurrentPlayerView extends HBox {
             if (controller.canRollDie()) {
                 final var roll = controller.rollDie();
                 final int width = 60, height = 60;
-                roll1.setImage(new Image("imgs/dice/" + roll.getLeft() + ".png", width, height, true, true));
-                roll2.setImage(new Image("imgs/dice/" + roll.getRight() + ".png", width, height, true, true));
+                roll1.setImage(new Image(ClassLoader.getSystemResourceAsStream("imgs/dice/" + roll.getLeft() + ".png"),
+                        width, height, true, true));
+                roll2.setImage(new Image(ClassLoader.getSystemResourceAsStream("imgs/dice/" + roll.getRight() + ".png"),
+                        width, height, true, true));
                 roll1.setVisible(true);
                 roll2.setVisible(true);
                 draw();
