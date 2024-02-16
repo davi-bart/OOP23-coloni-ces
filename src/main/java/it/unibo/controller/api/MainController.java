@@ -24,21 +24,15 @@ public interface MainController {
      */
     ResourceController getResourceController();
 
-    /**
-     * @return the turn controller
-     */
-    TurnController getTurnController();
+    // /**
+    // * @return the turn controller
+    // */
+    // TurnController getTurnController();
 
     /**
      * @return the list of the players' names
      */
     List<String> getPlayerNames();
-
-    /**
-     * @param playerName
-     * @return the victory points of the given player.
-     */
-    int getVictoryPoints(String playerName);
 
     /**
      * Build a settlement in the given position.
@@ -156,6 +150,11 @@ public interface MainController {
      * @return true if the player must place the robber.
      */
     boolean mustPlaceRobber();
+
+    /**
+     * end the current turn and updates the current player.
+     */
+    void endTurn();
 
     /**
      * 

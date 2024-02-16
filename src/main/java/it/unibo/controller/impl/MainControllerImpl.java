@@ -61,19 +61,14 @@ public final class MainControllerImpl implements MainController {
         return this.resourceController;
     }
 
-    @Override
-    public TurnController getTurnController() {
-        return this.turnController;
-    }
+    // @Override
+    // public TurnController getTurnController() {
+    // return this.turnController;
+    // }
 
     @Override
     public List<String> getPlayerNames() {
         return gameManager.getPlayers().stream().map(p -> p.getName()).toList();
-    }
-
-    @Override
-    public int getVictoryPoints(final String playerName) {
-        return getPlayerByName(playerName).getVictoryPoints();
     }
 
     @Override
@@ -143,14 +138,9 @@ public final class MainControllerImpl implements MainController {
                 && this.gameManager.canBuyCard(turnController.getCurrentPlayerTurn());
     }
 
-    private Player getPlayerByName(final String name) {
-        return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
-    }
-
     @Override
     public boolean canRollDie() {
-        return !turnController.hasRolled() && turnController.getCycle() > 2;
+        return !turnController.hasRolled() && turnController.getCycle() > 2; //
     }
 
     @Override
@@ -171,11 +161,6 @@ public final class MainControllerImpl implements MainController {
     @Override
     public boolean canStartTrade() {
         return !mustPlaceRobber() && turnController.getCycle() > 2 && turnController.hasRolled();
-    }
-
-    private void redrawResourcesView() {
-        this.appView.redrawCurrentPlayer();
-        this.appView.redrawBank();
     }
 
     @Override
@@ -210,4 +195,20 @@ public final class MainControllerImpl implements MainController {
         redrawResourcesView();
 
     }
+
+    @Override
+    public void endTurn() {
+        turnController.endTurn();
+    }
+
+    private void redrawResourcesView() {
+        this.appView.redrawCurrentPlayer();
+        this.appView.redrawBank();
+    }
+
+    private Player getPlayerByName(final String name) {
+        return this.gameManager.getPlayers().stream().filter(p -> p.getName().equals(name)).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
+    }
+
 }
