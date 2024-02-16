@@ -15,6 +15,7 @@ public final class ResourceManagerImpl implements ResourceManager {
     private final Map<ResourceOwner, Map<ResourceType, Integer>> allEntityResources = new HashMap<>();
     private final ResourceOwner bank;
     static final int DISCARD_THRESHOLD = 7;
+    static final int DEFAULT_BANK_RESOURCES = 19;
 
     /**
      * Create the ResourceManager from the list of the resource owner(such as
@@ -23,9 +24,9 @@ public final class ResourceManagerImpl implements ResourceManager {
      * @param players             the list of players
      * @param bankResourcesAmount the amount of resources in the bank
      */
-    public ResourceManagerImpl(final List<Player> players, final int bankResourcesAmount) {
+    public ResourceManagerImpl(final List<Player> players) {
         players.forEach(ro -> allEntityResources.put(ro, ro.getDefaultResources()));
-        bank = new BankImpl(bankResourcesAmount);
+        bank = new BankImpl(DEFAULT_BANK_RESOURCES);
         allEntityResources.put(bank, bank.getDefaultResources());
     }
 

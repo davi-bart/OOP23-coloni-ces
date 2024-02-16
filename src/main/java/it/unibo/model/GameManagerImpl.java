@@ -1,10 +1,16 @@
 package it.unibo.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.Recipes;
@@ -18,6 +24,7 @@ import it.unibo.model.board.Board;
 import it.unibo.model.board.BoardImpl;
 import it.unibo.model.developmentcard.DevelopmentCards;
 import it.unibo.model.developmentcard.DevelopmentCardsImpl;
+import it.unibo.model.mapgenerator.BeginnerGameMapGenerator;
 import it.unibo.model.mapgenerator.GameMapGenerator;
 import it.unibo.model.mapgenerator.RandomGameMapGenerator;
 import it.unibo.model.player.Player;
@@ -35,9 +42,6 @@ import it.unibo.model.turn.TurnManagerImpl;
  * Implementation of GameManager.
  */
 public final class GameManagerImpl implements GameManager {
-    private static final int DEFAULT_POINTS_TO_WIN = 10;
-    private static final int DEFAULT_BANK_RESOURCES = 19;
-
     private final DevelopmentCards developmentCards;
     private final PropertyManager propertyManager;
     private final RoadManager roadManager;
@@ -49,31 +53,21 @@ public final class GameManagerImpl implements GameManager {
     private final int pointsToWin;
 
     /**
-     * Game manager constructor.
-     * 
-     * @param generator           game map generator
-     * @param playersNames        list of players' names
-     * @param pointsToWin         points to win the game
-     * @param bankResourcesAmount initial amount for each resource of the bank
+     * @param playersNames list of players' names
+     * @see #GameManagerImpl(MapType,List,int)
      */
-    public GameManagerImpl(final GameMapGenerator generator, final List<String> playersNames, final int pointsToWin,
-            final int bankResourcesAmount) {
+    public GameManagerImpl(final List<String> playersNames) {
         playersNames.forEach(name -> players.add(new PlayerImpl(name)));
-        this.pointsToWin = pointsToWin;
 
         this.developmentCards = new DevelopmentCardsImpl();
         this.roadManager = new RoadManagerImpl();
         this.propertyManager = new PropertyManagerImpl();
         this.turnManager = new TurnManagerImpl(players);
-        this.resourceManager = new ResourceManagerImpl(players, bankResourcesAmount);
-        this.board = new BoardImpl(generator);
-    }
+        this.resourceManager = new ResourceManagerImpl(players);
 
-    /**
-     * @param playersNames list of players' names
-     */
-    public GameManagerImpl(final List<String> playersNames) {
-        this(new RandomGameMapGenerator(), playersNames, DEFAULT_POINTS_TO_WIN, DEFAULT_BANK_RESOURCES);
+        final GameSettings settings = new GameSettings("settings/settings.json");
+        this.pointsToWin = settings.getPoints();
+        this.board = new BoardImpl(settings.getMapGenerator());
     }
 
     @Override
@@ -337,6 +331,89 @@ public final class GameManagerImpl implements GameManager {
                 .anyMatch(propertyPosition -> {
                     return roadPosition.isNearToProperty(propertyPosition);
                 });
+    }
+
+    /**
+     * Represents
+     */
+    private class GameSettings {
+
+        private enum MapType {
+            /**
+             * @see BeginnerGameMapGenerator
+             */
+            BEGINNER,
+            /**
+             * @see RandomGameMapGenerator
+             */
+            RANDOM
+        }
+
+        private static final String DEFAULT_MAP_FIELD = "beginner";
+        private static final MapType DEFAULT_MAP_TYPE = MapType.BEGINNER;
+        private static final Map<String, MapType> fieldToMapType = Map.of(DEFAULT_MAP_FIELD, DEFAULT_MAP_TYPE,
+                "random", MapType.RANDOM);
+        private static final int DEFAULT_POINTS = 10;
+
+        private int points;
+        private MapType mapType;
+
+        /**
+         * Class which represents the settings of the game customized by players, which
+         * are the amount of points necessary to win and the type of map to play with.
+         * 
+         * @param settingsPath path of settings file in CLASSPATH
+         */
+        private GameSettings(final String settingsPath) {
+            try {
+                final ObjectMapper objectMapper = new ObjectMapper();
+                final JsonNode settings = objectMapper.readTree(ClassLoader.getSystemResourceAsStream(settingsPath));
+                final String MAP_FIELD_NAME = "map";
+                final String POINTS_FIELD_NAME = "points";
+                setMapType(Optional.ofNullable(settings.get(MAP_FIELD_NAME)));
+                setPoints(Optional.ofNullable(settings.get(POINTS_FIELD_NAME)));
+            } catch (IOException e) {
+                setDefaultMapType();
+                setDefaultPoints();
+            }
+        }
+
+        private int getPoints() {
+            return points;
+        }
+
+        private GameMapGenerator getMapGenerator() {
+            return switch (mapType) {
+                case RANDOM -> new RandomGameMapGenerator();
+                default -> new BeginnerGameMapGenerator();
+            };
+        }
+
+        private void setMapType(Optional<JsonNode> selectedMap) {
+            if (selectedMap.isPresent()) {
+                mapType = fieldToMapType.getOrDefault(
+                        selectedMap.get().asText(DEFAULT_MAP_FIELD).toLowerCase(Locale.US),
+                        DEFAULT_MAP_TYPE);
+            } else {
+                setDefaultMapType();
+            }
+        }
+
+        private void setDefaultMapType() {
+            mapType = DEFAULT_MAP_TYPE;
+        }
+
+        private void setPoints(Optional<JsonNode> selectedPoints) {
+            if (selectedPoints.isPresent()) {
+                points = selectedPoints.get().asInt(DEFAULT_POINTS);
+            } else {
+                setDefaultPoints();
+            }
+        }
+
+        private void setDefaultPoints() {
+            points = DEFAULT_POINTS;
+        }
     }
 
 }

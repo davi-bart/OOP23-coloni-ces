@@ -30,9 +30,7 @@ class GameManagerTest {
     void testProduceResources() {
         final Player player1 = new PlayerImpl("first");
         final Player player2 = new PlayerImpl("second");
-        final GameManager gameManager = new GameManagerImpl(new BeginnerGameMapGenerator(),
-                List.of(player1.getName(), player2.getName()), 10,
-                19);
+        final GameManager gameManager = new GameManagerImpl(List.of(player1.getName(), player2.getName()));
 
         final TilePosition tile1 = new TilePositionImpl(1, 0);
         final TilePosition tile2 = new TilePositionImpl(3, 2);

@@ -39,6 +39,8 @@ dependencies {
     // JGraphT (graph data structures and algorithms)
     val jGraphTVersion = "1.5.2"
     implementation("org.jgrapht:jgrapht-core:$jGraphTVersion")
+    val jacksonVersion = "2.16.0"
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
 
     // JavaFX: comment out if you do not need them
     val javaFxVersion = 15

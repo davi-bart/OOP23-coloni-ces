@@ -30,7 +30,7 @@ class ResourceManagerTest {
 
     @BeforeEach
     void init() {
-        this.resourceManager = new ResourceManagerImpl(List.of(PLAYER1, PLAYER2, PLAYER3, PLAYER4), 19);
+        this.resourceManager = new ResourceManagerImpl(List.of(PLAYER1, PLAYER2, PLAYER3, PLAYER4));
     }
 
     /**
