@@ -23,4 +23,9 @@ public interface AppView {
      * redraw the players.
      */
     void redrawPlayers();
+
+    /**
+     * update the log.
+     */
+    void updateLog(String name, String message);
 }

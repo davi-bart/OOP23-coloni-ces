@@ -1,6 +1,7 @@
 package it.unibo.controller.main;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -99,6 +100,7 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buyCard() {
         final CardType card = gameManager.buyCard(turnController.getCurrentPlayer());
+        appView.updateLog(getCurrentPlayerName(), createCardMessage(card));
         if (card.equals(CardType.KNIGHT)) {
             mustPlaceRobber = true;
         }
@@ -144,7 +146,11 @@ public final class MainControllerImpl implements MainController {
 
     @Override
     public void produceResources(final int number) {
-        gameManager.produceResources(number);
+        final Map<Player, Map<ResourceType, Integer>> producedResources = gameManager.produceResources(number);
+        producedResources.forEach((player, resources) -> {
+            resources.entrySet().stream().filter(entry -> entry.getValue() > 0)
+                    .forEach(e -> appView.updateLog(player.getName(), createResourceMessage(e.getKey(), e.getValue())));
+        });
         redrawResourcesView();
     }
 
@@ -198,5 +204,13 @@ public final class MainControllerImpl implements MainController {
     private void redrawResourcesView() {
         this.appView.redrawCurrentPlayer();
         this.appView.redrawBank();
+    }
+
+    private String createCardMessage(CardType card) {
+        return "used " + card.toString().toLowerCase(Locale.US).replace("_", " ") + " card";
+    }
+
+    private String createResourceMessage(ResourceType resource, int amount) {
+        return "got " + amount + " " + resource.toString().toLowerCase(Locale.US);
     }
 }

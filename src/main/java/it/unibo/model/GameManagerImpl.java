@@ -236,7 +236,7 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void produceResources(final int number) {
+    public Map<Player, Map<ResourceType, Integer>> produceResources(final int number) {
         final Map<TerrainType, ResourceType> terrainToResource = Map.of(TerrainType.FIELD, ResourceType.GRAIN,
                 TerrainType.FOREST, ResourceType.LUMBER,
                 TerrainType.HILL, ResourceType.BRICK,
@@ -277,8 +277,11 @@ public final class GameManagerImpl implements GameManager {
                 players.forEach(player -> resourceManager.addResources(player, resource,
                         playersResources.get(player).get(resource)));
                 resourceManager.removeResources(resourceManager.getBank(), resource, amount);
+            } else {
+                players.forEach(player -> playersResources.get(player).put(resource, 0));
             }
         });
+        return playersResources;
     }
 
     /**

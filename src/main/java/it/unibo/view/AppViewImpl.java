@@ -46,7 +46,7 @@ public final class AppViewImpl implements AppView {
         playersView = new PlayersView(controller, playerColors);
         currentPlayerView = new CurrentPlayerView(controller);
         logView = new LogView();
-        
+
     }
 
     @Override
@@ -72,7 +72,7 @@ public final class AppViewImpl implements AppView {
         final VBox rightSide = new VBox();
 
         final Scene scene = new Scene(root);
-        
+
         rightSide.getChildren().add(costCard());
         rightSide.getChildren().add(ruleButton());
         rightSide.getChildren().add(bankView);
@@ -125,5 +125,10 @@ public final class AppViewImpl implements AppView {
     @Override
     public void redrawPlayers() {
         playersView.draw(playerColors);
+    }
+
+    @Override
+    public void updateLog(final String name, final String message) {
+        logView.update(name, message);
     }
 }

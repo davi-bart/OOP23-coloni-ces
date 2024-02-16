@@ -1,10 +1,12 @@
 package it.unibo.model;
 
 import java.util.List;
+import java.util.Map;
 
 import it.unibo.common.card.CardType;
 import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.road.RoadPosition;
+import it.unibo.common.tile.ResourceType;
 import it.unibo.model.board.Board;
 import it.unibo.model.player.Player;
 import it.unibo.model.property.PropertyManager;
@@ -96,7 +98,7 @@ public interface GameManager {
      * 
      * @param number
      */
-    void produceResources(int number);
+    Map<Player, Map<ResourceType, Integer>> produceResources(int number);
 
     /**
      * @return the list of the players
