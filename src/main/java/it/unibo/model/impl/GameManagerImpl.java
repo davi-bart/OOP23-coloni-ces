@@ -134,11 +134,7 @@ public final class GameManagerImpl implements GameManager {
 
     @Override
     public void buildRoad(final RoadPosition position, final Player player) {
-        if (!canBuildRoad(position, player)) {
-            throw new IllegalArgumentException("Player " + player + " can't build a road at position " + position);
-        }
         roadManager.buildRoad(position, player);
-
         if (turnManager.getCycle() > 2) {
             Recipes.getRoadResources().forEach((resource, amount) -> {
                 resourceManager.removeResources(player, resource, amount);
@@ -206,6 +202,9 @@ public final class GameManagerImpl implements GameManager {
     @Override
     public boolean canBuildRoad(final RoadPosition position, final Player player) {
         final int cycle = turnManager.getCycle();
+        if (!roadManager.canBuildRoad(position)) {
+            return false;
+        }
         if (cycle <= 2) {
             return isRoadNearToAnyPlayerProperty(position, player)
                     && this.roadManager.getPlayerRoads(player).size() < cycle;

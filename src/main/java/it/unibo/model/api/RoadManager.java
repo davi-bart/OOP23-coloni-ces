@@ -1,5 +1,6 @@
 package it.unibo.model.api;
 
+import java.util.Optional;
 import java.util.Set;
 
 import it.unibo.common.api.road.RoadPosition;
@@ -10,10 +11,18 @@ import it.unibo.common.api.road.RoadPosition;
 public interface RoadManager {
 
     /**
-     * Adds a road.
+     * @param position
+     * @return whether a road can be built at position {@code position}
+     */
+    boolean canBuildRoad(RoadPosition position);
+
+    /**
+     * Builds a road.
      * 
      * @param position the position of the road
      * @param player   the player who owns the road
+     * @throws IllegalArgumentException if {@link #canBuildRoad} is false
+     * 
      */
     void buildRoad(RoadPosition position, Player player);
 
@@ -31,8 +40,9 @@ public interface RoadManager {
     int getLongestRoadLength(Player player);
 
     /**
-     * @return the player owning the longest road
+     * @return an optional containing, if present, the player owning the longest
+     *         road
      */
-    Player getLongestRoadOwner();
+    Optional<Player> getLongestRoadOwner();
 
 }

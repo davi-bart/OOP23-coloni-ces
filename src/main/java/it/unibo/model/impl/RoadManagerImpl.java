@@ -1,6 +1,7 @@
 package it.unibo.model.impl;
 
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,15 +22,21 @@ import it.unibo.model.api.RoadManager;
 public final class RoadManagerImpl implements RoadManager {
 
     private final Set<Road> roads = new LinkedHashSet<>();
-    private Player longestRoadOwner;
+    private Optional<Player> longestRoadOwner = Optional.empty();
+
+    @Override
+    public boolean canBuildRoad(final RoadPosition position) {
+        return !roads.stream().anyMatch(r -> r.getPosition().equals(position));
+    }
 
     @Override
     public void buildRoad(final RoadPosition position, final Player player) {
-        if (roads.stream().anyMatch(r -> r.getPosition().equals(position))) {
-            throw new IllegalArgumentException("Road was already present");
+        if (!canBuildRoad(position)) {
+            throw new IllegalArgumentException(
+                    "Player " + player + " cannot a build a road at position " + position + ": it is already present");
         }
         roads.add(new RoadImpl(position, player));
-        checkLongestRoad(player);
+        checkLongestRoadOwner(player);
     }
 
     @Override
@@ -74,32 +81,29 @@ public final class RoadManagerImpl implements RoadManager {
     }
 
     @Override
-    public Player getLongestRoadOwner() {
+    public Optional<Player> getLongestRoadOwner() {
         return longestRoadOwner;
     }
 
     /**
-     * Checks whether player {@code player} can become the longest road owner. If
-     * that is the case, it updates the longest road owner and the points.
+     * Checks whether player {@code player} can become the longest road owner.
+     * If that is the case, it updates the longest road owner and the victory
+     * points.
      * 
      * @param player
      */
-    private void checkLongestRoad(final Player player) {
+    private void checkLongestRoadOwner(final Player player) {
         final int minimumLongestRoadLength = 5;
         final int longestRoadVictoryPoints = 2;
-        if ((!longestRoadOwnerExists() && getLongestRoadLength(player) >= minimumLongestRoadLength)
-                || (longestRoadOwnerExists() && !player.equals(longestRoadOwner)
-                        && getLongestRoadLength(player) > getLongestRoadLength(longestRoadOwner))) {
-            if (longestRoadOwner != null) {
-                longestRoadOwner.decrementVictoryPoints(longestRoadVictoryPoints);
+        if ((longestRoadOwner.isEmpty() && getLongestRoadLength(player) >= minimumLongestRoadLength)
+                || (longestRoadOwner.isPresent() && !player.equals(longestRoadOwner.get())
+                        && getLongestRoadLength(player) > getLongestRoadLength(longestRoadOwner.get()))) {
+            if (longestRoadOwner.isPresent()) {
+                longestRoadOwner.get().decrementVictoryPoints(longestRoadVictoryPoints);
             }
-            longestRoadOwner = player;
-            longestRoadOwner.incrementVictoryPoints(longestRoadVictoryPoints);
+            longestRoadOwner = Optional.of(player);
+            longestRoadOwner.get().incrementVictoryPoints(longestRoadVictoryPoints);
         }
-    }
-
-    private boolean longestRoadOwnerExists() {
-        return longestRoadOwner != null;
     }
 
 }
