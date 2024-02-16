@@ -1,10 +1,5 @@
 package it.unibo.model.player;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import it.unibo.common.tile.ResourceType;
 
 /**
  * Implementation of Player.
@@ -12,7 +7,6 @@ import it.unibo.common.tile.ResourceType;
 public final class PlayerImpl implements Player {
     private int victoryPoints;
     private final String name;
-    private final int defaultValue;
 
     /**
      * Creates a Player.
@@ -21,7 +15,6 @@ public final class PlayerImpl implements Player {
      */
     public PlayerImpl(final String name) {
         this.name = name;
-        this.defaultValue = 0;
         victoryPoints = 0;
     }
 
@@ -40,13 +33,6 @@ public final class PlayerImpl implements Player {
     @Override
     public int getVictoryPoints() {
         return this.victoryPoints;
-    }
-
-    @Override
-    public Map<ResourceType, Integer> getDefaultResources() {
-        final Map<ResourceType, Integer> resources = new HashMap<>();
-        List.of(ResourceType.values()).forEach(resource -> resources.put(resource, defaultValue));
-        return resources;
     }
 
     @Override
