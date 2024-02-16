@@ -30,7 +30,7 @@ public final class BoardView extends StackPane {
         this.controller = controller;
         this.playerColors = playerColors;
 
-        // add the exagons and properties/road to the board
+        // add the hexagons and properties/road to the board
         final Group group = new Group();
         drawTiles();
         group.getChildren().addAll(this.tiles.values());

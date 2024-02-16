@@ -86,26 +86,26 @@ public final class ResourceManagerImpl implements ResourceManager {
 
     @Override
     public boolean canTrade(final ResourceOwner proposer, final ResourceOwner accepter,
-            final Map<ResourceType, Integer> proposedResouces,
+            final Map<ResourceType, Integer> proposedResources,
             final Map<ResourceType, Integer> wantedResources) {
         /**
          * 
          */
-        initializeResourceMap(proposedResouces);
+        initializeResourceMap(proposedResources);
         initializeResourceMap(wantedResources);
-        if (proposedResouces.values().stream().allMatch(amount -> amount == 0)
+        if (proposedResources.values().stream().allMatch(amount -> amount == 0)
                 && wantedResources.values().stream().allMatch(amount -> amount == 0)) {
             return false;
         }
-        if (!(hasResources(proposer, proposedResouces) && hasResources(accepter, wantedResources))) {
+        if (!(hasResources(proposer, proposedResources) && hasResources(accepter, wantedResources))) {
             return false;
         }
         if (accepter.equals(bank)) {
-            return proposedResouces.values().stream().anyMatch(amount -> amount == 4)
-                    && proposedResouces.values().stream().mapToInt(i -> i).sum() == 4
+            return proposedResources.values().stream().anyMatch(amount -> amount == 4)
+                    && proposedResources.values().stream().mapToInt(i -> i).sum() == 4
                     && wantedResources.values().stream().mapToInt(i -> i).sum() == 1;
         }
-        return !(proposedResouces.values().stream().allMatch(amount -> amount == 0)
+        return !(proposedResources.values().stream().allMatch(amount -> amount == 0)
                 || wantedResources.values().stream().allMatch(amount -> amount == 0));
     }
 

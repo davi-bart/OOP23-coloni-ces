@@ -6,9 +6,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import it.unibo.common.property.PropertyDirection;
 import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.property.PropertyPositionImpl;
@@ -61,19 +58,6 @@ public final class BoardControllerImpl implements BoardController {
     @Override
     public TerrainType getTileTerrainType(final TilePosition pos) {
         return this.board.getTileTerrainType(pos);
-    }
-
-    @Override
-    public Set<RoadPosition> getPlayerRoadPositions(final String playerName) {
-        return this.roadManager.getPlayerRoads(getPlayerByName.apply(playerName)).stream().map(r -> r.getPosition())
-                .collect(Collectors.toSet());
-    }
-
-    @Override
-    public Set<Pair<PropertyPosition, PropertyType>> getPlayerPropertyPositions(final String playerName) {
-        return this.propertyManager.getPlayerProperties(getPlayerByName.apply(playerName)).stream()
-                .map(p -> new ImmutablePair<PropertyPosition, PropertyType>(p.getPosition(), p.getPropertyType()))
-                .collect(Collectors.toSet());
     }
 
     @Override

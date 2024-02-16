@@ -107,7 +107,7 @@ public final class CurrentPlayerView extends HBox {
     }
 
     private Button getBuyCardButton() {
-        final Button buyCardButton = new Button("Buy developement card");
+        final Button buyCardButton = new Button("Buy development card");
         buyCardButton.setOnAction(e -> {
             if (controller.canBuyCard()) {
                 controller.buyCard();

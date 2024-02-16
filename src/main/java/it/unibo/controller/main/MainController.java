@@ -26,11 +26,6 @@ public interface MainController {
      */
     ResourceController getResourceController();
 
-    // /**
-    // * @return the turn controller
-    // */
-    // TurnController getTurnController();
-
     /**
      * @return the list of the players' names
      */
@@ -58,13 +53,13 @@ public interface MainController {
     void buildRoad(RoadPosition position);
 
     /**
-     * The current player buys a developement card.
+     * The current player buys a development card.
      */
     void buyCard();
 
     /**
      * @return whether the current player can build a settlement
-     * @param position where to build the settlemet
+     * @param position where to build the settlement
      */
     boolean canBuildSettlement(PropertyPosition position);
 
@@ -81,7 +76,7 @@ public interface MainController {
     boolean canBuildRoad(RoadPosition position);
 
     /**
-     * @return whether the current player can buy a developement card.
+     * @return whether the current player can buy a development card.
      */
     boolean canBuyCard();
 
@@ -113,13 +108,6 @@ public interface MainController {
      * @return if the player can roll.
      */
     boolean canRollDie();
-
-    /**
-     * give the resources produced by the tile with the given number.
-     * 
-     * @param rollSum sum of the 2 dices.
-     */
-    void produceResources(int rollSum);
 
     /**
      * Modify the resources of the owners into the trade.

@@ -82,8 +82,7 @@ public final class RobberView {
         discardContainer.getChildren().add(resourcesContainer);
         discardContainer.getChildren().add(confirm);
 
-        final Scene stageScene = new Scene(discardContainer, 500,
-                300);
+        final Scene stageScene = new Scene(discardContainer, 500, 300);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(stageScene);
         stage.setResizable(false);

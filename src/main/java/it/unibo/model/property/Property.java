@@ -25,7 +25,7 @@ public interface Property {
     PropertyType getPropertyType();
 
     /**
-     * Upgrade a settlemet to city.
+     * Upgrade a settlement to city.
      */
     void upgrade();
 }

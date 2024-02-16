@@ -61,14 +61,14 @@ public final class Utility {
     }
 
     /**
-     * returns the coordinates of the propertiy of an hexagon in the specified
+     * Calculates the coordinates of the property of an hexagon in the specified
      * direction.
      * 
-     * @param radius    radius
+     * @param radius    radius of the hexagon
      * @param x         x coordinate of the center
      * @param y         y coordinate of the center
      * @param direction direction of the property
-     * @return a map of properties, by their direction
+     * @return the coordinates of the property, in pixels
      */
     public static Pair<Double, Double> getPropertyCoordinates(final double radius, final double x,
             final double y, final PropertyDirection direction) {
@@ -78,7 +78,7 @@ public final class Utility {
     }
 
     /**
-     * returns the position of a tile in the board.
+     * Calculates the position of a tile in the board.
      * 
      * @param row row
      * @param col column
