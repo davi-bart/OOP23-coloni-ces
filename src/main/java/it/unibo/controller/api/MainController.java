@@ -36,12 +36,6 @@ public interface MainController {
 
     /**
      * @param playerName
-     * @return resources of the player with name {@code playerName}
-     */
-    Map<ResourceType, Integer> getPlayerResources(String playerName);
-
-    /**
-     * @param playerName
      * @return the victory points of the given player.
      */
     int getVictoryPoints(String playerName);
@@ -107,15 +101,6 @@ public interface MainController {
      * @return the points of the player
      */
     int getPlayerPoints(String player);
-
-    /**
-     * * Return if the given owner has the given resources.
-     * 
-     * @param playerName player's name
-     * @param resources  map with the resources
-     * @return true if the given owner has the given resources, false otherwise
-     */
-    boolean hasResources(String playerName, Map<ResourceType, Integer> resources);
 
     /**
      * @return whether the current player can end the turn

@@ -81,11 +81,6 @@ public final class MainControllerImpl implements MainController {
     }
 
     @Override
-    public Map<ResourceType, Integer> getPlayerResources(final String playerName) {
-        return resourceController.getOwnerResources(playerName);
-    }
-
-    @Override
     public int getVictoryPoints(final String playerName) {
         return getPlayerByName(playerName).getVictoryPoints();
     }
@@ -144,11 +139,6 @@ public final class MainControllerImpl implements MainController {
     @Override
     public int getPlayerPoints(final String player) {
         return getPlayerByName(player).getVictoryPoints();
-    }
-
-    @Override
-    public boolean hasResources(final String playerName, final Map<ResourceType, Integer> resources) {
-        return resourceController.hasResources(playerName, resources);
     }
 
     @Override

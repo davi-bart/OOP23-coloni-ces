@@ -1,12 +1,10 @@
 package it.unibo.controller.impl;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.HashMap;
 
 import it.unibo.common.api.tile.ResourceType;
-import it.unibo.common.impl.Recipes;
 import it.unibo.controller.api.ResourceController;
 import it.unibo.model.api.ResourceManager;
 import it.unibo.model.api.ResourceOwner;
@@ -34,7 +32,7 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public Map<ResourceType, Integer> getOwnerResources(final String owner) {
+    public Map<ResourceType, Integer> getPlayerResources(final String owner) {
         final Map<ResourceType, Integer> out = new HashMap<>();
         for (final ResourceType resource : ResourceType.values()) {
             out.put(resource, resourceManager.getResource(getResourceOwnerByName.apply(owner), resource));
@@ -58,44 +56,6 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
-    public boolean hasResourcesForSettlement(final String player) {
-        return resourceManager.hasResources(getResourceOwnerByName.apply(player), Recipes.getSettlementResources());
-    }
-
-    @Override
-    public boolean hasResourcesForCity(final String player) {
-        return resourceManager.hasResources(getResourceOwnerByName.apply(player), Recipes.getCityResources());
-    }
-
-    @Override
-    public void removeResources(final String owner, final Map<ResourceType, Integer> resources) {
-        for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
-            resourceManager.removeResources(getResourceOwnerByName.apply(owner), resource.getKey(),
-                    resource.getValue());
-        }
-    }
-
-    @Override
-    public boolean hasResourcesForRoad(final String player) {
-        return resourceManager.hasResources(getResourceOwnerByName.apply(player), Recipes.getRoadResources());
-    }
-
-    @Override
-    public void addResources(final String owner, final Map<ResourceType, Integer> resources) {
-        for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
-            resourceManager.addResources(getResourceOwnerByName.apply(owner), resource.getKey(),
-                    resources.get(resource.getKey()));
-        }
-    }
-
-    @Override
-    public void removeBankResources(final Map<ResourceType, Integer> resources) {
-        for (final Entry<ResourceType, Integer> resource : resources.entrySet()) {
-            resourceManager.removeResources(bank, resource.getKey(), resource.getValue());
-        }
-    }
-
-    @Override
     public void acceptTrade(final String proposer, final String accepter,
             final Map<ResourceType, Integer> givingResouces,
             final Map<ResourceType, Integer> recivingResources) {
@@ -107,6 +67,20 @@ public final class ResourceControllerImpl implements ResourceController {
     @Override
     public Map<ResourceType, Integer> getResources(final String owner) {
         return resourceManager.getResources(getResourceOwnerByName.apply(owner));
+    }
+
+    @Override
+    public boolean canTradeWithPlayer(String proposer, String accepter,
+            Map<ResourceType, Integer> proposedResouces, Map<ResourceType, Integer> wantedResources) {
+        return resourceManager.canTrade(getResourceOwnerByName.apply(proposer), getResourceOwnerByName.apply(accepter),
+                proposedResouces, wantedResources);
+    }
+
+    @Override
+    public boolean canTradeWithBank(String proposer, Map<ResourceType, Integer> proposedResouces,
+            Map<ResourceType, Integer> wantedResources) {
+        return resourceManager.canTrade(getResourceOwnerByName.apply(proposer), bank, proposedResouces,
+                wantedResources);
     }
 
 }
