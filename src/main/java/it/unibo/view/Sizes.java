@@ -19,11 +19,11 @@ public final class Sizes {
     /**
      * Minimum screen width.
      */
-    public static final double MIN_SCREEN_WIDTH = SCREEN_WIDTH * 0.6;
+    public static final double MIN_SCREEN_WIDTH = SCREEN_HEIGHT * 16 / 9 * 0.6;
     /**
      * Minimum screen height.
      */
-    public static final double MIN_SCREEN_HEIGHT = SCREEN_HEIGHT * 0.8;
+    public static final double MIN_SCREEN_HEIGHT = SCREEN_HEIGHT * 0.81;
 
     private Sizes() {
     }
