@@ -1,7 +1,7 @@
 package it.unibo.view.resource;
 
 import java.util.HashMap;
-    import java.util.Map;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -87,6 +87,7 @@ public final class TradeView {
                             .get(resource),
                     (options, oldValue, newValue) -> {
                         proposedResources.put(resource, newValue);
+                        buttonToAction.forEach((button, action) -> action.run());
                         reloadBankTradeButton.run();
                     }));
             wantedResourcesBox.getChildren().add(ResourcesViewFactory.resourceAndComboBox(resource,
