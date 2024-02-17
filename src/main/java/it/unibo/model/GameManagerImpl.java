@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -272,6 +273,7 @@ public final class GameManagerImpl implements GameManager {
                 players.forEach(player -> playersResources.get(player).put(resource, 0));
             }
         });
+        System.out.println(playersResources);
         return playersResources;
     }
 
@@ -416,4 +418,10 @@ public final class GameManagerImpl implements GameManager {
         }
     }
 
+    @Override
+    public Optional<Player> getWinner() {
+        return Optional.ofNullable(
+                players.stream().filter(player -> player.getVictoryPoints() >= pointsToWin).collect(Collectors.toList())
+                        .get(0));
+    }
 }

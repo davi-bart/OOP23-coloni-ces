@@ -1,8 +1,8 @@
 package it.unibo.controller.main;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -10,11 +10,14 @@ import org.apache.commons.lang3.tuple.Pair;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.card.CardType;
 import it.unibo.common.property.PropertyPosition;
+import it.unibo.common.property.PropertyType;
 import it.unibo.common.road.RoadPosition;
 import it.unibo.common.tile.ResourceType;
 import it.unibo.common.tile.TilePosition;
 import it.unibo.controller.board.BoardController;
 import it.unibo.controller.board.BoardControllerImpl;
+import it.unibo.controller.main.message.MessageFactory;
+import it.unibo.controller.main.message.MessageFactoryImpl;
 import it.unibo.controller.resource.ResourceController;
 import it.unibo.controller.resource.ResourceControllerImpl;
 import it.unibo.controller.turn.TurnController;
@@ -36,6 +39,7 @@ public final class MainControllerImpl implements MainController {
     private final AppView appView;
     private boolean mustPlaceRobber;
     private final Function<String, Player> getPlayerByName;
+    private final MessageFactory messageFactory = new MessageFactoryImpl();
 
     /**
      * Constructor of the controller.
@@ -60,6 +64,8 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buildCity(final PropertyPosition position) {
         gameManager.buildCity(position, turnController.getCurrentPlayer());
+        this.appView.updateLog(getCurrentPlayerName(),
+                messageFactory.createBuildPropertyMessage(PropertyType.CITY).getMessage());
         checkGameOver();
         redrawResourcesView();
         this.appView.redrawPlayers();
@@ -68,6 +74,8 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buildSettlement(final PropertyPosition position) {
         this.gameManager.buildSettlement(position, turnController.getCurrentPlayer());
+        this.appView.updateLog(getCurrentPlayerName(),
+                messageFactory.createBuildPropertyMessage(PropertyType.SETTLEMENT).getMessage());
         checkGameOver();
         redrawResourcesView();
         this.appView.redrawPlayers();
@@ -76,6 +84,7 @@ public final class MainControllerImpl implements MainController {
     @Override
     public void buildRoad(final RoadPosition position) {
         gameManager.buildRoad(position, turnController.getCurrentPlayer());
+        this.appView.updateLog(getCurrentPlayerName(), messageFactory.createBuildRoadMessage().getMessage());
         checkGameOver();
         redrawResourcesView();
         this.appView.redrawPlayers();
@@ -136,6 +145,9 @@ public final class MainControllerImpl implements MainController {
         final Pair<Integer, Integer> rolledDies = turnController.rollDie();
         produceResources(rolledDies.getLeft() + rolledDies.getRight());
         mustPlaceRobber = rolledDies.getLeft() + rolledDies.getRight() == ROBBER_NUMBER;
+        if (mustPlaceRobber) {
+            logRobber();
+        }
         return rolledDies;
     }
 
@@ -232,19 +244,25 @@ public final class MainControllerImpl implements MainController {
         producedResources.forEach((player, resources) -> {
             resources.entrySet().stream().filter(entry -> entry.getValue() > 0)
                     .forEach(e -> appView.updateLog(player.getName(),
-                            getResourcesLogMessage(e.getKey(), e.getValue())));
+                            messageFactory.createResourceMessage(e.getKey(), e.getValue()).getMessage()));
         });
     }
 
-    private String getResourcesLogMessage(final ResourceType resource, final int amount) {
-        return "got " + amount + " " + resource.toString().toLowerCase(Locale.US);
-    }
-
     private void logCard(final CardType card) {
-        appView.updateLog(getCurrentPlayerName(), getCardLogMessage(card));
+        appView.updateLog(getCurrentPlayerName(), messageFactory.createCardMessage(card).getMessage());
     }
 
-    private String getCardLogMessage(final CardType card) {
-        return "used " + card.toString().toLowerCase(Locale.US).replace("_", " ") + " card";
+    private void logRobber() {
+        appView.updateLog(getCurrentPlayerName(), "must place robber");
     }
+
+    @Override
+    public Optional<String> getWinner() {
+        if (gameManager.getWinner().isPresent()) {
+            return Optional.of(gameManager.getWinner().get().getName());
+        } else {
+            return Optional.empty();
+        }
+    }
+
 }

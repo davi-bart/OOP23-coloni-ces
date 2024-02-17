@@ -1,6 +1,8 @@
 package it.unibo.view.app;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -33,7 +35,7 @@ public final class AppViewImpl implements AppView {
     private final CurrentPlayerView currentPlayerView;
     private final Map<String, Color> playerColors = new HashMap<>();
     private final LogView logView;
-    private final EndGameView endGameView;
+    private final MainController controller;
 
     /**
      * Constructor of AppView.
@@ -43,7 +45,7 @@ public final class AppViewImpl implements AppView {
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The stage needs to be updated")
     public AppViewImpl(final Stage stage, final List<String> players) {
-        final MainController controller = new MainControllerImpl(this, players);
+        this.controller = new MainControllerImpl(this, players);
         final var colors = List.of(Color.RED, Color.ORANGE, Color.LIMEGREEN, Color.MAGENTA);
         controller.getPlayerNames().stream().forEach(p -> playerColors.put(p, colors.get(playerColors.size())));
         this.stage = stage;
@@ -52,8 +54,6 @@ public final class AppViewImpl implements AppView {
         playersView = new PlayersView(controller, playerColors);
         currentPlayerView = new CurrentPlayerView(controller);
         logView = new LogView();
-        endGameView = new EndGameView(controller, stage);
-
     }
 
     @Override
@@ -136,6 +136,12 @@ public final class AppViewImpl implements AppView {
 
     @Override
     public void drawEndGame() {
-        endGameView.draw();
+        final Alert popUp = new Alert(AlertType.INFORMATION);
+        if (controller.getWinner().isPresent()) {
+            popUp.setHeaderText("The winner is " + controller.getWinner().get());
+            if (popUp.showAndWait().isPresent()) {
+                stage.close();
+            }
+        }
     }
 }

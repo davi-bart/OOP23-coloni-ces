@@ -33,7 +33,7 @@ public interface AppView {
     void updateLog(String name, String message);
 
     /**
-     * Draws the end game window.
+     * 
      */
     void drawEndGame();
 }

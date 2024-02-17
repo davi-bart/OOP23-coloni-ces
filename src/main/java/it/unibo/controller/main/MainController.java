@@ -2,6 +2,7 @@ package it.unibo.controller.main;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -159,4 +160,10 @@ public interface MainController {
      * @return the points of the player
      */
     int getPlayerPoints(String player);
+
+    /**
+     * 
+     * @return the name of the winner.
+     */
+    Optional<String> getWinner();
 }

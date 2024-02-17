@@ -2,6 +2,7 @@ package it.unibo.model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import it.unibo.common.card.CardType;
 import it.unibo.common.property.PropertyPosition;
@@ -24,6 +25,12 @@ public interface GameManager {
      * @return true if the game is over, false otherwise.
      */
     boolean isGameOver();
+
+    /**
+     * 
+     * @return the player that reached winning points.
+     */
+    Optional<Player> getWinner();
 
     /**
      * Build a settlement of player {@code player} at position {@code position}.
