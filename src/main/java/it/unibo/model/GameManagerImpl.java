@@ -248,9 +248,9 @@ public final class GameManagerImpl implements GameManager {
                 property.getPosition().getEquivalentPositions().stream()
                         .map(propertyPosition -> propertyPosition.getTilePosition())
                         .filter(tilePosition -> board.getTilePositions().contains(tilePosition))
+                        .filter(tilePosition -> !board.getTileTerrainType(tilePosition).equals(TerrainType.DESERT))
                         .filter(tilePosition -> board.getTileNumber(tilePosition) == number
-                                && !board.getRobberPosition().equals(
-                                        tilePosition))
+                                && !board.getRobberPosition().equals(tilePosition))
                         .forEach(tilePosition -> {
                             final int amount = property.getPropertyType() == PropertyType.CITY ? 2 : 1;
                             final ResourceType resource = terrainToResource

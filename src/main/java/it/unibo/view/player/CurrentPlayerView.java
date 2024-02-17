@@ -53,13 +53,13 @@ public final class CurrentPlayerView extends HBox {
         buttonsBox.getChildren().add(getEndTurnButton());
         buttonsBox.getChildren().add(getRollButton());
         buttonsBox.getChildren().add(getBuyCardButton());
-        buttonsBox.getChildren().add(new Label(controller.getCurrentPlayerName()));
 
         final HBox dieImages = new HBox();
         dieImages.setSpacing(2);
         dieImages.getChildren().add(roll1);
         dieImages.getChildren().add(roll2);
 
+        info.getChildren().add(new Label("Current player: " + controller.getCurrentPlayerName()));
         info.getChildren().add(buttonsBox);
         info.getChildren().add(dieImages);
         super.getChildren().add(info);
