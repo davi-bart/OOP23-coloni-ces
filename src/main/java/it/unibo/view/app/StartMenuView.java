@@ -56,6 +56,7 @@ public class StartMenuView {
         stage.setTitle("I Coloni di Cesena");
         stage.setScene(getScene());
         stage.setMaximized(true);
+        stage.setResizable(false);
         stage.show();
     }
 

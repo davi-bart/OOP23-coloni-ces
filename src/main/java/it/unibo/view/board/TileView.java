@@ -67,6 +67,7 @@ public final class TileView extends Group implements Drawable {
             numberText.setFont(new Font(fontSize));
             numberText.setTranslateX(-numberText.getBoundsInLocal().getWidth() / 2);
             numberText.setTextOrigin(VPos.CENTER);
+            numberText.setOnMouseClicked(eventHandler);
             super.getChildren().add(numberText);
         }
         final var robberPosition = controller.getBoardController().getRobberPosition();

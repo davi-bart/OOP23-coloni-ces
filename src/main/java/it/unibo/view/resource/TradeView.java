@@ -13,7 +13,9 @@ import javafx.scene.control.Label;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.transform.Scale;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -49,6 +51,7 @@ public final class TradeView {
     }
 
     private void showTradeStage() {
+
         final Stage stage = new Stage();
         stage.setTitle("Trade window");
         final VBox resourcesContainer = new VBox();
@@ -120,8 +123,14 @@ public final class TradeView {
 
         playersContainer.getChildren().add(tradeBank);
         tradeContainer.getChildren().add(playersContainer);
-        final Scene stageScene = new Scene(tradeContainer, 500,
-                300);
+        final Scene stageScene = new Scene(tradeContainer);
+        Scale scale = new Scale(Screen.getPrimary().getBounds().getWidth() / 1920.0,
+                Screen.getPrimary().getBounds().getHeight() / 1080.0);
+        scale.setPivotX(0);
+        scale.setPivotY(0);
+        stageScene.getRoot().getTransforms().setAll(scale);
+        stage.setWidth(Screen.getPrimary().getBounds().getWidth() * 0.25);
+        stage.setHeight(Screen.getPrimary().getBounds().getHeight() * 0.30);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(stageScene);
         stage.setResizable(false);

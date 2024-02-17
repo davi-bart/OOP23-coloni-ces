@@ -273,7 +273,6 @@ public final class GameManagerImpl implements GameManager {
                 players.forEach(player -> playersResources.get(player).put(resource, 0));
             }
         });
-        System.out.println(playersResources);
         return playersResources;
     }
 
@@ -283,12 +282,6 @@ public final class GameManagerImpl implements GameManager {
      *         property
      */
     private boolean isPropertyNearToAnyProperty(final PropertyPosition position) {
-        // return players.forEach(player ->
-        // propertyManager.getPlayerProperties(player).stream()
-        // .map(property -> property.getPosition())
-        // .anyMatch(propertyPosition -> {
-        // return propertyPosition.isNear(position);
-        // }));
         return players.stream()
                 .anyMatch(player -> propertyManager.getPlayerProperties(player).stream()
                         .map(property -> property.getPosition())
