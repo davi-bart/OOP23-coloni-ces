@@ -20,7 +20,7 @@ class PlayerTest {
      */
     @BeforeEach
     void init() {
-        this.player = new PlayerImpl("lucone");
+        this.player = new PlayerImpl("player1");
     }
 
     /**

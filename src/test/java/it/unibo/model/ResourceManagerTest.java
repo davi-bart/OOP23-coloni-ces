@@ -1,6 +1,7 @@
 package it.unibo.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
@@ -23,10 +24,10 @@ import it.unibo.model.resource.ResourceManagerImpl;
 class ResourceManagerTest {
 
     private ResourceManager resourceManager;
-    private static final Player PLAYER1 = new PlayerImpl("luca");
-    private static final Player PLAYER2 = new PlayerImpl("andrea");
-    private static final Player PLAYER3 = new PlayerImpl("alex");
-    private static final Player PLAYER4 = new PlayerImpl("sbara");
+    private static final Player PLAYER1 = new PlayerImpl("player1");
+    private static final Player PLAYER2 = new PlayerImpl("player2");
+    private static final Player PLAYER3 = new PlayerImpl("player3");
+    private static final Player PLAYER4 = new PlayerImpl("player4");
 
     @BeforeEach
     void init() {
@@ -84,5 +85,19 @@ class ResourceManagerTest {
         assertEquals(2, resourceManager.getResource(PLAYER2, ResourceType.LUMBER));
         assertEquals(4, resourceManager.getResource(PLAYER2, ResourceType.ORE));
 
+    }
+
+    /*
+     * Test shouldDiscard and getAmountToDiscard.
+     */
+    @Test
+    void testDiscard() {
+        resourceManager.addResources(PLAYER1, Map.of(ResourceType.BRICK, 5, ResourceType.WOOL, 5,
+                ResourceType.GRAIN, 4));
+        assertTrue(resourceManager.shouldDiscard(PLAYER1));
+        assertEquals(7, resourceManager.getAmountToDiscard(PLAYER1));
+        resourceManager.removeResources(PLAYER1, Map.of(ResourceType.BRICK, 5, ResourceType.GRAIN, 2));
+        assertFalse(resourceManager.shouldDiscard(PLAYER1));
+        assertEquals(0, resourceManager.getAmountToDiscard(PLAYER1));
     }
 }
