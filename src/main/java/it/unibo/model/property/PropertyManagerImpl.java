@@ -1,8 +1,6 @@
 package it.unibo.model.property;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -45,14 +43,6 @@ public final class PropertyManagerImpl implements PropertyManager {
                 .findFirst().map(p -> p.getPropertyType()).orElse(PropertyType.EMPTY);
     }
 
-    @Override
-    public Set<Property> getAllPlayersProperties(final List<Player> players) {
-        final Set<Property> out = new HashSet<>();
-        players.forEach(player -> {
-            getPlayerProperties(player).forEach(property -> out.add(property));
-        });
-        return out;
-    }
 
     @Override
     public Optional<Player> getPropertyOwner(final PropertyPosition position) {

@@ -1,6 +1,5 @@
 package it.unibo.model.property;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -26,14 +25,6 @@ public interface PropertyManager {
      * @return a set of the properties built by {@code player}
      */
     Set<Property> getPlayerProperties(Player player);
-
-    /**
-     * Get all the properties built by the specified players.
-     * 
-     * @param players the players
-     * @return a set of the properties built by every player.
-     */
-    Set<Property> getAllPlayersProperties(List<Player> players);
 
     /**
      * get the property type of the property at the given position.
