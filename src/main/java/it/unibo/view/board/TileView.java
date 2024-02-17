@@ -9,6 +9,7 @@ import it.unibo.common.tile.TerrainType;
 import it.unibo.common.tile.TilePosition;
 import it.unibo.controller.main.MainController;
 import it.unibo.view.Drawable;
+import it.unibo.view.Sizes;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
@@ -62,7 +63,7 @@ public final class TileView extends Group implements Drawable {
         hexagon.setOnMouseClicked(eventHandler);
         super.getChildren().add(hexagon);
         if (terrainType != TerrainType.DESERT) {
-            final int fontSize = 30;
+            final double fontSize = Sizes.getHeight(30);
             final Text numberText = new Text(x, y, String.valueOf(number));
             numberText.setFont(new Font(fontSize));
             numberText.setTranslateX(-numberText.getBoundsInLocal().getWidth() / 2);

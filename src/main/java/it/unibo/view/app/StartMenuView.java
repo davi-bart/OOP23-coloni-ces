@@ -27,6 +27,7 @@ import java.io.IOException;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.main.MainController;
 import it.unibo.controller.main.MainControllerImpl;
+import it.unibo.view.Sizes;
 
 /**
  * Application.
@@ -96,11 +97,11 @@ public class StartMenuView {
         final TableView<String> tableView = new TableView<>();
         final Alert popUp = new Alert(AlertType.ERROR);
         final TableColumn<String, String> playerName = new TableColumn<>("Player Name");
-        final int maxTableHeight = 140;
-        final int maxTableWidth = 300;
+        final double maxTableHeight = Sizes.getHeight(140);
+        final double maxTableWidth = Sizes.getWidth(300);
         final int childrenSpacing = 5;
-        final int maxTextAreaHeight = 200;
-        final int maxTextAreaWidth = 200;
+        final double maxTextAreaHeight = Sizes.getHeight(200);
+        final double maxTextAreaWidth = Sizes.getWidth(200);
 
         playerName.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue()));
         tableView.getColumns().add(playerName);

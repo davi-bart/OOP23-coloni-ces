@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.tile.ResourceType;
 import it.unibo.controller.main.MainController;
+import it.unibo.view.Sizes;
 import it.unibo.view.resource.ResourcesViewFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -86,7 +87,7 @@ public final class RobberView {
         discardContainer.getChildren().add(resourcesContainer);
         discardContainer.getChildren().add(confirm);
 
-        final Scene stageScene = new Scene(discardContainer, 500, 300);
+        final Scene stageScene = new Scene(discardContainer, Sizes.getWidth(500), Sizes.getHeight(300));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(stageScene);
         stage.setResizable(false);

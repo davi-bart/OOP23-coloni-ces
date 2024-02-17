@@ -45,21 +45,17 @@ public final class MainControllerImpl implements MainController {
     /**
      * Constructor of the controller.
      * 
-     * @param appView the main view
      * @param players list of players' names
      */
     public MainControllerImpl(final List<String> players) {
         this.gameManager = new GameManagerImpl(players);
-
         this.getPlayerByName = name -> gameManager.getPlayers().stream().filter(p -> p.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Player with name " + name + " does not exist."));
-
         this.boardController = new BoardControllerImpl(getPlayerByName, this.gameManager.getBoard(),
                 this.gameManager.getPropertyManager(), this.gameManager.getRoadManager());
         this.resourceController = new ResourceControllerImpl(getPlayerByName, gameManager.getResourceManager());
         this.turnController = new TurnControllerImpl(gameManager.getTurnManager());
-
         this.appView = new AppViewImpl(this);
     }
 

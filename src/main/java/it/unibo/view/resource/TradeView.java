@@ -7,15 +7,14 @@ import java.util.stream.Stream;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.tile.ResourceType;
 import it.unibo.controller.main.MainController;
+import it.unibo.view.Sizes;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.transform.Scale;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -81,7 +80,6 @@ public final class TradeView {
                             getPlayerTradeButtonAction(acceptTradeButton, playerName, proposedResources,
                                     wantedResources));
                 });
-
         reloadBankTradeButton.run();
         buttonToAction.forEach((button, action) -> action.run());
         Stream.of(ResourceType.values()).forEach(resource -> {
@@ -124,13 +122,9 @@ public final class TradeView {
         playersContainer.getChildren().add(tradeBank);
         tradeContainer.getChildren().add(playersContainer);
         final Scene stageScene = new Scene(tradeContainer);
-        Scale scale = new Scale(Screen.getPrimary().getBounds().getWidth() / 1920.0,
-                Screen.getPrimary().getBounds().getHeight() / 1080.0);
-        scale.setPivotX(0);
-        scale.setPivotY(0);
-        stageScene.getRoot().getTransforms().setAll(scale);
-        stage.setWidth(Screen.getPrimary().getBounds().getWidth() * 0.25);
-        stage.setHeight(Screen.getPrimary().getBounds().getHeight() * 0.30);
+        final double width = Sizes.getWidth(500), height = Sizes.getHeight(300);
+        stage.setWidth(width);
+        stage.setHeight(height);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(stageScene);
         stage.setResizable(false);

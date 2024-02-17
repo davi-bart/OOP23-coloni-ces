@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import it.unibo.common.property.PropertyDirection;
 import it.unibo.common.road.RoadDirection;
+import it.unibo.view.Sizes;
 
 /**
  * Utility class for managing coordinates of roads,tiles and properties.
@@ -17,7 +18,7 @@ public final class Coordinates {
     /**
      * The radius of the hexagon in pixels.
      */
-    public static final int HEXAGON_RADIUS = 70;
+    public static final double HEXAGON_RADIUS = Sizes.getHeight(70);
 
     private Coordinates() {
     }

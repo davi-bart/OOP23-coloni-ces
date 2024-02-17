@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import it.unibo.common.tile.ResourceType;
+import it.unibo.view.Sizes;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -28,13 +29,12 @@ public final class ResourcesViewFactory {
      * @return the image view of the needed resource.
      */
     public static VBox generateResource(final ResourceType resourceType) {
-        final int defaultHeight = 100;
+        final double defaultHeight = Sizes.getHeight(100);
         final VBox resourceCard = new VBox();
         final Image resourceImage = new Image(
                 ClassLoader.getSystemResourceAsStream(
                         "imgs/resources/" + resourceType.toString().toLowerCase(Locale.US) + ".png"));
         final ImageView image = new ImageView(resourceImage);
-
         resourceCard.setAlignment(Pos.CENTER);
         image.setFitHeight(defaultHeight);
         image.setPreserveRatio(true);

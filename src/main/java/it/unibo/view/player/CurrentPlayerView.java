@@ -3,6 +3,7 @@ package it.unibo.view.player;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.main.MainController;
 import it.unibo.view.Drawable;
+import it.unibo.view.Sizes;
 import it.unibo.view.board.RobberView;
 import it.unibo.view.resource.ResourcesViewFactory;
 import it.unibo.view.resource.TradeView;
@@ -95,7 +96,7 @@ public final class CurrentPlayerView extends HBox implements Drawable {
         rollButton.setOnAction(e -> {
             if (controller.canRollDie()) {
                 final var roll = controller.rollDie();
-                final int width = 60, height = 60;
+                final double width = Sizes.getWidth(60), height = Sizes.getHeight(60);
                 roll1.setImage(new Image(ClassLoader.getSystemResourceAsStream("imgs/dice/" + roll.getLeft() + ".png"),
                         width, height, true, true));
                 roll2.setImage(new Image(ClassLoader.getSystemResourceAsStream("imgs/dice/" + roll.getRight() + ".png"),

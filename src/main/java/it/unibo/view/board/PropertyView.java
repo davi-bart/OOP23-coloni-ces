@@ -9,6 +9,7 @@ import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.property.PropertyType;
 import it.unibo.controller.main.MainController;
 import it.unibo.view.Drawable;
+import it.unibo.view.Sizes;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -44,7 +45,8 @@ public final class PropertyView extends Circle implements Drawable {
     @Override
     public void draw() {
         final PropertyType propertyType = controller.getBoardController().getPropertyType(propertyPosition);
-        final int azimuth = 45, elevation = 45, radius = 26, emptyRadius = 12;
+        final int azimuth = 45, elevation = 45;
+        final double radius = Sizes.getHeight(26), emptyRadius = Sizes.getHeight(12);
         setCircle(propertyPosition);
         if (propertyType == PropertyType.EMPTY) {
             super.setRadius(emptyRadius);

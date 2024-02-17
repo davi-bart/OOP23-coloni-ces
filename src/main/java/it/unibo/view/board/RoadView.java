@@ -9,6 +9,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.road.RoadPosition;
 import it.unibo.controller.main.MainController;
 import it.unibo.view.Drawable;
+import it.unibo.view.Sizes;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -57,7 +58,7 @@ public final class RoadView extends Line implements Drawable {
     }
 
     private void setLine(final RoadPosition position) {
-        final int strokeWidth = 12;
+        final double strokeWidth = Sizes.getHeight(12);
         final Pair<Double, Double> pos = Coordinates.getPositionFromTile(position.getCoordinates().getRow(),
                 position.getCoordinates().getCol());
         final var endpoints = Coordinates.getRoadCoordinates(Coordinates.HEXAGON_RADIUS * (2 - Math.sqrt(3) / 2),
