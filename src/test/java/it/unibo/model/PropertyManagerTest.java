@@ -68,7 +68,7 @@ class PropertyManagerTest {
     void testGetPlayerProperties() {
         propertyManager.addSettlement(pos1, PLAYER1);
         propertyManager.addSettlement(pos2, PLAYER1);
-        for (Property property : propertyManager.getPlayerProperties(PLAYER1)) {
+        for (final Property property : propertyManager.getPlayerProperties(PLAYER1)) {
             assertTrue(
                     Set.of(new PropertyImpl(pos2, PLAYER1).getPosition(), new PropertyImpl(pos1, PLAYER1).getPosition())
                             .contains(property.getPosition()));

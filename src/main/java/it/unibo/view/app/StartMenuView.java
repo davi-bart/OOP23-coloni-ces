@@ -31,7 +31,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Application.
  */
 public class StartMenuView {
-    private final static int PLAYERS_LIMIT = 4;
+    private static final int PLAYERS_LIMIT = 4;
     private final Stage stage;
     private final ObservableList<String> players = FXCollections.observableArrayList();
 
