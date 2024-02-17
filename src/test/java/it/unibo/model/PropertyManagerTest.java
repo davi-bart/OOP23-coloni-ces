@@ -1,6 +1,7 @@
 package it.unibo.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
@@ -60,6 +61,7 @@ class PropertyManagerTest {
         propertyManager.upgradeToCity(pos1);
         assertEquals(Optional.of(PLAYER1), propertyManager.getPropertyOwner(pos1));
         assertEquals(PropertyType.CITY, propertyManager.getPropertyType(pos1));
+        assertThrows(IllegalArgumentException.class, () -> propertyManager.upgradeToCity(pos2));
     }
 
     @Test

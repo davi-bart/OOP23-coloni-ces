@@ -34,6 +34,8 @@ public final class PropertyManagerImpl implements PropertyManager {
                 .findFirst();
         if (property.isPresent()) {
             property.get().upgrade();
+        } else {
+            throw new IllegalArgumentException("Cannot build a city in an empty position");
         }
     }
 
@@ -42,7 +44,6 @@ public final class PropertyManagerImpl implements PropertyManager {
         return properties.stream().filter(p -> p.getPosition().equals(position))
                 .findFirst().map(p -> p.getPropertyType()).orElse(PropertyType.EMPTY);
     }
-
 
     @Override
     public Optional<Player> getPropertyOwner(final PropertyPosition position) {
