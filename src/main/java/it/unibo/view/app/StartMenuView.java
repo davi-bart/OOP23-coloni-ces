@@ -31,6 +31,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Application.
  */
 public class StartMenuView {
+    private final static int PLAYERS_LIMIT = 4;
     private final Stage stage;
     private final ObservableList<String> players = FXCollections.observableArrayList();
 
@@ -59,7 +60,7 @@ public class StartMenuView {
 
     private void addPlayer(final int size, final ObservableList<String> list, final TextField textfield,
             final Alert alert) {
-        if (size < 4) {
+        if (size < PLAYERS_LIMIT) {
             if (list.contains(textfield.getText())) {
                 alert.setHeaderText("You cannot choose this name");
                 alert.showAndWait();

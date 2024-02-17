@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
  * View of the log.
  */
 public class LogView extends TableView<MessageView> {
-    private final TableColumn<MessageView, String> player = new TableColumn<>("Player Name");
+    private final TableColumn<MessageView, String> player = new TableColumn<>("Player");
     private final TableColumn<MessageView, String> message = new TableColumn<>("Message");
 
     /**
