@@ -26,6 +26,7 @@ import it.unibo.model.GameManager;
 import it.unibo.model.GameManagerImpl;
 import it.unibo.model.player.Player;
 import it.unibo.view.app.AppView;
+import it.unibo.view.app.AppViewImpl;
 
 /**
  * Main controller implementation.
@@ -47,8 +48,7 @@ public final class MainControllerImpl implements MainController {
      * @param appView the main view
      * @param players list of players' names
      */
-    public MainControllerImpl(final AppView appView, final List<String> players) {
-        this.appView = appView;
+    public MainControllerImpl(final List<String> players) {
         this.gameManager = new GameManagerImpl(players);
 
         this.getPlayerByName = name -> gameManager.getPlayers().stream().filter(p -> p.getName().equals(name))
@@ -59,6 +59,13 @@ public final class MainControllerImpl implements MainController {
                 this.gameManager.getPropertyManager(), this.gameManager.getRoadManager());
         this.resourceController = new ResourceControllerImpl(getPlayerByName, gameManager.getResourceManager());
         this.turnController = new TurnControllerImpl(gameManager.getTurnManager());
+
+        this.appView = new AppViewImpl(this);
+    }
+
+    @Override
+    public void start() {
+        appView.draw();
     }
 
     @Override

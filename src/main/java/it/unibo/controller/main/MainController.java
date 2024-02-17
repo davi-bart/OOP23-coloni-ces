@@ -19,6 +19,11 @@ import it.unibo.controller.resource.ResourceController;
 public interface MainController {
 
     /**
+     * Starts the application view.
+     */
+    void start();
+
+    /**
      * Build a city in the given position.
      * 
      * @param position where to build the city.

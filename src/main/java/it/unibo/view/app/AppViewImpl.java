@@ -17,7 +17,6 @@ import java.util.Map;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.main.MainController;
-import it.unibo.controller.main.MainControllerImpl;
 import it.unibo.view.board.BoardView;
 import it.unibo.view.log.LogView;
 import it.unibo.view.player.CurrentPlayerView;
@@ -45,11 +44,11 @@ public final class AppViewImpl implements AppView {
      * @param players the list of players names
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "The stage needs to be updated")
-    public AppViewImpl(final Stage stage, final List<String> players) {
-        this.controller = new MainControllerImpl(this, players);
+    public AppViewImpl(final MainController controller) {
+        this.controller = controller;
         final var colors = List.of(Color.RED, Color.ORANGE, Color.LIMEGREEN, Color.MAGENTA);
         controller.getPlayerNames().stream().forEach(p -> playerColors.put(p, colors.get(playerColors.size())));
-        this.stage = stage;
+        this.stage = new Stage();
         boardView = new BoardView(controller, playerColors);
         bankView = new BankView(controller);
         playersView = new PlayersView(controller, playerColors);
@@ -61,8 +60,8 @@ public final class AppViewImpl implements AppView {
     public void draw() {
         stage.setTitle("I Coloni di Cesena");
         stage.setScene(getScene());
-        // stage.setMaximized(true);
-        // stage.show();
+        stage.setMaximized(true);
+        stage.show();
     }
 
     /**

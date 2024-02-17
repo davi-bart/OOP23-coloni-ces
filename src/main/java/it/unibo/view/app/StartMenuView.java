@@ -26,6 +26,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.controller.main.MainController;
+import it.unibo.controller.main.MainControllerImpl;
 
 /**
  * Application.
@@ -107,7 +109,9 @@ public class StartMenuView {
 
         playButton.setOnMouseClicked(e -> {
             if (players.size() >= 1) {
-                new AppViewImpl(stage, players).draw();
+                final MainController controller = new MainControllerImpl(players);
+                controller.start();
+                this.stage.close();
             } else {
                 popUp.setHeaderText("You need at least one player to start the game");
                 popUp.showAndWait();
