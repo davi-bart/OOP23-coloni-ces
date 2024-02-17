@@ -69,9 +69,9 @@ public final class MainControllerImpl implements MainController {
         gameManager.buildCity(position, turnController.getCurrentPlayer());
         this.appView.updateLog(getCurrentPlayerName(),
                 messageFactory.createBuildPropertyMessage(PropertyType.CITY).getMessage());
-        checkGameOver();
         redrawResourcesView();
         this.appView.redrawPlayers();
+        checkGameOver();
     }
 
     @Override
@@ -79,31 +79,33 @@ public final class MainControllerImpl implements MainController {
         this.gameManager.buildSettlement(position, turnController.getCurrentPlayer());
         this.appView.updateLog(getCurrentPlayerName(),
                 messageFactory.createBuildPropertyMessage(PropertyType.SETTLEMENT).getMessage());
-        checkGameOver();
         redrawResourcesView();
         this.appView.redrawPlayers();
+        checkGameOver();
     }
 
     @Override
     public void buildRoad(final RoadPosition position) {
         gameManager.buildRoad(position, turnController.getCurrentPlayer());
         this.appView.updateLog(getCurrentPlayerName(), messageFactory.createBuildRoadMessage().getMessage());
-        checkGameOver();
         redrawResourcesView();
         this.appView.redrawPlayers();
+        checkGameOver();
     }
 
     @Override
     public void buyCard() {
         final CardType card = gameManager.buyCard(turnController.getCurrentPlayer());
         logCard(card);
-        checkGameOver();
         if (card.equals(CardType.KNIGHT)) {
             mustPlaceRobber = true;
             logRobber();
+        } else if (card.equals(CardType.VICTORY_POINT)) {
+            checkGameOver();
         }
         redrawResourcesView();
         this.appView.redrawPlayers();
+
     }
 
     @Override

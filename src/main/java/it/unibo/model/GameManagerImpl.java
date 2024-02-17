@@ -151,16 +151,25 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Player " + player + " can't buy a card during the first turn cycles");
         }
         resourceManager.removeResources(player, Recipes.getCardResources());
+        resourceManager.addResources(resourceManager.getBank(), Recipes.getCardResources());
+
         final CardType card = developmentCards.getCard();
         switch (card) {
             case VICTORY_POINT:
                 player.incrementVictoryPoints(1);
                 break;
             case FREE_SETTLEMENT:
-                resourceManager.addResources(player, Recipes.getSettlementResources());
+                if (resourceManager.hasResources(resourceManager.getBank(), Recipes.getSettlementResources())) {
+                    resourceManager.removeResources(resourceManager.getBank(), Recipes.getSettlementResources());
+                    resourceManager.addResources(player, Recipes.getSettlementResources());
+                }
+
                 break;
             case FREE_ROAD:
-                resourceManager.addResources(player, Recipes.getRoadResources());
+                if (resourceManager.hasResources(resourceManager.getBank(), Recipes.getRoadResources())) {
+                    resourceManager.removeResources(resourceManager.getBank(), Recipes.getRoadResources());
+                    resourceManager.addResources(player, Recipes.getRoadResources());
+                }
                 break;
             case MONOPOLY:
                 final ResourceType selectedType = List.of(ResourceType.values())

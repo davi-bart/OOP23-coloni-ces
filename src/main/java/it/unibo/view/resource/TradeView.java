@@ -122,7 +122,7 @@ public final class TradeView {
         playersContainer.getChildren().add(tradeBank);
         tradeContainer.getChildren().add(playersContainer);
         final Scene stageScene = new Scene(tradeContainer);
-        final double width = Sizes.getWidth(500), height = Sizes.getHeight(300);
+        final double width = Sizes.getWidth(500), height = Sizes.getHeight(350);
         stage.setWidth(width);
         stage.setHeight(height);
         stage.initModality(Modality.APPLICATION_MODAL);
