@@ -1,0 +1,43 @@
+classDiagram
+    class AppView {
+        <<interface>>
+        draw()
+        drawEndGame()
+        redrawElement()
+    }
+    class MainController {
+        <<interface>>
+        build()
+        buyCard()
+        rollDie()
+        endTurn()
+        trade()
+        getBoardController()
+        getResourceController()
+    }
+    class GameManager {
+        <<interface>>
+        isGameOver()
+        produceResources()
+        build()
+        buyCard()
+    }
+    class BoardController {
+        <<interface>>
+        getTileNumber()
+        getTileTerrain()
+    }
+    class ResourceController {
+        <<interface>>
+        getPlayerResources(Player)
+    }
+    class TurnController {
+        <<interface>>
+        getCurrentPlayer()
+    }
+
+    AppView -- MainController
+    GameManager -- MainController
+    MainController *-- BoardController
+    MainController *-- ResourceController
+    MainController *-- TurnController

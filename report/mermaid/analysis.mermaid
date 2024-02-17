@@ -1,0 +1,35 @@
+classDiagram
+    class GameManager {
+    }
+    class TurnManager {
+        int roll()
+        void endTurn()
+    }
+    class Board {
+        List~Tile~ getTiles()
+    }
+    class ResourceManager {
+        Map~Resource, int~ getResources(Player)
+    }
+    class Player {
+        int getPoints()
+    }
+    class Tile {
+        int getNumber()
+        Resource getResource()
+    }
+    class PropertyManager {
+        Set~Property~ getProperties(Player)
+    }
+    class RoadManager {
+        Set~Road~ getRoads(Player)
+    }
+    GameManager *-- Board
+    GameManager *-- ResourceManager
+    GameManager *-- TurnManager
+    GameManager *-- PropertyManager
+    GameManager *-- RoadManager
+    Board *-- Tile
+    PropertyManager -- Property
+    RoadManager -- Road
+    GameManager -- Player
