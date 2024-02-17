@@ -30,7 +30,7 @@ public interface AppView extends Drawable {
     void updateLog(String name, String message);
 
     /**
-     * 
+     * Draws the end game window.
      */
     void drawEndGame();
 }
