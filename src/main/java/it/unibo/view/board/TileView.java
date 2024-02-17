@@ -8,6 +8,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.tile.TerrainType;
 import it.unibo.common.tile.TilePosition;
 import it.unibo.controller.main.MainController;
+import it.unibo.view.Drawable;
 import javafx.event.EventHandler;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
@@ -23,7 +24,7 @@ import javafx.scene.text.Text;
  * View of a tile.
  * Consists of the hexagon and the nearby roads and properties.
  */
-public final class TileView extends Group {
+public final class TileView extends Group implements Drawable {
     static final int SIDES = 6;
     private final MainController controller;
     private final TilePosition coordinates;
@@ -47,12 +48,9 @@ public final class TileView extends Group {
         this.number = controller.getBoardController().getTileNumber(coordinates);
         this.eventHandler = eventHandler;
         draw();
-
     }
 
-    /**
-     * Draws the tile.
-     */
+    @Override
     public void draw() {
         final Pair<Double, Double> pos = Coordinates.getPositionFromTile(coordinates.getRow(), coordinates.getCol());
         final double x = pos.getLeft();

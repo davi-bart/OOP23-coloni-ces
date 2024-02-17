@@ -1,14 +1,11 @@
 package it.unibo.view.app;
 
-/**
- * interface of AppView.
- */
-public interface AppView {
-    /**
-     * draw the full application.
-     */
-    void draw();
+import it.unibo.view.Drawable;
 
+/**
+ * Interface representing the application view.
+ */
+public interface AppView extends Drawable {
     /**
      * redraw the current player.
      */

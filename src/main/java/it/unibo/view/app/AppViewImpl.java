@@ -70,6 +70,11 @@ public final class AppViewImpl implements AppView {
      * @return the scene
      */
     public Scene getScene() {
+        bankView.draw();
+        playersView.draw();
+        bankView.draw();
+        currentPlayerView.draw();
+        boardView.draw();
         final BorderPane root = new BorderPane();
         final VBox rightSide = new VBox();
         final Scene scene = new Scene(root);
@@ -126,7 +131,7 @@ public final class AppViewImpl implements AppView {
 
     @Override
     public void redrawPlayers() {
-        playersView.draw(playerColors);
+        playersView.draw();
     }
 
     @Override

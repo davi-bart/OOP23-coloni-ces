@@ -8,6 +8,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.property.PropertyPosition;
 import it.unibo.common.property.PropertyType;
 import it.unibo.controller.main.MainController;
+import it.unibo.view.Drawable;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -19,7 +20,7 @@ import javafx.scene.shape.Circle;
 /**
  * View of a property.
  */
-public final class PropertyView extends Circle {
+public final class PropertyView extends Circle implements Drawable {
     private final MainController controller;
     private final PropertyPosition propertyPosition;
     private final Function<PropertyPosition, Color> getPropertyColor;
@@ -40,7 +41,8 @@ public final class PropertyView extends Circle {
         draw();
     }
 
-    private void draw() {
+    @Override
+    public void draw() {
         final PropertyType propertyType = controller.getBoardController().getPropertyType(propertyPosition);
         final int azimuth = 45, elevation = 45, radius = 26, emptyRadius = 12;
         setCircle(propertyPosition);

@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.road.RoadPosition;
 import it.unibo.controller.main.MainController;
+import it.unibo.view.Drawable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -15,7 +16,7 @@ import javafx.scene.shape.Line;
 /**
  * View of a property.
  */
-public final class RoadView extends Line {
+public final class RoadView extends Line implements Drawable {
     private final MainController controller;
     private final RoadPosition roadPosition;
     private final Function<RoadPosition, Color> getRoadColor;
@@ -36,7 +37,8 @@ public final class RoadView extends Line {
         draw();
     }
 
-    private void draw() {
+    @Override
+    public void draw() {
         setLine(roadPosition);
         final Optional<String> roadOwner = controller.getBoardController().getRoadOwner(roadPosition);
         if (!roadOwner.isPresent()) {

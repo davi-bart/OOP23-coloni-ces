@@ -2,6 +2,7 @@ package it.unibo.view.player;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.main.MainController;
+import it.unibo.view.Drawable;
 import it.unibo.view.board.RobberView;
 import it.unibo.view.resource.ResourcesViewFactory;
 import it.unibo.view.resource.TradeView;
@@ -15,7 +16,7 @@ import javafx.scene.layout.VBox;
 /**
  * View class for the current player. It shows his resources and some buttons.
  */
-public final class CurrentPlayerView extends HBox {
+public final class CurrentPlayerView extends HBox implements Drawable {
     private final MainController controller;
     private final TradeView tradeView;
     private final RobberView robberView;
@@ -36,12 +37,9 @@ public final class CurrentPlayerView extends HBox {
         roll2 = new ImageView();
         roll1.setVisible(false);
         roll2.setVisible(false);
-        draw();
     }
 
-    /**
-     * Draw the current player view.
-     */
+    @Override
     public void draw() {
         super.getChildren().clear();
         drawResources();

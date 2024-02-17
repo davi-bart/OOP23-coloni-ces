@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import it.unibo.common.tile.TilePosition;
 import it.unibo.controller.main.MainController;
+import it.unibo.view.Drawable;
 import javafx.scene.Group;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -19,7 +20,7 @@ import javafx.scene.shape.Line;
 /**
  * Board view.
  */
-public final class BoardView extends StackPane {
+public final class BoardView extends StackPane implements Drawable {
     private final MainController controller;
     private final Map<String, Color> playerColors;
     private final Map<TilePosition, TileView> tiles = new HashMap<>();
@@ -34,7 +35,10 @@ public final class BoardView extends StackPane {
     public BoardView(final MainController controller, final Map<String, Color> playerColors) {
         this.controller = controller;
         this.playerColors = playerColors;
+    }
 
+    @Override
+    public void draw() {
         // add the hexagons and properties/road to the board
         final Group group = new Group();
         drawTiles();
