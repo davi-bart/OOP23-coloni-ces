@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -60,8 +61,8 @@ public final class AppViewImpl implements AppView {
     public void draw() {
         stage.setTitle("I Coloni di Cesena");
         stage.setScene(getScene());
-        stage.setMaximized(true);
-        stage.show();
+        // stage.setMaximized(true);
+        // stage.show();
     }
 
     /**
@@ -72,9 +73,7 @@ public final class AppViewImpl implements AppView {
     public Scene getScene() {
         final BorderPane root = new BorderPane();
         final VBox rightSide = new VBox();
-
         final Scene scene = new Scene(root);
-
         rightSide.getChildren().add(costCard());
         rightSide.getChildren().add(ruleButton());
         rightSide.getChildren().add(bankView);
@@ -92,7 +91,8 @@ public final class AppViewImpl implements AppView {
      * @return an ImageView representing the cost card.
      */
     private ImageView costCard() {
-        final ImageView costCard = new ImageView("imgs/building-costs/building_cost.png");
+        final ImageView costCard = new ImageView(
+                new Image(ClassLoader.getSystemResourceAsStream("imgs/building-costs/building_cost.png")));
         costCard.setFitHeight(DEFAULT_HEIGHT);
         costCard.setPreserveRatio(true);
         return costCard;
@@ -102,7 +102,8 @@ public final class AppViewImpl implements AppView {
         final Button ruleButton = new Button("Rules");
         final Stage stage = new Stage();
         final BorderPane root = new BorderPane();
-        final ImageView imageView = new ImageView("imgs/rules/turn_rules.png");
+        final ImageView imageView = new ImageView(
+                new Image(ClassLoader.getSystemResourceAsStream("imgs/rules/turn_rules.png")));
         imageView.setPreserveRatio(true);
         imageView.fitHeightProperty().bind(stage.heightProperty());
         root.setCenter(imageView);
