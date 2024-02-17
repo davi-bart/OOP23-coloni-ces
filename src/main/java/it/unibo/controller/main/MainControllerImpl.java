@@ -97,6 +97,7 @@ public final class MainControllerImpl implements MainController {
         checkGameOver();
         if (card.equals(CardType.KNIGHT)) {
             mustPlaceRobber = true;
+            logRobber();
         }
         redrawResourcesView();
         this.appView.redrawPlayers();

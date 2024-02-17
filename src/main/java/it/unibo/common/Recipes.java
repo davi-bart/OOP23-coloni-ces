@@ -43,7 +43,7 @@ public final class Recipes {
      *         card
      */
     public static Map<ResourceType, Integer> getCardResources() {
-        return Map.of(ResourceType.LUMBER, 1, ResourceType.WOOL, 1, ResourceType.GRAIN, 1);
+        return Map.of(ResourceType.ORE, 1, ResourceType.WOOL, 1, ResourceType.GRAIN, 1);
     }
 
 }
