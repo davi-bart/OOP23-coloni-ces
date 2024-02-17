@@ -261,7 +261,7 @@ public final class MainControllerImpl implements MainController {
     }
 
     private void logRobber() {
-        appView.updateLog(getCurrentPlayerName(), "must place robber");
+        appView.updateLog(getCurrentPlayerName(), messageFactory.createRobberMessage().getMessage());
     }
 
     @Override

@@ -6,10 +6,13 @@ import it.unibo.common.card.CardType;
 import it.unibo.common.property.PropertyType;
 import it.unibo.common.tile.ResourceType;
 
-public class MessageFactoryImpl implements MessageFactory {
+/**
+ * Implementation of MessageFactory.
+ */
+public final class MessageFactoryImpl implements MessageFactory {
 
     @Override
-    public Message createResourceMessage(ResourceType resource, int amount) {
+    public Message createResourceMessage(final ResourceType resource, final int amount) {
         return new Message() {
             @Override
             public String getMessage() {
@@ -19,7 +22,7 @@ public class MessageFactoryImpl implements MessageFactory {
     }
 
     @Override
-    public Message createCardMessage(CardType card) {
+    public Message createCardMessage(final CardType card) {
         return new Message() {
             @Override
             public String getMessage() {
@@ -29,7 +32,7 @@ public class MessageFactoryImpl implements MessageFactory {
     }
 
     @Override
-    public Message createBuildPropertyMessage(PropertyType property) {
+    public Message createBuildPropertyMessage(final PropertyType property) {
         return new Message() {
             @Override
             public String getMessage() {
@@ -44,6 +47,16 @@ public class MessageFactoryImpl implements MessageFactory {
             @Override
             public String getMessage() {
                 return "built a road";
+            }
+        };
+    }
+
+    @Override
+    public Message createRobberMessage() {
+        return new Message() {
+            @Override
+            public String getMessage() {
+                return "must place robber";
             }
         };
     }

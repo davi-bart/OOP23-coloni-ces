@@ -4,6 +4,9 @@ import it.unibo.common.card.CardType;
 import it.unibo.common.property.PropertyType;
 import it.unibo.common.tile.ResourceType;
 
+/**
+ * Factory of messages.
+ */
 public interface MessageFactory {
     /**
      * Create a message representing the resource and the amount.
@@ -36,4 +39,11 @@ public interface MessageFactory {
      * @return the message
      */
     Message createBuildRoadMessage();
+
+    /**
+     * Create a message representing the robber.
+     * 
+     * @return the message
+     */
+    Message createRobberMessage();
 }
