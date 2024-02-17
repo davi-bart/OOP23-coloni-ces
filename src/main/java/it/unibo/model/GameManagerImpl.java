@@ -354,10 +354,10 @@ public final class GameManagerImpl implements GameManager {
             RANDOM
         }
 
-        private static final String DEFAULT_MAP_FIELD = "beginner";
-        private static final MapType DEFAULT_MAP_TYPE = MapType.BEGINNER;
-        private static final Map<String, MapType> FIELD_TO_MAP_TYPE = Map.of(DEFAULT_MAP_FIELD, DEFAULT_MAP_TYPE,
-                "random", MapType.RANDOM);
+        private static final Map<String, MapType> FIELD_TO_MAP_TYPE = Map.of(
+                "random", MapType.RANDOM, "beginner", MapType.BEGINNER);
+        private static final String DEFAULT_MAP_FIELD = "random";
+        private static final MapType DEFAULT_MAP_TYPE = MapType.RANDOM;
         private static final int DEFAULT_POINTS = 10;
 
         private int points;
@@ -376,7 +376,7 @@ public final class GameManagerImpl implements GameManager {
                 final String pointsFieldName = "points";
                 setMapType(Optional.ofNullable(settings.get(mapFieldName)));
                 setPoints(Optional.ofNullable(settings.get(pointsFieldName)));
-            } catch (IOException e) {
+            } catch (IOException | IllegalArgumentException e) {
                 setDefaultMapType();
                 setDefaultPoints();
             }
@@ -388,8 +388,8 @@ public final class GameManagerImpl implements GameManager {
 
         private GameMapGenerator getMapGenerator() {
             return switch (mapType) {
-                case RANDOM -> new RandomGameMapGenerator();
-                default -> new BeginnerGameMapGenerator();
+                case BEGINNER -> new BeginnerGameMapGenerator();
+                default -> new RandomGameMapGenerator();
             };
         }
 
