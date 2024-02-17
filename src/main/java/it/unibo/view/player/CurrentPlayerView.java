@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 /**
  * View class for the current player. It shows his resources and some buttons.
@@ -58,7 +59,14 @@ public final class CurrentPlayerView extends HBox implements Drawable {
         dieImages.getChildren().add(roll1);
         dieImages.getChildren().add(roll2);
 
-        info.getChildren().add(new Label("Current player: " + controller.getCurrentPlayerName()));
+        final HBox labels = new HBox();
+        labels.getChildren().add(new Label("Current player: " + controller.getCurrentPlayerName()));
+        if (controller.mustPlaceRobber()) {
+            final Label robberLabel = new Label("   Click on a tile to place the robber.");
+            robberLabel.setTextFill(Color.RED);
+            labels.getChildren().add(robberLabel);
+        }
+        info.getChildren().add(labels);
         info.getChildren().add(buttonsBox);
         info.getChildren().add(dieImages);
         super.getChildren().add(info);
