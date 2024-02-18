@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,11 +63,11 @@ public final class GameManagerImpl implements GameManager {
         this.developmentCards = new DevelopmentCardsImpl();
         this.roadManager = new RoadManagerImpl();
         this.propertyManager = new PropertyManagerImpl();
-        this.turnManager = new TurnManagerImpl(players, false);
         this.resourceManager = new ResourceManagerImpl(players);
 
         final GameSettings settings = new GameSettings("settings/settings.json");
         this.pointsToWin = settings.getPoints();
+        this.turnManager = new TurnManagerImpl(players, settings.getShuffle());
         this.board = new BoardImpl(settings.getMapGenerator());
     }
 
@@ -238,51 +238,58 @@ public final class GameManagerImpl implements GameManager {
 
     @Override
     public Map<Player, Map<ResourceType, Integer>> produceResources(final int number) {
-        final Map<TerrainType, ResourceType> terrainToResource = Map.of(TerrainType.FIELD, ResourceType.GRAIN,
-                TerrainType.FOREST, ResourceType.LUMBER,
-                TerrainType.HILL, ResourceType.BRICK,
-                TerrainType.MOUNTAIN, ResourceType.ORE,
-                TerrainType.PASTURE, ResourceType.WOOL);
         /**
          * Before assigning the produced resource, it is necessary to check whether the
          * bank has enough amount of it to fulfill everyone's production. If it's not
          * the case, no one receives any of that resource during that turn.
          */
-        final Map<Player, Map<ResourceType, Integer>> playersResources = new HashMap<>();
-        players.forEach(player -> playersResources.put(player, new HashMap<>()));
-        players.forEach(player -> List.of(ResourceType.values())
-                .forEach(resource -> playersResources.get(player).put(resource, 0)));
-        players.forEach(player -> {
-            propertyManager.getPlayerProperties(player).forEach(property -> {
-                property.getPosition().getEquivalentPositions().stream()
-                        .map(propertyPosition -> propertyPosition.getTilePosition())
-                        .filter(tilePosition -> board.getTilePositions().contains(tilePosition))
-                        .filter(tilePosition -> !board.getTileTerrainType(tilePosition).equals(TerrainType.DESERT))
-                        .filter(tilePosition -> board.getTileNumber(tilePosition) == number
-                                && !board.getRobberPosition().equals(tilePosition))
-                        .forEach(tilePosition -> {
-                            final int amount = property.getPropertyType() == PropertyType.CITY ? 2 : 1;
-                            final ResourceType resource = terrainToResource
-                                    .get(board.getTileTerrainType(tilePosition));
-                            playersResources.get(player).compute(resource, (k, v) -> v + amount);
-                        });
-            });
-        });
-        final Map<ResourceType, Integer> producedResources = new HashMap<>();
-        List.of(ResourceType.values()).forEach(resource -> producedResources.put(resource, 0));
-        playersResources.values().forEach(map -> map.forEach((resource, amount) -> {
-            producedResources.compute(resource, (k, v) -> v + amount);
-        }));
-        producedResources.forEach((resource, amount) -> {
-            if (resourceManager.getResource(resourceManager.getBank(), resource) >= amount) {
+        final Map<Player, Map<ResourceType, Integer>> playersProducedResources = new HashMap<>();
+        players.forEach(player -> playersProducedResources.put(player, getPlayerProducedResources(player, number)));
+        final Map<ResourceType, Integer> totalResources = new HashMap<>();
+        Stream.of(ResourceType.values()).forEach(resource -> totalResources.put(resource, 0));
+        playersProducedResources.values().forEach(resources -> resources
+                .forEach((resource, amount) -> totalResources.compute(resource, (k, v) -> v + amount)));
+        totalResources.forEach((resource, amount) -> {
+            if (resourceManager.hasResources(resourceManager.getBank(), Map.of(resource, amount))) {
                 players.forEach(player -> resourceManager.addResources(player, Map.of(resource,
-                        playersResources.get(player).get(resource))));
+                        playersProducedResources.get(player).get(resource))));
                 resourceManager.removeResources(resourceManager.getBank(), Map.of(resource, amount));
             } else {
-                players.forEach(player -> playersResources.get(player).put(resource, 0));
+                players.forEach(player -> playersProducedResources.get(player).put(resource, 0));
             }
         });
-        return playersResources;
+        return playersProducedResources;
+    }
+
+    @Override
+    public Optional<Player> getWinner() {
+        return players.stream().filter(player -> player.getVictoryPoints() >= pointsToWin).findFirst();
+    }
+
+    private Map<ResourceType, Integer> getPlayerProducedResources(final Player player, final int number) {
+        final Map<TerrainType, ResourceType> terrainToResource = Map.of(TerrainType.FIELD, ResourceType.GRAIN,
+                TerrainType.FOREST, ResourceType.LUMBER,
+                TerrainType.HILL, ResourceType.BRICK,
+                TerrainType.MOUNTAIN, ResourceType.ORE,
+                TerrainType.PASTURE, ResourceType.WOOL);
+        final Map<ResourceType, Integer> resources = new HashMap<>();
+        Stream.of(ResourceType.values()).forEach(resource -> resources.put(resource, 0));
+        propertyManager.getPlayerProperties(player).stream()
+                .filter(property -> !property.getPropertyType().equals(PropertyType.EMPTY)).forEach(property -> {
+                    property.getPosition().getEquivalentPositions().stream()
+                            .map(propertyPosition -> propertyPosition.getTilePosition())
+                            .filter(tilePosition -> board.getTilePositions().contains(tilePosition))
+                            .filter(tilePosition -> !board.getTileTerrainType(tilePosition).equals(TerrainType.DESERT))
+                            .filter(tilePosition -> board.getTileNumber(tilePosition) == number
+                                    && !board.getRobberPosition().equals(tilePosition))
+                            .forEach(tilePosition -> {
+                                final int amount = property.getPropertyType() == PropertyType.CITY ? 2 : 1;
+                                final ResourceType resource = terrainToResource
+                                        .get(board.getTileTerrainType(tilePosition));
+                                resources.compute(resource, (k, v) -> v + amount);
+                            });
+                });
+        return resources;
     }
 
     /**
@@ -294,9 +301,7 @@ public final class GameManagerImpl implements GameManager {
         return players.stream()
                 .anyMatch(player -> propertyManager.getPlayerProperties(player).stream()
                         .map(property -> property.getPosition())
-                        .anyMatch(propertyPosition -> {
-                            return propertyPosition.isNear(position);
-                        }));
+                        .anyMatch(propertyPosition -> propertyPosition.isNear(position)));
     }
 
     /**
@@ -358,10 +363,12 @@ public final class GameManagerImpl implements GameManager {
                 "random", MapType.RANDOM, "beginner", MapType.BEGINNER);
         private static final String DEFAULT_MAP_FIELD = "random";
         private static final MapType DEFAULT_MAP_TYPE = MapType.RANDOM;
+        private static final boolean DEFAULT_SHUFFLE = true;
         private static final int DEFAULT_POINTS = 10;
 
-        private int points;
-        private MapType mapType;
+        private int points = DEFAULT_POINTS;
+        private MapType mapType = DEFAULT_MAP_TYPE;
+        private boolean shuffle = DEFAULT_SHUFFLE;
 
         /**
          * Game settings constructor.
@@ -374,11 +381,11 @@ public final class GameManagerImpl implements GameManager {
                 final JsonNode settings = objectMapper.readTree(ClassLoader.getSystemResourceAsStream(settingsPath));
                 final String mapFieldName = "map";
                 final String pointsFieldName = "points";
+                final String shuffleFieldName = "shuffle";
                 setMapType(Optional.ofNullable(settings.get(mapFieldName)));
                 setPoints(Optional.ofNullable(settings.get(pointsFieldName)));
+                setShuffle(Optional.ofNullable(settings.get(shuffleFieldName)));
             } catch (IOException | IllegalArgumentException e) {
-                setDefaultMapType();
-                setDefaultPoints();
             }
         }
 
@@ -393,37 +400,28 @@ public final class GameManagerImpl implements GameManager {
             };
         }
 
+        private boolean getShuffle() {
+            return shuffle;
+        }
+
         private void setMapType(final Optional<JsonNode> selectedMap) {
             if (selectedMap.isPresent()) {
                 mapType = FIELD_TO_MAP_TYPE.getOrDefault(
                         selectedMap.get().asText(DEFAULT_MAP_FIELD).toLowerCase(Locale.US),
                         DEFAULT_MAP_TYPE);
-            } else {
-                setDefaultMapType();
             }
-        }
-
-        private void setDefaultMapType() {
-            mapType = DEFAULT_MAP_TYPE;
         }
 
         private void setPoints(final Optional<JsonNode> selectedPoints) {
             if (selectedPoints.isPresent()) {
                 points = selectedPoints.get().asInt(DEFAULT_POINTS);
-            } else {
-                setDefaultPoints();
             }
         }
 
-        private void setDefaultPoints() {
-            points = DEFAULT_POINTS;
+        private void setShuffle(final Optional<JsonNode> selectedShuffle) {
+            if (selectedShuffle.isPresent()) {
+                shuffle = selectedShuffle.get().asBoolean(DEFAULT_SHUFFLE);
+            }
         }
-    }
-
-    @Override
-    public Optional<Player> getWinner() {
-        return Optional.ofNullable(
-                players.stream().filter(player -> player.getVictoryPoints() >= pointsToWin).collect(Collectors.toList())
-                        .get(0));
     }
 }
