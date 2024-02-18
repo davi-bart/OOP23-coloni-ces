@@ -26,17 +26,17 @@ class TurnManagerTest {
 
     @Test
     void testCurrentPlayer() {
-        assertTrue(turnManager.getCurrentPlayer().equals(player1));
+        assertEquals(player1, turnManager.getCurrentPlayer());
         turnManager.endTurn();
-        assertTrue(turnManager.getCurrentPlayer().equals(player2));
+        assertEquals(player2, turnManager.getCurrentPlayer());
         turnManager.endTurn();
-        assertTrue(turnManager.getCurrentPlayer().equals(player3));
+        assertEquals(player3, turnManager.getCurrentPlayer());
         turnManager.endTurn();
-        assertTrue(turnManager.getCurrentPlayer().equals(player4));
+        assertEquals(player4, turnManager.getCurrentPlayer());
         turnManager.endTurn();
-        assertTrue(turnManager.getCurrentPlayer().equals(player4));
+        assertEquals(player4, turnManager.getCurrentPlayer());
         turnManager.endTurn();
-        assertTrue(turnManager.getCurrentPlayer().equals(player3));
+        assertEquals(player3, turnManager.getCurrentPlayer());
     }
 
     @Test
