@@ -3,7 +3,6 @@ package it.unibo.view.app;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -76,9 +75,7 @@ public final class AppViewImpl implements AppView {
         final VBox rightSide = new VBox();
         final Scene scene = new Scene(root);
         final ImageView costCard = costCard();
-        final Button ruleButton = ruleButton();
         rightSide.getChildren().add(costCard);
-        rightSide.getChildren().add(ruleButton);
         rightSide.getChildren().add(bankView);
         rightSide.getChildren().add(playersView);
         rightSide.getChildren().add(logView);
@@ -105,23 +102,6 @@ public final class AppViewImpl implements AppView {
         costCard.setFitHeight(Sizes.getHeight(cardHeight));
         costCard.setPreserveRatio(true);
         return costCard;
-    }
-
-    private Button ruleButton() {
-        final Button ruleButton = new Button("Rules");
-        final Stage stage = new Stage();
-        final BorderPane root = new BorderPane();
-        final ImageView imageView = new ImageView(
-                new Image(ClassLoader.getSystemResourceAsStream("imgs/rules/turn_rules.png")));
-        imageView.setPreserveRatio(true);
-        imageView.fitHeightProperty().bind(stage.heightProperty());
-        root.setCenter(imageView);
-        stage.setScene(new Scene(root));
-        stage.setMaximized(true);
-        ruleButton.setOnAction(e -> {
-            stage.show();
-        });
-        return ruleButton;
     }
 
     @Override

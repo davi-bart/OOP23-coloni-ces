@@ -54,7 +54,7 @@ public class StartMenuView {
      * @throws IOException exception
      */
     public void draw() throws IOException {
-        stage.setTitle("I Coloni di Cesena");
+        stage.setTitle("The Settlers of Cesena");
         stage.setScene(getScene());
         stage.setMaximized(true);
         stage.setResizable(false);
