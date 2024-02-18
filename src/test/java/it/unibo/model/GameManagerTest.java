@@ -25,10 +25,10 @@ import it.unibo.model.player.PlayerImpl;
 // CHECKSTYLE: MagicNumber OFF
 class GameManagerTest {
 
-    final Player player1 = new PlayerImpl("first");
-    final Player player2 = new PlayerImpl("second");
-    final Player player3 = new PlayerImpl("third");
-    final GameManager gameManager = new GameManagerImpl(
+    private final Player player1 = new PlayerImpl("first");
+    private final Player player2 = new PlayerImpl("second");
+    private final Player player3 = new PlayerImpl("third");
+    private final GameManager gameManager = new GameManagerImpl(
             List.of(player1.getName(), player2.getName(), player3.getName()));
 
     @BeforeEach
@@ -108,18 +108,25 @@ class GameManagerTest {
 
     @Test
     void testProduceResources() {
+        final Map<ResourceType, Integer> emptyResources = new HashMap<>();
+        Stream.of(ResourceType.values()).forEach(resource -> emptyResources.put(resource, 0));
+        assertEquals(0,
+                gameManager.getPlayers().stream().map(player -> gameManager.getResourceManager()
+                        .getResources(player).values().stream().mapToInt(Integer::intValue)
+                        .sum())
+                        .mapToInt(Integer::intValue).sum());
         for (int i = 0; i < 19; i++) {
             for (int j = 2; j <= 12; j++) {
                 gameManager.produceResources(j);
             }
         }
-        final Map<ResourceType, Integer> emptyResources = new HashMap<>();
-        Stream.of(ResourceType.values()).forEach(resource -> emptyResources.put(resource, 0));
         assertEquals(emptyResources,
-                gameManager.getResourceManager().getResources(gameManager.getResourceManager().getBank()));
+                gameManager.getResourceManager()
+                        .getResources(gameManager.getResourceManager().getBank()));
         assertEquals(19 * 5,
                 gameManager.getPlayers().stream().map(player -> gameManager.getResourceManager()
-                        .getResources(player).values().stream().mapToInt(Integer::intValue).sum())
+                        .getResources(player).values().stream().mapToInt(Integer::intValue)
+                        .sum())
                         .mapToInt(Integer::intValue).sum());
     }
 }
