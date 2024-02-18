@@ -27,7 +27,6 @@ public final class TurnManagerImpl implements TurnManager {
     private static final int MAX_ROLL = 6;
     private static final int MIN_ROLL = 1;
 
-
     /**
      * constructor of TurnManager.
      * 
@@ -39,9 +38,11 @@ public final class TurnManagerImpl implements TurnManager {
         this.canShuffle = shuffles;
         /**
          * iterator contains 3 streams:
-         * a stream that goes from 1 to the number of players ,
-         * a stream that goes in reverse from the number of players to 1
-         * and a stream that goes from 1 to 4 infinite times.
+         * a stream that goes from 1 to the number of players - 1 ,
+         * a stream that goes in reverse from the number of players - 1 to 0
+         * and a stream that goes from 0 to number of players - 1 infinite times.
+         * This stream starts from the second turn since "currentTurn" is already the
+         * first turn (it's 0 by default).
          */
         this.iterator = Stream.concat(
                 Stream.concat(Stream.iterate(1, i -> i + 1).limit(playerList.size() - 1),
@@ -50,7 +51,7 @@ public final class TurnManagerImpl implements TurnManager {
     }
 
     private void setRandomOrder() {
-        if(canShuffle){
+        if (canShuffle) {
             Collections.shuffle(playerList);
         }
     }
