@@ -1,17 +1,12 @@
 package it.unibo.model;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Stream;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.common.Recipes;
@@ -25,9 +20,6 @@ import it.unibo.model.board.Board;
 import it.unibo.model.board.BoardImpl;
 import it.unibo.model.developmentcard.DevelopmentCards;
 import it.unibo.model.developmentcard.DevelopmentCardsImpl;
-import it.unibo.model.mapgenerator.BeginnerGameMapGenerator;
-import it.unibo.model.mapgenerator.GameMapGenerator;
-import it.unibo.model.mapgenerator.RandomGameMapGenerator;
 import it.unibo.model.player.Player;
 import it.unibo.model.player.PlayerImpl;
 import it.unibo.model.property.Property;
@@ -67,10 +59,10 @@ public final class GameManagerImpl implements GameManager {
         this.propertyManager = new PropertyManagerImpl();
         this.resourceManager = new ResourceManagerImpl(players);
 
-        final GameSettings settings = new GameSettings("settings/settings.json");
-        this.pointsToWin = settings.getPoints();
+        final GameSettings settings = new GameSettingsJSON("settings/settings.json");
+        this.pointsToWin = settings.getPointsToWin();
         this.turnManager = new TurnManagerImpl(players, settings.isRandomOrder());
-        this.board = new BoardImpl(settings.getMapGenerator());
+        this.board = new BoardImpl(settings.getGameMapGenerator());
     }
 
     @Override
@@ -338,88 +330,4 @@ public final class GameManagerImpl implements GameManager {
                 .anyMatch(roadPosition::isNearToProperty);
     }
 
-    /**
-     * Class which represents the settings of the game customized by players, which
-     * are the amount of points necessary to win, the type of map to play with and
-     * whether the randomize the order of players.
-     */
-    private static final class GameSettings {
-
-        private enum MapType {
-            /**
-             * @see BeginnerGameMapGenerator
-             */
-            BEGINNER,
-            /**
-             * @see RandomGameMapGenerator
-             */
-            RANDOM
-        }
-
-        private static final Map<String, MapType> FIELD_TO_MAP_TYPE = Map.of(
-                "random", MapType.RANDOM, "beginner", MapType.BEGINNER);
-        private static final String DEFAULT_MAP_FIELD = "random";
-        private static final MapType DEFAULT_MAP_TYPE = MapType.RANDOM;
-        private static final boolean DEFAULT_RANDOM_ORDER = true;
-        private static final int DEFAULT_POINTS = 10;
-
-        private int points = DEFAULT_POINTS;
-        private MapType mapType = DEFAULT_MAP_TYPE;
-        private boolean randomOrder = DEFAULT_RANDOM_ORDER;
-
-        /**
-         * Game settings constructor.
-         * 
-         * @param settingsPath path of settings file in CLASSPATH
-         */
-        @SuppressWarnings({ "PMD.EmptyCatchBlock" }) // default values are already set
-        private GameSettings(final String settingsPath) {
-            try {
-                final ObjectMapper objectMapper = new ObjectMapper();
-                final JsonNode settings = objectMapper.readTree(ClassLoader.getSystemResourceAsStream(settingsPath));
-                final String mapFieldName = "map";
-                final String pointsFieldName = "points";
-                final String shuffleFieldName = "shuffle";
-                setMapType(Optional.ofNullable(settings.get(mapFieldName)));
-                setPoints(Optional.ofNullable(settings.get(pointsFieldName)));
-                setShuffle(Optional.ofNullable(settings.get(shuffleFieldName)));
-            } catch (IOException | IllegalArgumentException e) {
-            }
-        }
-
-        private int getPoints() {
-            return points;
-        }
-
-        private GameMapGenerator getMapGenerator() {
-            return switch (mapType) {
-                case BEGINNER -> new BeginnerGameMapGenerator();
-                default -> new RandomGameMapGenerator();
-            };
-        }
-
-        private boolean isRandomOrder() {
-            return randomOrder;
-        }
-
-        private void setMapType(final Optional<JsonNode> selectedMap) {
-            if (selectedMap.isPresent()) {
-                mapType = FIELD_TO_MAP_TYPE.getOrDefault(
-                        selectedMap.get().asText(DEFAULT_MAP_FIELD).toLowerCase(Locale.US),
-                        DEFAULT_MAP_TYPE);
-            }
-        }
-
-        private void setPoints(final Optional<JsonNode> selectedPoints) {
-            if (selectedPoints.isPresent()) {
-                points = selectedPoints.get().asInt(DEFAULT_POINTS);
-            }
-        }
-
-        private void setShuffle(final Optional<JsonNode> selectedShuffle) {
-            if (selectedShuffle.isPresent()) {
-                randomOrder = selectedShuffle.get().asBoolean(DEFAULT_RANDOM_ORDER);
-            }
-        }
-    }
 }
