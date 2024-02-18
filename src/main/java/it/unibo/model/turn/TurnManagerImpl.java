@@ -33,7 +33,7 @@ public final class TurnManagerImpl implements TurnManager {
      * @param players list of players
      * @param shuffles wether the player list gets shuffled or not
      */
-    public TurnManagerImpl(final List<Player> players, boolean shuffles) {
+    public TurnManagerImpl(final List<Player> players, final boolean shuffles) {
         players.forEach(playerList::add);
         this.canShuffle = shuffles;
         setRandomOrder();

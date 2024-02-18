@@ -11,8 +11,9 @@ import it.unibo.model.player.Player;
 import it.unibo.model.player.PlayerImpl;
 import it.unibo.model.turn.TurnManager;
 import it.unibo.model.turn.TurnManagerImpl;
+
 /**
- * Tester for turnManager
+ * Tester for turnManager.
  */
 class TurnManagerTest {
 
@@ -24,7 +25,7 @@ class TurnManagerTest {
     private final TurnManager turnManager = new TurnManagerImpl(players, false);
 
     @Test
-    void testCurrentPlayer(){
+    void testCurrentPlayer() {
         assertTrue(turnManager.getCurrentPlayer().equals(player1));
         turnManager.endTurn();
         assertTrue(turnManager.getCurrentPlayer().equals(player2));
@@ -39,7 +40,7 @@ class TurnManagerTest {
     }
 
     @Test
-    void testTurnNumber(){
+    void testTurnNumber() {
         assertEquals(0, turnManager.getTurnNumber());
         turnManager.endTurn();
         assertEquals(1, turnManager.getTurnNumber());
