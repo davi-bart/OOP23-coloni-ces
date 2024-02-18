@@ -69,7 +69,7 @@ public final class GameManagerImpl implements GameManager {
 
         final GameSettings settings = new GameSettings("settings/settings.json");
         this.pointsToWin = settings.getPoints();
-        this.turnManager = new TurnManagerImpl(players, settings.getShuffle());
+        this.turnManager = new TurnManagerImpl(players, settings.isRandomOrder());
         this.board = new BoardImpl(settings.getMapGenerator());
     }
 
@@ -362,18 +362,19 @@ public final class GameManagerImpl implements GameManager {
                 "random", MapType.RANDOM, "beginner", MapType.BEGINNER);
         private static final String DEFAULT_MAP_FIELD = "random";
         private static final MapType DEFAULT_MAP_TYPE = MapType.RANDOM;
-        private static final boolean DEFAULT_SHUFFLE = true;
+        private static final boolean DEFAULT_RANDOM_ORDER = true;
         private static final int DEFAULT_POINTS = 10;
 
         private int points = DEFAULT_POINTS;
         private MapType mapType = DEFAULT_MAP_TYPE;
-        private boolean shuffle = DEFAULT_SHUFFLE;
+        private boolean randomOrder = DEFAULT_RANDOM_ORDER;
 
         /**
          * Game settings constructor.
          * 
          * @param settingsPath path of settings file in CLASSPATH
          */
+        @SuppressWarnings({ "PMD.EmptyCatchBlock" }) // default values are already set
         private GameSettings(final String settingsPath) {
             try {
                 final ObjectMapper objectMapper = new ObjectMapper();
@@ -399,8 +400,8 @@ public final class GameManagerImpl implements GameManager {
             };
         }
 
-        private boolean getShuffle() {
-            return shuffle;
+        private boolean isRandomOrder() {
+            return randomOrder;
         }
 
         private void setMapType(final Optional<JsonNode> selectedMap) {
@@ -419,7 +420,7 @@ public final class GameManagerImpl implements GameManager {
 
         private void setShuffle(final Optional<JsonNode> selectedShuffle) {
             if (selectedShuffle.isPresent()) {
-                shuffle = selectedShuffle.get().asBoolean(DEFAULT_SHUFFLE);
+                randomOrder = selectedShuffle.get().asBoolean(DEFAULT_RANDOM_ORDER);
             }
         }
     }
