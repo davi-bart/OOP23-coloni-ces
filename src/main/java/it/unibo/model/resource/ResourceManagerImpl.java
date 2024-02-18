@@ -33,10 +33,6 @@ public final class ResourceManagerImpl implements ResourceManager {
                 .collect(Collectors.toMap(Function.identity(), v -> DEFAULT_BANK_RESOURCES)));
     }
 
-    private boolean checkResourcesPositive(final Map<ResourceType, Integer> resources) {
-        return resources.values().stream().allMatch(amount -> amount >= 0);
-    }
-
     @Override
     public void addResources(final ResourceOwner owner, final Map<ResourceType, Integer> resources) {
         if (!checkResourcesPositive(resources)) {
@@ -55,7 +51,7 @@ public final class ResourceManagerImpl implements ResourceManager {
             throw new IllegalArgumentException("amount must be positive");
         }
         if (!hasResources(owner, resources)) {
-            throw new IllegalArgumentException("amount must be lower than the total resource");
+            throw new IllegalArgumentException("the passed owner does not have the resources");
         }
         resources.forEach((resource, amount) -> allEntityResources.get(owner).compute(resource, (k, v) -> v - amount));
     }
@@ -126,13 +122,17 @@ public final class ResourceManagerImpl implements ResourceManager {
         return amount == getAmountToDiscard(player);
     }
 
+    @Override
+    public boolean shouldDiscard(final ResourceOwner player) {
+        return getResourcesAmount(player) > DISCARD_THRESHOLD;
+    }
+
     private int getResourcesAmount(final ResourceOwner owner) {
         return getResources(owner).values().stream().mapToInt(Integer::intValue).sum();
     }
 
-    @Override
-    public boolean shouldDiscard(final ResourceOwner player) {
-        return getResourcesAmount(player) > DISCARD_THRESHOLD;
+    private boolean checkResourcesPositive(final Map<ResourceType, Integer> resources) {
+        return resources.values().stream().allMatch(amount -> amount >= 0);
     }
 
     /**

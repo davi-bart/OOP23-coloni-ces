@@ -34,6 +34,14 @@ class ResourceManagerTest {
         this.resourceManager = new ResourceManagerImpl(List.of(PLAYER1, PLAYER2, PLAYER3, PLAYER4));
     }
 
+    @Test
+    void testInitialState() {
+        assertEquals(Map.of(), resourceManager.getResources(PLAYER1));
+        assertEquals(Map.of(), resourceManager.getResources(PLAYER2));
+        assertEquals(Map.of(), resourceManager.getResources(PLAYER3));
+        assertEquals(Map.of(), resourceManager.getResources(PLAYER4));
+    }
+
     /**
      * Test addResources.
      */

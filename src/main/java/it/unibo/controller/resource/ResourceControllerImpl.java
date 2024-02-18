@@ -56,6 +56,13 @@ public final class ResourceControllerImpl implements ResourceController {
     }
 
     @Override
+    public void tradeWithBank(final String proposer, final Map<ResourceType, Integer> proposedResources,
+            final Map<ResourceType, Integer> wantedResources) {
+        resourceManager.trade(getPlayerByName.apply(proposer), resourceManager.getBank(), proposedResources,
+                wantedResources);
+    }
+
+    @Override
     public boolean canTradeWithPlayer(final String proposer, final String accepter,
             final Map<ResourceType, Integer> proposedResources, final Map<ResourceType, Integer> wantedResources) {
         return resourceManager.canTrade(getPlayerByName.apply(proposer), getPlayerByName.apply(accepter),
@@ -84,13 +91,6 @@ public final class ResourceControllerImpl implements ResourceController {
     @Override
     public boolean shouldDiscard(final String playerName) {
         return resourceManager.shouldDiscard(getPlayerByName.apply(playerName));
-    }
-
-    @Override
-    public void tradeWithBank(final String proposer, final Map<ResourceType, Integer> proposedResources,
-            final Map<ResourceType, Integer> wantedResources) {
-        resourceManager.trade(getPlayerByName.apply(proposer), resourceManager.getBank(), proposedResources,
-                wantedResources);
     }
 
 }

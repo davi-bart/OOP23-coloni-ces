@@ -8,9 +8,7 @@ import it.unibo.common.tile.ResourceType;
 import it.unibo.view.Sizes;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -75,16 +73,5 @@ public final class ResourcesViewFactory {
         comboBox.getSelectionModel().selectedItemProperty().addListener(listener);
         resourceBox.getChildren().add(comboBox);
         return resourceBox;
-    }
-
-    /**
-     * 
-     * @param text text to put on the header.
-     * @return an alert with the text on the header.
-     */
-    public static Alert getAlert(final String text) {
-        final Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText(text);
-        return alert;
     }
 }
