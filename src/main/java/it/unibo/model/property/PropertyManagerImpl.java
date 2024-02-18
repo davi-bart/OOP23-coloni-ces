@@ -21,6 +21,7 @@ public final class PropertyManagerImpl implements PropertyManager {
             throw new IllegalArgumentException("Settlement was already present");
         }
         properties.add(new PropertyImpl(position, player));
+        player.incrementVictoryPoints(1);
     }
 
     @Override
@@ -34,6 +35,7 @@ public final class PropertyManagerImpl implements PropertyManager {
                 .findFirst();
         if (property.isPresent()) {
             property.get().upgrade();
+            property.get().getOwner().incrementVictoryPoints(1);
         } else {
             throw new IllegalArgumentException("Cannot build a city in an empty position");
         }

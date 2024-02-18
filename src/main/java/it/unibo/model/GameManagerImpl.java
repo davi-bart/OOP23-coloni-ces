@@ -119,7 +119,6 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Can't build a settlement in position " + position);
         }
         propertyManager.addSettlement(position, player);
-        player.incrementVictoryPoints(1);
         if (turnManager.getCycle() > 2) {
             resourceManager.removeResources(player, Recipes.getSettlementResources());
         }
@@ -131,7 +130,6 @@ public final class GameManagerImpl implements GameManager {
             throw new IllegalArgumentException("Player " + player + " can't build a city at position " + position);
         }
         propertyManager.upgradeToCity(position);
-        player.incrementVictoryPoints(1);
         if (turnManager.getCycle() > 2) {
             resourceManager.removeResources(player, Recipes.getCityResources());
             resourceManager.addResources(resourceManager.getBank(), Recipes.getCityResources());
