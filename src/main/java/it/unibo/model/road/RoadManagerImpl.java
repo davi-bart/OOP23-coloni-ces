@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.AllDirectedPaths;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -60,8 +61,8 @@ public final class RoadManagerImpl implements RoadManager {
         final Set<Road> playerRoads = roads.stream().filter(road -> road.getOwner().equals(player))
                 .collect(Collectors.toSet());
         playerRoads.forEach(road -> road.getPosition().getNearbyProperties()
-                .forEach(propertyPosition -> propertyPositions.add(propertyPosition)));
-        propertyPositions.forEach(propertyPos -> graph.addVertex(propertyPos));
+                .forEach(propertyPositions::add));
+        propertyPositions.forEach(graph::addVertex);
 
         // for each distinct pair of near property positions, an edge is added if there
         // exists a road that connects them
@@ -75,7 +76,7 @@ public final class RoadManagerImpl implements RoadManager {
 
         final AllDirectedPaths<PropertyPosition, DefaultEdge> allPaths = new AllDirectedPaths<>(graph);
         return allPaths.getAllPaths(propertyPositions, propertyPositions, true, null).stream()
-                .mapToInt(graphPath -> graphPath.getLength()).reduce(0, Integer::max);
+                .mapToInt(GraphPath::getLength).reduce(0, Integer::max);
     }
 
     @Override
@@ -85,7 +86,7 @@ public final class RoadManagerImpl implements RoadManager {
 
     @Override
     public Optional<Player> getRoadOwner(final RoadPosition position) {
-        return roads.stream().filter(r -> r.getPosition().equals(position)).findFirst().map(r -> r.getOwner());
+        return roads.stream().filter(r -> r.getPosition().equals(position)).findFirst().map(Road::getOwner);
     }
 
     /**

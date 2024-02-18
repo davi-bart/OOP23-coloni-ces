@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -62,12 +63,8 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
         final List<Integer> unusedNumbers = List.of(7);
         IntStream.range(minNumber, maxNumber + 1).filter(i -> !unusedNumbers.contains(i))
                 .forEach(i -> numberOccurrences.put(i, i == minNumber || i == maxNumber ? 1 : 2));
-        numberOccurrences.forEach((number, occurrences) -> {
-            while (occurrences > 0) {
-                out.add(number);
-                occurrences--;
-            }
-        });
+        numberOccurrences.forEach(
+                (number, occurrences) -> IntStream.generate(() -> number).limit(occurrences).forEach(out::add));
         return out;
     }
 
@@ -108,12 +105,8 @@ public final class RandomGameMapGenerator implements GameMapGenerator {
         terrainOccurrences.put(TerrainType.FOREST, 4);
         terrainOccurrences.put(TerrainType.FIELD, 4);
         terrainOccurrences.put(TerrainType.PASTURE, 4);
-        terrainOccurrences.forEach((terrain, n) -> {
-            while (n > 0) {
-                out.add(terrain);
-                n--;
-            }
-        });
+        terrainOccurrences
+                .forEach((terrain, occurrences) -> Stream.generate(() -> terrain).limit(occurrences).forEach(out::add));
         return out;
     }
 
