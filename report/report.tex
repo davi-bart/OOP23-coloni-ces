@@ -20,6 +20,7 @@
 \begin{document}
 
 \maketitle
+
 \tableofcontents
 
 \chapter{Analisi}
@@ -36,6 +37,7 @@ Il software mira alla realizzazione di una versione virtuale del gioco da tavolo
     \begin{itemize}
         \item proporre scambi di risorse agli altri giocatori
         \item costruire proprietà/strade
+        \item acquistare carte sviluppo
     \end{itemize}
     \item Il software dovrà occuparsi di calcolare i punteggi di ogni giocatore, determinati dalle proprietà possedute, al fine di determinare il vincitore della partita.
 \end{itemize}
@@ -49,24 +51,16 @@ Il software mira alla realizzazione di una versione virtuale del gioco da tavolo
 \section{Analisi e modello del dominio}
 
 L'entità principale del sistema è il \textit{game manager}, che coordina la gestione degli aspetti principali del gioco: mappa, turni, proprietà, risorse e scambi. Il game manager dovrà poter accedere alla mappa, contenente le proprietà dei vari giocatori, e mantenerne aggiornato lo stato. Tali proprietà prendono il nome di strade, colonie e città. Ciascuna proprietà necessita, per la sua costruzione, di un certo numero di risorse. Il game manager dovrà gestire la corretta associazione di ciascuna proprietà o risorsa al corrispettivo giocatore. Infine, il game manager dovrà poter relazionarsi con i giocatori e la mappa per ottenere le informazioni necessarie a realizzare ciò che è descritto sopra.\\
-Per quanto riguarda gli aspetti impegnativi, si ritiene la mappa e le adiacenze tra caselle,strade e proprietà un aspetto ostico in quanto le caselle sono di forma esagonale.
+Per quanto riguarda gli aspetti impegnativi, si ritiene la mappa e le adiacenze tra caselle,strade e proprietà un aspetto ostico in quanto le caselle sono di forma esagonale
 
 \begin{figure}[H]
 \centering{}
-\includegraphics[]{img/analysis.png}
+\includegraphics[scale=0.3]{imgs/analysis.png}
 \caption{Schema UML dell'analisi del problema, con rappresentate le entità principali ed i rapporti fra loro}
 \label{img:analysis}
 \end{figure}
 
 \chapter{Design}
-
-In questo capitolo si spiegano le strategie messe in campo per soddisfare i requisiti identificati nell'analisi.
-
-Si parte da una visione architetturale, il cui scopo è informare il lettore di quale sia il funzionamento dell'applicativo realizzato ad alto livello.
-%
-In particolare, è necessario descrivere accuratamente in che modo i componenti principali del sistema si coordinano fra loro.
-%
-A seguire, si dettagliano alcune parti del design, quelle maggiormente rilevanti al fine di chiarificare la logica con cui sono stati affrontati i principali aspetti dell'applicazione.
 
 \section{Architettura}
 
@@ -79,338 +73,208 @@ L'architettura del software utilizza il pattern MVC. I componenti principali son
 AppView reagisce agli input forniti dall'utente e notifica il controller, che si occupa eventualmente di chiamare il model per aggiornare lo stato interno. Il controller si occupa anche di notificare la view di reagire a un cambiamento e aggiornarsi di conseguenza. MainController è suddiviso in ulteriori controller più specifici in base alle classi del model coinvolte.\\
 Con questa architettura, sostituire la view è semplice in quanto è sufficiente che implementi l'interfaccia AppView, composta da pochi metodi necessari al controller per mantenerla aggiornata.
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering{}
-\includegraphics[width=\textwidth]{img/design.png}
-\caption{Schema UML architetturale di GLaDOS. L'interfaccia \texttt{GLaDOS} è il controller del sistema, mentre \texttt{Input} ed \texttt{Output} sono le interfacce che mappano la view (o, più correttamente in questo specifico esempio, il boundary). Un'eventuale interfaccia grafica interattiva dovrà implementarle entrambe.}
-\label{img:goodarch}
+\includegraphics[scale=0.6]{imgs/design.png}
+\caption{Schema UML dell'analisi del problema, con rappresentate le entità principali ed i rapporti fra loro}
+\label{img:analysis}
 \end{figure}
-
-Con questa architettura, possono essere aggiunti un numero arbitrario di input ed output
-all'intelligenza artificiale.
-%
-Ovviamente, mentre l'aggiunta di output è semplice e non richiede alcuna modifica all'IA, la
-presenza di nuovi tipi di evento richiede invece in potenza aggiunte o rifiniture a GLaDOS.
-%
-Questo è dovuto al fatto che nuovi Input rappresentano di fatto nuovi elementi della business
-logic, la cui alterazione od espansione inevitabilmente impatta il controller del progetto.
-
-In \Cref{img:goodarch} è esemplificato il diagramma UML architetturale.
-
 
 \section{Design dettagliato}
-
-In questa sezione si possono approfondire alcuni elementi del design con maggior dettaglio.
-%
-Mentre ci attendiamo principalmente (o solo) interfacce negli schemi UML delle sezioni precedenti,
-in questa sezione è necessario scendere in maggior dettaglio presentando la struttura di alcune sottoparti rilevanti dell'applicazione.
-%
-È molto importante che, descrivendo la soluzione ad un problema, quando possibile si mostri che non si è re-inventata la ruota ma si è applicato un design pattern noto.
-%
-Che si sia utilizzato (o riconosciuto) o meno un pattern noto, è comunque bene definire qual è il problema che si è affrontato, qual è la soluzione messa in campo, e quali motivazioni l'hanno spinta.
-%
-È assolutamente inutile, ed è anzi controproducente, descrivere classe-per-classe (o peggio ancora metodo-per-metodo) com'è fatto il vostro software: è un livello di dettaglio proprio della documentazione dell'API (deducibile dalla Javadoc).
-
-\textbf{È necessario che ciascun membro del gruppo abbia una propria sezione di design dettagliato,
-di cui sarà il solo responsabile}.
-%
-Ciascun autore dovrà spiegare in modo corretto e giustamente approfondito (non troppo in dettaglio, non superficialmente) il proprio contributo.
-%
-È importante focalizzarsi sulle scelte che hanno un impatto positivo sul riuso, sull'estensibilità, e sulla chiarezza dell'applicazione.
-%
-Esattamente come nessun ingegnere meccanico presenta un solo foglio con l'intero progetto di una vettura di Formula 1, ma molteplici fogli di progetto che mostrano a livelli di dettaglio differenti le varie parti della vettura e le modalità di connessione fra le parti, così ci aspettiamo che voi, futuri ingegneri informatici, ci presentiate prima una visione globale del progetto, e via via siate in grado di dettagliare le singole parti, scartando i componenti che non interessano quella in esame.
-%
-Per continuare il parallelo con la vettura di Formula 1, se nei fogli di progetto che mostrano il
-design delle sospensioni anteriori appaiono pezzi che appartengono al volante o al turbo, c'è una
-chiara indicazione di qualche problema di design.
-
-Si divida la sezione in sottosezioni, e per ogni aspetto di design che si vuole approfondire, si presenti:
-\begin{enumerate}
-    \item: una breve descrizione in linguaggio naturale del problema che si vuole risolvere, se necessario ci si può aiutare con schemi o immagini;
-    \item: una descrizione della soluzione proposta, analizzando eventuali alternative che sono state prese in considerazione, e che descriva pro e contro della scelta fatta;
-    \item: uno schema UML che aiuti a comprendere la soluzione sopra descritta;
-    \item: se la soluzione è stata realizzata utilizzando uno o più pattern noti, si spieghi come questi sono reificati nel progetto
-    (ad esempio: nel caso di Template Method, qual è il metodo template;
-    nel caso di Strategy, quale interfaccia del progetto rappresenta la strategia, e quali sono le sue implementazioni;
-    nel caso di Decorator, qual è la classe astratta che fa da Decorator e quali sono le sue implementazioni concrete; eccetera);
-\end{enumerate}
-%
-La presenza di pattern di progettazione \emph{correttamente utilizzati} è valutata molto positivamente.
-%
-L'uso inappropriato è invece valutato negativamente: a tal proposito, si raccomanda di porre particolare attenzione all'abuso di Singleton, che, se usato in modo inappropriato, è di fatto un anti-pattern.
-
-\subsection*{Elementi positivi}
-
-\begin{itemize}
-	\item Ogni membro del gruppo discute le proprie decisioni di progettazione, ed in particolare le azioni volte ad anticipare possibili cambiamenti futuri (ad esempio l'aggiunta di una nuova funzionalità, o il miglioramento di una esistente).
-	\item Si mostrano le principali interazioni fra le varie componenti che collaborano alla soluzione di un determinato problema.
-	\item Si identificano, utilizzano \textit{appropriatamente}, e descrivono diversi design pattern.
-	\item Ogni membro del gruppo identifica i pattern utilizzati nella sua sottoparte.
-	\item Si mostrano gli aspetti di design più rilevanti dell'applicazione, mettendo in luce la maniera in cui si è costruita la soluzione ai problemi descritti nell'analisi.
-	\item Si tralasciano aspetti strettamente implementativi e quelli non rilevanti, non mostrandoli negli schemi UML (ad esempio, campi privati) e non descrivendoli.
-	\item Ciascun elemento di design identificato presenta una piccola descrizione del problema calato
-nell'applicazione, uno schema UML che ne mostra la concretizzazione nelle classi del progetto, ed
-una breve descrizione della motivazione per cui tale soluzione è stata scelta, specialmente se è stato utilizzato un pattern noto. Ad esempio, se si
-dichiara di aver usato Observer, è necessario specificare chi sia l'observable e chi l'observer; se
-si usa Template Method, è necessario indicare quale sia il metodo template; se si usa Strategy, è
-necessario identificare l'interfaccia che rappresenta la strategia; e via dicendo.
-\end{itemize}
-
-\subsection*{Elementi negativi}
-\begin{itemize}
-	\item Il design del modello risulta scorrelato dal problema descritto in analisi.
-	\item Si tratta in modo prolisso, classe per classe, il software realizzato, o comunque si riduce la sezione ad un mero elenco di quanto fatto.
-	\item Non si presentano schemi UML esemplificativi.
-	\item Non si individuano design pattern, o si individuano in modo errato (si spaccia per design pattern qualcosa che non lo è).
-	\item Si utilizzano design pattern in modo inopportuno. Un esempio classico è l'abuso di
-Singleton per entità che possono essere univoche ma non devono necessariamente esserlo. Si rammenta
-che Singleton ha senso nel secondo caso (ad esempio \texttt{System} e \texttt{Runtime} sono
-singleton), mentre rischia di essere un problema nel secondo. Ad esempio, se si rendesse singleton
-il motore di un videogioco, sarebbe impossibile riusarlo per costruire un server per partite online
-(dove, presumibilmente, si gestiscono parallelamente più partite).
-	\item Si producono schemi UML caotici e difficili da leggere, che comprendono inutili elementi di dettaglio.
-	\item Si presentano schemi UML con classi (nel senso UML del termine) che ``galleggiano'' nello schema, non connesse, ossia senza relazioni con il resto degli elementi inseriti.
-	\item Si tratta in modo inutilmente prolisso la divisione in package, elencando ad esempio le classi una per una.
-\end{itemize}
-
-\subsection*{Esempio minimale (e quindi parziale) di sezione di progetto con UML ben realizzati}
-
-\subsubsection{Personalità intercambiabili}
+\subsection{Bartoli Davide}
+\paragraph{Problema:} Gestione della posizione delle caselle e dei strade e proprietà. Questo è reso complesso dal fatto che le caselle hanno forma esagonale.
+\paragraph{Soluzione:} Ho realizzato le interfacce TilePosition, RoadPosition e PropertyPosition. Le caselle vengono indicizzate tramite la loro riga e la loro colonna, e le righe di indice dispari sono traslate verso destra di mezzo esagono. RoadPosition e PropertyPosition invece sono composte di una TilePosition e una delle 6 possibili direzioni (una RoadPosition di fatto indica uno dei 6 lati dell'esagono mentre una PropertyPosition uno dei 6 vertici). Notare che questa rappresentazione di RoadPosition e PropertyPosition non è univoca dato che ad esempio una strada può essere vista dai due esagoni che tocca, per questo ho realizzato il metodo equals per tenerne conto, utilizzando metodi che calcola le altre posizioni equivalenti. 
 
 \begin{figure}[H]
 \centering{}
-\includegraphics[width=\textwidth]{img/strategy}
-\caption{Rappresentazione UML del pattern Strategy per la personalità di GLaDOS}
-\label{img:strategy}
+\includegraphics[scale=0.6]{imgs/board.png}
+\caption{Posizioni delle caselle}
+\label{img:analysis}
 \end{figure}
-
-\paragraph{Problema} GLaDOS ha più personalità intercambiabili, la cui presenza deve essere trasparente al client.
-
-\paragraph{Soluzione} Il sistema per la gestione della personalità utilizza il \textit{pattern Strategy}, come da
-\Cref{img:strategy}: le implementazioni di \texttt{Personality} possono essere modificate, e la
-modifica impatta direttamente sul comportamento di GLaDOS.
-
-\subsubsection{Riuso del codice delle personalità}
-
 \begin{figure}[H]
 \centering{}
-\includegraphics[width=\textwidth]{img/template}
-\caption{Rappresentazione UML dell'applicazione del pattern Template Method alla gerarchia delle Personalità}
-\label{img:template}
+\includegraphics[scale=0.45]{imgs/positions.png}
+\label{img:analysis}
 \end{figure}
-
-\paragraph{Problema} In fase di sviluppo, sono state sviluppate due personalità, una buona ed una cattiva.
-Quella buona restituisce sempre una torta vera, mentre quella cattiva restituisce sempre la
-promessa di una torta che verrà in realtà disattesa.
-Ci si è accorti che diverse personalità condividevano molto del comportamento,
-portando a classi molto simili e a duplicazione.
-
-\paragraph{Soluzione} Dato che le due personalità differiscono solo per il comportamento da effettuarsi in caso di percorso completato con successo,
-è stato utilizzato il \textit{pattern template method} per massimizzare il riuso, come da \Cref{img:template}.
-Il metodo template è \texttt{onSuccess()}, che chiama un metodo astratto e protetto
-\texttt{makeCake()}.
-
-\subsubsection{Gestione di output multipli}
-
+\paragraph{Problema:} Gestione della mappa di gioco.
+\paragraph{Soluzione:} Ho creato la classe BoardImpl, che implementa l'interfaccia Board, che salva tutte le caselle in una mappa da TilePosition a Tile. L'interfaccia Tile permette di ottenere informazioni come il numero e il tipo di terreno di quella casella.
 \begin{figure}[H]
 \centering{}
-\includegraphics[width=.7\textwidth]{img/observer}
-\caption{Il pattern Observer è usato per consentire a GLaDOS di informare tutti i sistemi di output in ascolto}
-\label{img:observer}
+\includegraphics[scale=0.35]{imgs/BoardImpl.png}
+\label{img:analysis}
 \end{figure}
 
-\paragraph{Problema} Il sistema deve supportare output multipli. In particolare, si richiede che vi sia un logger che stampa a terminale o su file,
-e un'interfaccia grafica che mostri una rappresentazione grafica del sistema.
+\paragraph{Problema:} Aggiornare la view della mappa
+\paragraph{Soluzione:} Ho creato le classi PropertyView, RoadView e TileView che estendono classi di JavaFX e implementano il metodo draw() per ridisegnarsi. In questo modo posso chiamare draw solamente sulle parti necessarie in modo da non dover rigenerare ogni volta tutta la view.
+\begin{figure}[H]
+\centering{}
+\includegraphics[scale=0.35]{imgs/boardView.png}
+\label{img:analysis}
+\end{figure}
+\subsection{Guerrini Alex}
+La mia parte del progetto consisteva nel lavorare sulla gestione dei turni di gioco, la gestione delle carte sviluppo e la creazione dei menu di gioco per la corretta inizializzazione della partita.
+\paragraph{Problema:}Sistema che tenga traccia del turno corrente e delle azioni che possono svolgere i giocatori in base al turno in cui si trovano.
+\paragraph{Soluzione:}Ho progettato un'interfaccia \textit{TurnManager} che definisce i metodi necessari per il conteggio dei turni per alleggerire il lavoro del \textit{GameManager}, come il recupero del giocatore corrente, la fine del turno e il lancio dei dadi. Successivamente, ho implementato questa interfaccia nella classe \textit{TurnManagerImpl}, che gestisce la logica dei turni e delle operazioni ad essi associate.
+ All'interno del \textit{GameManager} è presente la logica finale che utilizza sia il turn manager che altri componenti creati dai miei compagni per poter determinare le azioni dei giocatori in base al ciclo di turni corrente.
+\paragraph{Problema:}Corretta gestione dei turni e divisione in cicli dei turni di gioco per rispettare le regole del gioco "Coloni di Catan".
+\paragraph{Soluzione:}Utilizzo del pattern Iterator in \textit{TurnManager}.
+\paragraph{Utilizzo di design pattern:}Nella progettazione è stato utilizzato il pattern Iterator per gestire in modo efficiente il ciclo dei turni. L'iteratore generato è stato implementato in modo da garantire un ciclo di turni che attraversa tutti i giocatori nell'ordine corretto con un corretto reverse dell'ordine nel secondo ciclo di turni.
+\begin{figure}[H]
+\centering{}
+\includegraphics[scale=0.4]{imgs/GameManagerTurnManager.png}
+\caption{Schema UML del TurnManager e del GameManager}
+\label{img:analysis}
+\end{figure}
+\paragraph{Problema:}Creazione e gestione del mazzo delle carte sviluppo
+\paragraph{Soluzione:}Ho progettato un'interfaccia \textit{DevelopmentCards} che definisce i metodi necessari per la gestione delle carte sviluppo, come la pesca di una carta dal mazzo e la verifica se il mazzo è vuoto. Successivamente, ho implementato concretamente questa interfaccia nella classe \textit{DevelopmentCardsImpl}, che gestisce il mazzo di carte sviluppo e fornisce i metodi per pescare carte e verificare lo stato del mazzo.
+\paragraph{Problema:}Gestione della pescata delle carte sviluppo e dei loro effetti sul giocatore.
+\paragraph{Soluzione:}Ho creato i tipi di carte sviluppo attraverso \textit{CardType.java}, ne ho gestito la pescata che comprende la spesa delle risorse dei giocatori per pescare e l'effetto di queste carte sul giocatore attraverso \textit{buyCard} all'interno di \textit{GameManager}.
+\begin{figure}[H]
+\centering{}
+\includegraphics[scale=0.4]{imgs/GameManagerDevelopmentCards.png}
+\caption{Schema UML del TurnManager e delle DevelopmentCards}
+\label{img:analysis}
+\end{figure}
+\subsection{Ronchi Mattia}
+\paragraph{Problema} Struttura della mappa di gioco variabile.
+\paragraph{Soluzione} La mappa di gioco viene creata utilizzando il pattern Strategy: la classe GameMapGenerator è la classe che rappresenta la strategia, mentre BeginnerGameMapGenerator e RandomGameMapGenerator sono le sue due implementazioni.
+\begin{figure}[H]
+\centering{}
+\includegraphics[scale=0.4]{imgs/gameMapGenerator.png}
+\caption{Schema UML della generazione della mappa}
+\label{img:analysis}
+\end{figure}
+\paragraph{Problema} Personalizzazione delle impostazioni
+\paragraph{Soluzione} Ho utilizzato una interfaccia GameSettings, che viene utilizzata da GameManager per modificare l'inizializzazione di alcuni componenti. Attualmente esiste una sola implementazione di questa interfaccia, GameSettingsJSON (che recupera le impostazioni tramite un file JSON con uno schema predefinito) ma è semplice crearne altre varianti.
+\begin{figure}[H]
+\centering{}
+\includegraphics[scale=0.4]{imgs/gameSettings.png}
+\caption{Schema UML della gestione del punteggio}
+\label{img:analysis}
+\end{figure}
+\paragraph{Problema} Gestione dei punteggi
+\paragraph{Soluzione} Essendo i punti vittoria ottenibili attraverso diverse tipologie di azioni, ho scelto di delegare ai singoli gestori delle entità (RoadManager e PropertyManager) la loro gestione (fatta eccezione per le carte sviluppo, in quanto quest'ultime, a differenza di altre entità, non hanno un proprietario ma vengono utilizzate e subito scartate). I singoli gestori gestiscono il punteggio direttamente all'interno dei metodi corrispondenti alle azioni che comportano una modifica del punteggio (questo è reso possibile dal fatto che essi non hanno bisogno di accedere, per gestire i punteggi, ad altro che le entità da loro gestite).\\
+Un'altra valida alternativa sarebbe stata quella di gestire i punteggi all'interno di GameManager (ad esempio tramite una classe interna). In questo caso si ha il vantaggio di poter disattivare a piacimento alcuni fattori che modificano il punteggio (es. bonus della strada più lunga) ma al prezzo di appesantire la classe. Al limite, si potrebbe anche decidere di delegare l'intera gestione dei punti a un gestore separato (PointsManager).
+\begin{figure}[H]
+\centering{}
+\includegraphics[scale=0.4]{imgs/gameManagerPoints.png}
+\caption{Schema UML della gestione del punteggio}
+\label{img:analysis}
+\end{figure}
+\subsection{Samor\'i Andrea}
+Nella parte da me effettuata, ho cercato di ideare il codice per agevolare il pi\`u possibile il riuso e l'estendibilit\`a. Un esempio \`e nelle risorse, dove basta inserire nell'enum dedicato (ResourceType) la nuova risorsa, e il programma continuer\`a funzioner\`a alla perfezione.
+\paragraph{Problema:}  gestione delle propriet\`a dei vari giocatori.
+\paragraph{Soluzione:} ho deciso di utilizzare un \textit{Property Manager} per gestire le propriet\`a in gioco piuttosto che assegnare nella classe \textit{Player} i metodi e le strutture dati per le propriet\`a. Questo \`e stato fatto per non appesantire gli altri componenti.
+\paragraph{Problema:} gestione delle risorse dei vari elementi del gioco (giocatori e mappa).
+\paragraph{Soluzione:} ho deciso di utilizzare un \textit{Resource Manager} per gestire le risorse in gioco piuttosto che assegnare nelle varie classi (Player e Bank) i metodi e le strutture dati per le risorse. Questo \`e stato fatto per non appesantire gli altri componenti.
+\paragraph{Problema:}effettuare operazioni di scambio di risorse sia con altri giocatori sia con la banca.
 
-\paragraph{Soluzione} Dato che i due sistemi di reporting utilizzano le medesime informazioni, si è deciso di raggrupparli dietro l'interfaccia \texttt{Output}.
-A questo punto, le due possibilità erano quelle di far sì che \texttt{GLaDOS} potesse pilotarle entrambe.
-Invece di fare un sistema in cui questi output sono obbligatori e connessi, si è deciso di usare maggior flessibilità (anche in vista di future estensioni)
-e di adottare una comunicazione uno-a-molti fra \texttt{GLaDOS} ed i sistemi di output.
-La scelta è quindi ricaduta sul \textit{pattern Observer}: \texttt{GLaDOS} è observable, e le istanze di \texttt{Output} sono observer.
-%
-Il suo utilizzo è esemplificato in \Cref{img:observer}
-
-
-\subsection*{Contro-esempio: pessimo diagramma UML}
-
-In \Cref{img:badarch} è mostrato il modo \textbf{sbagliato} di fare le cose.
-%
-Questo schema è fatto male perché:
-\begin{itemize}
-	\item È caotico.
-	\item È difficile da leggere e capire.
-	\item Vi sono troppe classi, e non si capisce bene quali siano i rapporti che intercorrono fra loro.
-	\item Si mostrano elementi implementativi irrilevanti, come i campi e i metodi privati nella classe \texttt{AbstractEnvironment}.
-	\item Se l'intenzione era quella di costruire un diagramma architetturale, allora lo schema è ancora più sbagliato, perché mostra pezzi di implementazione.
-	\item Una delle classi, in alto al centro, galleggia nello schema, non connessa a nessuna altra classe, e di fatto costituisce da sola un secondo schema UML scorrelato al resto
-	\item Le interfacce presentano tutti i metodi e non una selezione che aiuti il lettore a capire quale parte del sistema si vuol mostrare.
-\end{itemize}
-
-
-%\begin{figure}[h]
-%\centering{}
-%\includegraphics[width=\textwidth]{img/badarch}
-%\caption{Schema UML mal fatto e con una pessima descrizione, che non aiuta a %capire. Don't try this at home.}
-%\label{img:badarch}
-%\end{figure}
-
+\paragraph{Soluzione:}ho risolto creando una interfaccia \textit{ResourceOwner} che viene implementata sia dalla classe Player che dalla classe Bank. All'interno del ResourceManager  ogni operazione di modifica e scambio delle risorse prende come input un ResourceOwner, cos\`i da permettere le sopracitate operazioni sia tra due giocatori che tra giocatore e banca. Quando lo richiedono, metodi del \textit{ResourceManager}     
+\begin{figure}[H]
+\centering{}
+\includegraphics[scale=0.4]{imgs/resourceManager.png}
+\caption{Schema UML del Resource manager}
+\label{img:analysis}
+\end{figure}
+\paragraph{Problema:} mandare a schermo messaggi di diversa natura, in base a ci\`o che accade nel gioco.
+\paragraph{Soluzione:} ho utilizzato il pattern \textit{Factory}, creando una \textit{MessageFactory} che crea vari messaggi in base a ci\`o che \`e richiesto. Questo permette, in caso si vogliano creare nuovi messaggi da inviare a schermo, di aggiungere semplicemente altri metodi create alla fabbrica.
+\begin{figure}[H]
+\centering{}
+\includegraphics[scale=0.4]{imgs/messageFactory.png}
+\caption{Schema UML del Resource manager}
+\label{img:analysis}
+\end{figure}
+\paragraph{Problema:} creazione di elementi simili nella view. Infatti, serve creare l'immagine delle varie risorse con vari elementi affianco.
+\paragraph{Soluzione:} Per evitare di riscrivere inutilmente codice, ho creato una ResourceViewFactory, che permette di creare differenti tipi di visuale della risorsa in base alla necessit\`a.
 
 \chapter{Sviluppo}
 \section{Testing automatizzato}
 Si è deciso di sottoporre a test automatizzato tramite JUnit alcune funzionalità dei componenti principali:
 \begin{itemize}
     \item RoadPosition,PropertyPosition: funzioni che verificano l'adiacenza tra strade/proprietà/caselle
-    \item GameManager: funzioni che 
+    \item GameManager: funzioni che simulano i primi turni di gioco e la produzione di risorse
     \item RoadManager: funzioni che verificano la costruzione di strade e la meccanica della strada più lunga
     \item ResourceManager: funzioni che verificano la gestione delle risorse e degli scambi
     \item TurnManager: funzioni che verificano la gestione dei turni
     \item Player: funzioni che verificano l'aggiornamento dei punti
+    \item GameMapGenerator: funzioni che verificano la generazione di una mappa di gioco aderente alle regole
 \end{itemize}
 
 
 \section{Note di sviluppo}
+\subsection{Bartoli Davide}
+\subsubsection{Utilizzo di Stream e lambda expressions}
+Usati in numerosi punti. Ad esempio \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/dfbfa6f4eb46f9ed826c6d568074ce085e25fd25/src/main/java/it/unibo/controller/impl/MainControllerImpl.java#L112C9-L115C46}
+\subsubsection{Utilizzo della libreria Apache Commons}
+Ad esempio \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/0950c43bdd3aee77487a8cbdb0aed8111b5f7916/src/main/java/it/unibo/common/TileCoordinatesImpl.java#L7C5-L7C54}
+\subsubsection{Utilizzo della libreria JavaFX}
+Utilizzata in tutto il progetto. Un esempio \`e \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/bb5e6b1ecf814446af912da8460983d4d5c8e953/src/main/java/it/unibo/view/PropertyView.java#L56C1-L61C1}
+\subsubsection{Utilizzo dei record}
+Ad esempio \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/88e2af616a6af9e8dcd04c7efb93fcd7eb89262b/src/main/java/it/unibo/view/MessageView.java#L3C1-L3C69}
+\subsubsection{Utilizzo di Optional}
+Ad esempio \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/7b6d50c738ca08d9b8f1d0930366eff178d45141/src/main/java/it/unibo/model/property/PropertyManagerImpl.java#L58C5-L58C28}
 
-Questa sezione, come quella riguardante il design dettagliato va svolta \textbf{singolarmente da ogni membro del gruppo}.
-%
-Nella prima parte, ciascuno dovrà mostrare degli esempi di codice particolarmente ben realizzati,
-che dimostrino proefficienza con funzionalità avanzate del linguaggio e capacità di spingersi oltre le librerie mostrate a lezione.
+\subsection{Guerrini Alex}
+\subsubsection{Utilizzo di Stream e lambda expressions}
+Utilizzato in tutto il progetto. Un esempio \`e \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/94d6e93730b0de4e9a41878b0cd8de7cdda4f1f1/src/main/java/it/unibo/model/turn/TurnManagerImpl.java#L37C1-L46C81}
+\subsubsection{Utilizzo della libreria JavaFX}
+Un esempio \`e \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/94d6e93730b0de4e9a41878b0cd8de7cdda4f1f1/src/main/java/it/unibo/view/app/StartMenuView.java#L138C1-L148C33}
+\subsection{Ronchi Mattia}
+\subsubsection{Utilizzo della libreria}
+Permalink: \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/2759276c233b2d366192f17430bb8f9c7de6f275/src/main/java/it/unibo/model/mapgenerator/RandomGameMapGenerator.java#L83}
+\subsubsection{Utilizzo della libreria JGraphT}
+Utilizzato in RoadManagerImpl per il calcolo della strada più lunga: \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/fac3379ddae2ca7015850973811087d3b8f247bd/src/main/java/it/unibo/model/road/RoadManagerImpl.java#L59}
+\subsubsection{Utilizzo della libreria Jackson}
+Utilizzata per la lettura del file JSON: \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/fac3379ddae2ca7015850973811087d3b8f247bd/src/main/java/it/unibo/model/GameSettingsJSON.java#L50}
+\subsubsection{Utilizzo di Optional}
+Ad esempio \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/fac3379ddae2ca7015850973811087d3b8f247bd/src/main/java/it/unibo/model/road/RoadManagerImpl.java#L89}
+\subsubsection{Utilizzo di Stream}
+Utilizzate massivamente. Un esempio è \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/2759276c233b2d366192f17430bb8f9c7de6f275/src/main/java/it/unibo/model/GameManagerImpl.java#L269}
+\subsubsection{Utilizzo di method reference}
+Ad esempio \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/fac3379ddae2ca7015850973811087d3b8f247bd/src/main/java/it/unibo/model/road/RoadManagerImpl.java#L79}
 
-\begin{itemize}
-	\item \textbf{Elencare} (fare un semplice elenco per punti, non un testo!) le feature \textit{avanzate} del linguaggio e dell'ecosistema Java che sono state
-utilizzate. Le feature di interesse sono:
-	\begin{itemize}
-		\item Progettazione con generici, ad esempio costruzione di nuovi tipi generici, e uso di generici bounded.
-		L'uso di classi generiche di libreria non è considerato avanzato.
-		\item Uso di lambda expressions
-		\item Uso di \texttt{Stream}, di \texttt{Optional} o di altri costrutti funzionali
-		\item Uso di reflection
-		\item Definizione ed uso di nuove annotazioni
-		\item Uso del Java Platform Module System
-		\item Uso di parti della libreria JDK non spiegate a lezione (networking, compressione, parsing XML, eccetera...)
-		\item Uso di librerie di terze parti (incluso JavaFX): Google Guava, Apache Commons...
-	\end{itemize}
-	\item Si faccia molta attenzione a non scrivere banalità, elencando qui features di tipo ``core'', come le eccezioni, le enumerazioni, o le inner class: nessuna di queste è considerata avanzata.
-	\item Per ogni feature avanzata, mostrata, includere:
-	\begin{itemize}
-		\item Nome della feature
-		\item Permalink GitHub al punto nel codice in cui è stata utilizzata
-	\end{itemize}
-\end{itemize}
-
-In questa sezione, \textit{dopo l'elenco},
-vanno menzionati ed attributi con precisione eventuali pezzi di codice ``riadattati'' (o scopiazzati...) da Internet o da altri progetti,
-pratica che tolleriamo ma che non raccomandiamo.
-%
-Si rammenta agli studenti che non è consentito partire da progetti esistenti e procedere per modifiche successive.
-%
-Si ricorda anche che i docenti hanno in mano strumenti antiplagio piuttosto raffinati e che ``capiscono'' il codice e la storia delle modifiche del progetto,
-per cui tecniche banali come cambiare nomi (di classi, metodi, campi, parametri, o variabili locali),
-aggiungere o togliere commenti,
-oppure riordinare i membri di una classe vengono individuate senza problemi.
-%
-Le regole del progetto spiegano in dettaglio l'approccio dei docenti verso atti gravi come il plagiarismo.
-
-I pattern di design \textbf{non} vanno messi qui.
-%
-L'uso di pattern di design (come suggerisce il nome) è un aspetto avanzato di design, non di implementazione,
-e non va in questa sezione.
-
-\subsection*{Elementi positivi}
-
-\begin{itemize}
-	\item Si elencano gli aspetti avanzati di linguaggio che sono stati impiegati
-	\item Si elencano le librerie che sono state utilizzate
-	\item Per ciascun elemento, si fornisce un permalink
-	\item Ogni permalink fa riferimento ad uno snippet di codice scritto dall'autore della sezione (i docenti verificheranno usando \texttt{git blame})
-	\item Se si è utilizzato un particolare algoritmo, se ne cita la fonte originale.
-	Ad esempio, se si è usato Mersenne Twister per la generazione di numeri pseudo-random, si cita \cite{mersenne}.
-	\item Si identificano parti di codice prese da altri progetti, dal web, o comunque scritte in forma originale da altre persone.
-	In tal senso, si ricorda che agli ingegneri non è richiesto di re-inventare la ruota continuamente:
-	se si cita debitamente la sorgente è tollerato fare uso di di snippet di codice open source per risolvere velocemente problemi non banali.
-	Nel caso in cui si usino snippet di codice di qualità discutibile,
-	oltre a menzionarne l'autore originale si invitano gli studenti ad adeguare tali parti di codice agli standard e allo stile del progetto.
-	Contestualmente, si fa presente che è largamente meglio fare uso di una libreria che copiarsi pezzi di codice:
-	qualora vi sia scelta (e tipicamente c'è), si preferisca la prima via.
-\end{itemize}
-
-\subsection*{Elementi negativi}
-\begin{itemize}
-	\item Si elencano feature core del linguaggio invece di quelle segnalate. Esempi di feature core da non menzionare sono:
-    \begin{itemize}
-        \item eccezioni;
-        \item classi innestate;
-        \item enumerazioni;
-        \item interfacce.
-    \end{itemize}
-	\item Si elencano applicazioni di terze parti (peggio se per usarle occorre licenza, e lo studente ne è sprovvisto) che non c'entrano nulla con lo sviluppo, ad esempio:
-    \begin{itemize}
-        \item Editor di grafica vettoriale come Inkscape o Adobe Illustrator;
-        \item Editor di grafica scalare come GIMP o Adobe Photoshop;
-        \item Editor di audio come Audacity;
-        \item Strumenti di design dell'interfaccia grafica come SceneBuilder: il codice è in ogni caso inteso come sviluppato da voi.
-    \end{itemize}
-	\item Si descrivono aspetti di scarsa rilevanza, o si scende in dettagli inutili.
-	\item Sono presenti parti di codice sviluppate originalmente da altri che non vengono debitamente segnalate.
-	In tal senso, si ricorda agli studenti che i docenti hanno accesso a tutti i progetti degli anni passati,
-	a Stack Overflow,
-	ai principali blog di sviluppatori ed esperti Java,
-	ai blog dedicati allo sviluppo di soluzioni e applicazioni
-	(inclusi blog dedicati ad Android e allo sviluppo di videogame),
-	nonché ai vari GitHub, GitLab, e Bitbucket.
-	Conseguentemente, è \emph{molto} conveniente \emph{citare} una fonte ed usarla invece di tentare di spacciare per proprio il lavoro di altri.
-	\item Si elencano design pattern
-\end{itemize}
-
-\subsection{Esempio}
-
-\subsubsection{Utilizzo della libreria SLF4J}
-
-Utilizzata in vari punti.
-Un esempio è \url{https://github.com/AlchemistSimulator/Alchemist/blob/5c17f8b76920c78d955d478864ac1f11508ed9ad/alchemist-swingui/src/main/java/it/unibo/alchemist/boundary/swingui/effect/impl/EffectBuilder.java#L49}
-
-\subsubsection{Utilizzo di \texttt{LoadingCache} dalla libreria Google Guava}
-
-Permalink: \url{https://github.com/AlchemistSimulator/Alchemist/blob/d8a1799027d7d685569e15316a32e6394632ce71/alchemist-incarnation-protelis/src/main/java/it/unibo/alchemist/protelis/AlchemistExecutionContext.java#L141-L143}
-
+\subsection{Samor\'i Andrea}
+\subsubsection{Utilizzo della libreria JavaFX}
+Utilizzata in tutto il progetto. Un esempio \`e \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/94d6e93730b0de4e9a41878b0cd8de7cdda4f1f1/src/main/java/it/unibo/view/resource/ResourcesViewFactory.java#L37C8-L41C47}
 \subsubsection{Utilizzo di \texttt{Stream} e lambda expressions}
-
-Usate pervasivamente. Il seguente è un singolo esempio.
-Permalink: \url{https://github.com/AlchemistSimulator/Alchemist/blob/d8a1799027d7d685569e15316a32e6394632ce71/alchemist-incarnation-protelis/src/main/java/it/unibo/alchemist/model/ProtelisIncarnation.java#L98-L120}
-
-\subsubsection{Scrittura di metodo generico con parametri contravarianti}
-
-Permalink: \url{https://github.com/AlchemistSimulator/Alchemist/blob/d8a1799027d7d685569e15316a32e6394632ce71/alchemist-incarnation-protelis/src/main/java/it/unibo/alchemist/protelis/AlchemistExecutionContext.java#L141-L143}
-
-\subsubsection{Protezione da corse critiche usando \texttt{Semaphore}}
-
-Permalink: \url{https://github.com/AlchemistSimulator/Alchemist/blob/d8a1799027d7d685569e15316a32e6394632ce71/alchemist-incarnation-protelis/src/main/java/it/unibo/alchemist/model/ProtelisIncarnation.java#L388-L440}
-
+Uso massivo. Il seguente \`e un esempio:\url{https://github.com/davi-bart/OOP23-coloni-ces/blob/94d6e93730b0de4e9a41878b0cd8de7cdda4f1f1/src/main/java/it/unibo/model/resource/ResourceManagerImpl.java#L32-L33}
+Propongo anche una pozione di codice dove viene utilizzata anche la method reference: \url{https://github.com/davi-bart/OOP23-coloni-ces/blob/bf20339e5603deddb49259c841ca6f19fb6432c5/src/main/java/it/unibo/model/resource/ResourceManagerImpl.java#L131}
+\subsubsection{Utilizzo di Optional}
+Permalink:\url{https://github.com/davi-bart/OOP23-coloni-ces/blob/94d6e93730b0de4e9a41878b0cd8de7cdda4f1f1/src/main/java/it/unibo/model/property/PropertyManagerImpl.java#L33-L34}
 
 \chapter{Commenti finali}
-
-In quest'ultimo capitolo si tirano le somme del lavoro svolto e si delineano eventuali sviluppi
-futuri.
-
-\textit{Nessuna delle informazioni incluse in questo capitolo verrà utilizzata per formulare la valutazione finale}, a meno che non sia assente o manchino delle sezioni obbligatorie.
-%
-Al fine di evitare pregiudizi involontari, l'intero capitolo verrà letto dai docenti solo dopo aver formulato la valutazione.
-
-\section{Autovalutazione e lavori futuri}
-
-\textbf{È richiesta una sezione per ciascun membro del gruppo, obbligatoriamente}.
-%
-Ciascuno dovrà autovalutare il proprio lavoro, elencando i punti di forza e di debolezza in quanto prodotto.
-Si dovrà anche cercare di descrivere \emph{in modo quanto più obiettivo possibile} il proprio ruolo all'interno del gruppo.
-Si ricorda, a tal proposito, che ciascuno studente è responsabile solo della propria sezione: non è un problema se ci sono opinioni contrastanti, a patto che rispecchino effettivamente l'opinione di chi le scrive.
-Nel caso in cui si pensasse di portare avanti il progetto, ad esempio perché effettivamente impiegato, o perché sufficientemente ben riuscito da poter esser usato come dimostrazione di esser capaci progettisti, si descriva brevemente verso che direzione portarlo.
-
+\section{Bartoli Davide}
+Il mio ruolo è stato rivolto principalmente alla rappresentazione della mappa nel model e nella view.
+Nella parte da me prodotta penso che uno dei punti di forza siano le rappresentazioni delle posizioni degli oggetti, che penso abbiano astratto in maniera efficace la rappresentazione sottostante e siano state facili da utilizzare anche dai miei compagni di gruppo. 
+Uno dei punti deboli è stato il design della BoardView. Infatti, anche a causa della difficoltà iniziale con JavaFX, è stato necessario modificarlo numerose volte. Inoltre avevo creato una versione iniziale della BoardView prima di aver definito fino in fondo la struttura del model, e questo ha necessitato cambiamenti successivi, anche se sono soddisfatto del risultato finale.
+In generale mi ritengo soddisfatto del risultato raggiunto dal gruppo.
+\section{Guerrini Alex}
+Il mio ruolo all'interno del gruppo era quello di gestire i turni di gioco e ciò che ne conseguiva, gestire i menu di gioco e gestire la lista delle carte sviluppo e la loro logica.
+I principali punti deboli che ho riscontrato sono: un'iniziale difficoltà nel comprendere appieno le funzionalità più avanzate di Java, l'utilizzo di Git per la gestione del progetto e l'uso di JavaFX per l'implementazione dell'interfaccia grafica. Tuttavia, ho fatto uno sforzo cosciente nel partecipare ad un gruppo di studenti molto competenti, con l'intento di imparare da loro e migliorare le mie abilità, questo ha fatto in modo che io faticassi inizialmente a stare al passo ma ha anche fatto in modo che imparassi molte cose e molto più in fretta rispetto a quanto avrei appreso in un altro gruppo.
+I miei punti di forza riscontrati in questo progetto sono:
+Per quanto riguarda il codice  ho cercato di utilizzare nomi di variabili e metodi esplicativi, migliorando così la leggibilità e la comprensione del codice da parte degli altri membri del gruppo limitando a zero le incomprensioni e inoltre ho adottato una struttura ben organizzata, dividendo le funzionalità in moduli distinti e garantendo una separazione facilmente comprensibile delle responsabilità rendendo più semplice la modifica e l'estensione del codice più avanti nel progetto.
+Mentre per quanto riguarda i punti di forza riscontrati non inerenti al codice ho avuto una buona capacità di adattamento ad una situazione a me sconosciuta cioè il lavoro di programmazione in gruppo.
+Principali difficolt\`a riscontrate durante il progetto:
+\begin{itemize}
+    \item Quantità di lavoro necessario: ho sottovalutato la mole di lavoro necessaria al completamento del progetto, questo è stato causato da una mia inesperienza nella programmazione di un progetto di gruppo.
+    \item Uso di Git: Inizialmente ho riscontrato difficoltà nell'uso di Git e la risoluzione di possibili merge conflict. La sua complessità iniziale ha richiesto tempo per essere compresa e utilizzata in modo corretto.
+    \item Uso di JavaFX: JavaFX è una libreria con cui non ero familiare e che non avevo approfondito dopo l'unica lezione di laboratorio in cui è stata spiegata.
+\end{itemize}
+\section{Ronchi Mattia}
+Il mio ruolo all'interno del gruppo è stato rivolto principalmente nella parte controller e model e penso di aver avuto un impatto rilevante nella progettazione dell'architettura generale. A tal proposito, ho proposto nella parte iniziale del progetto una architettura che infine si è rilevata problematica e ha costretto tutto il gruppo a spostare diverse parti di codice da un punto all'altro (mantenendone però invariata la logica), comportando una rilevante perdita di tempo.\\
+In generale, ritengo di aver svolto nel complesso un buon lavoro (in base alle capacità che ritengo di avere). Tra i punti di forza farei rientrare l'aver realizzato un codice per quanto possibile semplice, chiaro e ben documentato. Per quanto riguarda i punti di debolezza, oltre al problema sopracitato, aggiungerei anche l'aver sottovalutato la quantità del carico di lavoro necessario alla realizzazione del progetto.
+\section{Samor\'i Andrea}
+Nella parte da me prodotta, i punti di debolezza da me riscontrati sono la iniziale parziale ignoranza di alcune delle funzionalit\`a pi\`u avanzate del linguaggio, che ho cercato di colmare andando avanti con il progetto e mettendo in pratica ci\`o che abbiamo visto a lezione. Infatti credo che mettere in pratica e confrontarsi giornalmente con altri studenti (sicuramente pi\`u competenti di me) siano le principali cause del mio miglioramento.\\
+I punti di forza nella parte da me prodotta sono la semplicit\`a nel comprendere cosa deve fare ogni singolo componente. Questo ho cercato di effettuarlo utilizzando nomi "parlanti", che possano dare una idea effettiva di ci\`o che la parte di codice deve fare.\\
+A livello di progetto, sono abbastanza soddisfatto del risultato del lavoro del gruppo. Abbiamo cercato di organizzare e dividerci il codice il meglio possibile e di dividerci in maniera equa la mole di lavoro (forse in questo caso non riuscendoci al meglio). \\
+Le principali difficolt\`a da me riscontrate durante il progetto sono:
+\begin{itemize}
+    \item Utilizzo di JavaFX: una libreria nuova, che non avevo visto a lezione (essendo stato assente durante la presentazione). Cercare per alcuni componenti se si poteva fare ci\`o che volevo non \`e stato banale, soprattutto perch\`e gli esempi di codice effettivo nella documentazione sono scarsi.
+    \item Utilizzo di Git: soprattutto inizialmente, non avendolo mai usato se non in questo corso, ho trovato difficile utilizzare Git in modo proficuo.
+    \item Ammontare di lavoro: inizialmente avevo sottovalutato l'ammontare di lavoro, e quindi mi sono ritrovato un po' spiazzato quando ho capito che ci\`o che avevo previsto fosse una sotto-stima della realt\`a.
+    \item Organizzare il lavoro in un progetto: essendo la mia prima esperienza in un progetto relativamente grande, ho trovato difficile (soprattutto nelle fasi iniziali) organizzare e analizzare l'interezza del progetto, e non pensare solo alle singole entit\`a, ma anche ai rapporti che ci devono essere tra esse.
+\end{itemize}
 \section{Difficoltà incontrate e commenti per i docenti}
-
-Questa sezione, \textbf{opzionale}, può essere utilizzata per segnalare ai docenti eventuali problemi o difficoltà incontrate nel corso o nello svolgimento del progetto, può essere vista come una seconda possibilità di valutare il corso (dopo quella offerta dalle rilevazioni della didattica) avendo anche conoscenza delle modalità e delle difficoltà collegate all'esame, cosa impossibile da fare usando le valutazioni in aula per ovvie ragioni.
-%
-È possibile che alcuni dei commenti forniti vengano utilizzati per migliorare il corso in futuro: sebbene non andrà a vostro beneficio, potreste fare un favore ai vostri futuri colleghi.
-%
-Ovviamente \textit{il contenuto della sezione non impatterà il voto finale}.
 
 \appendix
 \chapter{Guida utente}
@@ -426,45 +290,17 @@ All'avvio dell'applicazione, viene presentata una schermata in cui viene present
         \item terminare il turno
     \end{itemize}
 \end{enumerate}
-Un'eccezione si ha durante i primi 2 turni di ogni giocatore: in questo caso, infatti, ogni giocatore può costruire (gratuitamente) 1 colonia e 1 strada.\\
 Per costruire è sufficiente cliccare la mappa nel punto desiderato.
 
-\chapter{Esercitazioni di laboratorio}
-
-In questo capitolo ciascuno studente elenca gli esercizi di laboratorio che ha svolto
-(se ne ha svolti),
-elencando i permalink dei post sul forum dove è avvenuta la consegna.
-%
-Questa sezione potrebbe essere processata da strumenti automatici,
-per cui link a oggetti diversi dal permalink della consegna,
-errori nell'email o nel nome del laboratorio possono portare ad ignorare alcune consegne,
-si raccomanda la massima precisione.
-
-\section*{Esempio}
-
-\subsection{paolino.paperino@studio.unibo.it}
-
+\chapter{Regole del gioco}
 \begin{itemize}
- \item Laboratorio 04: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=12345#p123456}
- \item Laboratorio 06: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=22222#p222222}
- \item Laboratorio 09: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=99999#p999999}
+    \item durante i suoi primi 2 turni, ogni giocatore deve costruire una colonia e una strada
+    \item per ogni turno di un ciclo successivo al secondo, va lanciato una coppia di dadi. Tutti i giocatori che possiedono una proprietà vicina ad una casella avente come numero la somma dei dadi lanciati, ricevono la risorsa prodotta dal terreno di quella casella (1 risorsa se la proprietà è una colonia, 2 risorse se la proprietà è una città)
+    \item una strada può essere posizionata solamente vicino ad una proprietà posseduta dal giocatore o ad un'altra strada
+    \item una proprietà può essere posizionata solamente su una strada posseduta dal giocatore (ad eccezione dei primi 2 turni) e se ad almeno 2 strade di distanza da tutte le altre proprietà
+    \item se il numero estratto è 7, tutti i giocatori con più di 7 risorse devono scartarne la metà
+    \item è possibile scambiare con la banca offrendo 4 risorse dello stesso tipo in cambio di 1 qualsiasi altra risorsa
+    \item il giocatore che ha la strada più lunga (almeno 5 strade) ottiene 2 punti bonus
 \end{itemize}
-
-\subsection{paperon.depaperoni@studio.unibo.it}
-
-\begin{itemize}
- \item Laboratorio 04: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=12345#p123456}
- \item Laboratorio 05: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=22222#p222222}
- \item Laboratorio 06: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=99999#p999999}
- \item Laboratorio 07: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=22222#p222222}
- \item Laboratorio 08: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=99999#p999999}
- \item Laboratorio 09: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=22222#p222222}
- \item Laboratorio 10: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=99999#p999999}
- \item Laboratorio 11: \url{https://virtuale.unibo.it/mod/forum/discuss.php?d=22222#p222222}
-\end{itemize}
-
-
-\bibliographystyle{alpha}
-\bibliography{13-template}
 
 \end{document}
