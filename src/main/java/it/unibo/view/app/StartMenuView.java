@@ -57,7 +57,6 @@ public class StartMenuView {
         stage.setTitle("The Settlers of Cesena");
         stage.setScene(getScene());
         stage.setMaximized(true);
-        stage.setResizable(false);
         stage.show();
     }
 
