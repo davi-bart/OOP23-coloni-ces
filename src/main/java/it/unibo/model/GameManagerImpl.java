@@ -78,7 +78,7 @@ public final class GameManagerImpl implements GameManager {
     }
 
     @Override
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The board needs to be modifiable")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The property manager needs to be modifiable")
     public PropertyManager getPropertyManager() {
         return propertyManager;
     }

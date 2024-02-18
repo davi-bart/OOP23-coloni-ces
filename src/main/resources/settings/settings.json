@@ -1,4 +1,5 @@
 {
-    "map": "random",
-    "points": 10
+    "map": "beginner",
+    "points": 10,
+    "shuffle": false
 }
