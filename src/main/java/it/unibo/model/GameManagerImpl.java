@@ -30,10 +30,12 @@ import it.unibo.model.mapgenerator.GameMapGenerator;
 import it.unibo.model.mapgenerator.RandomGameMapGenerator;
 import it.unibo.model.player.Player;
 import it.unibo.model.player.PlayerImpl;
+import it.unibo.model.property.Property;
 import it.unibo.model.property.PropertyManager;
 import it.unibo.model.property.PropertyManagerImpl;
 import it.unibo.model.resource.ResourceManager;
 import it.unibo.model.resource.ResourceManagerImpl;
+import it.unibo.model.road.Road;
 import it.unibo.model.road.RoadManager;
 import it.unibo.model.road.RoadManagerImpl;
 import it.unibo.model.turn.TurnManager;
@@ -58,7 +60,7 @@ public final class GameManagerImpl implements GameManager {
      * @param playersNames list of players' names
      */
     public GameManagerImpl(final List<String> playersNames) {
-        playersNames.forEach(name -> players.add(new PlayerImpl(name)));
+        playersNames.stream().map(PlayerImpl::new).forEach(players::add);
 
         this.developmentCards = new DevelopmentCardsImpl();
         this.roadManager = new RoadManagerImpl();
@@ -103,7 +105,7 @@ public final class GameManagerImpl implements GameManager {
 
     @Override
     public boolean isGameOver() {
-        return players.stream().anyMatch(p -> p.getVictoryPoints() >= pointsToWin);
+        return players.stream().anyMatch(player -> player.getVictoryPoints() >= pointsToWin);
     }
 
     @Override
@@ -203,7 +205,7 @@ public final class GameManagerImpl implements GameManager {
         if (turnManager.getCycle() <= 2) {
             return false;
         }
-        return this.propertyManager.getPlayerProperties(player).stream().map(property -> property.getPosition())
+        return this.propertyManager.getPlayerProperties(player).stream().map(Property::getPosition)
                 .anyMatch(propertyPosition -> propertyPosition.equals(position))
                 && this.resourceManager.hasResources(player, Recipes.getCityResources());
     }
@@ -277,8 +279,8 @@ public final class GameManagerImpl implements GameManager {
         propertyManager.getPlayerProperties(player).stream()
                 .filter(property -> !property.getPropertyType().equals(PropertyType.EMPTY)).forEach(property -> {
                     property.getPosition().getEquivalentPositions().stream()
-                            .map(propertyPosition -> propertyPosition.getTilePosition())
-                            .filter(tilePosition -> board.getTilePositions().contains(tilePosition))
+                            .map(PropertyPosition::getTilePosition)
+                            .filter(board.getTilePositions()::contains)
                             .filter(tilePosition -> !board.getTileTerrainType(tilePosition).equals(TerrainType.DESERT))
                             .filter(tilePosition -> board.getTileNumber(tilePosition) == number
                                     && !board.getRobberPosition().equals(tilePosition))
@@ -300,7 +302,7 @@ public final class GameManagerImpl implements GameManager {
     private boolean isPropertyNearToAnyProperty(final PropertyPosition position) {
         return players.stream()
                 .anyMatch(player -> propertyManager.getPlayerProperties(player).stream()
-                        .map(property -> property.getPosition())
+                        .map(Property::getPosition)
                         .anyMatch(propertyPosition -> propertyPosition.isNear(position)));
     }
 
@@ -312,10 +314,8 @@ public final class GameManagerImpl implements GameManager {
      */
     private boolean isPropertyNearToAnyPlayerRoad(final PropertyPosition propertyPosition,
             final Player player) {
-        return roadManager.getPlayerRoads(player).stream().map(road -> road.getPosition())
-                .anyMatch(roadPosition -> {
-                    return roadPosition.isNearToProperty(propertyPosition);
-                });
+        return roadManager.getPlayerRoads(player).stream().map(Road::getPosition)
+                .anyMatch(roadPosition -> roadPosition.isNearToProperty(propertyPosition));
     }
 
     /**
@@ -325,8 +325,8 @@ public final class GameManagerImpl implements GameManager {
      *         owned by player {@code player}
      */
     private boolean isRoadNearToAnyPlayerRoad(final RoadPosition roadPosition, final Player player) {
-        return roadManager.getPlayerRoads(player).stream().map(road -> road.getPosition())
-                .anyMatch(roadPosition2 -> roadPosition.isNearby(roadPosition2));
+        return roadManager.getPlayerRoads(player).stream().map(Road::getPosition)
+                .anyMatch(roadPosition::isNearby);
     }
 
     /**
@@ -336,15 +336,14 @@ public final class GameManagerImpl implements GameManager {
      *         property owned by player {@code player}
      */
     private boolean isRoadNearToAnyPlayerProperty(final RoadPosition roadPosition, final Player player) {
-        return this.propertyManager.getPlayerProperties(player).stream().map(property -> property.getPosition())
-                .anyMatch(propertyPosition -> {
-                    return roadPosition.isNearToProperty(propertyPosition);
-                });
+        return this.propertyManager.getPlayerProperties(player).stream().map(Property::getPosition)
+                .anyMatch(roadPosition::isNearToProperty);
     }
 
     /**
      * Class which represents the settings of the game customized by players, which
-     * are the amount of points necessary to win and the type of map to play with.
+     * are the amount of points necessary to win, the type of map to play with and
+     * whether the randomize the order of players.
      */
     private static final class GameSettings {
 
