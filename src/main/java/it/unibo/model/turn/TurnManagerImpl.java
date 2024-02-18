@@ -20,20 +20,23 @@ public final class TurnManagerImpl implements TurnManager {
     private boolean hasRolled;
     private int turnNumber;
     private int currentTurn;
+    private final boolean canShuffle;
     private final Iterator<Integer> iterator;
     private final List<Player> playerList = new ArrayList<>();
     private final Random random = new Random();
     private static final int MAX_ROLL = 6;
     private static final int MIN_ROLL = 1;
 
+
     /**
      * constructor of TurnManager.
      * 
      * @param players list of players
      */
-    public TurnManagerImpl(final List<Player> players) {
+    public TurnManagerImpl(final List<Player> players, boolean shuffles) {
         players.forEach(playerList::add);
         setRandomOrder();
+        this.canShuffle = shuffles;
         /**
          * iterator contains 3 streams:
          * a stream that goes from 1 to the number of players ,
@@ -47,7 +50,9 @@ public final class TurnManagerImpl implements TurnManager {
     }
 
     private void setRandomOrder() {
-        Collections.shuffle(playerList);
+        if(canShuffle){
+            Collections.shuffle(playerList);
+        }
     }
 
     @Override

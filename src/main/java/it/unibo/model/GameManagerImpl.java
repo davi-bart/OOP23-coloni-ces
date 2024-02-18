@@ -63,7 +63,7 @@ public final class GameManagerImpl implements GameManager {
         this.developmentCards = new DevelopmentCardsImpl();
         this.roadManager = new RoadManagerImpl();
         this.propertyManager = new PropertyManagerImpl();
-        this.turnManager = new TurnManagerImpl(players);
+        this.turnManager = new TurnManagerImpl(players, false);
         this.resourceManager = new ResourceManagerImpl(players);
 
         final GameSettings settings = new GameSettings("settings/settings.json");
