@@ -31,11 +31,12 @@ public final class TurnManagerImpl implements TurnManager {
      * constructor of TurnManager.
      * 
      * @param players list of players
+     * @param shuffles wether the player list gets shuffled or not
      */
     public TurnManagerImpl(final List<Player> players, boolean shuffles) {
         players.forEach(playerList::add);
-        setRandomOrder();
         this.canShuffle = shuffles;
+        setRandomOrder();
         /**
          * iterator contains 3 streams:
          * a stream that goes from 1 to the number of players - 1 ,
