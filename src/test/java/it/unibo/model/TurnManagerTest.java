@@ -1,5 +1,6 @@
 package it.unibo.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -26,7 +27,7 @@ class TurnManagerTest {
 
 
     @Test
-    void testTurn(){
+    void testCurrentPlayer(){
         assertTrue(turnManager.getCurrentPlayer().equals(player1));
         turnManager.endTurn();
         assertTrue(turnManager.getCurrentPlayer().equals(player2));
@@ -34,6 +35,24 @@ class TurnManagerTest {
         assertTrue(turnManager.getCurrentPlayer().equals(player3));
         turnManager.endTurn();
         assertTrue(turnManager.getCurrentPlayer().equals(player4));
+        turnManager.endTurn();
+        assertTrue(turnManager.getCurrentPlayer().equals(player4));
+        turnManager.endTurn();
+        assertTrue(turnManager.getCurrentPlayer().equals(player3));
     }
 
+    @Test
+    void testTurnNumber(){
+        assertEquals(0, turnManager.getTurnNumber());
+        turnManager.endTurn();
+        assertEquals(1, turnManager.getTurnNumber());
+        turnManager.endTurn();
+        assertEquals(2, turnManager.getTurnNumber());
+        turnManager.endTurn();
+        assertEquals(3, turnManager.getTurnNumber());
+        assertEquals(1, turnManager.getCycle());
+        turnManager.endTurn();
+        assertEquals(4, turnManager.getTurnNumber());
+        assertEquals(2, turnManager.getCycle());
+    }
 }
